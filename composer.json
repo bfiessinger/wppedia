@@ -1,0 +1,22 @@
+{
+    "name": "bf/wp-pedia",
+    "description": "Basic Glossary for WordPress",
+    "type": "wordpress-plugin",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Bastian Fießinger",
+            "email": "bastian.fiessinger@proxenos.de"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "bf\\wpPedia\\": "classes/"
+        }
+    },
+    "require-dev": {
+        "scssphp/scssphp": "^1.0"
+    }
+}
