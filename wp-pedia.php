@@ -12,8 +12,6 @@
  * Text Domain: wppedia
  */
 
-namespace bf\wpPedia;
-
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
@@ -56,28 +54,35 @@ dev_compile_scss(
  */
 function wiki_utils() {
 
-  return helper::getInstance();
+	return bf\wpPedia\helper::getInstance();
 
 }
 wiki_utils();
+
+/**
+ * Instantiate Controller
+ * 
+ * @since 1.0.0
+ */
+bf\wpPedia\controller::getInstance();
 
 /**
  * Instantiate Post Type
  * 
  * @since 1.0.0
  */
-wikiPostType::getInstance();
+bf\wpPedia\wikiPostType::getInstance();
 
 /**
  * Instatiate Admin View
  * 
  * @since 1.0.0
  */
-adminView::getInstance();
+bf\wpPedia\adminView::getInstance();
 
 /**
  * Modify Wiki Content
  * 
  * @since 1.0.0
  */
-new wikiContent();
+new bf\wpPedia\wikiContent();
