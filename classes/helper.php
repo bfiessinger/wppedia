@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WP Wiki Main Class
+ * WP Wiki Helpers
  * 
  * @since 1.0.0
  */
@@ -43,12 +43,20 @@ class helper {
    * 
    * @since 1.0.0
    */
-  public function get_view(string $view, array $args = []) {
+  public function get_view(string $view, array $args = [], bool $display = true) {
 
     $view_file = wpPediaPluginDir . '/views/view-' . $view . '.php';
 
-    if ( file_exists( $view_file ) )
-      require_once $view_file;
+    if ( file_exists( $view_file ) ) {
+
+			if ( $display )
+				require_once $view_file;
+			else
+				return $view_file;
+
+		}
+
+		return false;
 
   }
 
@@ -57,12 +65,20 @@ class helper {
    * 
    * @since 1.0.0
    */
-  public function get_partial(string $partial, array $args = []) {
+  public function get_partial(string $partial, array $args = [], bool $display = true) {
 
     $partial_file = wpPediaPluginDir . '/partials/partial-' . $partial . '.php';
 
-    if ( file_exists( $partial_file ) )
-      require_once $partial_file;
+    if ( file_exists( $partial_file ) ) {
+
+			if ( $display )
+				require_once $partial_file;
+			else
+				return $partial_file;
+
+		}
+			
+		return false;
 
   }
   
