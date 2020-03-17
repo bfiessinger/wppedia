@@ -136,14 +136,25 @@ class helper {
 
     $initials = [
       // Default letters
-      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-      // Numbers
-      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     ];
 
     return $initials;
 
   }
+
+	/**
+	 * Get the initial letter from an post
+	 * 
+	 * @param int|WP_POST $post
+	 * 
+	 * @return string the first character
+	 */
+	function post_initial_letter( $post ) {
+
+		return strtolower( substr( get_the_title( $post ), 0, 1 ) );
+
+	}
 
   /**
    * Get initial letters of current Glossary Entries
@@ -156,33 +167,26 @@ class helper {
 
     $defaults = [
       'hide_empty' => true
-    ];
+		];
 
     $settings = array_merge($defaults, $args);
 
-    if ( $settings['hide_empty'] !== false ) {
+		$initial_char_terms = get_terms( array(
+			'taxonomy' => 'initialcharacter',
+			'hide_empty' => $settings['hide_empty'],
+		) );
 
-      $available_initial_letters = [];
-      $entries_query = $this->get_wiki_entries();
+		$available_initial_chars = array_unique( $initial_char_terms );
 
-      if ( $entries_query->have_posts() ) {
+		if ( $settings['hide_empty'] !== false )
+			return $available_initial_chars;
 
-        while( $entries_query->have_posts() ) {
+		$available_initial_chars = array_unique( array_merge( $available_initial_chars, $this->list_initial_letters() ) );
+		sort( $available_initial_chars );
 
-          $entries_query->the_post();
-          $available_initial_letters[] = strtolower( substr( get_the_title(), 0, 1 ) );
+		return $available_initial_chars;
 
-        }
-
-      }
-
-      return array_unique( $available_initial_letters );
-
-    }
-
-    return $this->list_initial_letters();
-
-  }
+	}
 
   /**
    * Query by initial letters
@@ -230,6 +234,40 @@ class helper {
 
     return $final_query;
 
-  }
+	}
+	
+	/**
+	 * Determine if the currently viewed page is a wiki page
+	 * 
+	 * @since 1.0.0
+	 */
+	public function is_wiki_post_type() {
+
+		$post_type = false;
+
+		if ( get_post_type() == 'wp_pedia_term' )
+			$post_type = 'wp_pedia_term';
+			
+		return $post_type;
+
+	}
+
+	/**
+	 * Get Wiki URL
+	 * 
+	 * @param array $query_args array with query args to add
+	 * 
+	 * @return string final URL
+	 */
+	public function get_wiki_url( array $query_args = [] ) {
+
+		$archive_url = get_post_type_archive_link('wp_pedia_term');
+
+		if ( ! empty( $query_args ) )
+			$archive_url = add_query_arg( $query_args, $archive_url );
+
+		return $archive_url;
+
+	}
 
 }
