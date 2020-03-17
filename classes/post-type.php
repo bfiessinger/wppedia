@@ -34,12 +34,19 @@ class wikiPostType {
 
   protected function __construct() {
 
-    add_action( 'init', [$this, 'register_wiki_post_type'] );
+		// Create Post type
+		add_action( 'init', [$this, 'register_wiki_post_type'] );
+
+		// Create Fake Taxonomy to query by initial letter
+		add_action( 'init', [$this, 'create_initialcharacter_tax'] );
+
+		// Set Initial Letter Taxonomy on post save
+		add_action( 'save_post_wp_pedia_term', [$this, 'manage_initial_character_onsave'], 10, 3 );
 
   }
 
   /**
-   * Register CPT
+   * Register Wiki Custom Post type
    * 
    * @since 1.0.0
    */
@@ -76,8 +83,8 @@ class wikiPostType {
     );
 
     $rewrite = array(
-      'slug' => 'wiki',
-      'with_front' => true,
+      'slug' => 'glossary/term',
+      'with_front' => false,
       'pages' => true,
       'feeds' => true,
     );
@@ -100,12 +107,88 @@ class wikiPostType {
       'exclude_from_search' => false,
       'show_in_rest' => true,
       'publicly_queryable' => true,
-      'capability_type' => 'post',
-      'rewrite' => $rewrite,
+			'capability_type' => 'post',
+			'has_archive' => 'glossary',
+      'rewrite' => $rewrite
     );
 
     register_post_type( 'wp_pedia_term', $args );
 
-  }
+	}
+
+	/**
+	 * Register a fake Taxonomy for initial letters
+	 * used to query glossary terms by initial letter
+	 * 
+	 * @since 1.0.0
+	 */
+	function create_initialcharacter_tax() {
+
+		$labels = array(
+			'name'              => _x( 'Initial Characters', 'taxonomy general name', 'wppedia' ),
+			'singular_name'     => _x( 'Initial Character', 'taxonomy singular name', 'wppedia' ),
+			'search_items'      => __( 'Search Initial Characters', 'wppedia' ),
+			'all_items'         => __( 'All Initial Characters', 'wppedia' ),
+			'parent_item'       => __( 'Parent Initial Character', 'wppedia' ),
+			'parent_item_colon' => __( 'Parent Initial Character:', 'wppedia' ),
+			'edit_item'         => __( 'Edit Initial Character', 'wppedia' ),
+			'update_item'       => __( 'Update Initial Character', 'wppedia' ),
+			'add_new_item'      => __( 'Add New Initial Character', 'wppedia' ),
+			'new_item_name'     => __( 'New Initial Character Name', 'wppedia' ),
+			'menu_name'         => __( 'Initial Character', 'wppedia' ),
+		);
+
+		$rewrite = array(
+			'slug' => 'glossary',
+			'with_front' => false,
+			'hierarchical' => false,
+		);
+
+		$args = array(
+			'labels' => $labels,
+			'description' => __( '', 'wppedia' ),
+			'hierarchical' => false,
+			'public' => false,
+			'publicly_queryable' => true,
+			'show_ui' => false,
+			'show_in_menu' => false,
+			'show_in_nav_menus' => true,
+			'show_tagcloud' => false,
+			'show_in_quick_edit' => false,
+			'show_admin_column' => false,
+			'show_in_rest' => true,
+			'rewrite' => $rewrite
+		);
+		register_taxonomy( 'initialcharacter', array('wp_pedia_term'), $args );
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * Set and update the initial character fake taxonomy on save
+	 */
+	function manage_initial_character_onsave( int $post_ID, \WP_POST $post, bool $update ) {
+
+		$cur_initial = \wiki_utils()->post_initial_letter( $post_ID );
+		
+		// Create a new term based on the initial letter
+		wp_insert_term( 
+			$cur_initial, 
+			'initialcharacter', 
+			[
+				'slug' => $cur_initial
+			]
+		);
+
+		// Set post term for current post
+		wp_set_post_terms(
+			$post_ID,
+			[
+				$cur_initial
+			],
+			'initialcharacter',
+			false
+		);
+
+	}
 
 }
