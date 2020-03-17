@@ -12,7 +12,7 @@ namespace bf\wpPedia;
 defined( 'ABSPATH' ) or die();
 
 class controller {
-	
+
   /**
    * Static variable for instanciation
    */
@@ -20,6 +20,10 @@ class controller {
 
   /**
    * Get current Instance
+	 * 
+	 * @since 1.0.0
+	 * 
+	 * @return self
    */
   public static function getInstance() {
 
@@ -35,21 +39,28 @@ class controller {
   protected function __construct() {
   
 		add_filter( 'template_include', [ $this, 'template_include' ], 10 );
-		
-		add_action( 'init', [ $this, 'rewrite_initial_letter' ], 10 );
-    
+
 	}
 	
 	/**
 	 * Modify single view
+	 * 
+	 * @param string $template - the default template for the current view
+	 * 
+	 * @since 1.0.0
+	 * 
+	 * @return string - final Template to use
 	 */
 	function template_include( $template ) {
 
-		global $post;
-		$post_type = $post->post_type;
+		$post_type = wiki_utils()->is_wiki_post_type();
+
+		// Bail early if the current page is not a wiki page
+		if ( ! $post_type  )
+			return $template;
 
 		// Check for single view
-		if ( is_singular( $post_type ) ) {
+		if ( is_single() ) {
 
 			// Don't modify the template if specified in the current Theme
 			if ( locate_template(['single-' . $post_type . '.php']) )
@@ -71,7 +82,7 @@ class controller {
 		}
 
 		// Check for archive view
-		if ( is_archive( $post_type ) ) {
+		if ( is_archive() ) {
 
 			// Don't modify the template if specified in the current Theme
 			if ( locate_template(['archive-' . $post_type . '.php']) )
@@ -93,16 +104,6 @@ class controller {
 		}
 
     return $template;
-
-	}
-
-	static function rewrite_initial_letter() {
-
-		add_rewrite_rule(
-			'^properties/([0-9]+)/?',
-			'index.php?pagename=properties&property_id=$matches[1]',
-			'top'
-		);
 
 	}
 
