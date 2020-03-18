@@ -60,7 +60,7 @@ class controller {
 			return $template;
 
 		// Check for single view
-		if ( is_single() ) {
+		if ( is_singular('wp_pedia_term') ) {
 
 			// Don't modify the template if specified in the current Theme
 			if ( locate_template(['single-' . $post_type . '.php']) )
@@ -82,7 +82,7 @@ class controller {
 		}
 
 		// Check for archive view
-		if ( is_archive() ) {
+		if ( is_post_type_archive('wp_pedia_term') ) {
 
 			// Don't modify the template if specified in the current Theme
 			if ( locate_template(['archive-' . $post_type . '.php']) )

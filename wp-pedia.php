@@ -64,7 +64,7 @@ wiki_utils();
  * 
  * @since 1.0.0
  */
-bf\wpPedia\controller::getInstance();
+$wiki_controller = bf\wpPedia\controller::getInstance();
 
 /**
  * Instantiate Post Type
@@ -86,3 +86,10 @@ bf\wpPedia\adminView::getInstance();
  * @since 1.0.0
  */
 new bf\wpPedia\wikiContent();
+
+/**
+ * Load Template Tags
+ * 
+ * @since 1.0.0
+ */
+require_once wpPediaPluginDir . '/template-tags/template-tags.php';

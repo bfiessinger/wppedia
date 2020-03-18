@@ -95,7 +95,7 @@ class wikiPostType {
       'labels' => $labels,
       'menu_icon' => 'dashicons-book-alt',
       'supports' => array('title', 'editor', 'excerpt', 'revisions', 'author'),
-      'taxonomies' => array(),
+      'taxonomies' => array('initialcharacter'),
       'public' => true,
       'show_ui' => true,
       'show_in_menu' => true,
@@ -160,7 +160,7 @@ class wikiPostType {
 			'rewrite' => $rewrite
 		);
 		register_taxonomy( 'initialcharacter', array('wp_pedia_term'), $args );
-		flush_rewrite_rules();
+
 	}
 
 	/**

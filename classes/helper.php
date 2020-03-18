@@ -136,7 +136,32 @@ class helper {
 
     $initials = [
       // Default letters
-      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+			'a' => 'a',
+			'b' => 'b',
+			'c' => 'c', 
+			'd' => 'd', 
+			'e' => 'e', 
+			'f' => 'f', 
+			'g' => 'g', 
+			'h' => 'h', 
+			'i' => 'i', 
+			'j' => 'j', 
+			'k' => 'k', 
+			'l' => 'l', 
+			'm' => 'm', 
+			'n' => 'n', 
+			'o' => 'o', 
+			'p' => 'p', 
+			'q' => 'q', 
+			'r' => 'r', 
+			's' => 's', 
+			't' => 't', 
+			'u' => 'u', 
+			'v' => 'v', 
+			'w' => 'w', 
+			'x' => 'x', 
+			'y' => 'y', 
+			'z' => 'z'
     ];
 
     return $initials;
@@ -165,24 +190,36 @@ class helper {
    */
   public function get_wiki_initial_letters(array $args = []) {
 
+		// Default settings array
     $defaults = [
       'hide_empty' => true
 		];
 
+		// Build final settings array
     $settings = array_merge($defaults, $args);
 
-		$initial_char_terms = get_terms( array(
+		$available_initial_chars = [];
+
+		// Get available initial char terms
+		$initial_char_terms = get_terms( [
 			'taxonomy' => 'initialcharacter',
 			'hide_empty' => $settings['hide_empty'],
-		) );
+		] );
 
-		$available_initial_chars = array_unique( $initial_char_terms );
+		// Loop over all available terms and get their slugs and names
+		foreach ( $initial_char_terms as $wp_term ) {
+			$available_initial_chars[$wp_term->slug] = $wp_term->name;
+		}
+
+		$available_initial_chars = array_unique( $available_initial_chars );
 
 		if ( $settings['hide_empty'] !== false )
 			return $available_initial_chars;
 
-		$available_initial_chars = array_unique( array_merge( $available_initial_chars, $this->list_initial_letters() ) );
-		sort( $available_initial_chars );
+		$available_initial_chars = array_unique( array_replace( $available_initial_chars, $this->list_initial_letters() ) );
+
+		// Sort Array and keep indexes
+		asort( $available_initial_chars );
 
 		return $available_initial_chars;
 

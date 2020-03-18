@@ -14,19 +14,19 @@ defined( 'ABSPATH' ) or die();
 class wikiContent {
 
 	public $crosslink_activated = true;
-  public $prefer_single_words = false;
-  public $post_types = ['wp_pedia_term'];
+	public $prefer_single_words = false;
+	public $post_types = ['wp_pedia_term'];
 
-  public function __construct( bool $crosslink_activated = null, bool $prefer_single_words = null, array $post_types = null ) {
+	public function __construct( bool $crosslink_activated = null, bool $prefer_single_words = null, array $post_types = null ) {
 
-    if ( $prefer_single_words !== null )
-      $this->prefer_single_words = $prefer_single_words;
+		if ( $prefer_single_words !== null )
+			$this->prefer_single_words = $prefer_single_words;
 
-    if ( $post_types !== null )
-      $this->post_types = $post_types;
+		if ( $post_types !== null )
+			$this->post_types = $post_types;
 
 		if ( $this->crosslink_activated )
-    	add_filter( 'the_content', [$this, 'the_post_content_links'] );
+			add_filter( 'the_content', [$this, 'the_post_content_links'] );
 
   }
 
