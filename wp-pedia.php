@@ -26,27 +26,6 @@ if ( ! defined('wpPediaPluginUrl') )
 $loader = require "vendor/autoload.php";
 $loader->addPsr4('bf\\wpPedia\\', __DIR__);
 
-// DEV: scss compiler
-function dev_compile_scss($inputFile, $outputFile) {
-
-  $scss = new \ScssPhp\ScssPhp\Compiler();
-  $scss->setImportPaths( wpPediaPluginDir . '/assets/css/scss/' );
-  $scss->setFormatter('ScssPhp\ScssPhp\Formatter\Crunched');
-
-  $input = file_get_contents( $inputFile );
-  $compiled = $scss->compile( $input );
-
-  $outputHandle = fopen( $outputFile, 'w' ) or die('unable to open file!');
-  fwrite( $outputHandle, $compiled );
-  fclose( $outputHandle );
-
-}
-dev_compile_scss( 
-  wpPediaPluginDir . '/assets/css/scss/admin.scss', // Input 
-  wpPediaPluginDir . '/assets/css/admin.css' // Output
-);
-// DEV: scss compiler END
-
 /**
  * Instatiate Helper Utils
  * 
