@@ -26,6 +26,15 @@ if ( ! defined('wpPediaPluginUrl') )
 $loader = require "vendor/autoload.php";
 $loader->addPsr4('bf\\wpPedia\\', __DIR__);
 
+// DEV START
+function includestyles() {
+
+  wp_enqueue_style( 'wppedia', wpPediaPluginUrl . '/dist/css/style.css' );
+
+}
+add_action( 'wp_enqueue_scripts', 'includestyles' );
+// DEV END
+
 /**
  * Instatiate Helper Utils
  * 

@@ -34,10 +34,11 @@ module.exports = [
         filename: '[name].css',
         chunkFilename: '[id].css'
       }),
+      //require('autoprefixer')({}),
       new PurgecssPlugin({
         paths: PurgecssFiles,
         whitelist: [
-          ...purgecssHTMLTags.whitelist,						            // HTML Tags Whitelist
+          ...purgecssHTMLTags.whitelist,	// HTML Tags Whitelist
         ],
         whitelistPatterns: [],
         whitelistPatternsChildren: []

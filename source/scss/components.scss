@@ -1,0 +1,10 @@
+/**
+ * Glossary Navigation
+ */
+#glossary-char-navigation { background-color: #f5f5f5; 
+	> ul { display: flex; justify-content: center; padding: 15px;
+		> li { list-style: none; 
+			> a, > span { text-transform: uppercase; margin: 0px 15px; }
+		}
+ 	}
+}
