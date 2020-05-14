@@ -60,7 +60,7 @@ class adminView {
       'edit_posts', // Capability
       'wiki_settings', // Menu Slug
       [ $this, 'main_menu_cb' ], // Menu Callback
-      null, // Position
+      null // Position
     );
 
     // Print Admin Styles
