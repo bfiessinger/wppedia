@@ -15,12 +15,19 @@ get_header();
 
 <?php
 /**
- * wp_wiki_tpl_initial_nav hook
+ * wppedia_tpl_initial_nav hook
  *
- * @hooked wp_wiki_tpl_initial_nav -  10
+ * @hooked wppedia_tpl_initial_nav -  10
  *
  */
+do_action( 'wppedia_tpl_initial_nav' );
 
- do_action('wp_wiki_tpl_initial_nav');
+/**
+ * wppedia_tpl_list_entries hook
+ * 
+ * @hooked wppedia_tpl_list_entries - 10
+ * 
+ */
+do_action( 'wppedia_tpl_list_entries' );
 
 get_footer();
