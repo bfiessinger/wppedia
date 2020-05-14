@@ -235,7 +235,7 @@ class helper {
    * 
    * @return WP_Query custom query based on initial letters
    */
-  public function wp_query_all_initial_letters(array $args = [], int $letter = null) {
+  public function wp_query_all_initial_letters(array $args = [], string $letter = null) {
 
     $found_posts = [];
 

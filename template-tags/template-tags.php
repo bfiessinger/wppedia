@@ -66,30 +66,31 @@ add_action( 'wppedia_tpl_list_entries', 'wppedia_tpl_list_entries', 10 );
  */
 if ( ! function_exists( 'wppedia_tpl_list_entries_single_char' ) ) {
 
-	function wppedia_tpl_list_entries_single_char( $initial ) {
+	function wppedia_tpl_list_entries_single_char( $initial_letter ) {
 
-		$initial_query = wp_query_all_initial_letters( 
-			[
-				'posts_per_page' => -1
-			], 
-			$initial 
-		);
+		$initial_query = wiki_utils()->get_wiki_entries(['initial_letter' => $initial_letter]);
 
 		if ( $initial_query->have_posts() ):
 
 	?>
 
-		<span class="initial-letter"><?php echo $initial; ?></span>
+		<span class="initial-letter"><?php echo $initial_letter; ?></span>
 		<ul>
-			<?php while ( $initial_query->have_posts() ): the_post(); ?>
+			<?php while ( $initial_query->have_posts() ): $initial_query->the_post(); ?>
 				<li>
 					<a href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a>
 				</li>				
 			<?php endwhile; ?>
 		</ul>
-		<?php endif; ?>
 
-	<?php }
+	<?php
+			
+			// Restore original Postdata
+			wp_reset_postdata();
+
+		endif;
+
+	}
 
 }
 add_action( 'wppedia_tpl_list_entries_single_char', 'wppedia_tpl_list_entries_single_char', 10, 1 );
