@@ -147,7 +147,7 @@ class wikiContent {
 
     // Bail early if the current post is not a wiki entry
     if ( is_admin() || ! is_singular('wp_pedia_term') )
-      return;
+      return $content;
 
     return $this->the_content_linked( $content );
 
