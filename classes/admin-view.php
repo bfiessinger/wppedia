@@ -76,16 +76,16 @@ class adminView {
   public static function main_menu_cb() {
 
     // Admin Page wrapper start
-    wiki_utils()->get_partial('admin-wrap-start');
+    wppedia_template()->get_partial('admin-wrap-start');
 
     // Filter
-    wiki_utils()->get_partial('admin-filter');
+    wppedia_template()->get_partial('admin-filter');
 
     // Listing
-    wiki_utils()->get_partial('admin-listing');
+    wppedia_template()->get_partial('admin-listing');
 
     // Admin Page wrapper end
-    wiki_utils()->get_partial('admin-wrap-end');
+    wppedia_template()->get_partial('admin-wrap-end');
 
   }
 

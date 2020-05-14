@@ -40,12 +40,23 @@ add_action( 'wp_enqueue_scripts', 'includestyles' );
  * 
  * @since 1.0.0
  */
-function wiki_utils() {
+function wppedia_utils() {
 
 	return bf\wpPedia\helper::getInstance();
 
 }
-wiki_utils();
+wppedia_utils();
+
+/**
+ * Instantiate Template Utils
+ * 
+ * @since 1.0.0
+ */
+function wppedia_template() {
+
+	return bf\wpPedia\template::getInstance();
+
+}
 
 /**
  * Instantiate Controller
@@ -81,3 +92,10 @@ new bf\wpPedia\wikiContent();
  * @since 1.0.0
  */
 require_once wpPediaPluginDir . '/template-tags/template-tags.php';
+
+/**
+ * Public functions
+ * 
+ * @since 1.0.0
+ */
+require_once wpPediaPluginDir . '/inc/public-functions.php';
