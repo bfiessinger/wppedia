@@ -37,7 +37,8 @@ class controller {
   protected function __clone() {}
 
   protected function __construct() {
-  
+
+		// Include Custom Templates
 		add_filter( 'template_include', [ $this, 'template_include' ], 10 );
 
 	}

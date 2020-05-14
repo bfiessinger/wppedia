@@ -34,60 +34,16 @@ class helper {
 
   protected function __construct() {
   
-    add_filter( 'posts_where', [ $this, 'get_posts_by_initial_letter' ], 10, 2 );
+    add_filter( 'posts_where', [ $this, 'get_posts_where_initial_letter' ], 10, 2 );
     
   }
 
-  /**
-   * Get a specific View
-   * 
-   * @since 1.0.0
-   */
-  public function get_view(string $view, array $args = [], bool $display = true) {
-
-    $view_file = wpPediaPluginDir . '/views/view-' . $view . '.php';
-
-    if ( file_exists( $view_file ) ) {
-
-			if ( $display )
-				require_once $view_file;
-			else
-				return $view_file;
-
-		}
-
-		return false;
-
-  }
-
-  /**
-   * Get a partial view
-   * 
-   * @since 1.0.0
-   */
-  public function get_partial(string $partial, array $args = [], bool $display = true) {
-
-    $partial_file = wpPediaPluginDir . '/partials/partial-' . $partial . '.php';
-
-    if ( file_exists( $partial_file ) ) {
-
-			if ( $display )
-				require_once $partial_file;
-			else
-				return $partial_file;
-
-		}
-			
-		return false;
-
-  }
-  
   /**
    * Find posts beginning with a specific letter
    * 
    * @since 1.0.0 
    */
-  function get_posts_by_initial_letter( $where, \WP_Query $query ) {
+  function get_posts_where_initial_letter( $where, \WP_Query $query ) {
 
     $initial_letter = $query->get( 'initial_letter' );
 
@@ -97,7 +53,7 @@ class helper {
 
       $where .= " AND $wpdb->posts.post_title LIKE '$initial_letter%'";
 
-    }
+		}
 
     return $where;
 
