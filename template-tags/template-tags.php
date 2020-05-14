@@ -14,7 +14,7 @@ if ( ! function_exists( 'wppedia_tpl_initial_nav' ) ) {
 	<nav id="glossary-char-navigation">
 		<ul>
 
-		<?php foreach ( wiki_utils()->get_wiki_initial_letters(['hide_empty' => false]) as $slug => $initial ): ?>
+		<?php foreach ( wppedia_utils()->get_wiki_initial_letters(['hide_empty' => false]) as $slug => $initial ): ?>
 
 			<li>
 
@@ -49,7 +49,7 @@ if ( ! function_exists( 'wppedia_tpl_list_entries' ) ) {
 
 	function wppedia_tpl_list_entries() { ?>
 
-		<?php foreach ( wiki_utils()->get_wiki_initial_letters() as $initial ): ?>
+		<?php foreach ( wppedia_utils()->get_wiki_initial_letters() as $initial ): ?>
 
 			<?php do_action( 'wppedia_tpl_list_entries_single_char', $initial ); ?>
 
@@ -68,7 +68,7 @@ if ( ! function_exists( 'wppedia_tpl_list_entries_single_char' ) ) {
 
 	function wppedia_tpl_list_entries_single_char( $initial_letter ) {
 
-		$initial_query = wiki_utils()->get_wiki_entries(['initial_letter' => $initial_letter]);
+		$initial_query = wppedia_utils()->get_wiki_entries(['initial_letter' => $initial_letter]);
 
 		if ( $initial_query->have_posts() ):
 

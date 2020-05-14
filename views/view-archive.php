@@ -2,6 +2,8 @@
 
 get_header();
 
+get_wppedia_searchform();
+
 /**
  * wppedia_tpl_initial_nav hook
  *

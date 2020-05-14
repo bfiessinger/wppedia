@@ -38,7 +38,7 @@ class wikiContent {
   public function get_crosslink_posts() {
 
     // Query all available posts
-    $posts_query = wiki_utils()->get_wiki_entries([
+    $posts_query = wppedia_utils()->get_wiki_entries([
       'post_type'     => $this->post_types,
       'post_status'   => 'publish',
       'post__not_in'  => [get_the_ID()]

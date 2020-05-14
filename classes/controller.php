@@ -54,7 +54,7 @@ class controller {
 	 */
 	function template_include( $template ) {
 
-		$post_type = wiki_utils()->is_wiki_post_type();
+		$post_type = wppedia_utils()->is_wiki_post_type();
 
 		// Bail early if the current page is not a wiki page
 		if ( ! $post_type  )
@@ -70,7 +70,7 @@ class controller {
 			// Check for the single Template by Post type
 			if ( $post_type == 'wp_pedia_term' ) {
 
-				$single_template = wiki_utils()->get_view(
+				$single_template = wppedia_template()->get_view(
 					'single', 
 					[], 
 					false
@@ -92,7 +92,7 @@ class controller {
 			// Checkk for the archive Template by Post Type
 			if ( $post_type == 'wp_pedia_term' ) {
 
-				$archive_template = wiki_utils()->get_view(
+				$archive_template = wppedia_template()->get_view(
 					'archive', 
 					[], 
 					false

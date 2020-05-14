@@ -11,6 +11,27 @@ namespace bf\wpPedia;
 class template {
 
   /**
+   * Static variable for instanciation
+   */
+  protected static $instance = null;
+
+  /**
+   * Get current Instance
+   */
+  public static function getInstance() {
+
+    if ( null === self::$instance ) {
+      self::$instance = new self;
+    }
+    return self::$instance;
+
+  }
+
+  protected function __clone() {}
+
+	protected function __construct() {}
+	
+  /**
    * Get a specific View
    * 
    * @since 1.0.0
@@ -61,7 +82,7 @@ class template {
 	 * 
 	 * @since 1.0.0
 	 */
-	public function get_wppedia_searchform() {
+	public function get_searchform() {
 
 		// Don't modify the template if specified in the current Theme
 		if ( locate_template(['searchform-wppedia.php']) ) {
@@ -72,7 +93,7 @@ class template {
 		}
 
 		// print searchform
-		get_partial( 'searchform' );		
+		$this->get_partial( 'searchform' );		
 
 	}
 	

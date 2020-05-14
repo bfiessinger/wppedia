@@ -168,7 +168,7 @@ class wikiPostType {
 	 */
 	function manage_initial_character_onsave( int $post_ID, \WP_POST $post, bool $update ) {
 
-		$cur_initial = \wiki_utils()->post_initial_letter( $post_ID );
+		$cur_initial = \wppedia_utils()->post_initial_letter( $post_ID );
 		
 		// Create a new term based on the initial letter
 		wp_insert_term( 
