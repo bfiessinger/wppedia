@@ -83,7 +83,7 @@ class controller {
 		}
 
 		// Check for archive view
-		if ( is_post_type_archive('wp_pedia_term') ) {
+		if ( ( is_tax('initialcharacter') || is_post_type_archive('wp_pedia_term') ) && ! is_search() ) {
 
 			// Don't modify the template if specified in the current Theme
 			if ( locate_template(['archive-' . $post_type . '.php']) )
