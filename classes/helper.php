@@ -181,6 +181,27 @@ class helper {
 
 	}
 
+	/**
+	 * Get initial letters available for the current view
+	 * 
+	 * @since 1.0.0
+	 */
+	function get_current_initial_letters() {
+
+		$show = $this->get_wiki_initial_letters();
+
+		if ( is_tax('initialcharacter') ) {
+
+			$show = [
+				get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') )->name
+			];
+			
+		}
+
+		return $show;
+
+	}
+
   /**
    * Query by initial letters
    * 
