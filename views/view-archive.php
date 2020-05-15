@@ -8,15 +8,12 @@ get_header();
   <section id="main" role="main" itemscope="" itemprop="mainContentOfPage" itemtype="https://schema.org/WebPageElement">
     <div class="contentwrap">
       
-      <header>
+      <header class="glossary-header">
 				<h1><?php echo __('Glossary', 'messring'); ?></h1>
-				<?php get_search_form();?>
+        <?php get_wppedia_searchform(); ?>
       </header>
 
-
-
 <?php
-get_wppedia_searchform();
 
 /**
  * wppedia_tpl_initial_nav hook
