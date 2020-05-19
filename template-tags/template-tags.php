@@ -23,7 +23,7 @@ if ( ! function_exists( 'wppedia_tpl_initial_nav' ) ) {
 				$initial_term = get_term_by( 'slug', $slug, 'initialcharacter' );
 			?>
 
-				<a href="<?php echo get_post_type_archive_link('wp_pedia_term') . $slug . '/'; ?>" title="<?php echo sprintf(__('Glossary terms with initial character „%s“ (%d)', 'wppedia'), $initial, $initial_term->count); ?>"><?php echo $initial; ?></a>		
+				<a href="<?php echo get_post_type_archive_link('wp_pedia_term') . '#glossary-initial-' . strtoupper( \rawurlencode( $initial ) ); ?>" title="<?php echo sprintf(__('Glossary terms with initial character „%s“ (%d)', 'wppedia'), $initial, $initial_term->count); ?>"><?php echo $initial; ?></a>		
 				<?php else: /* Term does not exist */ ?>
 				<span><?php echo $initial; ?></span>
 
@@ -49,11 +49,15 @@ if ( ! function_exists( 'wppedia_tpl_list_entries' ) ) {
 
 	function wppedia_tpl_list_entries() { ?>
 
+	<div class="wppedia-entries">
+
 		<?php foreach ( wppedia_utils()->get_current_initial_letters() as $initial ): ?>
 
 			<?php do_action( 'wppedia_tpl_list_entries_single_char', $initial ); ?>
 
 		<?php endforeach; ?>
+
+	</div>
 
 	<?php }
 
@@ -74,14 +78,16 @@ if ( ! function_exists( 'wppedia_tpl_list_entries_single_char' ) ) {
 
 	?>
 
+	<div id="glossary-initial-<?php echo strtoupper( \rawurlencode( $initial_letter ) ); ?>">
 		<span class="initial-letter"><?php echo $initial_letter; ?></span>
-		<ul>
+		<ul class="initial-letter-listing">
 			<?php while ( $initial_query->have_posts() ): $initial_query->the_post(); ?>
 				<li>
 					<a href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a>
 				</li>				
 			<?php endwhile; ?>
 		</ul>
+	</div>
 
 	<?php
 			

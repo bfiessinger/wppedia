@@ -35,24 +35,26 @@ class wikiPostType {
   protected function __construct() {
 
 		// Create Post type
-		add_action( 'init', [$this, 'register_wiki_post_type'] );
+		add_action( 'init', [ $this, 'register_wiki_post_type' ] );
 
 		// Create Fake Taxonomy to query by initial letter
-		add_action( 'init', [$this, 'create_initialcharacter_tax'] );
+		add_action( 'init', [ $this, 'create_initialcharacter_tax' ] );
 
 		// Set Initial Letter Taxonomy on post save
-		add_action( 'save_post_wp_pedia_term', [$this, 'manage_initial_character_onsave'], 10, 3 );
+		add_action( 'save_post_wp_pedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
 
   }
 
   /**
    * Register Wiki Custom Post type
    * 
+	 * @uses register_post_type
+	 * 
    * @since 1.0.0
    */
   public static function register_wiki_post_type() {
 
-    $labels = array(
+    $labels = [
       'name' => _x( 'wpPedia Entries', 'Post Type General Name', 'wppedia' ),
       'singular_name' => _x( 'wpPedia Entry', 'Post Type Singular Name', 'wppedia' ),
       'menu_name' => _x( 'wpPedia Entries', 'Admin Menu text', 'wppedia' ),
@@ -80,16 +82,16 @@ class wikiPostType {
       'items_list' => __( 'wpPedia Entries list', 'wppedia' ),
       'items_list_navigation' => __( 'wpPedia Entries list navigation', 'wppedia' ),
       'filter_items_list' => __( 'Filter wpPedia Entries list', 'wppedia' ),
-    );
+		];
 
-    $rewrite = array(
+    $rewrite = [
       'slug' => 'glossary/term',
       'with_front' => false,
       'pages' => true,
       'feeds' => true,
-    );
+		];
 
-    $args = array(
+    $args = [
       'label' => __( 'wpPedia Entry', 'wppedia' ),
       'description' => __( '', 'wppedia' ),
       'labels' => $labels,
@@ -110,9 +112,9 @@ class wikiPostType {
 			'capability_type' => 'post',
 			'has_archive' => 'glossary',
       'rewrite' => $rewrite
-    );
+		];
 
-    register_post_type( 'wp_pedia_term', $args );
+    \register_post_type( 'wp_pedia_term', $args );
 
 	}
 
@@ -120,11 +122,13 @@ class wikiPostType {
 	 * Register a fake Taxonomy for initial letters
 	 * used to query glossary terms by initial letter
 	 * 
+	 * @uses register_taxonomy
+	 * 
 	 * @since 1.0.0
 	 */
 	function create_initialcharacter_tax() {
 
-		$labels = array(
+		$labels = [
 			'name'              => _x( 'Initial Characters', 'taxonomy general name', 'wppedia' ),
 			'singular_name'     => _x( 'Initial Character', 'taxonomy singular name', 'wppedia' ),
 			'search_items'      => __( 'Search Initial Characters', 'wppedia' ),
@@ -136,58 +140,83 @@ class wikiPostType {
 			'add_new_item'      => __( 'Add New Initial Character', 'wppedia' ),
 			'new_item_name'     => __( 'New Initial Character Name', 'wppedia' ),
 			'menu_name'         => __( 'Initial Character', 'wppedia' ),
-		);
+		];
 
-		$rewrite = array(
+		$rewrite = [
 			'slug' => 'glossary',
 			'with_front' => false,
 			'hierarchical' => false,
-		);
+		];
 
-		$args = array(
+		$args = [
 			'labels' => $labels,
 			'description' => __( '', 'wppedia' ),
 			'hierarchical' => false,
 			'public' => false,
 			'publicly_queryable' => true,
-			'show_ui' => false,
-			'show_in_menu' => false,
+			'show_ui' => true,
+			'show_in_menu' => true,
 			'show_in_nav_menus' => true,
 			'show_tagcloud' => false,
 			'show_in_quick_edit' => false,
 			'show_admin_column' => false,
 			'show_in_rest' => true,
 			'rewrite' => $rewrite
-		);
-		register_taxonomy( 'initialcharacter', array('wp_pedia_term'), $args );
+		];
+
+		\register_taxonomy( 'initialcharacter', [ 'wp_pedia_term' ], $args );
 
 	}
 
 	/**
 	 * Set and update the initial character fake taxonomy on save
+	 * 
+	 * @uses wp_insert_term
+	 * @uses get_terms
+	 * @uses wp_delete_term
+	 * 
+	 * @since 1.0.0
 	 */
 	function manage_initial_character_onsave( int $post_ID, \WP_POST $post, bool $update ) {
 
 		$cur_initial = \wppedia_utils()->post_initial_letter( $post_ID );
+
+		$taxonomy = 'initialcharacter';
+		$cur_initial_encoded = \rawurlencode( $cur_initial );
 		
 		// Create a new term based on the initial letter
-		wp_insert_term( 
+		\wp_insert_term( 
 			$cur_initial, 
-			'initialcharacter', 
+			$taxonomy, 
 			[
-				'slug' => $cur_initial
+				'slug' => $cur_initial_encoded
 			]
 		);
 
 		// Set post term for current post
-		wp_set_post_terms(
+		\wp_set_post_terms(
 			$post_ID,
 			[
-				$cur_initial
+				$cur_initial_encoded
 			],
-			'initialcharacter',
+			$taxonomy,
 			false
 		);
+
+		// Delete empty taxonomy terms
+		$all_terms = \get_terms( [
+			'taxonomy' 		=> $taxonomy,
+			'hide_empty' 	=> false
+		] );
+
+		foreach( $all_terms as $term ) {
+
+			$term_count = $term->count;
+
+			if ( $term_count < 1 )
+				\wp_delete_term( $term->term_id, $taxonomy );
+			
+		}
 
 	}
 

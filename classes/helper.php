@@ -13,6 +13,11 @@ defined( 'ABSPATH' ) or die();
 
 class helper {
 
+	/**
+	 * Use all special chars or turn them into hashtags
+	 */
+	protected $use_special_chars = false;
+
   /**
    * Static variable for instanciation
    */
@@ -32,32 +37,7 @@ class helper {
 
   protected function __clone() {}
 
-  protected function __construct() {
-  
-    add_filter( 'posts_where', [ $this, 'get_posts_where_initial_letter' ], 10, 2 );
-    
-  }
-
-  /**
-   * Find posts beginning with a specific letter
-   * 
-   * @since 1.0.0 
-   */
-  function get_posts_where_initial_letter( $where, \WP_Query $query ) {
-
-    $initial_letter = $query->get( 'initial_letter' );
-
-    if ( $initial_letter ) {
-
-      global $wpdb;
-
-      $where .= " AND $wpdb->posts.post_title LIKE '$initial_letter%'";
-
-		}
-
-    return $where;
-
-  }
+  protected function __construct() {}
 
   /**
    * Get Wiki Entries
@@ -133,7 +113,13 @@ class helper {
 	 */
 	function post_initial_letter( $post ) {
 
-		return strtolower( substr( get_the_title( $post ), 0, 1 ) );
+		$post_initial_letter = substr( get_the_title( $post ), 0, 1 );
+
+		if ( $this->use_special_chars !== true && ! in_array( $post_initial_letter, $this->list_initial_letters() )  ) {
+			$post_initial_letter = '#';
+		}
+
+		return strtolower( $post_initial_letter );
 
 	}
 
@@ -148,7 +134,7 @@ class helper {
 
 		// Default settings array
     $defaults = [
-      'hide_empty' => true
+			'hide_empty' => true
 		];
 
 		// Build final settings array

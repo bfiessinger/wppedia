@@ -4,8 +4,9 @@
 .glossary-header { display: flex; justify-content: space-between; align-items: flex-start; }
 
 // Search Header
-.wppedia-search { border: 1px solid #595959;
+.search-form.wppedia-search { border: 1px solid #595959;
 	.search-field { font-size: 15px; padding: 20px 40px 20px 20px; min-width: 350px; }
+	.search-submit { height: 100%; width: 45px; background-color: #db012f; background-position: center; }
 }
 
 /**
@@ -22,11 +23,10 @@
 /**
  * Glossary List
  */
-.initial-letter { text-transform: uppercase; color: #db012f; font-size: 20px; }
-
-.contentwrap { 
-	#glossary-char-navigation a, ul a { color: #595959; 
-		&:hover { color: #db012f; }
-	}
-	> ul { column-count: 3; column-gap: 2rem; margin: 1rem 0; }
+#glossary-char-navigation a, ul a { color: #595959; 
+	&:hover { color: #db012f; }
+}
+.wppedia-entries {
+	.initial-letter { text-transform: uppercase; color: #db012f; font-size: 20px; }
+	.initial-letter-listing { column-count: 3; column-gap: 2rem; margin: 1rem 0; }
 }
