@@ -53,18 +53,18 @@ class adminView {
   function add_wiki_admin_pages() {
 
     // Create the top level admin-page for Glossary Entries
-    $wiki_main_page = add_submenu_page(
+    $wiki_settings_page = add_submenu_page(
       'edit.php?post_type=wp_pedia_term',
       __('Wiki Settings', 'wppedia'), // Page Title
       __('Wiki Settings', 'wppedia'), // Menu Title
       'edit_posts', // Capability
       'wiki_settings', // Menu Slug
-      [ $this, 'main_menu_cb' ], // Menu Callback
+      [ $this, 'wiki_settings_page_cb' ], // Menu Callback
       null // Position
     );
 
     // Print Admin Styles
-    add_action( 'admin_print_styles-' . $wiki_main_page, [$this, 'add_admin_stylesheets'] );
+    add_action( 'admin_print_styles-' . $wiki_settings_page, [$this, 'add_admin_stylesheets'] );
 
   }
 
@@ -73,16 +73,12 @@ class adminView {
    * 
    * @since 1.0.0
    */
-  public static function main_menu_cb() {
+  public static function wiki_settings_page_cb() {
 
     // Admin Page wrapper start
     wppedia_template()->get_partial('admin-wrap-start');
 
-    // Filter
-    wppedia_template()->get_partial('admin-filter');
-
-    // Listing
-    wppedia_template()->get_partial('admin-listing');
+		echo '<h1>Test</h1>';
 
     // Admin Page wrapper end
     wppedia_template()->get_partial('admin-wrap-end');
