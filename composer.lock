@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "670b2dc72ab100cac6357820dd406728",
+    "content-hash": "137ce3cfbcb826ca59bd0c7f54eee5cb",
     "packages": [
         {
             "name": "cmb2/cmb2",
@@ -58,6 +58,59 @@
                 "wordpress"
             ],
             "time": "2020-01-21T17:49:50+00:00"
+        },
+        {
+            "name": "polupraneeth/cmb2-extension",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/polupraneeth/cmb2-extension.git",
+                "reference": "fead0a0fcc8897387b92c96e444de6f5f0ce1a4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/polupraneeth/cmb2-extension/zipball/fead0a0fcc8897387b92c96e444de6f5f0ce1a4b",
+                "reference": "fead0a0fcc8897387b92c96e444de6f5f0ce1a4b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">5.2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Praneeth Polu",
+                    "email": "contact@polupraneeth.me",
+                    "homepage": "https://github.com/polupraneeth/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Team StackAdriot",
+                    "email": "contact@stackadroit.com",
+                    "homepage": "https://github.com/stackadroit",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This is a CMB2 Extension repository which help modify the default behavior of CMB2 and extends it's functionality.",
+            "homepage": "https://github.com/polupraneeth/cmb2-extension",
+            "keywords": [
+                "CMB2",
+                "cmb2-extension",
+                "metabox",
+                "plugin",
+                "wordpress"
+            ],
+            "time": "2020-06-04T04:22:13+00:00"
         }
     ],
     "packages-dev": [],

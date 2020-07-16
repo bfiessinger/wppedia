@@ -33,9 +33,12 @@ class admin {
   protected function __clone() {}
 
   protected function __construct() {
-    
+		
+		// Hacky solution to allow custom hooks for cmb2-extension
+		define( 'CMB_EXTENSIONS_ASSETS_ADDITIONAL_HOOKS', [ 'wp_pedia_term_page_wppedia_settings_general' ] );
+
     // Setup Admin Pages
-    add_action( 'admin_menu', [ $this, 'add_wiki_admin_pages' ] );
+    add_action( 'cmb2_admin_init', [ $this, 'add_wiki_admin_pages' ] );
 
     // Sort Wiki Entries in wp_admin
     add_action( 'pre_get_posts', [ $this, 'default_wiki_entries_orderby' ] );
@@ -52,50 +55,31 @@ class admin {
    */
   function add_wiki_admin_pages() {
 
-    // Create the top level admin-page for Glossary Entries
-    $wiki_settings_page = add_submenu_page(
-      'edit.php?post_type=wp_pedia_term',
-      __('Wiki Settings', 'wppedia'), // Page Title
-      __('Wiki Settings', 'wppedia'), // Menu Title
-      'edit_posts', // Capability
-      'wiki_settings', // Menu Slug
-      [ $this, 'wiki_settings_page_cb' ], // Menu Callback
-      null // Position
-    );
+		$settings_general_page = 'wppedia_settings_general';
 
-    // Print Admin Styles
-    add_action( 'admin_print_styles-' . $wiki_settings_page, [$this, 'add_admin_stylesheets'] );
+		// Create the admin-page for Glossary Settings
+    $wiki_settings_page = new_cmb2_box( [
+			'id'           		=> 'wppedia_page_settings_general',
+			'title'						=> __('Wiki Settings', 'wppedia'),
+			'object_types'		=> [ 'options-page' ],
+			'option_key'			=> $settings_general_page,
+      'parent_slug'			=> 'edit.php?post_type=wp_pedia_term',
+      'capability'			=> 'manage_options',
+			'position'				=> null,
+			'tab_style' 			=> 'default',
+			'tabs' 						=> [
+				'content' => [
+					'label' => __('Content', 'wppedia'),
+					'icon' 	=> 'dashicons-text-page', // Dashicon
+				],
+				'style' => [
+					'label' => __('CSS & JavaScript', 'wppedia'),
+					'icon' 	=> 'dashicons-admin-customizer', // Dashicon
+				],
+			],
+		] );
 
-  }
-
-  /**
-   * Callback function for Glossary entry listing page
-   * 
-   * @since 1.0.0
-   */
-  public static function wiki_settings_page_cb() {
-
-    // Admin Page wrapper start
-    wppedia_template()->get_partial('admin-wrap-start');
-
-		echo '<h1>Test</h1>';
-
-    // Admin Page wrapper end
-    wppedia_template()->get_partial('admin-wrap-end');
-
-  }
-
-  /**
-   * Print Admin Styles
-   * 
-   * @since 1.0.0
-   */
-  function add_admin_stylesheets() {
-
-    wp_register_style( 'wp-wiki_admin_css', wpPediaPluginUrl . '/assets/css/admin.css', false, '1.0.0' );
-    wp_enqueue_style( 'wp-wiki_admin_css' );
-
-  }
+	}
 
   /**
    * Set default sorting for WP List Table on wiki entries
