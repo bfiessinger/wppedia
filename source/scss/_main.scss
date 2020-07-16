@@ -4,7 +4,8 @@
  * Tailwind Utility CSS Framework
  * @link https://tailwindcss.com/
  */
-@import '../../node_modules/tailwindcss/tailwind';
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 /**
  * Theme Options
