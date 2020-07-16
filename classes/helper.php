@@ -113,7 +113,7 @@ class helper {
 	 */
 	function post_initial_letter( $post ) {
 
-		$post_initial_letter = substr( get_the_title( $post ), 0, 1 );
+		$post_initial_letter = \strtolower( substr( get_the_title( $post ), 0, 1 ) );
 
 		if ( $this->use_special_chars !== true && ! in_array( $post_initial_letter, $this->list_initial_letters() )  ) {
 			$post_initial_letter = '#';
