@@ -11,7 +11,7 @@ namespace bf\wpPedia;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class adminView {
+class admin {
 
   /**
    * Static variable for instanciation
