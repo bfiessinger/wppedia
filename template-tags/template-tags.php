@@ -12,7 +12,7 @@ if ( ! function_exists( 'wppedia_tpl_initial_nav' ) ) {
   function wppedia_tpl_initial_nav() { ?>
 
 	<nav id="glossary-char-navigation">
-		<ul>
+		<ul class="flex justify-center">
 
 		<?php foreach ( wppedia_utils()->get_wiki_initial_letters(['hide_empty' => false]) as $slug => $initial ): ?>
 
