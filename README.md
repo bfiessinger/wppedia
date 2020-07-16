@@ -7,4 +7,6 @@ With WPPedia you can setup a Glossary on your WordPress with ease. Just install 
 **Currently WIP**
 
 ## Sponsors
-[![SteinRein](https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/steinrein-logo.svg?sanitize=true)](https://www.steinrein.com/)
+<a href="https://www.steinrein.com/" target="_blank">
+	<img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/steinrein-logo.svg?sanitize=true" alt="SteinRein" width="150">
+</a>
