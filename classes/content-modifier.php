@@ -15,15 +15,22 @@ class wikiContent {
 
 	public $crosslink_activated = true;
 	public $prefer_single_words = false;
+	public $require_full_words = true;
 	public $post_types = ['wp_pedia_term'];
 
-	public function __construct( bool $crosslink_activated = null, bool $prefer_single_words = null, array $post_types = null ) {
+	public function __construct( bool $crosslink_activated = null, bool $prefer_single_words = null, bool $require_full_words = null, array $post_types = null ) {
 
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;
 
 		if ( $post_types !== null )
 			$this->post_types = $post_types;
+
+		if ( $require_full_words !== null )
+			$this->require_full_words = $require_full_words;
+
+		if ( $crosslink_activated !== null )
+			$this->crosslink_activated = $crosslink_activated;
 
 		if ( $this->crosslink_activated )
 			add_filter( 'the_content', [$this, 'the_post_content_links'] );
@@ -124,7 +131,9 @@ class wikiContent {
       // Check if a title exists in the current posts content
       if ( stripos( $content, $post->title ) !== false ) {
 
-        $link_phrase = $this->prepare_link_phrase( $post->title );
+				$link_phrase = $this->prepare_link_phrase( $post->title );
+				if ( $this->require_full_words )
+					$link_phrase = "\s$link_phrase\s";
 
         $post_title_link = get_permalink( $post->ID );
         $content = preg_replace( '/' . $replace_regex . '(' . $link_phrase . ')/' . $regex_flags, '<a href="' . $post_title_link . '" title="$1" class="wppedia-crosslink">$1</a>', $content );
