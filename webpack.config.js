@@ -4,6 +4,9 @@ const glob = require('glob-all');
 // Plugins
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
+const CssoWebpackPlugin = require('csso-webpack-plugin').default;
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 // PurgeCss Whitelists
 const purgecssHTMLTags = require('purgecss-whitelist-htmltags');
@@ -28,15 +31,38 @@ module.exports = [
     output: {
       path: path.resolve(__dirname, 'dist/css'),
       filename: '[name].bundle.js'
-    },
+		},
+		optimization: {
+			minimize: true,
+			minimizer: [
+				new TerserJSPlugin({
+					sourceMap: true,
+					terserOptions: {
+						output: {
+							comments: false,
+						},
+					},
+					extractComments: false,
+				}), 
+				new OptimizeCSSAssetsPlugin({})
+			],
+		},
     plugins: [
       new MiniCssExtractPlugin({
         filename: '[name].css',
         chunkFilename: '[id].css'
+			}),
+      new CssoWebpackPlugin({
+        pluginOutputPostfix: 'min'
       }),
-      //require('autoprefixer')({}),
       new PurgecssPlugin({
-        paths: PurgecssFiles,
+				paths: PurgecssFiles,
+        extractors: [
+          {
+            extractor: content => content.match(/[A-z0-9-:\/]+/g) || [],
+            extensions: ['js', 'ts', 'php']
+          }
+        ],
         whitelist: [
           ...purgecssHTMLTags.whitelist,	// HTML Tags Whitelist
         ],
@@ -46,6 +72,33 @@ module.exports = [
     ],
     module: {
       rules: [
+        {
+          test: /\.(png|jpg|jpeg|gif|ico)$/,
+          use: [
+						{
+							loader: 'file-loader',
+							options: {
+								name: '[name].[ext]',
+								outputPath: 'images'
+							}
+						}
+					],
+				},
+				{
+					test: /\.svgz?$/,
+					use: [
+						{
+							loader: 'file-loader',
+							options: {
+								name: '[name].[ext]',
+								outputPath: 'images'
+							}
+						},
+						{
+							loader: 'svgo-loader'
+						}
+					],
+				},
         {
           test: /\.(pc|sa|sc|c)ss$/,
           use: [
