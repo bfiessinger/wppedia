@@ -1,8 +1,8 @@
 # WPPedia - The WordPress Wiki Solution
 
-<div style="background-color: rgba(255,0,0,0.3); border-bottom: 2px solid #f00; display: inline-block; padding: .5rem 1rem; max-width: 100%; text-align: center; font-weight: bold; color: #FFF;">
+***
 Currently Work in Progress! Do not use this plugin in production!
-</div>
+***
 
 > Be your own WikiPedia!
 
