@@ -26,15 +26,6 @@ if ( ! defined('wpPediaPluginUrl') )
 $loader = require "vendor/autoload.php";
 $loader->addPsr4('bf\\wpPedia\\', __DIR__);
 
-// DEV START
-function includestyles() {
-
-	wp_enqueue_style( 'wppedia', wpPediaPluginUrl . '/dist/css/style.min.css' );
-
-}
-add_action( 'wp_enqueue_scripts', 'includestyles' );
-// DEV END
-
 /**
  * Instatiate Helper Utils
  * 
@@ -93,6 +84,13 @@ new bf\wpPedia\wikiContent();
  * @since 1.0.0
  */
 require_once wpPediaPluginDir . '/template-tags/template-tags.php';
+
+/**
+ * Enqueue Assets
+ * 
+ * @since 1.0.0
+ */
+require_once wpPediaPluginDir . 'inc/assets.php';
 
 /**
  * Public functions
