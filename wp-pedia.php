@@ -45,7 +45,6 @@ function wppedia_utils() {
 	return bf\wpPedia\helper::getInstance();
 
 }
-wppedia_utils();
 
 /**
  * Instantiate Template Utils
