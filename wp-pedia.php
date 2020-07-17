@@ -66,20 +66,20 @@ function wppedia_template() {
 $wiki_controller = bf\wpPedia\controller::getInstance();
 
 /**
- * Instantiate Post Type
- * Generates the WPPedia Post type and related taxonomies
- * 
- * @since 1.0.0
- */
-bf\wpPedia\wikiPostType::getInstance();
-
-/**
  * Instatiate Admin View
  * Used for Settings and other Admin Pages
  * 
  * @since 1.0.0
  */
 bf\wpPedia\admin::getInstance();
+
+/**
+ * Instantiate Post Type
+ * Generates the WPPedia Post type and related taxonomies
+ * 
+ * @since 1.0.0
+ */
+bf\wpPedia\wikiPostType::getInstance();
 
 /**
  * Modify Wiki Content
