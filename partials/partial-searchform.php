@@ -6,7 +6,7 @@
 ?> 
 
 <form role="search" method="get" class="search-form wppedia-search" action="<?php echo $searchUrl ?>">
-  <label class="search-label screen-reader-text"><?php _e('Search glossary', 'wppedia'); ?></label>
+  <label class="screen-reader-text"><?php _e('Search glossary', 'wppedia'); ?></label>
   <input type="search" class="search-field" placeholder="<?php _e('Search glossary', 'wppedia'); ?>" value="<?php echo get_search_query() ?>" name="s" title="<?php _e('Search for', 'wppedia'); ?>:" />
   <input type="hidden" name="post_type" value="<?php echo $post_type; ?>" />
 	<input type="submit" class="search-submit" value="Search" />
