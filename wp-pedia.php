@@ -20,7 +20,7 @@ if ( ! defined('wpPediaPluginDir') )
   define('wpPediaPluginDir', plugin_dir_path(__FILE__));
 
 if ( ! defined('wpPediaPluginUrl') )
-  define('wpPediaPluginUrl', plugin_dir_url(__FILE__));
+	define('wpPediaPluginUrl', plugin_dir_url(__FILE__));
 
 // psr4 Autoloader
 $loader = require "vendor/autoload.php";
@@ -98,3 +98,8 @@ require_once wpPediaPluginDir . 'inc/assets.php';
  * @since 1.0.0
  */
 require_once wpPediaPluginDir . '/inc/public-functions.php';
+
+register_activation_hook( __FILE__, 'wppedia_activation_deactivation_hook' );
+function wppedia_activation_deactivation_hook() {
+	flush_rewrite_rules();
+}
