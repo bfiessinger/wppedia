@@ -85,7 +85,7 @@ class wikiPostType {
 		];
 
     $rewrite = [
-      'slug' => 'glossary/term',
+      'slug' => ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . ltrim( rtrim( get_option( 'wppedia_permalink_term_base', 'glossary' ), '/' ), '/' ),
       'with_front' => false,
       'pages' => true,
       'feeds' => true,
@@ -110,7 +110,7 @@ class wikiPostType {
       'show_in_rest' => true,
       'publicly_queryable' => true,
 			'capability_type' => 'post',
-			'has_archive' => 'glossary',
+			'has_archive' => ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ),
       'rewrite' => $rewrite
 		];
 
