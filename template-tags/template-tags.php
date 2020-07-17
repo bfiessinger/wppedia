@@ -81,10 +81,10 @@ if ( ! function_exists( 'wppedia_tpl_list_entries_single_char' ) ) {
 	<div class="w-full lg:w-3/12 md:w-4/12 sm:w-6/12 m-4" id="glossary-initial-<?php echo strtoupper( \rawurlencode( $initial_letter ) ); ?>">
 		<span class="initial-letter text-primary"><?php echo $initial_letter; ?></span>
 		<ul class="initial-letter-listing list-none p-0">
-			<?php while ( $initial_query->have_posts() ): $initial_query->the_post(); ?>
+			<?php while ( $initial_query->have_posts() ):	$initial_query->the_post(); ?>
 				<li>
 					<a class="text-black" href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a>
-				</li>				
+				</li>
 			<?php endwhile; ?>
 		</ul>
 	</div>
