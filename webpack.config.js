@@ -22,6 +22,41 @@ const PurgecssFiles = glob.sync([
 ]);
 
 module.exports = [
+	// Compile Javascript
+	/*
+	{
+		mode: 'production',
+		entry: {
+			none: './source/js/none.js'
+		},
+		optimization: {
+			minimize: true,
+			minimizer: [
+				new TerserJSPlugin({
+					sourceMap: true,
+					terserOptions: {
+						output: {
+							comments: false,
+						},
+					},
+					extractComments: false,
+				})
+			],
+		},
+		output: {
+			path: path.resolve(__dirname, 'dist/js'),
+			filename: '[name].bundle.js'
+		},
+		module: {
+			rules: [
+				{
+					test: /\.(jsx?)$/,
+					exclude: /node_modules/,
+					use: ['babel-loader']
+				},
+			]
+		}
+	},*/
   // Compile CSS
   {
     mode: 'production',
