@@ -76,7 +76,7 @@ bf\wpPedia\wikiPostType::getInstance();
  * 
  * @since 1.0.0
  */
-new bf\wpPedia\wikiContent();
+new bf\wpPedia\crosslinks();
 
 /**
  * Load Template Tags

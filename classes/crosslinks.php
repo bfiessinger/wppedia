@@ -11,7 +11,7 @@ namespace bf\wpPedia;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class wikiContent {
+class crosslinks {
 
 	public $crosslink_activated = true;
 	public $prefer_single_words = false;

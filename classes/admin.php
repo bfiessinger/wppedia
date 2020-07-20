@@ -21,7 +21,7 @@ class admin {
 	/**
 	 * Public Variables
 	 */
-	public $settings_general_page = 'wppedia_settings_general';
+	public static $settings_general_page = 'wppedia_settings_general';
 
   /**
    * Get current Instance

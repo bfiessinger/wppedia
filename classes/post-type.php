@@ -8,6 +8,8 @@
 
 namespace bf\wpPedia;
 
+use bf\wpPedia\admin;
+
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
@@ -110,9 +112,12 @@ class wikiPostType {
       'show_in_rest' => true,
       'publicly_queryable' => true,
 			'capability_type' => 'post',
-			'has_archive' => ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ),
+			'has_archive' => false,
       'rewrite' => $rewrite
 		];
+
+		if ( FALSE === wppedia_utils()->get_option( admin::settings_general_page, 'wppedia_archive_page' ) )
+			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
     \register_post_type( 'wp_pedia_term', $args );
 
