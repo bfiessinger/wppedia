@@ -235,6 +235,23 @@ class helper {
     return $final_query;
 
 	}
+
+	/**
+	 * Determine if a static page is used for the wpPedia front page
+	 * 
+	 * @since 1.0.0
+	 * 
+	 * @return boolean|int Returns false if a cpt archive is used or the post ID of the static page
+	 */
+	public function has_static_archive_page() {
+
+		if ( FALSE === $this->get_option( admin::$settings_general_page, 'wppedia_archive_page' ) ) {
+			return false;
+		}
+
+		return $this->get_option( admin::$settings_general_page, 'wppedia_archive_page' );
+
+	}
 	
 	/**
 	 * Determine if the currently viewed page is a wiki page
@@ -245,7 +262,7 @@ class helper {
 
 		$post_type = false;
 
-		if ( get_post_type() == 'wp_pedia_term' )
+		if ( get_post_type() == 'wp_pedia_term' || get_the_ID() === intval( $this->has_static_archive_page() ) )
 			$post_type = 'wp_pedia_term';
 			
 		return $post_type;
@@ -261,7 +278,11 @@ class helper {
 	 */
 	public function get_wiki_url( array $query_args = [] ) {
 
-		$archive_url = get_post_type_archive_link('wp_pedia_term');
+		$archive_url;
+		if ( FALSE === $this->has_static_archive_page() )
+			$archive_url = get_post_type_archive_link('wp_pedia_term');
+		else
+			$archive_url = get_permalink( $this->has_static_archive_page() );
 
 		if ( ! empty( $query_args ) )
 			$archive_url = add_query_arg( $query_args, $archive_url );
