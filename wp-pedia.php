@@ -69,7 +69,7 @@ bf\wpPedia\admin::getInstance();
  * 
  * @since 1.0.0
  */
-bf\wpPedia\wikiPostType::getInstance();
+bf\wpPedia\post_type::getInstance();
 
 /**
  * Modify Wiki Content
