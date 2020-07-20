@@ -116,7 +116,7 @@ class wikiPostType {
       'rewrite' => $rewrite
 		];
 
-		if ( FALSE === wppedia_utils()->get_option( admin::settings_general_page, 'wppedia_archive_page' ) )
+		if ( FALSE === wppedia_utils()->get_option( admin::$settings_general_page, 'wppedia_archive_page' ) )
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
     \register_post_type( 'wp_pedia_term', $args );
