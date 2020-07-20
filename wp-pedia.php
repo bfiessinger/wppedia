@@ -47,6 +47,7 @@ function wppedia_template() {
 	return bf\wpPedia\template::getInstance();
 
 }
+wppedia_template();
 
 /**
  * Instantiate Controller
