@@ -16,7 +16,12 @@ class admin {
   /**
    * Static variable for instanciation
    */
-  protected static $instance = null;
+	protected static $instance = null;
+
+	/**
+	 * Public Variables
+	 */
+	public $settings_general_page = 'wppedia_settings_general';
 
   /**
    * Get current Instance
@@ -43,6 +48,9 @@ class admin {
 		// Custom Permalinks Section
 		add_action('admin_init', [ $this, 'wppedia_permalink_settings' ], 999999 );
 
+		// Add Text to the glossary archive page
+		add_action( 'display_post_states', [ $this, 'wppedia_archive_post_state' ], 10, 2 );
+
     // Sort Wiki Entries in wp_admin
     add_action( 'pre_get_posts', [ $this, 'default_wiki_entries_orderby' ] );
 
@@ -58,14 +66,12 @@ class admin {
    */
   function add_wiki_admin_pages() {
 
-		$settings_general_page = 'wppedia_settings_general';
-
 		// Create the admin-page for Glossary Settings
     $wiki_settings_page = new_cmb2_box( [
 			'id'           		=> 'wppedia_page_settings_general',
 			'title'						=> __('Wiki Settings', 'wppedia'),
 			'object_types'		=> [ 'options-page' ],
-			'option_key'			=> $settings_general_page,
+			'option_key'			=> $this->settings_general_page,
       'parent_slug'			=> 'edit.php?post_type=wp_pedia_term',
       'capability'			=> 'manage_options',
 			'position'				=> null,
@@ -80,6 +86,37 @@ class admin {
 					'icon' 	=> 'dashicons-admin-customizer', // Dashicon
 				],
 			],
+		] );
+
+		$wiki_settings_page->add_field( [
+			'name'          => __( 'Glossary Page', 'wppedia' ),
+			'desc'          => __( 'Select the page that is used to display the glossary archive.', 'wppedia' ),
+			'id'            => 'wppedia_archive_page',
+			'type'          => 'ajax_search',
+			'tab'  			=> 'content',
+			'search'		=> 'post',
+			'query_args'	=> [
+				'post_type'			=> [ 'page' ],
+				'posts_per_page'	=> -1
+			]
+		] );
+
+		$wiki_settings_page->add_field( [
+			'name'			=> __( 'Activate Crosslinking', 'wppedia' ),
+			'desc'			=> __( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.','wppedia' ),
+			'id'				=> 'wppedia_activate_crosslinking',
+			'type'			=> 'switch_button',
+			'default'		=> 'on',
+			'tab'				=> 'content',
+		] );
+
+		$wiki_settings_page->add_field( [
+			'name'			=> __( 'Load base CSS', 'wppedia' ),
+			'desc'			=> __( 'Enqueue the base CSS Stylesheet.','wppedia' ),
+			'id'				=> 'wppedia_enqueue_base_style',
+			'type'			=> 'switch_button',
+			'default'		=> 'on',
+			'tab'				=> 'style',
 		] );
 
 	}
@@ -191,6 +228,21 @@ class admin {
 			$sanitized .= '/';
 
 		return $sanitized;
+
+	}
+
+	/**
+	 * Modify the posts state for the glossary Archive Page
+	 * 
+	 * @since 1.0.0
+	 */
+	function wppedia_archive_post_state( $post_states, $post ) {
+
+		if( $post->ID == wppedia_utils()->get_option( $this->settings_general_page, 'wppedia_archive_page' ) ) {
+			$post_states[] = __( 'Glossary', 'wppedia' );
+		}
+	
+		return $post_states;
 
 	}
 
