@@ -82,9 +82,7 @@ $prefer_single_words = ( wppedia_utils()->get_option( \bf\wpPedia\admin::$settin
 
 new bf\wpPedia\crosslinks( 
 	$crosslinks_module_active,
-	$prefer_single_words,
-	true,
-
+	$prefer_single_words
 );
 
 /**
