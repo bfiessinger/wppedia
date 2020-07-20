@@ -1,13 +1,6 @@
 @charset "UTF-8";
 
 /**
- * Tailwind Utility CSS Framework
- * @link https://tailwindcss.com/
- */
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
-/**
  * Theme Options
  */
 @import 'options';
@@ -16,3 +9,10 @@
  * Components
  */
 @import 'components';
+
+/**
+ * Tailwind Utility CSS Framework
+ * @link https://tailwindcss.com/
+ */
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
