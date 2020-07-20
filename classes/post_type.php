@@ -13,7 +13,7 @@ use bf\wpPedia\admin;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class wikiPostType {
+class post_type {
 
   /**
    * Static variable for instanciation
