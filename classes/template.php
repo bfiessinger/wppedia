@@ -29,7 +29,11 @@ class template {
 
   protected function __clone() {}
 
-	protected function __construct() {}
+	protected function __construct() {
+
+		add_action( 'loop_start', [ $this, 'initial_letter_navigation' ] );
+
+	}
 	
   /**
    * Get a specific View
@@ -38,7 +42,7 @@ class template {
    */
   public function get_view(string $view, array $args = [], bool $display = true) {
 
-    $view_file = wpPediaPluginDir . '/views/view-' . $view . '.php';
+    $view_file = wpPediaPluginDir . 'views/view-' . $view . '.php';
 
     if ( file_exists( $view_file ) ) {
 
@@ -60,7 +64,7 @@ class template {
    */
   public function get_partial(string $partial, array $args = [], bool $display = true) {
 
-    $partial_file = wpPediaPluginDir . '/partials/partial-' . $partial . '.php';
+    $partial_file = wpPediaPluginDir . 'partials/partial-' . $partial . '.php';
 
     if ( file_exists( $partial_file ) ) {
 
@@ -74,7 +78,7 @@ class template {
 		return false;
 
 	}
-	
+
 	/**
 	 * Get the WPPedia Searchform
 	 * 
@@ -97,4 +101,22 @@ class template {
 
 	}
 	
+	function initial_letter_navigation( $query ) {
+
+		if ( wppedia_utils()->is_wiki_post_type() ) {
+
+			/**
+			 * wppedia_tpl_initial_nav hook
+			 *
+			 * @hooked wppedia_tpl_initial_nav -  10
+			 *
+			 */
+			do_action( 'wppedia_tpl_initial_nav' );
+
+		}
+		
+		return $query;
+
+	}
+
 }
