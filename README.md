@@ -13,9 +13,12 @@ Glossaries are a great option to give your users valuable content about your nic
 With this quality content you can significantly improve your website’s SEO and ranking on search engines like Google, etc.
 
 ## Key Features
-* WPPedia provides an archive for all glossary terms and single view pages for individual terms
-* Terms are listed by initial letter
-* Crosslinking between glossary terms
+* Archive 
+  * Pages with Navigation for initial Characters 
+  * Use a static Page for the Glossary Frontpage
+  * Or let WPPedia generate your Archive Page
+* Single View
+  * Crosslinking between glossary terms
 
 ## Sponsors
 <a href="https://www.steinrein.com/" target="_blank">
