@@ -54,7 +54,7 @@ wppedia_template();
  * 
  * @since 1.0.0
  */
-$wiki_controller = bf\wpPedia\controller::getInstance();
+bf\wpPedia\controller::getInstance();
 
 /**
  * Instatiate Admin View
@@ -77,7 +77,15 @@ bf\wpPedia\post_type::getInstance();
  * 
  * @since 1.0.0
  */
-new bf\wpPedia\crosslinks();
+$crosslinks_module_active = ( wppedia_utils()->get_option( \bf\wpPedia\admin::$settings_general_page, 'wppedia_crosslinking_active' ) == 'on' ) ? true : false;
+$prefer_single_words = ( wppedia_utils()->get_option( \bf\wpPedia\admin::$settings_general_page, 'wppedia_crosslinking_prefer-single-words' ) == 'on' ) ? true : false;
+
+new bf\wpPedia\crosslinks( 
+	$crosslinks_module_active,
+	$prefer_single_words,
+	true,
+
+);
 
 /**
  * Load Template Tags

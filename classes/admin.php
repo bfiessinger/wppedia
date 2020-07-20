@@ -71,7 +71,7 @@ class admin {
 			'id'           		=> 'wppedia_page_settings_general',
 			'title'						=> __('Wiki Settings', 'wppedia'),
 			'object_types'		=> [ 'options-page' ],
-			'option_key'			=> $this->settings_general_page,
+			'option_key'			=> self::$settings_general_page,
       'parent_slug'			=> 'edit.php?post_type=wp_pedia_term',
       'capability'			=> 'manage_options',
 			'position'				=> null,
@@ -104,9 +104,17 @@ class admin {
 		$wiki_settings_page->add_field( [
 			'name'			=> __( 'Activate Crosslinking', 'wppedia' ),
 			'desc'			=> __( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.','wppedia' ),
-			'id'				=> 'wppedia_activate_crosslinking',
+			'id'				=> 'wppedia_crosslinking_active',
 			'type'			=> 'switch_button',
 			'default'		=> 'on',
+			'tab'				=> 'content',
+		] );
+
+		$wiki_settings_page->add_field( [
+			'name'			=> __( 'Prefer Single Words', 'wppedia' ),
+			'desc'			=> __( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.','wppedia' ),
+			'id'				=> 'wppedia_crosslinking_prefer-single-words',
+			'type'			=> 'switch_button',
 			'tab'				=> 'content',
 		] );
 
@@ -238,7 +246,7 @@ class admin {
 	 */
 	function wppedia_archive_post_state( $post_states, $post ) {
 
-		if( $post->ID == wppedia_utils()->get_option( $this->settings_general_page, 'wppedia_archive_page' ) ) {
+		if( $post->ID == wppedia_utils()->get_option( self::$settings_general_page, 'wppedia_archive_page' ) ) {
 			$post_states[] = __( 'Glossary', 'wppedia' );
 		}
 	
