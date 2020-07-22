@@ -91,7 +91,6 @@ class post_type {
 		];
 
     $rewrite = [
-      'slug' => ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ),
       'with_front' => false,
       'pages' => true,
       'feeds' => true,
@@ -117,7 +116,7 @@ class post_type {
       'publicly_queryable' => true,
 			'capability_type' => 'post',
 			'has_archive' => false,
-      'rewrite' => true
+      'rewrite' => $rewrite
 		];
 
 		if ( FALSE === wppedia_utils()->get_option( admin::$settings_general_page, 'wppedia_archive_page' ) )
@@ -241,7 +240,7 @@ class post_type {
 		$post_type = 'wp_pedia_term';
 
 		foreach ($terms as $term) {    
-    	$rules[ ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $post_type. '&wp_pedia_term=$matches[1]&name=$matches[1]';
+    	$rules[ ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $post_type. '&name=$matches[1]';
 		}
 
     // merge with global rules
