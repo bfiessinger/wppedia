@@ -47,7 +47,7 @@ class post_type {
 		add_action( 'init', [ $this, 'create_initialcharacter_tax' ] );
 
 		// Set Initial Letter Taxonomy on post save
-		add_action( 'save_post_wp_pedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
+		add_action( 'save_post_wppedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
 
   }
 
@@ -122,7 +122,7 @@ class post_type {
 		if ( FALSE === wppedia_utils()->get_option( admin::$settings_general_page, 'wppedia_archive_page' ) )
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
-		\register_post_type( 'wp_pedia_term', $args );
+		\register_post_type( 'wppedia_term', $args );
 
 	}
 
@@ -172,7 +172,7 @@ class post_type {
 			'rewrite' => $rewrite
 		];
 
-		\register_taxonomy( 'initialcharacter', [ 'wp_pedia_term' ], $args );
+		\register_taxonomy( 'initialcharacter', [ 'wppedia_term' ], $args );
 
 	}
 
@@ -237,7 +237,7 @@ class post_type {
 			'hide_empty' => false,
 		) );
    
-		$post_type = 'wp_pedia_term';
+		$post_type = 'wppedia_term';
 
 		foreach ($terms as $term) {    
     	$rules[ ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $post_type. '&name=$matches[1]';
@@ -250,7 +250,7 @@ class post_type {
 
 	function wppedia_cpt_link( $permalink, $post ) {
 
-		if( $post->post_type == 'wp_pedia_term' ) {
+		if( $post->post_type == 'wppedia_term' ) {
 
 			$resource_terms = get_the_terms( $post, 'initialcharacter' );
 			$term_slug = '';

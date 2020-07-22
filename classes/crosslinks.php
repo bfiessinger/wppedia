@@ -16,7 +16,7 @@ class crosslinks {
 	public $crosslink_activated = true;
 	public $prefer_single_words = false;
 	public $require_full_words = true;
-	public $post_types = ['wp_pedia_term'];
+	public $post_types = ['wppedia_term'];
 
 	public function __construct( bool $crosslink_activated = null, bool $prefer_single_words = null, bool $require_full_words = null, array $post_types = null ) {
 
@@ -155,7 +155,7 @@ class crosslinks {
   public function the_post_content_links( $content ) {
 
     // Bail early if the current post is not a wiki entry
-    if ( is_admin() || ! is_singular('wp_pedia_term') )
+    if ( is_admin() || ! is_singular('wppedia_term') )
       return $content;
 
     return $this->the_content_linked( $content );

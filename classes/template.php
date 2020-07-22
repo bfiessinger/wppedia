@@ -29,8 +29,34 @@ class template {
 
   protected function __clone() {}
 
-	protected function __construct() {}
+	protected function __construct() {
+		add_filter( 'template_include', [ $this, 'template_include' ] );
+	}
 	
+	/**
+	 * Custom Template for the wordpress template hierarchy
+	 * 
+	 * @since 1.0.0
+	 */
+	public function template_include( $template ) {
+
+		echo get_page_template();
+
+		echo get_single_template();
+
+		// Return the Default Template for all non WPPedia Posts
+		if ( ! \wppedia_utils()->is_wiki_post_type() )
+			return $template;
+
+		// Return custom index for WPPedia Pages if the file exists
+		// and no other template should override it
+		if ( locate_template('index-wppedia') )
+			return get_query_template('index-wppedia');
+
+		return $template;
+
+	}
+
   /**
    * Get a specific View
    * 

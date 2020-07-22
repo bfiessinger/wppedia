@@ -49,7 +49,7 @@ class helper {
   public function get_wiki_entries(array $query_args = []) {
 
     $query_defaults = [
-      'post_type' => 'wp_pedia_term',
+      'post_type' => 'wppedia_term',
       'posts_per_page' => -1,
       'orderby' => 'title',
       'order' => 'ASC'
@@ -221,7 +221,7 @@ class helper {
 
     // Build the final Query based on found post ID's
     $final_query_args = [
-      'post_type'       => 'wp_pedia_term',
+      'post_type'       => 'wppedia_term',
       'post__in'        => $found_posts,
       'posts_per_page'  => 20,
       'orderby'         => 'post__in'
@@ -262,8 +262,8 @@ class helper {
 
 		$post_type = false;
 
-		if ( get_post_type() == 'wp_pedia_term' || get_the_ID() === intval( $this->has_static_archive_page() ) )
-			$post_type = 'wp_pedia_term';
+		if ( get_post_type() == 'wppedia_term' || get_the_ID() === intval( $this->has_static_archive_page() ) )
+			$post_type = 'wppedia_term';
 			
 		return $post_type;
 
@@ -280,7 +280,7 @@ class helper {
 
 		$archive_url;
 		if ( FALSE === $this->has_static_archive_page() )
-			$archive_url = get_post_type_archive_link('wp_pedia_term');
+			$archive_url = get_post_type_archive_link('wppedia_term');
 		else
 			$archive_url = get_permalink( $this->has_static_archive_page() );
 
