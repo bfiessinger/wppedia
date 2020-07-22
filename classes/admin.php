@@ -145,24 +145,10 @@ class admin {
 			true 
 		);
 
-		add_option( 
-			'wppedia_permalink_term_base', 
-			'/term/', 
-			'', 
-			true 
-		);
-
 		// Register glossary Base Setting
 		register_setting(
 			'permalink', 
 			'wppedia_permalink_base',
-			[ $this, 'wppedia_permalink_part_sanitize' ]
-		);
-
-		// Register glossary Term Permalink Setting
-		register_setting(
-			'permalink', 
-			'wppedia_permalink_term_base',
 			[ $this, 'wppedia_permalink_part_sanitize' ]
 		);
 
@@ -177,14 +163,6 @@ class admin {
 			'wppedia_permalink_base_setting', 
 			__( 'WPPedia base', 'wppedia' ), 
 			[ $this, 'wppedia_setting_permalink_base_cb' ], 
-			'permalink', 
-			'wppedia_permalink_structure'
-		);
-
-		add_settings_field( 
-			'wppedia_permalink_term_base_setting', 
-			__( 'WPPedia Term base', 'wppedia' ), 
-			[ $this, 'wppedia_setting_permalink_term_base_cb' ], 
 			'permalink', 
 			'wppedia_permalink_structure'
 		);
@@ -205,9 +183,6 @@ class admin {
 			if ( isset( $_POST['wppedia_permalink_base'] ) )
 				update_option( 'wppedia_permalink_base', $_POST['wppedia_permalink_base'] );
 
-			if ( isset( $_POST['wppedia_permalink_term_base'] ) )
-				update_option( 'wppedia_permalink_term_base', $_POST['wppedia_permalink_term_base'] );
-
 		}
 
 	}
@@ -218,10 +193,6 @@ class admin {
 
 	function wppedia_setting_permalink_base_cb() { ?>
 		<input type="text" name="wppedia_permalink_base" value="<?php echo get_option('wppedia_permalink_base'); ?>" class="regular-text code" />
-	<?php	}
-
-	function wppedia_setting_permalink_term_base_cb() { ?>
-		<input type="text" name="wppedia_permalink_term_base" value="<?php echo get_option('wppedia_permalink_term_base'); ?>" class="regular-text code" />
 	<?php	}
 
 	function wppedia_permalink_part_sanitize( $input ) {

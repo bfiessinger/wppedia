@@ -103,7 +103,11 @@ class template {
 	
 	function initial_letter_navigation( $query ) {
 
-		if ( wppedia_utils()->is_wiki_post_type() ) {
+		//echo '<pre>';
+		//print_r( $query->query_vars );
+		//echo '</pre>';
+
+		if ( $query->is_main_query() && wppedia_utils()->is_wiki_post_type() ) {
 
 			/**
 			 * wppedia_tpl_initial_nav hook

@@ -39,6 +39,10 @@ class post_type {
 		// Create Post type
 		add_action( 'init', [ $this, 'register_wiki_post_type' ] );
 
+		// Rewrite Rules for initial Characters
+		add_filter('generate_rewrite_rules', [ $this, 'wppedia_cpt_generate_rewrite_rules' ] );
+		add_filter('post_type_link', [ $this, 'wppedia_cpt_link' ], 10, 2);
+
 		// Create Fake Taxonomy to query by initial letter
 		add_action( 'init', [ $this, 'create_initialcharacter_tax' ] );
 
@@ -87,7 +91,7 @@ class post_type {
 		];
 
     $rewrite = [
-      'slug' => ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . ltrim( rtrim( get_option( 'wppedia_permalink_term_base', 'glossary' ), '/' ), '/' ),
+      'slug' => ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ),
       'with_front' => false,
       'pages' => true,
       'feeds' => true,
@@ -113,13 +117,13 @@ class post_type {
       'publicly_queryable' => true,
 			'capability_type' => 'post',
 			'has_archive' => false,
-      'rewrite' => $rewrite
+      'rewrite' => true
 		];
 
 		if ( FALSE === wppedia_utils()->get_option( admin::$settings_general_page, 'wppedia_archive_page' ) )
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
-    \register_post_type( 'wp_pedia_term', $args );
+		\register_post_type( 'wp_pedia_term', $args );
 
 	}
 
@@ -148,7 +152,7 @@ class post_type {
 		];
 
 		$rewrite = [
-			'slug' => 'glossary',
+			'slug' => ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ),
 			'with_front' => false,
 			'hierarchical' => false,
 		];
@@ -222,6 +226,50 @@ class post_type {
 				\wp_delete_term( $term->term_id, $taxonomy );
 			
 		}
+
+	}
+
+	function wppedia_cpt_generate_rewrite_rules( $wp_rewrite ) {
+
+		$rules = array();
+
+		$terms = get_terms( array(
+			'taxonomy' => 'initialcharacter',
+			'hide_empty' => false,
+		) );
+   
+		$post_type = 'wp_pedia_term';
+
+		foreach ($terms as $term) {    
+    	$rules[ ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $post_type. '&wp_pedia_term=$matches[1]&name=$matches[1]';
+		}
+
+    // merge with global rules
+    $wp_rewrite->rules = $rules + $wp_rewrite->rules;
+
+	}
+
+	function wppedia_cpt_link( $permalink, $post ) {
+
+		if( $post->post_type == 'wp_pedia_term' ) {
+
+			$resource_terms = get_the_terms( $post, 'initialcharacter' );
+			$term_slug = '';
+
+			if( ! empty( $resource_terms ) ) {
+
+				foreach ( $resource_terms as $term ) {
+					$term_slug = $term->slug;
+					break;
+				}
+
+			}
+
+			$permalink = get_home_url() ."/" . ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . "/" . $term_slug . '/' . $post->post_name;
+
+		}
+
+		return $permalink;
 
 	}
 
