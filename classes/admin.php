@@ -89,16 +89,13 @@ class admin {
 		] );
 
 		$wiki_settings_page->add_field( [
-			'name'          => __( 'Glossary Page', 'wppedia' ),
-			'desc'          => __( 'Select the page that is used to display the glossary archive.', 'wppedia' ),
-			'id'            => 'wppedia_archive_page',
-			'type'          => 'ajax_search',
-			'tab'  			=> 'content',
-			'search'		=> 'post',
-			'query_args'	=> [
-				'post_type'			=> [ 'page' ],
-				'posts_per_page'	=> -1
-			]
+			'name'          		=> __( 'Glossary Page', 'wppedia' ),
+			'desc'          		=> __( 'Select the page that is used to display the glossary archive.', 'wppedia' ),
+			'id'            		=> 'wppedia_archive_page',
+			'type'          		=> 'select',
+			'tab'  							=> 'content',
+			'show_option_none' 	=> true,
+			'options_cb'				=> [ $this, 'dropdown_pages' ]
 		] );
 
 		$wiki_settings_page->add_field( [
@@ -126,6 +123,24 @@ class admin {
 			'default'		=> 'on',
 			'tab'				=> 'style',
 		] );
+
+	}
+
+	/**
+	 * Custom options Callback for selecting Pages
+	 * 
+	 * @since 1.0.0
+	 */
+	function dropdown_pages() {
+
+		$options = [];
+		$pages = get_pages();
+		
+		foreach ( $pages as $page ) {
+			$options[$page->ID] = get_the_title( $page->ID );
+		}
+
+		return $options;
 
 	}
 
