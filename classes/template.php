@@ -29,11 +29,7 @@ class template {
 
   protected function __clone() {}
 
-	protected function __construct() {
-
-		add_action( 'loop_start', [ $this, 'initial_letter_navigation' ] );
-
-	}
+	protected function __construct() {}
 	
   /**
    * Get a specific View
@@ -89,9 +85,9 @@ class template {
 	public function get_searchform() {
 
 		// Don't modify the template if specified in the current Theme
-		if ( locate_template(['searchform-wppedia.php']) ) {
+		if ( locate_template(['wppedia-searchform.php']) ) {
 
-			locate_template(['searchform-wppedia.php'], true);
+			locate_template(['wppedia-searchform.php'], true);
 			return;
 
 		}
@@ -101,25 +97,18 @@ class template {
 
 	}
 	
-	function initial_letter_navigation( $query ) {
+	function initial_letter_navigation() {
 
-		//echo '<pre>';
-		//print_r( $query->query_vars );
-		//echo '</pre>';
+		// Don't modify the template if specified in the current Theme
+		if ( locate_template(['wppedia-navigation.php']) ) {
 
-		if ( $query->is_main_query() && wppedia_utils()->is_wiki_post_type() ) {
-
-			/**
-			 * wppedia_tpl_initial_nav hook
-			 *
-			 * @hooked wppedia_tpl_initial_nav -  10
-			 *
-			 */
-			do_action( 'wppedia_tpl_initial_nav' );
+			locate_template(['wppedia-navigation.php'], true);
+			return;
 
 		}
-		
-		return $query;
+
+		// print searchform
+		$this->get_partial( 'initial-letter-navigation' );		
 
 	}
 
