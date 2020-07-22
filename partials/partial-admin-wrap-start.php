@@ -1,1 +1,0 @@
-<div class="wrap --wp-wiki-ui">
