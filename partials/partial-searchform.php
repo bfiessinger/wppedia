@@ -1,5 +1,11 @@
 <?php
 
+	/**
+	 * Template Part for the WPPedia Searchform
+	 * 
+	 * @since 1.0.0
+	 */
+
 	$post_type = 'wp_pedia_term';
   $searchUrl = get_post_type_archive_link( $post_type );
 
