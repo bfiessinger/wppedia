@@ -14,9 +14,9 @@
 
 		<li>
 
-		<?php if ( term_exists( $slug, 'initialcharacter' ) ): 
+		<?php if ( term_exists( $slug, 'wppedia_initial_letter' ) ): 
 			// Get Information about the current term
-			$initial_term = get_term_by( 'slug', $slug, 'initialcharacter' );
+			$initial_term = get_term_by( 'slug', $slug, 'wppedia_initial_letter' );
 		?>
 
 			<a class="block px-3 py-2 bg-grey text-darkgrey" href="<?php echo get_term_link( $initial_term ); ?>" title="<?php echo sprintf(__('Glossary terms with initial character „%s“ (%d)', 'wppedia'), $initial, $initial_term->count); ?>"><?php echo $initial; ?></a>		

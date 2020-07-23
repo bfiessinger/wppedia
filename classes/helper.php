@@ -144,7 +144,7 @@ class helper {
 
 		// Get available initial char terms
 		$initial_char_terms = get_terms( [
-			'taxonomy' => 'initialcharacter',
+			'taxonomy' => 'wppedia_initial_letter',
 			'hide_empty' => $settings['hide_empty'],
 		] );
 
@@ -176,7 +176,7 @@ class helper {
 
 		$show = $this->get_wiki_initial_letters();
 
-		if ( is_tax('initialcharacter') ) {
+		if ( is_tax('wppedia_initial_letter') ) {
 
 			$show = [
 				get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') )->name

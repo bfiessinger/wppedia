@@ -44,7 +44,7 @@ class post_type {
 		add_filter('post_type_link', [ $this, 'wppedia_cpt_link' ], 10, 2);
 
 		// Create Fake Taxonomy to query by initial letter
-		add_action( 'init', [ $this, 'create_initialcharacter_tax' ] );
+		add_action( 'init', [ $this, 'create_wppedia_initial_letter_tax' ] );
 
 		// Set Initial Letter Taxonomy on post save
 		add_action( 'save_post_wppedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
@@ -102,7 +102,7 @@ class post_type {
       'labels' => $labels,
       'menu_icon' => 'dashicons-book-alt',
       'supports' => array('title', 'editor', 'excerpt', 'revisions', 'author'),
-      'taxonomies' => array('initialcharacter'),
+      'taxonomies' => array('wppedia_initial_letter'),
       'public' => true,
       'show_ui' => true,
       'show_in_menu' => true,
@@ -134,7 +134,7 @@ class post_type {
 	 * 
 	 * @since 1.0.0
 	 */
-	function create_initialcharacter_tax() {
+	function create_wppedia_initial_letter_tax() {
 
 		$labels = [
 			'name'              => _x( 'Initial Characters', 'taxonomy general name', 'wppedia' ),
@@ -172,7 +172,7 @@ class post_type {
 			'rewrite' => $rewrite
 		];
 
-		\register_taxonomy( 'initialcharacter', [ 'wppedia_term' ], $args );
+		\register_taxonomy( 'wppedia_initial_letter', [ 'wppedia_term' ], $args );
 
 	}
 
@@ -189,7 +189,7 @@ class post_type {
 
 		$cur_initial = \wppedia_utils()->post_initial_letter( $post_ID );
 
-		$taxonomy = 'initialcharacter';
+		$taxonomy = 'wppedia_initial_letter';
 		$cur_initial_encoded = \rawurlencode( $cur_initial );
 		
 		// Create a new term based on the initial letter
@@ -233,7 +233,7 @@ class post_type {
 		$rules = array();
 
 		$terms = get_terms( array(
-			'taxonomy' => 'initialcharacter',
+			'taxonomy' => 'wppedia_initial_letter',
 			'hide_empty' => false,
 		) );
    
@@ -252,7 +252,7 @@ class post_type {
 
 		if( $post->post_type == 'wppedia_term' ) {
 
-			$resource_terms = get_the_terms( $post, 'initialcharacter' );
+			$resource_terms = get_the_terms( $post, 'wppedia_initial_letter' );
 			$term_slug = '';
 
 			if( ! empty( $resource_terms ) ) {

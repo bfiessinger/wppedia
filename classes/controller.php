@@ -78,7 +78,7 @@ class controller {
 
       global $wpdb;
 
-			$where .= " AND (wtt.taxonomy = 'initialcharacter') AND (wt.name = '$initial_letter')";
+			$where .= " AND (wtt.taxonomy = 'wppedia_initial_letter') AND (wt.name = '$initial_letter')";
 
 		}
 
