@@ -34,23 +34,63 @@ class template {
 	}
 	
 	/**
-	 * Custom Template for the wordpress template hierarchy
+	 * Use a custom default template for the WP Template Hierarchy.
+	 * If no custom template for singular posts, custom post type
+	 * archives or taxonomy archives was found try to use the template
+	 * index-wppedia.php
+	 * 
+	 * @see https://wphierarchy.com/
 	 * 
 	 * @since 1.0.0
+	 * 
+	 * @return string $template - the current Template file in your theme's Root folder
 	 */
 	public function template_include( $template ) {
 
-		echo get_page_template();
+		$custom_index_include = true;
 
-		echo get_single_template();
-
-		// Return the Default Template for all non WPPedia Posts
-		if ( ! \wppedia_utils()->is_wiki_post_type() )
-			return $template;
+		/**
+		 * Check for the following Templates first:
+		 * 
+		 * - Posttype Archive: 
+		 * 			archive-wppedia_term.php
+		 * - Initial Character Taxonomy: 
+		 * 			taxonomy-wppedia_initial_letter.php OR 
+		 * 			taxonomy-wppedia_initial_letter-{initial_letter}.php
+		 * - Singular Posts: 
+		 * 			single-wppedia_term.php OR 
+		 * 			single-wppedia_term-{post_name}.php
+		 */
+		if ( 
+			// Return the Default Template for all non WPPedia Posts
+			! \wppedia_utils()->is_wiki_post_type() ||
+			// Post Type Archive
+			( 
+				is_post_type_archive( 'wppedia_term' ) && 
+				locate_template( 'archive-wppedia_term.php' ) 
+			) ||
+			// Taxonomy Archive
+			(
+				is_tax( 'wppedia_initial_letter' ) && 
+				( 
+					locate_template( 'taxonomy-wppedia_initial_letter.php' ) ||
+					locate_template( 'taxonomy-wppedia_initial_letter-' . get_queried_object()->slug . '.php' )
+				)
+			) ||
+			// Singular Posts
+			(
+				is_singular( 'wppedia_term' ) &&
+				(
+					locate_template( 'single-wppedia_term.php' ) ||
+					locate_template( 'single-wppedia_term-' . get_queried_object()->post_name . '.php' )
+				)
+			)
+		)
+			$custom_index_include = false;
 
 		// Return custom index for WPPedia Pages if the file exists
 		// and no other template should override it
-		if ( locate_template('index-wppedia') )
+		if ( locate_template('index-wppedia.php') && $custom_index_include )
 			return get_query_template('index-wppedia');
 
 		return $template;
