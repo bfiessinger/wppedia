@@ -106,6 +106,13 @@ require_once wpPediaPluginDir . 'inc/assets.php';
  */
 require_once wpPediaPluginDir . '/inc/public-functions.php';
 
+/**
+ * Shortcodes
+ * 
+ * @since 1.0.0
+ */
+require_once wpPediaPluginDir . '/inc/shortcodes.php';
+
 register_activation_hook( __FILE__, 'wppedia_activation_deactivation_hook' );
 function wppedia_activation_deactivation_hook() {
 	flush_rewrite_rules();
