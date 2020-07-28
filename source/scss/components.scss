@@ -6,10 +6,11 @@
 	}
 	ul {
 		display: flex;
-		justify-content: center;
+		flex-wrap: wrap;
+		justify-content: flex-start;
 	}
 	li { 
-		margin: 0 1px;
+		margin: 1px;
 		&:hover {
 			a, span {
 				color: lighten($main-color, 5%);
