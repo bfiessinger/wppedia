@@ -38,12 +38,12 @@ class admin {
   protected function __clone() {}
 
   protected function __construct() {
-		
-		// Hacky solution to allow custom hooks for cmb2-extension
-		define( 'CMB_EXTENSIONS_ASSETS_ADDITIONAL_HOOKS', [ 'wppedia_term_page_wppedia_settings_general' ] );
 
     // Setup Admin Pages
-    add_action( 'cmb2_admin_init', [ $this, 'add_wiki_admin_pages' ] );
+		add_action( 'cmb2_admin_init', [ $this, 'add_wiki_admin_pages' ] );
+		
+		// Admin Page Assets
+		add_action( 'admin_enqueue_scripts', [ $this, 'do_admin_scripts' ] );
 
 		// Custom Permalinks Section
 		add_action('admin_init', [ $this, 'wppedia_permalink_settings' ], 999999 );
@@ -141,6 +141,20 @@ class admin {
 		}
 
 		return $options;
+
+	}
+
+	/**
+	 * Add admin scripts and styles
+	 * 
+	 * @since 1.0.0
+	 */
+	function do_admin_scripts() {
+
+		if ( class_exists( 'CMB_Extension_Hookup' ) ) {
+			\CMB_Extension_Hookup::enqueue_cmb_css();
+			\CMB_Extension_Hookup::enqueue_cmb_js();
+		}
 
 	}
 
