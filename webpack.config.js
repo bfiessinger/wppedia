@@ -61,7 +61,8 @@ module.exports = [
   {
     mode: 'production',
     entry: {
-      style: './source/scss/_main.scss',
+			style: './source/scss/_main.scss',
+			components_navigation: './source/scss/components/initial-char-navigation.scss'
     },
     output: {
       path: path.resolve(__dirname, 'dist/css'),

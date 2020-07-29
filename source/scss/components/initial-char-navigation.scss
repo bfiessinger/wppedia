@@ -1,0 +1,46 @@
+/**
+ * Theme Options
+ */
+@import '../options';
+
+#wppedia-char-navigation {
+	&:not(:last-child) { margin-bottom: 2rem; }
+	ul, li {
+		list-style: none;
+		padding-left: 0px;
+	}
+	ul {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+	}
+	li { 
+		margin: 1px;
+		&:hover {
+			a, span {
+				color: lighten($main-color, 5%);
+				background-color: $secondary-color;
+				border: solid 1px $secondary-color;
+			}
+		}
+		&.active {
+			a, span {
+				color: lighten($main-color, 5%);
+				background-color: $secondary-color;
+				border: solid 1px $secondary-color;
+			}
+		}
+		a, span {
+			border: solid 1px darken($main-color, 10%);
+			border-radius: 0.2rem;
+			color: darken($main-color, 45%);
+			text-decoration: none;
+			text-transform: uppercase;
+			display: block;
+			text-align: center;
+			padding: 0.3rem 0.75rem;
+			box-sizing: content-box;
+			min-width: 1ch;
+		}
+	}
+}
