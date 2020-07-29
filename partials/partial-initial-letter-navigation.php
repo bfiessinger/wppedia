@@ -7,7 +7,7 @@
 	 */
 
 ?> 
-<nav id="glossary-char-navigation">
+<nav id="wppedia-char-navigation">
 	<ul>
 
 	<?php foreach ( wppedia_utils()->get_wiki_initial_letters(['hide_empty' => false]) as $slug => $initial ): ?>
