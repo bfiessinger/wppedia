@@ -1,4 +1,6 @@
-# <img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/WPPedia-logo-vorlaeufig.svg?sanitize=true" alt="SteinRein" width="30"> WPPedia - The WordPress Wiki Solution
+<img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/WPPedia-logo-vorlaeufig.svg?sanitize=true" alt="SteinRein" width="100">
+
+# WPPedia - The WordPress Wiki Solution
 
 ***
 Currently Work in Progress! Do not use this plugin in production!
@@ -12,9 +14,10 @@ With WPPedia you can setup a Glossary on your WordPress with ease. Just install,
 ### Installation
 #### via Download
 1. [Download](https://github.com/bfiessinger/wppedia/archive/master.zip) this repository and upload it to your WordPress plugins folder.
-2. Open your terminal and switch to the `root` folder of the plugin
-3. Run `composer install -o`
-4. Optional: Run `npm install`
+2. Open your terminal and switch to the `root` folder of the plugin.
+3. Run `composer install -o`.
+4. Optional: Run `npm install`.
+5. Activate the plugin.
 
 #### via the WordPress Plugin Repository
 *coming soon!*
