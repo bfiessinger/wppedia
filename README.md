@@ -11,7 +11,7 @@ With WPPedia you can setup a Glossary on your WordPress with ease. Just install,
 ## Getting started
 ### Installation
 #### via Download
-1. [Download](https://github.com/bfiessinger/wppedia/archive/master.zip) this repository.
+1. [Download](https://github.com/bfiessinger/wppedia/archive/master.zip) this repository and upload it to your WordPress plugins folder.
 2. Open your terminal and switch to the `root` folder of the plugin
 3. Run `composer install -o`
 4. Optional: Run `npm install`
