@@ -149,9 +149,12 @@ class admin {
 	 * 
 	 * @since 1.0.0
 	 */
-	function do_admin_scripts() {
+	function do_admin_scripts( $hook ) {
 
-		if ( class_exists( 'CMB_Extension_Hookup' ) ) {
+		if ( 
+			class_exists( 'CMB_Extension_Hookup' ) && 
+			$hook == 'wppedia_term_page_wppedia_settings_general' 
+		) {
 			\CMB_Extension_Hookup::enqueue_cmb_css();
 			\CMB_Extension_Hookup::enqueue_cmb_js();
 		}
