@@ -1,4 +1,4 @@
-# WPPedia - The WordPress Wiki Solution
+# <img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/WPPedia-logo-vorlaeufig.svg?sanitize=true" alt="SteinRein" width="30"> WPPedia - The WordPress Wiki Solution
 
 ***
 Currently Work in Progress! Do not use this plugin in production!
