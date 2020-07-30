@@ -33,3 +33,7 @@ function get_wppedia_searchform() {
 function is_wppedia() {
 	return wppedia_utils()->is_wiki_post_type();
 }
+
+function wppedia_add_inline_style( string $stylesheet ) {
+	return \bf\wpPedia\inline_style_collector::getInstance( $stylesheet );
+}
