@@ -78,16 +78,26 @@ class admin {
 			'tab_style' 			=> 'default',
 			'tabs' 						=> [
 				'content' => [
-					'label' => __('Content', 'wppedia'),
+					'label' => __( 'Content', 'wppedia' ),
 					'icon' 	=> 'dashicons-text-page', // Dashicon
 				],
-				'style' => [
-					'label' => __('CSS & JavaScript', 'wppedia'),
+				'layout' => [
+					'label' => __( 'Layout and Functionality', 'wppedia' ),
 					'icon' 	=> 'dashicons-admin-customizer', // Dashicon
+				],
+				'permalink' => [
+					'label'	=> __( 'Permalink structure', 'wppedia' ),
+					'icon'	=> 'dashicons-admin-links', // Dashicon
 				],
 			],
 		] );
 
+		/**
+		 * Tab Content
+		 * All options related to views and content modification goes here
+		 * 
+		 * @since 1.0.0
+		 */
 		$wiki_settings_page->add_field( [
 			'name'          		=> __( 'Glossary Page', 'wppedia' ),
 			'desc'          		=> __( 'Select the page that is used to display the glossary archive.', 'wppedia' ),
@@ -115,13 +125,33 @@ class admin {
 			'tab'				=> 'content',
 		] );
 
+		/**
+		 * Tab Layout
+		 * Options related to stylesheets and scripts
+		 * 
+		 * @since 1.0.0
+		 */
 		$wiki_settings_page->add_field( [
 			'name'			=> __( 'Load base CSS', 'wppedia' ),
 			'desc'			=> __( 'Enqueue the base CSS Stylesheet.','wppedia' ),
 			'id'				=> 'wppedia_enqueue_base_style',
 			'type'			=> 'switch_button',
 			'default'		=> 'on',
-			'tab'				=> 'style',
+			'tab'				=> 'layout',
+		] );
+
+		/**
+		 * Tab Permalink
+		 * Options related to the permalink structure
+		 * 
+		 * @since 1.0.0
+		 */
+		$wiki_settings_page->add_field( [
+			'name'	=> __( 'Permalink Settings' ),
+			'desc'	=> sprintf( __( 'Adjust the permalink structure. If you want to edit the permalink base visit %s', 'wppedia' ), '<a href="' . admin_url('options-permalink.php') . '" target="_blank">' . __( 'Permalink Settings' ) . '</a>' ),
+			'type'	=> 'title',
+			'id'		=> 'wppedia_title_permalink',
+			'tab'		=> 'permalink',
 		] );
 
 	}
