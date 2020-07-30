@@ -134,9 +134,17 @@ class admin {
 		$wiki_settings_page->add_field( [
 			'name'			=> __( 'Load base CSS', 'wppedia' ),
 			'desc'			=> __( 'Enqueue the base CSS Stylesheet.','wppedia' ),
-			'id'				=> 'wppedia_enqueue_base_style',
+			'id'				=> 'wppedia_layout_enqueue-base-style',
 			'type'			=> 'switch_button',
 			'default'		=> 'on',
+			'tab'				=> 'layout',
+		] );
+
+		$wiki_settings_page->add_field( [
+			'name'			=> __( 'Load styles inline', 'wppedia' ),
+			'desc'			=> __( 'This option ensures that you are only loading styles required for the current view. All styles will be displayed inline without the need to request an additional stylesheet.','wppedia' ),
+			'id'				=> 'wppedia_layout_use-inline-styles',
+			'type'			=> 'switch_button',
 			'tab'				=> 'layout',
 		] );
 
