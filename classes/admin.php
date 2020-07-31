@@ -51,7 +51,7 @@ class admin {
 		// Add Text to the glossary archive page
 		add_action( 'display_post_states', [ $this, 'wppedia_archive_post_state' ], 10, 2 );
 
-    // Sort Wiki Entries in wp_admin
+    // Sort Wiki Entries by postname
     add_action( 'pre_get_posts', [ $this, 'default_wiki_entries_orderby' ] );
 
   }

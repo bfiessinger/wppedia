@@ -90,7 +90,7 @@ new bf\wpPedia\crosslinks(
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . '/template-tags/template-tags.php';
+require_once wpPediaPluginDir . 'template-tags/template-functions.php';
 
 /**
  * Enqueue Assets
@@ -104,14 +104,14 @@ require_once wpPediaPluginDir . 'inc/assets.php';
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . '/inc/public-functions.php';
+require_once wpPediaPluginDir . 'inc/public-functions.php';
 
 /**
  * Shortcodes
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . '/inc/shortcodes.php';
+require_once wpPediaPluginDir . 'inc/shortcodes.php';
 
 register_activation_hook( __FILE__, 'wppedia_activation_deactivation_hook' );
 function wppedia_activation_deactivation_hook() {

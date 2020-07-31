@@ -23,12 +23,10 @@
 				border: solid 1px $secondary-color;
 			}
 		}
-		&.active {
-			a, span {
-				color: lighten($main-color, 5%);
-				background-color: $secondary-color;
-				border: solid 1px $secondary-color;
-			}
+		a.active {
+			color: lighten($main-color, 5%);
+			background-color: $secondary-color;
+			border: solid 1px $secondary-color;
 		}
 		a, span {
 			border: solid 1px darken($main-color, 10%);
