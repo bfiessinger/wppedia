@@ -58,11 +58,20 @@ bf\wpPedia\controller::getInstance();
 
 /**
  * Instatiate Admin View
- * Used for Settings and other Admin Pages
+ * Used to edit post or edit views in wp_admin
  * 
  * @since 1.0.0
  */
 bf\wpPedia\admin::getInstance();
+
+/**
+ * Options
+ * Setup options and settings pages
+ * 
+ * @since 1.0.0
+ */
+bf\wpPedia\options::getInstance();
+bf\wpPedia\settings::getInstance();
 
 /**
  * Instantiate Post Type
@@ -77,8 +86,8 @@ bf\wpPedia\post_type::getInstance();
  * 
  * @since 1.0.0
  */
-$crosslinks_module_active = ( wppedia_utils()->get_option( \bf\wpPedia\admin::$settings_general_page, 'wppedia_crosslinking_active' ) == 'on' ) ? true : false;
-$prefer_single_words = ( wppedia_utils()->get_option( \bf\wpPedia\admin::$settings_general_page, 'wppedia_crosslinking_prefer-single-words' ) == 'on' ) ? true : false;
+$crosslinks_module_active = ( wppedia_utils()->get_option( \bf\wpPedia\settings::$settings_general_page, 'wppedia_crosslinking_active' ) == 'on' ) ? true : false;
+$prefer_single_words = ( wppedia_utils()->get_option( \bf\wpPedia\settings::$settings_general_page, 'wppedia_crosslinking_prefer-single-words' ) == 'on' ) ? true : false;
 
 new bf\wpPedia\crosslinks( 
 	$crosslinks_module_active,
