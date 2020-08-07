@@ -51,7 +51,7 @@ class controller {
 
 		$initial_letter = $query->get( 'wppedia_initial_letter' );
 
-		if ( $initial_letter ) {
+		if ( '' !== $initial_letter ) {
 			
 			global $wpdb;
 
@@ -74,7 +74,7 @@ class controller {
 
     $initial_letter = $query->get( 'wppedia_initial_letter' );
 
-    if ( $initial_letter ) {
+    if ( '' !== $initial_letter ) {
 
       global $wpdb;
 
