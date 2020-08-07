@@ -8,7 +8,7 @@
 
 namespace bf\wpPedia;
 
-use bf\wpPedia\admin;
+use bf\wpPedia\settings;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -91,9 +91,9 @@ class post_type {
 		];
 
     $rewrite = [
-      'with_front' => false,
-      'pages' => true,
-      'feeds' => true,
+      'with_front'	=> false,
+      'pages' 			=> true,
+      'feeds' 			=> true,
 		];
 
     $args = [
@@ -119,7 +119,7 @@ class post_type {
       'rewrite' => $rewrite
 		];
 
-		if ( FALSE === wppedia_utils()->get_option( admin::$settings_general_page, 'wppedia_archive_page' ) )
+		if ( FALSE === wppedia_utils()->get_option( settings::$settings_general_page, 'wppedia_archive_page' ) )
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
 		\register_post_type( 'wppedia_term', $args );
@@ -244,8 +244,8 @@ class post_type {
 		}
 
     // merge with global rules
-    $wp_rewrite->rules = $rules + $wp_rewrite->rules;
-
+		$wp_rewrite->rules = $rules + $wp_rewrite->rules;
+	
 	}
 
 	function wppedia_cpt_link( $permalink, $post ) {
@@ -264,7 +264,7 @@ class post_type {
 
 			}
 
-			$permalink = get_home_url() ."/" . ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . "/" . $term_slug . '/' . $post->post_name;
+			$permalink = get_home_url() ."/" . ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term_slug . '/' . $post->post_name;
 
 		}
 

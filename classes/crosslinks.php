@@ -95,8 +95,6 @@ class crosslinks {
 
     $posts = $this->get_crosslink_posts();
 
-    $replace_results = [];
-
     // Tags to ignore
     $ignore_tags = ['a', 'script', 'style', 'code', 'pre'];
 
