@@ -151,7 +151,7 @@ class template {
 	 * 
 	 * @since 1.0.0
 	 */
-	public function get_searchform() {
+	public function get_search_form() {
 
 		// Don't modify the template if specified in the current Theme
 		if ( locate_template(['wppedia-searchform.php']) ) {
@@ -166,7 +166,7 @@ class template {
 
 	}
 	
-	function initial_letter_navigation() {
+	function get_char_navigation() {
 
 		// Don't modify the template if specified in the current Theme
 		if ( locate_template(['wppedia-navigation.php']) ) {
