@@ -130,11 +130,12 @@ class crosslinks {
       if ( stripos( $content, $post->title ) !== false ) {
 
 				$link_phrase = $this->prepare_link_phrase( $post->title );
-				if ( $this->require_full_words && 0 === preg_match( '/' . $replace_regex . '(^|\s|\>)' . $link_phrase . '(\<|\s|$)/' . $regex_flags, $content ) )
+				if ( $this->require_full_words && 0 === preg_match( '/' . $replace_regex . '(^|\s|\>|\#|\@|\+)' . $link_phrase . '(\?|\!|\;|,|\.|\<|\s|$)/' . $regex_flags, $content ) )
 					continue;
 
-        $post_title_link = get_permalink( $post->ID );
-        $content = preg_replace( '/' . $replace_regex . '(' . $link_phrase . ')/' . $regex_flags, '<a href="' . $post_title_link . '" title="$1" class="wppedia-crosslink">$1</a>', $content );
+				$post_title_link = get_permalink( $post->ID );
+
+        $content = preg_replace( '/' . $replace_regex . '(' . $link_phrase . ')/' . $regex_flags, '<a href="' . $post_title_link . '" title="$1" class="wppedia-crosslink" data-post_id="' . $post->ID . '">$1</a>', $content );
 
       }
       
