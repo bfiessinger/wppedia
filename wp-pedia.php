@@ -95,6 +95,13 @@ new bf\wpPedia\crosslinks(
 );
 
 /**
+ * Tooltips
+ * 
+ * @since 1.0.0
+ */
+new bf\wpPedia\tooltip();
+
+/**
  * Load Template Tags
  * 
  * @since 1.0.0
