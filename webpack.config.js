@@ -23,11 +23,10 @@ const PurgecssFiles = glob.sync([
 
 module.exports = [
 	// Compile Javascript
-	/*
 	{
 		mode: 'production',
 		entry: {
-			none: './source/js/none.js'
+			ajax_tooltip: './source/js/ajax-tooltips.js'
 		},
 		optimization: {
 			minimize: true,
@@ -56,13 +55,14 @@ module.exports = [
 				},
 			]
 		}
-	},*/
+	},
   // Compile CSS
   {
     mode: 'production',
     entry: {
 			style: './source/scss/_main.scss',
-			components_navigation: './source/scss/components/initial-char-navigation.scss'
+			components_navigation: './source/scss/components/initial-char-navigation.scss',
+			components_tooltip: './source/scss/components/tooltip.scss',
     },
     output: {
       path: path.resolve(__dirname, 'dist/css'),
@@ -145,8 +145,8 @@ module.exports = [
               }
             },
             'css-loader',
-            'postcss-loader',
-            'sass-loader',
+						'postcss-loader',
+						'sass-loader',
           ],
         },
       ],
