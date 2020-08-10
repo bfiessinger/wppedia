@@ -101,7 +101,7 @@ class post_type {
       'description' => __( '', 'wppedia' ),
       'labels' => $labels,
       'menu_icon' => 'dashicons-book-alt',
-      'supports' => array('title', 'editor', 'excerpt', 'revisions', 'author'),
+      'supports' => array('thumbnail', 'title', 'editor', 'excerpt', 'revisions', 'author'),
       'taxonomies' => array('wppedia_initial_letter'),
       'public' => true,
       'show_ui' => true,
