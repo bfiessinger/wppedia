@@ -130,6 +130,28 @@ class crosslinks {
       if ( stripos( $content, $post->title ) !== false ) {
 
 				$link_phrase = $this->prepare_link_phrase( $post->title );
+
+				// Split $link_phrase by empty spaces 
+				/*
+				$link_phrase_splitted = explode( ' ', $link_phrase );
+				if ( count( $link_phrase_splitted ) > 1 ) {
+
+					$link_phrase = '';
+
+					foreach ( $link_phrase_splitted as $chunk ) {
+						$link_phrase .= '(<(\w[^>]+)>\s?)?' . $chunk . '(<(\/\w[^>]+)>\s?)?';
+					}
+
+				}
+
+				echo '/' . $replace_regex . '(' . $link_phrase . ')/' . $regex_flags;
+				echo '<br>';
+				*/
+
+				// TESTING
+				// (?!(?:[^<\[]+[>\]]|[^>\]]+\<\/(?:a|script|style|code|pre))\>)((<(\w[^>]+)>\s?)?Lorem(<(\/\w[^>]+)>\s?)?(<(\w[^>]+)>\s?)?Ipsum(<(\/\w[^>]+)>\s?)?)
+
+
 				if ( $this->require_full_words && 0 === preg_match( '/' . $replace_regex . '(^|\s|\>|\#|\@|\+)' . $link_phrase . '(\?|\!|\;|,|\.|\<|\s|$)/' . $regex_flags, $content ) )
 					continue;
 
