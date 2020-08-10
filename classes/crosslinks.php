@@ -153,8 +153,14 @@ class crosslinks {
    */
   public function the_post_content_links( $content ) {
 
+		$doing_seo = doing_action('wpseo_head');
+
     // Bail early if the current post is not a wiki entry
-    if ( is_admin() || ! is_singular('wppedia_term') )
+    if ( 
+			is_admin() || 
+			! is_singular('wppedia_term') ||
+			$doing_seo
+		)
       return $content;
 
     return $this->the_content_linked( $content );
