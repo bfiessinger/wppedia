@@ -33,6 +33,10 @@ class tooltip {
 
 		$this->tooltip_thumbnail( $post_id );
 
+		echo apply_filters( 'wppedia_tooltip_before_excerpt', '<div class="wppedia-tooltip-content">' );
+		$this->the_excerpt( $post_id );
+		echo apply_filters( 'wppedia_tooltip_after_excerpt', '</div>' );
+		
 		die;
 
 	}
