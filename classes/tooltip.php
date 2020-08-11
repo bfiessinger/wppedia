@@ -34,9 +34,21 @@ class tooltip {
 
 	}
 
-	private function the_excerpt( \WP_Post $post ) {
+	/**
+	 * Get the excerpt with fallback generated from the content
+	 * 
+	 * @param WP_Post|int $post - Post ID or object
+	 * 
+	 * @since 1.0.0
+	 */
+	private function get_the_excerpt( $post = null ) {
 
 		$str = '';
+
+    $post = get_post( $post );
+    if ( empty( $post ) ) {
+      return;
+    }
 
 		if ( ! has_excerpt( $post ) ) {
 
