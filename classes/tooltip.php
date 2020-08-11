@@ -29,7 +29,6 @@ class tooltip {
 
 		// The Post ID delivered through the AJAX request
 		$post_id = $_POST['post_id'];
-		$post = get_post( $post_id );
 
 		$this->tooltip_thumbnail( $post_id );
 
@@ -52,10 +51,10 @@ class tooltip {
 
 		$str = '';
 
+		// setup Postdata
     $post = get_post( $post );
     if ( empty( $post ) )
       return;
-    }
 
 		if ( ! has_excerpt( $post ) ) {
 
