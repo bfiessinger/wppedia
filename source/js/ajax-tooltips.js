@@ -13,6 +13,7 @@ import { obj_serialize } from './utils';
  * Get Postdata to build the tooltip
  * 
  * @param {string} url 
+ * @param {object} data
  */
 async function get_tooltip_postdata ( url = '', data = {} ) {
 
@@ -32,6 +33,7 @@ async function get_tooltip_postdata ( url = '', data = {} ) {
 tippy(document.querySelectorAll('.wppedia-crosslink'), {
 	content: 'Loading&hellip;',
 	theme: 'light',
+	maxWidth: 320,
 	animation: 'shift-toward',
 	allowHTML: true,
 	onCreate( instance ) {
