@@ -49,7 +49,7 @@ class tooltip {
 		$str = '';
 
     $post = get_post( $post );
-    if ( empty( $post ) ) {
+    if ( empty( $post ) )
       return;
     }
 
