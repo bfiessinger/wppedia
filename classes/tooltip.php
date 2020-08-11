@@ -28,13 +28,13 @@ class tooltip {
 		$post_id = $_POST['post_id'];
 		$post = get_post( $post_id );
 
-		echo $this->setup_excerpt( $post );
+		echo $this->the_excerpt( $post );
 		
 		die;
 
 	}
 
-	private function setup_excerpt( \WP_Post $post ) {
+	private function the_excerpt( \WP_Post $post ) {
 
 		$str = '';
 
