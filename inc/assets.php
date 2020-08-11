@@ -17,7 +17,7 @@ function wppedia_enqueue_scripts() {
 		return;
 
 	// Load Styles
-	if ( 'on' == wppedia_utils()->get_option( \bf\wpPedia\settings::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
+	if ( 'on' == wppedia_utils()->get_option( \bf\wpPedia\options\plugin_settings::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
 
 		// Initial Letter Navigation Component
 		wppedia_add_inline_style( wpPediaPluginDir . 'dist/css/components_navigation.min.css' );
@@ -56,7 +56,7 @@ add_action( 'wp_enqueue_scripts', 'wppedia_enqueue_scripts' );
  */
 function wppedia_print_inline_styles() {
 
-	if ( 'on' != wppedia_utils()->get_option( \bf\wpPedia\settings::$settings_general_page, 'wppedia_layout_use-inline-styles' ) )
+	if ( 'on' != wppedia_utils()->get_option( \bf\wpPedia\options\plugin_settings::$settings_general_page, 'wppedia_layout_use-inline-styles' ) )
 		return;
 
 	$final_css = \bf\wpPedia\inline_style_collector::getInstance()->get_final_css();

@@ -6,12 +6,12 @@
  * @since 1.0.0
  */
 
-namespace bf\wpPedia;
+namespace bf\wpPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class settings {
+class plugin_settings {
 
   /**
    * Static variable for instanciation

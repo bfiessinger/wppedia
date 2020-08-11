@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-namespace bf\wpPedia;
+namespace bf\wpPedia\modules;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -217,7 +217,7 @@ class crosslinks {
 	 * @since 1.0.0
 	 */
 	public function the_post_content_links( $content ) {
-		
+
 		// Bail early if the current post is not a wiki entry
 		if ( 
 			is_admin() || 
