@@ -31,10 +31,11 @@ async function get_tooltip_postdata ( url = '', data = {} ) {
 }
 
 tippy(document.querySelectorAll('.wppedia-crosslink'), {
-	content: 'Loading&hellip;',
+	content: '<div class="wppedia-tooltip-loading">Loading&hellip;</div>',
 	theme: 'light',
 	maxWidth: 320,
 	animation: 'shift-toward',
+	interactive: true,
 	allowHTML: true,
 	onCreate( instance ) {
 
@@ -79,7 +80,7 @@ tippy(document.querySelectorAll('.wppedia-crosslink'), {
 	},
   onHidden( instance ) {
 
-    instance.setContent('Loading&hellip;');
+    instance.setContent('<div class="wppedia-tooltip-loading">Loading&hellip;</div>');
     // Unset these properties so new network requests can be initiated
 		instance._error = null;
 		
