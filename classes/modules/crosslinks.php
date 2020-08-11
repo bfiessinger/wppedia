@@ -86,106 +86,147 @@ class crosslinks {
 
   }
 
-  /**
-   * Filter the content and insert crosslinks
-   * 
-   * @since 1.0.0
-   */
-  public function the_content_linked( $content ) {
+	/**
+	 * Filter the content and insert crosslinks
+	 * 
+	 * @since 1.0.0
+	 */
+	public function the_content_linked( $content ) {
 
-    $posts = $this->get_crosslink_posts();
+		$posts = $this->get_crosslink_posts();
 
-    // Tags to ignore
-    $ignore_tags = ['a', 'script', 'style', 'code', 'pre'];
+		// Sort available posts by title length
+		usort($posts, function($a, $b) {
 
-    // Prepare regex for replacements
-    $regex_flags = 'imsu';
-    $replace_regex = '(?!(?:[^<\[]+[>\]]|[^>\]]+\<\/(?:';
-    foreach ( $ignore_tags as $index => $tag ) {
+			$a_len = mb_strlen($a->title);
+			$b_len = mb_strlen($b->title);
 
-      $replace_regex .= $tag;
-      if ( $index !== count($ignore_tags) - 1 )
-        $replace_regex .= '|';
+			if ( $this->prefer_single_words )
+				return $a_len - $b_len;
 
-    }
-    $replace_regex .= ')\>))';
+			return $b_len - $a_len;
 
-    // Sort available posts by title length
-    usort($posts, function($a, $b) {
+		});
 
-      $a_len = mb_strlen($a->title);
-      $b_len = mb_strlen($b->title);
+		// Loop over available posts and add crosslinks
+		foreach ( $posts as $post ) {
 
-      if ( $this->prefer_single_words )
-        return $a_len - $b_len;
-
-      return $b_len - $a_len;
-
-    });
-
-    // Loop over available posts and add crosslinks
-    foreach ( $posts as $post ) {
-      
-      // Check if a title exists in the current posts content
-      if ( stripos( $content, $post->title ) !== false ) {
+			// Check if a title exists in the current posts content
+			if ( stripos( wp_strip_all_tags( $content ), $post->title ) !== false ) {
 
 				$link_phrase = $this->prepare_link_phrase( $post->title );
-
-				// Split $link_phrase by empty spaces 
-				/*
-				$link_phrase_splitted = explode( ' ', $link_phrase );
-				if ( count( $link_phrase_splitted ) > 1 ) {
-
-					$link_phrase = '';
-
-					foreach ( $link_phrase_splitted as $chunk ) {
-						$link_phrase .= '(<(\w[^>]+)>\s?)?' . $chunk . '(<(\/\w[^>]+)>\s?)?';
-					}
-
+				if ( ! empty( $content ) && is_string( $content ) ) {
+					$content = $this->parse_content_xml( $content, $link_phrase, $post );
 				}
 
-				echo '/' . $replace_regex . '(' . $link_phrase . ')/' . $regex_flags;
-				echo '<br>';
-				*/
-
-				// TESTING
-				// (?!(?:[^<\[]+[>\]]|[^>\]]+\<\/(?:a|script|style|code|pre))\>)((<(\w[^>]+)>\s?)?Lorem(<(\/\w[^>]+)>\s?)?(<(\w[^>]+)>\s?)?Ipsum(<(\/\w[^>]+)>\s?)?)
-
-
-				if ( $this->require_full_words && 0 === preg_match( '/' . $replace_regex . '(^|\s|\>|\#|\@|\+)' . $link_phrase . '(\?|\!|\;|,|\.|\<|\s|$)/' . $regex_flags, $content ) )
-					continue;
-
-				$post_title_link = get_permalink( $post->ID );
-
-        $content = preg_replace( '/' . $replace_regex . '(' . $link_phrase . ')/' . $regex_flags, '<a href="' . $post_title_link . '" title="$1" class="wppedia-crosslink" data-post_id="' . $post->ID . '">$1</a>', $content );
-
-      }
-      
-
-    }
+			}
+			
+		}
 
     return $content;
 
-  }
+	}
 
-  /**
-   * Modify Post Content
-   * 
-   * @since 1.0.0
-   */
-  public function the_post_content_links( $content ) {
+	private function parse_content_xml( $content, $link_phrase, $post ) {
 
-		$doing_seo = doing_action('wpseo_head');
+		$dom = new \DOMDocument();
+		
+		libxml_use_internal_errors(true);
+		if ( ! $dom->loadHtml(mb_convert_encoding( $content, 'HTML-ENTITIES', "UTF-8") ) ) {
+			libxml_clear_errors();
+		}
+		$xpath = new \DOMXPath($dom);
 
-    // Bail early if the current post is not a wiki entry
-    if ( 
+		$ignore_tags = [
+			'a', 
+			'script', 
+			'style', 
+			'code', 
+			'pre', 
+			'object',
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6',
+			'textarea'
+		];
+
+		$query = '//text()';
+			foreach ( $ignore_tags as $tag ) {
+				$query .= '[not(ancestor::' . $tag . ')]';
+		}
+
+		foreach( $xpath->query($query) as $node ) {
+
+			if ( $this->require_full_words && 0 === preg_match( '/(^|\s|\>|\#|\@|\+)' . $link_phrase . '(\?|\!|\;|,|\.|\<|\s|$)/imsu', $node->wholeText ) )
+				continue;
+
+			$replaced = preg_replace_callback( '/' . $link_phrase . '/imsu', function( $match ) use ( $post ) {
+
+				if ( ! empty( $match[0] ) ) {
+
+					$post_title_link = get_permalink( $post->ID );
+
+					return '<a href="' . $post_title_link . '" title="' . esc_html( $match[0] ) . '" class="wppedia-crosslink" data-post_id="' . $post->ID . '">' . $match[0] . '</a>';
+
+				}
+
+			}, htmlspecialchars($node->wholeText, ENT_COMPAT));
+
+			if (!empty($replaced)) {
+				$newNode = $dom->createDocumentFragment();
+				$replacedShortcodes = strip_shortcodes($replaced);
+				$result = $newNode->appendXML('<![CDATA[' . $replacedShortcodes . ']]>');
+
+				if ($result !== false) {
+						$node->parentNode->replaceChild($newNode, $node);
+				}
+			}
+
+		}
+		
+		/*
+		 *  get only the body tag with its contents, then trim the body tag itself to get only the original content
+		 */
+		$bodyNode = $xpath->query('//body')->item(0);
+
+		if ($bodyNode !== NULL) {
+
+			$newDom = new \DOMDocument();
+			$newDom->appendChild($newDom->importNode($bodyNode, TRUE));
+
+			$intermalHtml = $newDom->saveHTML();
+			$content = mb_substr(trim($intermalHtml), 6, (mb_strlen($intermalHtml) - 14), "UTF-8");
+
+			/*
+			 * Fixing the self-closing which is lost due to a bug in DOMDocument->saveHtml() (caused a conflict with NextGen)
+			 */
+			$content = preg_replace('#(<img[^>]*[^/])>#Ui', '$1/>', $content);
+
+		}
+
+		return $content;
+
+	}
+
+	/**
+	 * Modify Post Content
+	 * 
+	 * @since 1.0.0
+	 */
+	public function the_post_content_links( $content ) {
+		
+		// Bail early if the current post is not a wiki entry
+		if ( 
 			is_admin() || 
 			! is_singular('wppedia_term') ||
-			$doing_seo
+			doing_action('wpseo_head')
 		)
-      return $content;
+			return $content;
 
-    return $this->the_content_linked( $content );
+		return $this->the_content_linked( $content );
 
   }
 
