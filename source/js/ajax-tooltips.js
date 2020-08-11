@@ -29,15 +29,8 @@ async function get_tooltip_postdata ( url = '', data = {} ) {
 	
 }
 
-Array.prototype.forEach.call( document.querySelectorAll('.wppedia-crosslink'), (el) => {
-	el.addEventListener('click', (e) => {
-		e.preventDefault();
-	});
-});
-
 tippy(document.querySelectorAll('.wppedia-crosslink'), {
 	content: 'Loading&hellip;',
-	trigger: 'click',
 	theme: 'light',
 	animation: 'shift-toward',
 	allowHTML: true,
