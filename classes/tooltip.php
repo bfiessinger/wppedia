@@ -65,7 +65,7 @@ class tooltip {
 
 		}
 
-		return $str;
+		return apply_filters( 'wppedia_tooltip_excerpt', $str );
 
 	}
 
