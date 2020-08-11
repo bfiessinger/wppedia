@@ -27,7 +27,7 @@ class tooltip {
 
 	function __generate_tooltip() {
 
-		// Setup Post Data
+		// The Post ID delivered through the AJAX request
 		$post_id = $_POST['post_id'];
 		$post = get_post( $post_id );
 
