@@ -50,7 +50,6 @@ class tooltip {
 
 				// Add some filters to the text
 				$str = strip_shortcodes( $str );
-				//$str = wpautop( $str );
 				$str = str_replace(']]&gt;', ']]&gt;', $str);
 
 				// Get a formatted string
