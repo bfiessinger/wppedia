@@ -13,6 +13,10 @@ function wppedia_navigation_link( string $term_slug ) {
 
 	$output = '';
 
+	$link_name = null;
+	$link_url = null;
+	$link_title = '';
+
 	/**
 	 * Filter for common link Classes
 	 * 
@@ -27,24 +31,31 @@ function wppedia_navigation_link( string $term_slug ) {
 	 */
 	$active_class = apply_filters( 'wppedia_navigation_link__active_class', 'active' );
 
-	if ( term_exists( $term_slug, 'wppedia_initial_letter' ) ) {
+	if ( 'home' == $term_slug ) {
+
+		$link_name = __( 'home', 'wppedia' );
+		$link_url = get_post_type_archive_link( 'wppedia_term' );
+		$link_title = __( 'home', 'wppedia' );
+		$link_classes[] = 'wppedia_navigation_home';
+
+		if ( wppedia_utils()->is_wiki_home() )
+			$link_classes[] = $active_class;
+
+		$output .= wppedia_navigation_link_anchor( $link_name, $link_url, $link_title, $link_classes );
+
+	} else if ( term_exists( $term_slug, 'wppedia_initial_letter' ) ) {
+
 		// Get Information about the current term
 		$obj = get_term_by( 'slug', $term_slug, 'wppedia_initial_letter' );
-		
-		$output .= '<a href="' . get_term_link( $obj ) . '"';
-		$output .= ' title="' . sprintf(__('Glossary terms with initial character „%s“ (%d)', 'wppedia'), $obj->name, $obj->count) . '"';
-		
+
+		$link_name = $obj->name;
+		$link_url = get_term_link( $obj );
+		$link_title = sprintf( __('Glossary terms with initial character „%s“ (%d)', 'wppedia'), $obj->name, $obj->count );
+
 		if ( isset( get_queried_object()->term_id ) && $obj->term_id === get_queried_object()->term_id )
 			$link_classes[] = $active_class;
 
-		if ( ! empty( $link_classes ) )
-			$output .= ' class="' . implode( ' ', $link_classes ) . '"';
-
-		$output .= '>';
-
-		$output .= apply_filters( 'wppedia_navigation_link__name', $obj->name );
-
-		$output .= '</a>';
+		$output .= wppedia_navigation_link_anchor( $link_name, $link_url, $link_title, $link_classes );
 
 	} else  {
 
@@ -63,6 +74,24 @@ function wppedia_navigation_link( string $term_slug ) {
 	}
 
 	return apply_filters( 'wppedia_navigation_link', $output );
+
+}
+
+function wppedia_navigation_link_anchor( string $name, string $url, string $title = '', array $classes = [] ) {
+		
+	$link_html = '<a href="' . $url . '"';
+	$link_html .= ' title="' . $title . '"';
+
+	if ( ! empty( $classes ) )
+		$link_html .= ' class="' . implode( ' ', $classes ) . '"';
+
+	$link_html .= '>';
+
+	$link_html .= apply_filters( 'wppedia_navigation_link__name', $name );
+
+	$link_html .= '</a>';
+
+	return $link_html;
 
 }
 

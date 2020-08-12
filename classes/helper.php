@@ -134,6 +134,7 @@ class helper {
 
 		// Default settings array
     $defaults = [
+			'show_option_home' => false,
 			'hide_empty' => true
 		];
 
@@ -155,13 +156,17 @@ class helper {
 
 		$available_initial_chars = array_unique( $available_initial_chars );
 
-		if ( $settings['hide_empty'] !== false )
+		if ( false !== $settings['hide_empty'] )
 			return $available_initial_chars;
 
 		$available_initial_chars = array_unique( array_replace( $available_initial_chars, $this->list_initial_letters() ) );
 
 		// Sort Array and keep indexes
 		asort( $available_initial_chars );
+
+		// Add all option after sorting
+		if ( false !== $settings['show_option_home'] )
+			$available_initial_chars = array_merge( ['home' => 'home'], $available_initial_chars );
 
 		return $available_initial_chars;
 
@@ -266,6 +271,20 @@ class helper {
 			$post_type = 'wppedia_term';
 			
 		return $post_type;
+
+	}
+
+	/**
+	 * Determine if the currently viewed page is the wiki homepage
+	 * 
+	 * @since 1.0.0
+	 */
+	public function is_wiki_home() {
+
+		if ( is_post_type_archive( 'wppedia_term' ) || get_the_ID() === intval( $this->has_static_archive_page() ) )
+			return true;
+
+		return false;
 
 	}
 
