@@ -245,11 +245,11 @@ class helper {
 	 */
 	public function has_static_archive_page() {
 
-		if ( FALSE === $this->get_option( settings::$settings_general_page, 'wppedia_archive_page' ) ) {
+		if ( FALSE === $this->get_option( options\plugin_settings::$settings_general_page, 'wppedia_archive_page' ) ) {
 			return false;
 		}
 
-		return $this->get_option( settings::$settings_general_page, 'wppedia_archive_page' );
+		return $this->get_option( options\plugin_settings::$settings_general_page, 'wppedia_archive_page' );
 
 	}
 	
