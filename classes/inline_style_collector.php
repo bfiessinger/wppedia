@@ -61,8 +61,20 @@ class inline_style_collector {
 		else
 			$css_string = $stylesheet;
 
-		if ( $css_string !== '' )
+		if ( $css_string !== '' ) {
+
+			/**
+			 * When loading CSS files inline their root is relative to the current page
+			 * so the browser will try to load background images from the wrong root
+			 */
+			$css_file_url_regex = '/url\s*\((?:\'|")?(.*?)(?:\'|")?\)/mi';
+			if ( preg_match($css_file_url_regex, $css_string, $matches, PREG_OFFSET_CAPTURE, 0) ) {
+				$css_string = preg_replace( $css_file_url_regex, 'url(\'' . wpPediaPluginUrl . 'dist/css/$1\')', $css_string );
+			}
+
 			self::merge_inline_styles( $css_string );
+
+		}
 
 	}
 
