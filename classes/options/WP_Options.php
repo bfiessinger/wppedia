@@ -18,7 +18,6 @@ class WP_Options {
    */
 	protected static $instance = null;
 
-
   /**
    * Get current Instance
    */
