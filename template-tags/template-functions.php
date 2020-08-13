@@ -34,7 +34,7 @@ function wppedia_navigation_link( string $term_slug ) {
 	if ( 'home' == $term_slug ) {
 
 		$link_name = __( 'home', 'wppedia' );
-		$link_url = get_post_type_archive_link( 'wppedia_term' );
+		$link_url = ( has_static_archive_page() ) ? has_static_archive_page() : get_post_type_archive_link( 'wppedia_term' );
 		$link_title = __( 'home', 'wppedia' );
 		$link_classes[] = 'wppedia_navigation_home';
 
