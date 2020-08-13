@@ -8,7 +8,7 @@
 
 namespace bf\wpPedia;
 
-use bf\wpPedia\settings;
+use bf\wpPedia\options\plugin_settings;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -119,7 +119,7 @@ class post_type {
       'rewrite' => $rewrite
 		];
 
-		if ( FALSE === wppedia_utils()->get_option( options\plugin_settings::$settings_general_page, 'wppedia_archive_page' ) )
+		if ( FALSE === wppedia_utils()->get_option( plugin_settings::$settings_general_page, 'wppedia_archive_page' ) )
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
 		\register_post_type( 'wppedia_term', $args );
