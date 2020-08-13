@@ -146,6 +146,7 @@ module.exports = [
             },
             'css-loader',
 						'postcss-loader',
+						'resolve-url-loader',
 						'sass-loader',
           ],
         },

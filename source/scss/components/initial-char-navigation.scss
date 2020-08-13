@@ -3,6 +3,15 @@
  */
 @import '../options';
 
+.wppedia_navigation_home { 
+	margin-right: 1rem;
+	text-indent: -9999px;
+	background-image: url('../../../assets/img/encyclopedia.svg');
+	background-size: 19px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
 #wppedia-char-navigation {
 	&:not(:last-child) { margin-bottom: 2rem; }
 	ul, li {
@@ -12,33 +21,34 @@
 	ul {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
 	}
 	li { 
-		margin: 1px;
+		margin: .25rem 0 .25rem -1px;
 		&:hover {
-			a, span {
+			span {
+				z-index: 1;
 				color: lighten($main-color, 5%);
-				background-color: $secondary-color;
-				border: solid 1px $secondary-color;
+				background-color: darken($main-color, 10%);
 			}
 		}
-		a.active {
+		a.active, &:hover a {
+			z-index: 1;
 			color: lighten($main-color, 5%);
 			background-color: $secondary-color;
 			border: solid 1px $secondary-color;
 		}
 		a, span {
+			position: relative;
 			border: solid 1px darken($main-color, 10%);
-			border-radius: 0.2rem;
 			color: darken($main-color, 45%);
 			text-decoration: none;
 			text-transform: uppercase;
 			display: block;
 			text-align: center;
-			padding: 0.3rem 0.75rem;
+			padding: .1rem .5rem;
 			box-sizing: content-box;
 			min-width: 1ch;
+			user-select: none;
 		}
 	}
 }
