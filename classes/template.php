@@ -53,6 +53,12 @@ class template {
 		$custom_index_include = true;
 
 		/**
+		 * This function adds a new template to the wordpress template hierarchy.
+		 * it works like index.php but only if the requested page is related to WPPedia.
+		 * 
+		 * Usage:
+		 * Create a custom index-wppedia.php file in the root of your WordPress Theme.
+		 * 
 		 * Check for the following Templates first:
 		 * 
 		 * - Posttype Archive: 
