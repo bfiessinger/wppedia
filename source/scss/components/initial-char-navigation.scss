@@ -3,15 +3,6 @@
  */
 @import '../options';
 
-.wppedia_navigation_home { 
-	margin-right: 1rem;
-	text-indent: -9999px;
-	background-image: url('../../../assets/img/encyclopedia.svg');
-	background-size: 19px;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-
 #wppedia-char-navigation {
 	&:not(:last-child) { margin-bottom: 2rem; }
 	ul, li {
@@ -50,5 +41,15 @@
 			min-width: 1ch;
 			user-select: none;
 		}
+	}
+	.wppedia_navigation_home { 
+		margin-right: 1rem;
+		text-indent: -9999px;
+		background-image: url('../../../assets/img/encyclopedia.svg');
+		background-size: 19px;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-color: darken($main-color, 10%);
+		border-color: darken($main-color, 10%);
 	}
 }
