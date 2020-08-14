@@ -190,7 +190,7 @@ class post_type {
 		$cur_initial = \wppedia_utils()->post_initial_letter( $post_ID );
 
 		$taxonomy = 'wppedia_initial_letter';
-		$cur_initial_encoded = \rawurlencode( $cur_initial );
+		$cur_initial_encoded = \wppedia_utils()->slugify( $cur_initial );
 		
 		// Create a new term based on the initial letter
 		\wp_insert_term( 
