@@ -63,6 +63,8 @@ class template {
 		 * - Singular Posts: 
 		 * 			single-wppedia_term.php OR 
 		 * 			single-wppedia_term-{post_name}.php
+		 * 
+		 * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
 		 */
 		if ( 
 			// Return the Default Template for all non WPPedia Posts
