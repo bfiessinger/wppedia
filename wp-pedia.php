@@ -16,6 +16,9 @@
 defined( 'ABSPATH' ) or die();
 
 // Define Constants
+if ( ! defined('wpPediaPluginFile') )
+	define('wpPediaPluginFile', __FILE__);
+
 if ( ! defined('wpPediaPluginDir') )
   define('wpPediaPluginDir', plugin_dir_path(__FILE__));
 
@@ -102,6 +105,14 @@ new bf\wpPedia\modules\crosslinks(
 new bf\wpPedia\modules\tooltip();
 
 /**
+ * Plugin activation / deactivation
+ * 
+ * @since 1.0.0
+ */
+new bf\wpPedia\activation();
+new bf\wpPedia\deactivation();
+
+/**
  * Load Template Tags
  * 
  * @since 1.0.0
@@ -128,8 +139,3 @@ require_once wpPediaPluginDir . 'inc/public-functions.php';
  * @since 1.0.0
  */
 require_once wpPediaPluginDir . 'inc/shortcodes.php';
-
-register_activation_hook( __FILE__, 'wppedia_activation_deactivation_hook' );
-function wppedia_activation_deactivation_hook() {
-	flush_rewrite_rules();
-}
