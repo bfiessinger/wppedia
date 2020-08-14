@@ -49,7 +49,7 @@ class controller {
 	 */
 	function posts_join_get_posts_by_initial_letter( $join, \WP_Query $query ) {
 
-		$initial_letter = $query->get( 'initial_letter' );
+		$initial_letter = $query->get( 'wppedia_query_initial_letter' );
 
 		if ( '' !== $initial_letter ) {
 			
@@ -72,7 +72,7 @@ class controller {
    */
   function posts_where_get_posts_by_initial_letter( $where, \WP_Query $query ) {
 
-    $initial_letter = $query->get( 'initial_letter' );
+    $initial_letter = $query->get( 'wppedia_query_initial_letter' );
 
     if ( '' !== $initial_letter ) {
 

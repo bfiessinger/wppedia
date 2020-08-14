@@ -254,7 +254,7 @@ class helper {
 
     foreach( $letterSet as $initial_letter ) {
 
-      $query_by_initial_letter = $this->get_wiki_entries(['initial_letter' => $initial_letter]);
+      $query_by_initial_letter = $this->get_wiki_entries(['wppedia_query_initial_letter' => $initial_letter]);
 
       foreach ( $query_by_initial_letter->posts as $post ) {
         
