@@ -8,6 +8,8 @@
 
 namespace bf\wpPedia\modules;
 
+use bf\wpPedia\helper;
+
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 

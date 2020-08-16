@@ -8,6 +8,8 @@
 
 namespace bf\wpPedia\modules;
 
+use bf\wpPedia\helper;
+
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
@@ -45,7 +47,7 @@ class crosslinks {
   public function get_crosslink_posts() {
 
     // Query all available posts
-    $posts_query = wppedia_utils()->get_wiki_entries([
+    $posts_query = helper::getInstance()->get_wiki_entries([
       'post_type'     => $this->post_types,
       'post_status'   => 'publish',
       'post__not_in'  => [get_the_ID()]

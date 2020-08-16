@@ -8,6 +8,7 @@
 
 namespace bf\wpPedia;
 
+use bf\wpPedia\helper;
 use bf\wpPedia\options\plugin_settings;
 
 // Make sure this file runs only from within WordPress.
@@ -119,7 +120,7 @@ class post_type {
       'rewrite' => $rewrite
 		];
 
-		if ( FALSE === wppedia_utils()->get_option( plugin_settings::$settings_general_page, 'wppedia_archive_page' ) )
+		if ( FALSE === helper::getInstance()->get_option( plugin_settings::$settings_general_page, 'wppedia_archive_page' ) )
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
 		\register_post_type( 'wppedia_term', $args );
@@ -187,10 +188,10 @@ class post_type {
 	 */
 	function manage_initial_character_onsave( int $post_ID, \WP_POST $post, bool $update ) {
 
-		$cur_initial = \wppedia_utils()->post_initial_letter( $post_ID );
+		$cur_initial = helper::getInstance()->post_initial_letter( $post_ID );
 
 		$taxonomy = 'wppedia_initial_letter';
-		$cur_initial_encoded = \wppedia_utils()->slugify( $cur_initial );
+		$cur_initial_encoded = helper::getInstance()->slugify( $cur_initial );
 		
 		// Create a new term based on the initial letter
 		\wp_insert_term( 

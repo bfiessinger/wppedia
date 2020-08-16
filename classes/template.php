@@ -8,6 +8,8 @@
 
 namespace bf\wpPedia;
 
+use bf\wpPedia\helper;
+
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
@@ -74,7 +76,7 @@ class template {
 		 */
 		if ( 
 			// Return the Default Template for all non WPPedia Posts
-			! \wppedia_utils()->is_wiki_post_type() ||
+			! helper::getInstance()->is_wiki_post_type() ||
 			// Post Type Archive
 			( 
 				is_post_type_archive( 'wppedia_term' ) && 
