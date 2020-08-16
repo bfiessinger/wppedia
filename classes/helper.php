@@ -41,6 +41,15 @@ class helper {
 
   protected function __construct() {}
 
+	/**
+	 * Return the current version of wpPedia
+	 * 
+	 * @since 1.0.0
+	 */
+	public function get_version() {
+		return wpPediaPluginVersion;
+	}
+
   /**
    * Get Wiki Entries
    * 
@@ -63,7 +72,34 @@ class helper {
 
     return $wiki_entries;
 
-  }
+	}
+	
+	/**
+	 * Get Wiki Entry titles
+	 * 
+	 * @since 1.0.0
+	 * 
+	 * @return array Array with post titles
+	 */
+	public function get_wiki_entry_titles( array $query_args = [] ) {
+
+		$query = $this->get_wiki_entries( $query_args );
+
+		if ( ! have_posts( $query ) )
+			return null;
+
+		$title_array = [];
+		while ( have_posts( $query ) ) {
+
+			the_post();
+			global $post;
+
+			$title_array[] = $post->title;
+		}
+
+		return $title_array;
+
+	}
 
   /**
    * Lists all available initial letters
