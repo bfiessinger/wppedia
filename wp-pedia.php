@@ -16,6 +16,9 @@
 defined( 'ABSPATH' ) or die();
 
 // Define Constants
+if ( ! defined('wpPediaPluginVersion') )
+	define('wpPediaPluginVersion', '1.0.0');
+
 if ( ! defined('wpPediaPluginFile') )
 	define('wpPediaPluginFile', __FILE__);
 
