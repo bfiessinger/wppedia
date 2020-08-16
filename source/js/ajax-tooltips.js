@@ -6,29 +6,7 @@ import tippy from 'tippy.js';
 /**
  * Internal Dependencies
  */
-import { obj_serialize } from './utils';
-
-
-/**
- * Get Postdata to build the tooltip
- * 
- * @param {string} url 
- * @param {object} data
- */
-async function get_tooltip_postdata ( url = '', data = {} ) {
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-    },
-		body: obj_serialize( data ),
-		credentials: 'same-origin'
-	});
-
-	return response.text();
-	
-}
+import { fetch_response__text } from './utils';
 
 tippy(document.querySelectorAll('.wppedia-crosslink'), {
 	content: '<div class="wppedia-tooltip-loading">Loading&hellip;</div>',
@@ -56,7 +34,7 @@ tippy(document.querySelectorAll('.wppedia-crosslink'), {
 
 		const cur_ref = instance.reference;
 
-		get_tooltip_postdata( wppedia_tooltip_props.ajaxurl, {
+		fetch_response__text( wppedia_tooltip_props.ajaxurl, {
 			action: 'wppedia_generate_tooltip',
 			post_id: cur_ref.getAttribute( 'data-post_id' )
 		} )
@@ -68,7 +46,7 @@ tippy(document.querySelectorAll('.wppedia-crosslink'), {
 			.catch( ( error ) => {
 
 				instance._error = error;
-				instance.setContent( 'Request failed' );
+				instance.setContent( '<div class="wppedia-tooltip-error">Request failed</div>' );
 
 			} )
 			.finally(() => {
