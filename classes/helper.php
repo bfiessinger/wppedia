@@ -83,18 +83,17 @@ class helper {
 	 */
 	public function get_wiki_entry_titles( array $query_args = [] ) {
 
-		$query = $this->get_wiki_entries( $query_args );
+		$the_query = $this->get_wiki_entries( $query_args );
 
-		if ( ! have_posts( $query ) )
+		if ( ! $the_query->have_posts() )
 			return null;
 
 		$title_array = [];
-		while ( have_posts( $query ) ) {
+		while ( $the_query->have_posts() ) {
 
-			the_post();
-			global $post;
+			$the_query->the_post();
+			$title_array[] = get_the_title();
 
-			$title_array[] = $post->title;
 		}
 
 		return $title_array;
