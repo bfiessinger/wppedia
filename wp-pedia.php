@@ -56,6 +56,14 @@ function wppedia_template() {
 wppedia_template();
 
 /**
+ * Instantiate REST Class
+ * 
+ * @since 1.0.0
+ */
+$rest = new bf\wpPedia\rest();
+$rest->init_actions();
+
+/**
  * Instantiate Controller
  * 
  * @since 1.0.0
