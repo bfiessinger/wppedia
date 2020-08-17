@@ -155,7 +155,11 @@ class template {
 	}
 
 	/**
-	 * Get the WPPedia Searchform
+	 * Template functions related to the Searchform
+	 */
+
+	/**
+	 * Get the template for WPPedia Searchform
 	 * 
 	 * @return void
 	 * 
@@ -176,6 +180,14 @@ class template {
 
 	}
 
+	/**
+	 * Get searchform attributes
+	 * 
+	 * @param array $attrs - Additional Attributes
+	 * @param boolean $tostring - Whether to render the Attributes as a string or return an Array
+	 * 
+	 * @since 1.0.0
+	 */
 	public function get_search_form_attrs( array $attrs = [], bool $tostring = true ) {
 
 		$post_type = 'wp_pedia_term';
@@ -212,6 +224,17 @@ class template {
 
 	}
 	
+	/**
+	 * Template functions related to the Initial char navigation
+	 */
+
+	/**
+	 * Get the template for WPPedia Initial char navigation
+	 * 
+	 * @return void
+	 * 
+	 * @since 1.0.0
+	 */
 	function get_char_navigation() {
 
 		// Don't modify the template if specified in the current Theme
