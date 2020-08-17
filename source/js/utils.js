@@ -42,16 +42,21 @@ export const obj_serialize = ( obj, prefix ) => {
  * @param {string} url 
  * @param {object} data
  */
-export async function fetch_request( url = '', data = {} ) {
+export async function fetch_request( url = '', data = {}, method = 'POST' ) {
 
-  const response = await fetch(url, {
-    method: 'POST',
+	let fetch_arguments = {
+		method: method,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-    },
-		body: obj_serialize( data ),
+		},
 		credentials: 'same-origin'
-	});
+	};
+
+	if ( method != 'GET' && method != 'HEAD' && ! isEmpty( data ) ) {
+		fetch_arguments.body = obj_serialize( data );
+	}
+
+  const response = await fetch(url, fetch_arguments);
 
 	return response;
 	
@@ -65,8 +70,8 @@ export async function fetch_request( url = '', data = {} ) {
  * @param {string} url 
  * @param {object} data
  */
-export async function fetch_response__text( url = '', data = {} ) {
-	const response = await fetch_request( url, data );
+export async function fetch_response__text( url = '', data = {}, method = 'POST' ) {
+	const response = await fetch_request( url, data, method );
 	return response.text();
 }
 
@@ -78,8 +83,8 @@ export async function fetch_response__text( url = '', data = {} ) {
  * @param {string} url 
  * @param {object} data
  */
-export async function fetch_response__blob( url = '', data = {} ) {
-	const response = await fetch_request( url, data );
+export async function fetch_response__blob( url = '', data = {}, method = 'POST' ) {
+	const response = await fetch_request( url, data, method );
 	return response.blob();
 }
 
@@ -91,7 +96,7 @@ export async function fetch_response__blob( url = '', data = {} ) {
  * @param {string} url 
  * @param {object} data
  */
-export async function fetch_response__json( url = '', data = {} ) {
-	const response = await fetch_request( url, data );
+export async function fetch_response__json( url = '', data = {}, method = 'POST' ) {
+	const response = await fetch_request( url, data, method );
 	return response.json();
 }
