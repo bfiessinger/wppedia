@@ -46,6 +46,13 @@ function wppedia_enqueue_scripts() {
 
 	}
 
+	$wppedia_rest = new bf\wpPedia\rest();
+
+	wp_enqueue_script( 'wppedia_search', wpPediaPluginUrl . 'dist/js/search.bundle.js', [], null, true );
+	wp_localize_script( 'wppedia_search', 'wppedia_search_props', [
+		'posts_url' => $wppedia_rest->get_endpoint_url( $wppedia_rest->rest_endpoint_posts )
+	] );
+
 }
 add_action( 'wp_enqueue_scripts', 'wppedia_enqueue_scripts' );
 

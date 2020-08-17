@@ -26,7 +26,8 @@ module.exports = [
 	{
 		mode: 'production',
 		entry: {
-			ajax_tooltip: './source/js/ajax-tooltips.js'
+			ajax_tooltip: './source/js/ajax-tooltips.js',
+			search: './source/js/wppedia-search.js'
 		},
 		optimization: {
 			minimize: true,
