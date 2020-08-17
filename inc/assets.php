@@ -36,7 +36,7 @@ function wppedia_enqueue_scripts() {
 	}
 
 	// Scripts
-	if ( is_wppedia() && is_singular() ) {
+	if ( is_singular() ) {
 
 		// Tooltips
 		wp_enqueue_script( 'wppedia_ajax_tooltips', wpPediaPluginUrl . 'dist/js/ajax_tooltip.bundle.js', [], null, true );
