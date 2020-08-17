@@ -29,8 +29,8 @@ function get_wppedia_searchform() {
  * 
  * @since 1.0.0
  */
-function get_wppedia_searchform_attrs() {
-	return bf\wpPedia\template::getInstance()->get_search_form_attrs();
+function get_wppedia_searchform_attrs( array $attrs = [], bool $tostring = true ) {
+	return bf\wpPedia\template::getInstance()->get_search_form_attrs( $attrs, $tostring );
 }
 
 /**
