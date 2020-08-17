@@ -175,6 +175,42 @@ class template {
 		$this->get_partial( 'searchform' );		
 
 	}
+
+	public function get_search_form_attrs( array $attrs = [], bool $tostring = true ) {
+
+		$post_type = 'wp_pedia_term';
+		$searchUrl = get_post_type_archive_link( $post_type );
+
+		$default = [
+			'role'		=> apply_filters( 'wppedia_searchform_attrs__role', 'search' ),
+			'method' 	=> apply_filters( 'wppedia_searchform_attrs__method', 'GET' ),
+			'class' 	=> apply_filters( 'wppedia_searchform_attrs__class', 'search-form wppedia-search' ),
+			'id' 			=> apply_filters( 'wppedia_searchform_attrs__id', 'wppedia_searchform' ),
+			'action' 	=> apply_filters( 'wppedia_searchform_attrs__action', $searchUrl )
+		];
+
+		$attrs = array_merge( $default, $attrs );
+
+		if ( $tostring ) {
+
+			$final = '';
+
+			$attr_index = 0;
+			$attr_count = count( $attrs );
+			foreach ( $attrs as $k => $v ) {
+				$attr_index++;
+				$final .= $k . '="' . $v . '"';
+				if ( $attr_index < $attr_count )
+					$final .= ' ';
+			}
+
+			return $final;
+
+		}
+
+		return $attrs;
+
+	}
 	
 	function get_char_navigation() {
 
