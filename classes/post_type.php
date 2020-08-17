@@ -16,6 +16,11 @@ defined( 'ABSPATH' ) or die();
 
 class post_type {
 
+	/**
+	 * Public variables
+	 */
+	public $post_type = 'wppedia_term';
+
   /**
    * Static variable for instanciation
    */
@@ -59,7 +64,7 @@ class post_type {
 	 * 
    * @since 1.0.0
    */
-  public static function register_wiki_post_type() {
+  public function register_wiki_post_type() {
 
     $labels = [
 			'name' => _x( 'Glossary', 'Post Type General Name', 'wppedia' ),
@@ -123,7 +128,7 @@ class post_type {
 		if ( FALSE === helper::getInstance()->get_option( plugin_settings::$settings_general_page, 'wppedia_archive_page' ) )
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
-		\register_post_type( 'wppedia_term', $args );
+		\register_post_type( $this->post_type, $args );
 
 	}
 
@@ -173,7 +178,7 @@ class post_type {
 			'rewrite' => $rewrite
 		];
 
-		\register_taxonomy( 'wppedia_initial_letter', [ 'wppedia_term' ], $args );
+		\register_taxonomy( 'wppedia_initial_letter', [ $this->post_type ], $args );
 
 	}
 
@@ -237,11 +242,9 @@ class post_type {
 			'taxonomy' => 'wppedia_initial_letter',
 			'hide_empty' => false,
 		) );
-   
-		$post_type = 'wppedia_term';
 
 		foreach ($terms as $term) {    
-    	$rules[ ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $post_type. '&name=$matches[1]';
+    	$rules[ ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $this->post_type. '&name=$matches[1]';
 		}
 
     // merge with global rules
