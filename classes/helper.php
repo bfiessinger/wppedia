@@ -92,7 +92,10 @@ class helper {
 		while ( $the_query->have_posts() ) {
 
 			$the_query->the_post();
-			$title_array[] = get_the_title();
+			$title_array[] = [
+				'post_id'			=> get_the_ID(),
+				'post_title'	=> get_the_title()
+			];
 
 		}
 
