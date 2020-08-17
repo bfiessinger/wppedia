@@ -47,6 +47,16 @@ function is_wppedia() {
 	return wppedia_utils()->is_wiki_post_type();
 }
 
+/**
+ * Add additional inline styles
+ * 
+ * @since 1.0.0
+ */
 function wppedia_add_inline_style( string $stylesheet ) {
-	return \bf\wpPedia\inline_style_collector::getInstance( $stylesheet );
+	
+	if ( bf\wpPedia\inline_style_collector::getInstance( $stylesheet ) )
+		return true;
+
+	return false;
+
 }

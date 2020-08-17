@@ -50,6 +50,8 @@ class inline_style_collector {
 	 * @param string $handle - CSS handle
 	 * @param string $data - CSS File or String to register
 	 * 
+	 * @return boolean - returns true if styles where merged, false otherwhise
+	 * 
 	 * @since 1.0.0
 	 */
 	private static function add( string $stylesheet ) {
@@ -74,7 +76,11 @@ class inline_style_collector {
 
 			self::merge_inline_styles( $css_string );
 
+			return true;
+
 		}
+
+		return false;
 
 	}
 
