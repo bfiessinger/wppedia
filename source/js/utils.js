@@ -7,7 +7,7 @@
 /**
  * External Dependencies
  */
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'micro-dash';
 
 /**
  * serialize an object
