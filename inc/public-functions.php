@@ -9,7 +9,7 @@
 /**
  * Prints the Template for the Searchform
  * 
- * @uses get_searchform()
+ * @uses helper::get_searchform()
  * @see bf\wpPedia\template
  * 
  * @return void
@@ -21,9 +21,22 @@ function get_wppedia_searchform() {
 }
 
 /**
+ * Print WPPedia Searchform form attributes as a string
+ * 
+ * @uses template::get_search_form_attrs()
+ * 
+ * @return string
+ * 
+ * @since 1.0.0
+ */
+function get_wppedia_searchform_attrs() {
+	return bf\wpPedia\template::getInstance()->get_search_form_attrs();
+}
+
+/**
  * Returns whether the current view is from the glossary
  * 
- * @uses is_wiki_post_type()
+ * @uses helper::is_wiki_post_type()
  * @see bf\wpPedia\helper
  * 
  * @return boolean
