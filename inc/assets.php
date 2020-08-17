@@ -46,11 +46,11 @@ function wppedia_enqueue_scripts() {
 
 	}
 
-	$wppedia_rest = new bf\wpPedia\rest();
-
+	$WPPedia_REST = new bf\wpPedia\rest();
 	wp_enqueue_script( 'wppedia_search', wpPediaPluginUrl . 'dist/js/search.bundle.js', [], null, true );
 	wp_localize_script( 'wppedia_search', 'wppedia_search_props', [
-		'posts_url' => $wppedia_rest->get_endpoint_url( $wppedia_rest->rest_endpoint_posts )
+		'postlist_url' 		=> $WPPedia_REST->get_endpoint_url( $WPPedia_REST->rest_endpoint_posts ),
+		'searchform_id' => bf\wpPedia\template::getInstance()->get_search_form_attrs( [], false )['id']
 	] );
 
 }

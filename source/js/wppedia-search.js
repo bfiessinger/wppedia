@@ -1,58 +1,77 @@
 /**
  * External Dependencies
  */
-import fuzzy from 'fuzzy';
+import FuzzySearch from 'fuzzy-search';
 
 /**
  * Internal Dependencies
  */
 import { fetch_response__json } from './utils';
 
+// Instantiate Postlist Variable
 let post_list;
 
-fetch_response__json( wppedia_search_props.posts_url, {}, 'GET' )
+// Fetch JSON
+fetch_response__json( wppedia_search_props.postlist_url, {}, 'GET' )
 	.then( ( response ) => {
-
 		post_list = response;
-
 	} );
 
-function display_results( str ) {
+/**
+ * 
+ * @param {*} str 
+ */
+function render_postlist( str, appendTo ) {
 
-	// Bail early if the string is undefined
-	if ( ! str ) {
-		return;
+	// Bail early if the string or the post_list is undefined
+	if ( typeof str == undefined || typeof post_list == undefined ) {
+		return false;
 	}
-	
-	const options = {
-		pre: '<b>', 
-		post: '</b>',
-		/**
-		 * Each Element in the postlist is an object. We can pass in a
-		 * function that is called on each element in the array to extract the
-		 * string to fuzzy search against. In this case, element.dir
-		 * 
-		 * @param {object} entry 
-		 */
-		extract: function(entry) {
-			return entry.post_title;
+
+	/**
+	 * Filter!
+	 * @see https://www.npmjs.com/package/fuzzy-search
+	 */	
+	const searcher = new FuzzySearch(
+		post_list, 
+		[ 
+			'post_title' 
+		], 
+		{
+			sort: true,
 		}
-	}
+	);
 
-  // Filter!
-	const filtered = fuzzy.filter(str, post_list, options);
-	
-	return filtered;
+	const result = searcher.search( str );
+
+	console.log( result );
+
+	/*
+	// Map the results to the html we want generated
+	const results = filtered.slice(0,50).map(function(result){
+		return listItemTemplate({
+				freebase: result.original.fb
+			, director: result.string
+			, movies: result.original.movies
+			, score: result.score
+		});
+	});
+
+	// Update the html
+	$('#lists').html(results.join(''));
+	*/
+
+	return result;
 
 }
 
-const wpPedia_search = document.getElementsByClassName('wppedia-search')[0];
-const search_input = wpPedia_search.getElementsByClassName('search-field')[0];
+const searchform = document.getElementById( wppedia_search_props.searchform_id );
+const search_input = searchform.getElementsByClassName('search-field')[0];
 
 search_input.addEventListener( 'keyup', ( e ) => {
 
 	const str = e.target.value;
 
-	console.log( display_results( str ) );
+	console.log( render_postlist( str ) );
 
 } );
