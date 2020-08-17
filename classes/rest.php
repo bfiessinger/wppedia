@@ -31,7 +31,7 @@ class rest extends \WP_REST_Controller {
 
 	function register_rest_routes() {
 
-		register_rest_route( $this->rest_namespace, '/data', [
+		register_rest_route( $this->rest_namespace, '/posts', [
 			'methods' => 'GET',
 			'callback' => function() { 
 				return helper::getInstance()->get_wiki_entry_titles(); 
