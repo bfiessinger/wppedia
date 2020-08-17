@@ -9,6 +9,7 @@
 namespace bf\wpPedia\modules;
 
 use bf\wpPedia\helper;
+use bf\wpPedia\post_type;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -18,7 +19,7 @@ class crosslinks {
 	public $crosslink_activated = true;
 	public $prefer_single_words = false;
 	public $require_full_words = true;
-	public $post_types = ['wppedia_term'];
+	public $post_types = [];
 
 	public function __construct( bool $crosslink_activated = null, bool $prefer_single_words = null, bool $require_full_words = null, array $post_types = null ) {
 
@@ -27,6 +28,10 @@ class crosslinks {
 
 		if ( $post_types !== null )
 			$this->post_types = $post_types;
+
+		// Push the main post type to the array if not already given
+		if ( ! in_array( post_type::getInstance()->post_type, $this->post_types ) )
+			$this->post_types[] = post_type::getInstance()->post_type;
 
 		if ( $require_full_words !== null )
 			$this->require_full_words = $require_full_words;
@@ -223,7 +228,7 @@ class crosslinks {
 		// Bail early if the current post is not a wiki entry
 		if ( 
 			is_admin() || 
-			! is_singular('wppedia_term') ||
+			! is_singular( post_type::getInstance()->post_type ) ||
 			doing_action('wpseo_head')
 		)
 			return $content;
