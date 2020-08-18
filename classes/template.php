@@ -34,10 +34,12 @@ class template {
 
   protected function __clone() {}
 
-	protected function __construct() {
+	protected function __construct() {}
+	
+	public function start() {
 		add_filter( 'template_include', [ $this, 'template_include' ] );
 	}
-	
+
 	/**
 	 * Use a custom default template for the WP Template Hierarchy.
 	 * If no custom template for singular posts, custom post type

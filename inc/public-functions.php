@@ -27,6 +27,15 @@ function get_wppedia_post_type() {
  */
 
 /**
+ * Get instance of helper utils
+ * 
+ * @since 1.0.0
+ */
+function wppedia_utils() {
+	return bf\wpPedia\helper::getInstance();
+}
+
+/**
  * Returns whether the current view is from the glossary
  * 
  * @uses helper::is_wiki_post_type()
@@ -44,6 +53,15 @@ function is_wppedia() {
 /**
  * Template
  */
+
+/**
+ * Get Instance of Template utils
+ * 
+ * @since 1.0.0
+ */
+function wppedia_template() {
+	return bf\wpPedia\template::getInstance();
+}
 
 /**
  * Prints the Template for the Searchform
