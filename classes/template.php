@@ -39,6 +39,7 @@ class template {
 	
 	public function start() {
 		add_filter( 'template_include', [ $this, 'template_include' ] );
+		add_filter( 'body_class', [ $this, 'body_class' ] );
 	}
 
 	/**
@@ -110,6 +111,18 @@ class template {
 			return get_query_template('index-wppedia');
 
 		return $template;
+
+	}
+
+	/**
+	 * Add a body class to WPPedia Pages
+	 */
+	function body_class( $classes ) {
+
+		if ( helper::getInstance()->is_wiki_post_type() )
+			$classes[] = apply_filters( 'wppedia_body_class', 'wppedia-page' );
+
+		return $classes;
 
 	}
 
