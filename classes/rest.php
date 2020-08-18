@@ -31,7 +31,6 @@ class rest extends \WP_REST_Controller {
 
 	public function start() {
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ] );
-
 	}
 
 	function register_rest_routes() {
