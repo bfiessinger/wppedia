@@ -1,25 +1,10 @@
 const path = require('path');
-const glob = require('glob-all');
 
 // Plugins
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const PurgecssPlugin = require('purgecss-webpack-plugin');
 const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
-// PurgeCss Whitelists
-const purgecssHTMLTags = require('purgecss-whitelist-htmltags');
-
-const PurgecssFiles = glob.sync([
-  '**/*.js',
-  '*.js',               // Get all JavaScript Files
-  '**/*.php',
-  '*.php',              // Get all PHP Files
-  '!node_modules/**/*', // Exclude node_modules folder
-  '!vendor/**/*',       // Exclude vendor folder
-  '!classes/**/*'	      // Exclude classes folder
-]);
 
 module.exports = [
 	// Compile Javascript
@@ -91,20 +76,6 @@ module.exports = [
 			}),
       new CssoWebpackPlugin({
         pluginOutputPostfix: 'min'
-      }),
-      new PurgecssPlugin({
-				paths: PurgecssFiles,
-        extractors: [
-          {
-            extractor: content => content.match(/[A-z0-9-:\/]+/g) || [],
-            extensions: ['js', 'ts', 'php']
-          }
-        ],
-        whitelist: [
-          ...purgecssHTMLTags.whitelist,	// HTML Tags Whitelist
-        ],
-        whitelistPatterns: [],
-        whitelistPatternsChildren: []
       })
     ],
     module: {
