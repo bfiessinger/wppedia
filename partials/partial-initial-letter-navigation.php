@@ -10,9 +10,9 @@
 <nav id="wppedia-char-navigation">
 	<ul>
 
-	<?php foreach ( wppedia_utils()->get_wiki_initial_letters(['hide_empty' => false, 'show_option_home' => true]) as $slug => $initial ): ?>
+	<?php foreach ( bf\wpPedia\helper::getInstance()->get_wiki_initial_letters(['hide_empty' => false, 'show_option_home' => true]) as $slug => $initial ): ?>
 
-		<li><?php echo wppedia_navigation_link( $slug ); ?></li>
+		<li><?php echo bf\wpPedia\template::getInstance()->get_char_navigation_link( $slug ); ?></li>
 
 	<?php endforeach; ?>
 

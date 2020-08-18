@@ -6,4 +6,4 @@
 	 * @since 1.0.0
 	 */
 
-echo wppedia_searchform(); ?>
+echo bf\wpPedia\template::getInstance()->render_searchform(); ?>
