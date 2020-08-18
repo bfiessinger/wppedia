@@ -1,15 +1,17 @@
 /**
  * External Dependencies
  */
-//import FuzzySearch from 'fuzzy-search';
 import Fuse from 'fuse.js/dist/fuse.basic.esm';
+import { isEmpty } from 'micro-dash';
 
 /**
  * Internal Dependencies
  */
 import { 
 	fetch_response__json, 
-	insertAfter 
+	insertAfter,
+	appendElement,
+	removeElement
 } from './utils';
 
 // Instantiate Postlist Variable
@@ -23,12 +25,15 @@ fetch_response__json( wppedia_search_props.postlist_url, {}, 'GET' )
 
 /**
  * Get search results from string
+ * 
  * @param {string} str 
+ * 
+ * @return {boolean|Fuse} Search results
  */
 function get_results( str, search_options ) {
 
 	// Bail early if the string or the post_list is undefined
-	if ( typeof str == undefined || typeof post_list == undefined ) {
+	if ( typeof str == 'undefined' || str == '' || typeof post_list == 'undefined' ) {
 		return false;
 	}
 
@@ -44,11 +49,20 @@ function get_results( str, search_options ) {
 
 	const results = searcher.search( str, {limit: 15} );
 
+	// Return false on an empty object
+	if ( isEmpty( results ) ) {
+		return false;
+	}
+
 	return results;
 
 }
 
-function render_results( search_results, render_to ) {
+/**
+ * Render the results wrapper and return the
+ * element
+ */
+function render_result_wrapper() {
 
 	const results_rendered_ID = 'wppedia_results_rendered';
 
@@ -60,27 +74,80 @@ function render_results( search_results, render_to ) {
 		results_rendered = document.getElementById( results_rendered_ID );
 	}
 
-	if ( search_results.length ) {
-		results_rendered.style.display = '';
-	} else {
-		results_rendered.style.display = 'none';
-	}
+	return results_rendered;
+
+}
+
+/**
+ * Render Search Results
+ * using "false" as the search_results param removes
+ * the results  
+ * 
+ * @param {boolean|Fuse} search_results 
+ * @param {Element} render_to 
+ * 
+ * @return {void}
+ */
+function render_results( search_results, render_to ) {
+
+	const results_rendered = render_result_wrapper();
 
 	// Insert Rendered results after `render_to`
 	insertAfter( results_rendered, render_to );
+	
+	results_rendered.innerHTML = '';
 
+	if ( search_results === false ) {
+		removeElement( results_rendered );
+		return;
+	}
+
+	// Re/Create Result list
 	Array.prototype.forEach.call( search_results, ( sr ) => {
-		
+
+		const res_item = sr.item;
+
+		const listitem_content = document.createElement('a');
+		listitem_content.href = res_item.url;
+		// Make Elements accessible
+		listitem_content.tabIndex = 0;
+		listitem_content.innerHTML = res_item.post_title;
+
+		appendElement( results_rendered, 'li', 'res_id_' + res_item.post_id, listitem_content );
+
 	} );
 
 }
 
 const search_input = document.getElementById( wppedia_search_props.searchinput_id );
-search_input.addEventListener( 'keyup', ( e ) => {
 
-	const _this = e.target;
-	const str = _this.value;
-	const search_results = get_results( str, wppedia_search_props.search_options );
-	render_results( search_results, _this );
+// Event Listeners to trigger the renderer
+const input_listeners = [
+	'keyup',
+	'focus',
+	'click',
+	'search'
+];
+
+input_listeners.forEach( ( listener ) => {
+
+	search_input.addEventListener( listener, ( e ) => {
+
+		const _this = e.target;
+		const str = _this.value;
+		const search_results = get_results( str, wppedia_search_props.search_options );
+		render_results( search_results, _this );
+	
+	} );
 
 } );
+
+// Detect clicks outside the searchform
+document.addEventListener('click', function(event) {
+
+  const isClickInside = search_input.parentElement.contains( event.target );
+  if ( ! isClickInside ) {
+		render_results( false, document.body );
+	}
+	
+});

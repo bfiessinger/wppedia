@@ -237,7 +237,9 @@ class template {
 	 * @since 1.0.0
 	 */
 	public function render_search_input() { ?>
-		<input type="search" class="search-field" id="<?php echo $this->__filtered_search_input_id(); ?>" placeholder="<?php _e('Search glossary', 'wppedia'); ?>" value="<?php echo get_search_query() ?>" name="s" title="<?php _e('Search for', 'wppedia'); ?>:" />
+		<div class="wppedia-search-field-wrapper">
+			<input type="search" class="search-field" id="<?php echo $this->__filtered_search_input_id(); ?>" placeholder="<?php _e('Search glossary', 'wppedia'); ?>" value="<?php echo get_search_query() ?>" name="s" title="<?php _e('Search for', 'wppedia'); ?>:" autocomplete="off" />
+		</div>
 	<?php }
 
 	/**

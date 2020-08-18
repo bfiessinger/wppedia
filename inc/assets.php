@@ -22,6 +22,9 @@ function wppedia_enqueue_scripts() {
 		// Initial Letter Navigation Component
 		wppedia_add_inline_style( wpPediaPluginDir . 'dist/css/components_navigation.min.css' );
 
+		// Searchbar
+		wppedia_add_inline_style( wpPediaPluginDir . 'dist/css/components_search.min.css' );
+
 		if ( is_wppedia() && is_singular() ) {
 
 			// Tooltips
@@ -53,7 +56,8 @@ function wppedia_enqueue_scripts() {
 		'search_options'	=> json_encode( [
 			'keys' => [ 
 				'post_title' 
-			]
+			],
+			'threshold' => 0.5,
 		] ),
 		'searchinput_id'	=> bf\wpPedia\template::getInstance()->__filtered_search_input_id()
 	] );
