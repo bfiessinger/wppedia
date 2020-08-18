@@ -50,7 +50,12 @@ function wppedia_enqueue_scripts() {
 	wp_enqueue_script( 'wppedia_search', wpPediaPluginUrl . 'dist/js/search.bundle.js', [], null, true );
 	wp_localize_script( 'wppedia_search', 'wppedia_search_props', [
 		'postlist_url' 		=> $WPPedia_REST->get_endpoint_url( $WPPedia_REST->rest_endpoint_posts ),
-		'searchform_id' => bf\wpPedia\template::getInstance()->get_search_form_attrs( [], false )['id']
+		'search_options'	=> json_encode( [
+			'keys' => [ 
+				'post_title' 
+			]
+		] ),
+		'searchinput_id'	=> bf\wpPedia\template::getInstance()->__filtered_search_input_id()
 	] );
 
 }

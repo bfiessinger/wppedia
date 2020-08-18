@@ -19,10 +19,10 @@ fetch_response__json( wppedia_search_props.postlist_url, {}, 'GET' )
 	} );
 
 /**
- * 
- * @param {*} str 
+ * Get search results from string
+ * @param {string} str 
  */
-function render_postlist( str, appendTo ) {
+function get_results( str, search_options ) {
 
 	// Bail early if the string or the post_list is undefined
 	if ( typeof str == undefined || typeof post_list == undefined ) {
@@ -32,64 +32,45 @@ function render_postlist( str, appendTo ) {
 	/**
 	 * Filter!
 	 * @see https://www.npmjs.com/package/fuse.js
-	 */	
-	const search_options = {
-		keys: [ 'post_title' ]
-	}
+	 */
+	const search_opt_obj = JSON.parse( search_options );
 
 	// Create the Fuse index
-	const search_index = Fuse.createIndex(search_options.keys, post_list);
-	const searcher = new Fuse(post_list, search_options, search_index);
+	const search_index = Fuse.createIndex(search_opt_obj.keys, post_list);
+	const searcher = new Fuse(post_list, search_opt_obj, search_index);
 
-	const search = searcher.search( $str, {limit: 15} );
+	const results = searcher.search( str, {limit: 15} );
 
-	console.log(search);
-
-
-	//const filtered = fuzzy.filter(str, post_list, options);
-
-	 /*
-	const searcher = new FuzzySearch(
-		post_list, 
-		[ 
-			'post_title' 
-		], 
-		{
-			sort: true,
-		}
-	);
-
-	const result = searcher.search( str );
-
-	console.log( result );
-	*/
-
-	/*
-	// Map the results to the html we want generated
-	const results = filtered.slice(0,50).map(function(result){
-		return listItemTemplate({
-				freebase: result.original.fb
-			, director: result.string
-			, movies: result.original.movies
-			, score: result.score
-		});
-	});
-
-	// Update the html
-	$('#lists').html(results.join(''));
-	*/
-
-	//return result;
+	return results;
 
 }
 
-const searchform = document.getElementById( wppedia_search_props.searchform_id );
-const search_input = searchform.getElementsByClassName('search-field')[0];
+function render_results( search_results, render_to ) {
 
+	let results_rendered = document.createElement('ul');
+	results_rendered.id = 'wppedia_results_rendered';
+
+	if ( search_results.length ) {
+		results_rendered.style.display = '';
+	} else {
+		results_rendered.style.display = 'none';
+	}
+
+	// Insert Rendered results after `render_to`
+	render_to.parentNode.insertBefore(results_rendered, render_to.nextSibling);
+
+	Array.prototype.forEach.call( search_results, ( sr ) => {
+		
+	} );
+
+}
+
+const search_input = document.getElementById( wppedia_search_props.searchinput_id );
 search_input.addEventListener( 'keyup', ( e ) => {
 
-	const str = e.target.value;
-
-	console.log( render_postlist( str ) );
+	const _this = e.target;
+	const str = _this.value;
+	const search_results = get_results( str, wppedia_search_props.search_options );
+	render_results( search_results, _this );
 
 } );
