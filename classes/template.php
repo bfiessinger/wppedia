@@ -206,7 +206,7 @@ class template {
 	 */
 	public function get_search_form_attrs( array $attrs = [], bool $tostring = true ) {
 
-		$post_type = 'wp_pedia_term';
+		$post_type = post_type::getInstance()->post_type;
 		$searchUrl = get_post_type_archive_link( $post_type );
 
 		$default = [
