@@ -7,6 +7,17 @@
  */
 
 /**
+ * Get the post type for WPPedia Posts
+ * 
+ * @return string
+ * 
+ * @since 1.0.0
+ */
+function get_wppedia_post_type() {
+	return bf\wpPedia\post_type::getInstance()->post_type;
+}
+
+/**
  * Prints the Template for the Searchform
  * 
  * @uses helper::get_searchform()
