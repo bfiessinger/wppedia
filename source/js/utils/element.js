@@ -3,6 +3,15 @@
  */
 
 /**
+ * Check whether a variable is an Element
+ * 
+ * @param {any} element 
+ */
+export function isElement(element) {
+	return element instanceof Element || element instanceof HTMLDocument;  
+}
+
+/**
  * Append a dynamically generated HTMLElement to an 
  * existing Node
  * 
