@@ -1,7 +1,8 @@
 /**
  * External Dependencies
  */
-import FuzzySearch from 'fuzzy-search';
+//import FuzzySearch from 'fuzzy-search';
+import Fuse from 'fuse.js/dist/fuse.basic.esm';
 
 /**
  * Internal Dependencies
@@ -30,8 +31,24 @@ function render_postlist( str, appendTo ) {
 
 	/**
 	 * Filter!
-	 * @see https://www.npmjs.com/package/fuzzy-search
+	 * @see https://www.npmjs.com/package/fuse.js
 	 */	
+	const search_options = {
+		keys: [ 'post_title' ]
+	}
+
+	// Create the Fuse index
+	const search_index = Fuse.createIndex(search_options.keys, post_list);
+	const searcher = new Fuse(post_list, search_options, search_index);
+
+	const search = searcher.search( $str, {limit: 15} );
+
+	console.log(search);
+
+
+	//const filtered = fuzzy.filter(str, post_list, options);
+
+	 /*
 	const searcher = new FuzzySearch(
 		post_list, 
 		[ 
@@ -45,6 +62,7 @@ function render_postlist( str, appendTo ) {
 	const result = searcher.search( str );
 
 	console.log( result );
+	*/
 
 	/*
 	// Map the results to the html we want generated
@@ -61,7 +79,7 @@ function render_postlist( str, appendTo ) {
 	$('#lists').html(results.join(''));
 	*/
 
-	return result;
+	//return result;
 
 }
 
