@@ -49,7 +49,7 @@ function wppedia_enqueue_scripts() {
 	$WPPedia_REST = new bf\wpPedia\rest();
 	wp_enqueue_script( 'wppedia_search', wpPediaPluginUrl . 'dist/js/search.bundle.js', [], null, true );
 	wp_localize_script( 'wppedia_search', 'wppedia_search_props', [
-		'postlist_url' 		=> $WPPedia_REST->get_endpoint_url( $WPPedia_REST->rest_endpoint_posts ),
+		'postlist_url' 		=> $WPPedia_REST->get_endpoint_url( $WPPedia_REST->rest_endpoint_search ),
 		'search_options'	=> json_encode( [
 			'keys' => [ 
 				'post_title' 

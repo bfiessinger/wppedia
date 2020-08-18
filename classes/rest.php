@@ -19,13 +19,13 @@ class rest extends \WP_REST_Controller {
 	public $rest_namespace = null;
 
 	// Public Endpoints
-	public $rest_endpoint_posts = null;
+	public $rest_endpoint_search = null;
 
 	public function __construct() {
 
 		$this->rest_namespace = 'wppedia/v/' . helper::getInstance()->get_version();
 
-		$this->rest_endpoint_posts = 'posts';
+		$this->rest_endpoint_search = 'search';
 
 	}
 
@@ -35,10 +35,10 @@ class rest extends \WP_REST_Controller {
 
 	function register_rest_routes() {
 
-		register_rest_route( $this->rest_namespace, '/' . $this->rest_endpoint_posts, [
+		register_rest_route( $this->rest_namespace, '/' . $this->rest_endpoint_search, [
 			'methods' => 'GET',
 			'callback' => function() { 
-				return helper::getInstance()->get_wiki_entry_titles(); 
+				return helper::getInstance()->get_wiki_entry_searchables(); 
 			}
 		] );
 

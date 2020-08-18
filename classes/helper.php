@@ -81,7 +81,7 @@ class helper {
 	 * 
 	 * @return array Array with post titles
 	 */
-	public function get_wiki_entry_titles( array $query_args = [] ) {
+	public function get_wiki_entry_searchables( array $query_args = [] ) {
 
 		$the_query = $this->get_wiki_entries( $query_args );
 
@@ -94,7 +94,9 @@ class helper {
 			$the_query->the_post();
 			$title_array[] = [
 				'post_id'			=> get_the_ID(),
-				'post_title'	=> get_the_title()
+				'post_title'	=> get_the_title(),
+				'url'					=> get_permalink(),
+				'tags'				=> []
 			];
 
 		}
