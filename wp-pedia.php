@@ -33,17 +33,6 @@ $loader = require "vendor/autoload.php";
 $loader->addPsr4('bf\\wpPedia\\', __DIR__);
 
 /**
- * Instatiate Helper Utils
- * 
- * @since 1.0.0
- */
-function wppedia_utils() {
-
-	return bf\wpPedia\helper::getInstance();
-
-}
-
-/**
  * Instantiate Template Utils
  * 
  * @since 1.0.0
