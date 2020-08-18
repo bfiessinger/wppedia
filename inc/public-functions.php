@@ -28,7 +28,7 @@ function get_wppedia_post_type() {
  * @since 1.0.0
  */
 function get_wppedia_searchform() {
-	wppedia_template()->get_searchform();
+	bf\wpPedia\template::getInstance()->get_searchform();
 }
 
 /**
@@ -55,7 +55,7 @@ function get_wppedia_searchform_attrs( array $attrs = [], bool $tostring = true 
  * @since 1.0.0
  */
 function is_wppedia() {
-	return wppedia_utils()->is_wiki_post_type();
+	return bf\wpPedia\helper::getInstance()->is_wiki_post_type();
 }
 
 /**
