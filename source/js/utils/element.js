@@ -13,17 +13,24 @@ export function isElement(element) {
 
 /**
  * Append a dynamically generated HTMLElement to an 
- * existing Node
+ * existing Node. Content might be either a string or
+ * another Element.
  * 
  * @param {Element} parentNode 
  * @param {string} elementTag 
  * @param {string} elementId 
- * @param {string} html 
+ * @param {string|Element} content 
  */
-export function appendElement(parentNode, elementTag, elementId, html) {
+export function appendElement(parentNode, elementTag, elementId, content) {
 	const newElement = document.createElement(elementTag);
 	newElement.setAttribute('id', elementId);
-	newElement.innerHTML = html;
+
+	if ( isElement( content ) ) {
+		newElement.appendChild( content );
+	} else {
+		newElement.innerHTML = content;
+	}
+
 	parentNode.appendChild(newElement);
 }
 
@@ -40,10 +47,8 @@ export function insertAfter(newNode, existingNode) {
 /**
  * Remove an Element from the DOM
  * 
- * @param {Element} elementId 
+ * @param {Element} element 
  */
-export function removeElement(elementId) {
-	// Removes an element from the document
-	var element = document.getElementById(elementId);
+export function removeElement(element) {
 	element.parentNode.removeChild(element);
 }

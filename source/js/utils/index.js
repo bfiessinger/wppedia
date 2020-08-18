@@ -5,6 +5,7 @@
  */
 
 import {
+	isElement,
 	appendElement,
 	insertAfter,
 	removeElement
@@ -23,6 +24,7 @@ import {
 
 export {
 	// Element Utils
+	isElement,
 	appendElement,
 	insertAfter,
 	removeElement,
