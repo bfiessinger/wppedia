@@ -7,7 +7,10 @@ import Fuse from 'fuse.js/dist/fuse.basic.esm';
 /**
  * Internal Dependencies
  */
-import { fetch_response__json } from './utils';
+import { 
+	fetch_response__json, 
+	insertAfter 
+} from './utils';
 
 // Instantiate Postlist Variable
 let post_list;
@@ -47,8 +50,15 @@ function get_results( str, search_options ) {
 
 function render_results( search_results, render_to ) {
 
-	let results_rendered = document.createElement('ul');
-	results_rendered.id = 'wppedia_results_rendered';
+	const results_rendered_ID = 'wppedia_results_rendered';
+
+	let results_rendered;
+	if ( ! document.getElementById( results_rendered_ID ) ) {
+		results_rendered = document.createElement('ul');
+		results_rendered.id = results_rendered_ID;
+	} else {
+		results_rendered = document.getElementById( results_rendered_ID );
+	}
 
 	if ( search_results.length ) {
 		results_rendered.style.display = '';
@@ -57,7 +67,7 @@ function render_results( search_results, render_to ) {
 	}
 
 	// Insert Rendered results after `render_to`
-	render_to.parentNode.insertBefore(results_rendered, render_to.nextSibling);
+	insertAfter( results_rendered, render_to );
 
 	Array.prototype.forEach.call( search_results, ( sr ) => {
 		

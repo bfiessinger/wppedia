@@ -1,40 +1,11 @@
 /**
- * Common Helper Utils
- * 
- * @since 1.0.0
+ * Utility functions to work with AJAX
  */
 
 /**
  * External Dependencies
  */
 import { isEmpty } from 'micro-dash';
-
-/**
- * serialize an object
- * 
- * @param {object} obj 
- * @param {string} prefix 
- */
-export const obj_serialize = ( obj, prefix ) => {
-
-	let str = [];
-	let p;
-	
-	for (p in obj) {
-
-		if (obj.hasOwnProperty(p)) {
-			const k = prefix ? prefix + '[' + p + ']' : p;
-			const v = obj[p];
-			str.push((v !== null && typeof v === 'object') ?
-				serialize(v, k) :
-				encodeURIComponent(k) + '=' + encodeURIComponent(v));
-		}
-		
-	}
-	
-	return str.join('&');
-	
-}
 
 /**
  * Make an AJAX fetch Call
