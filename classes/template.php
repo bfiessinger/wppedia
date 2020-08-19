@@ -268,7 +268,6 @@ class template {
 			// Render the search input
 			$this->render_search_input();
 			?>
-			<input type="hidden" name="post_type" value="<?php echo post_type::getInstance()->post_type; ?>" />
 			<input type="submit" class="search-submit" value="Search" />
 		</form>
 		
