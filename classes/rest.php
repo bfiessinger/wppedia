@@ -23,8 +23,7 @@ class rest extends \WP_REST_Controller {
 
 	public function __construct() {
 
-		$this->rest_namespace = 'wppedia/v/' . helper::getInstance()->get_version();
-
+		$this->rest_namespace = 'wppedia/v1';
 		$this->rest_endpoint_search = 'search';
 
 	}
@@ -40,9 +39,7 @@ class rest extends \WP_REST_Controller {
 			'callback' => function() { 
 				return helper::getInstance()->get_wiki_entry_searchables(); 
 			},
-			'args' => [
-				'permission_callback' => '__return_true'
-			]
+			'permission_callback' => '__return_true'
 		] );
 
 	}
