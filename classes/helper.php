@@ -8,6 +8,7 @@
 
 namespace bf\wpPedia;
 
+use bf\wpPedia\post_type;
 use bf\wpPedia\options\plugin_settings;
 
 // Make sure this file runs only from within WordPress.
@@ -343,14 +344,63 @@ class helper {
 	 * 
 	 * @since 1.0.0
 	 */
-	public function is_wiki_post_type() {
+	public function is_wiki_post_type( $query = false ) {
 
-		$post_type = false;
+		if ( ! $query ) {
+			global $wp_query;
+			$query = $wp_query;
+		}
 
-		if ( get_post_type() == 'wppedia_term' || get_the_ID() === intval( $this->has_static_archive_page() ) )
-			$post_type = 'wppedia_term';
+		/**
+		 * No Checks should be performed if the request is 404
+		 * or we are not on the main query
+		 */
+		if ( is_404() || ! $query->is_main_query() )
+			return false;
+
+		$post_type = post_type::getInstance()->post_type;
+		$is_wppedia_post_type = false;
+
+		global $wp;
+
+		if ( 
+			/**
+			 * Check for singular and archive pages where there is only
+			 * one given post type
+			 */
+			(
+				! $query->is_search() &&
+				get_post_type() == $post_type
+			) ||
+			/**
+			 * Check for searches in the archive
+			 */
+			(
+				$query->is_post_type_archive() &&
+				rtrim( home_url( $wp->request ), '/' ) == rtrim( get_post_type_archive_link( $post_type ), '/' )
+			) ||
+			/**
+			 * Check for requests to the custom selected static WPPedia front page
+			 */
+			get_the_ID() === intval( $this->has_static_archive_page() )
+		)
+			$is_wppedia_post_type = $post_type;
 			
-		return $post_type;
+		return $is_wppedia_post_type;
+
+	}
+
+	public function is_wiki_search( $query = false ) {
+
+		if ( ! $query ) {
+			global $wp_query;
+			$query = $wp_query;
+		}
+
+		if ( $query->is_search() && $this->is_wiki_post_type( $query ) )
+			return true;
+		
+		return false;
 
 	}
 
