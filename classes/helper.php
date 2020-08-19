@@ -390,6 +390,13 @@ class helper {
 
 	}
 
+	/**
+	 * Determine if the current view is a wiki search
+	 * 
+	 * @uses is_wiki_post_type()
+	 * 
+	 * @since 1.0.0
+	 */
 	public function is_wiki_search( $query = false ) {
 
 		if ( ! $query ) {
