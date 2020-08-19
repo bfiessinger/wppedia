@@ -121,33 +121,37 @@ function render_results( search_results, render_to ) {
 
 const search_input = document.getElementById( wppedia_search_props.searchinput_id );
 
-// Event Listeners to trigger the renderer
-const input_listeners = [
-	'keyup',
-	'focus',
-	'click',
-	'search'
-];
+if ( search_input ) {
 
-input_listeners.forEach( ( listener ) => {
+	// Event Listeners to trigger the renderer
+	const input_listeners = [
+		'keyup',
+		'focus',
+		'click',
+		'search'
+	];
 
-	search_input.addEventListener( listener, ( e ) => {
+	input_listeners.forEach( ( listener ) => {
 
-		const _this = e.target;
-		const str = _this.value;
-		const search_results = get_results( str, wppedia_search_props.search_options );
-		render_results( search_results, _this );
-	
+		search_input.addEventListener( listener, ( e ) => {
+
+			const _this = e.target;
+			const str = _this.value;
+			const search_results = get_results( str, wppedia_search_props.search_options );
+			render_results( search_results, _this );
+		
+		} );
+
 	} );
 
-} );
+	// Detect clicks outside the searchform
+	document.addEventListener('click', function(event) {
 
-// Detect clicks outside the searchform
-document.addEventListener('click', function(event) {
+		const isClickInside = search_input.parentElement.contains( event.target );
+		if ( ! isClickInside ) {
+			render_results( false, document.body );
+		}
+		
+	});
 
-  const isClickInside = search_input.parentElement.contains( event.target );
-  if ( ! isClickInside ) {
-		render_results( false, document.body );
-	}
-	
-});
+}
