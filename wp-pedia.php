@@ -53,7 +53,7 @@ $rest_utils->start();
  * 
  * @since 1.0.0
  */
-bf\wpPedia\controller::getInstance();
+bf\wpPedia\query_control::getInstance();
 
 /**
  * Instatiate Admin View
