@@ -8,6 +8,9 @@
 
 namespace bf\wpPedia;
 
+use bf\wpPedia\helper;
+use bf\wpPedia\post_type;
+
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
@@ -41,6 +44,9 @@ class controller {
 		// Modify the default query output
 		add_filter( 'posts_join', [ $this, 'posts_join_get_posts_by_initial_letter' ], 10, 2 );
 		add_filter( 'posts_where', [ $this, 'posts_where_get_posts_by_initial_letter' ], 10, 2 );
+
+		// Allow searching in glossary entries only
+		add_filter( 'pre_get_posts', [ $this, 'search_wppedia' ], 202 );
 
 	}
 
@@ -84,6 +90,21 @@ class controller {
 
     return $where;
 
-  }
+	}
+	
+	/**
+	 * Modify the main query for searches on the archive page
+	 * 
+	 * @since 1.0.0
+	 */
+	function search_wppedia( $query ) {
+
+		if ( helper::getInstance()->is_wiki_search( $query ) ) {
+			$query->set( 'post_type', post_type::getInstance()->post_type );
+		}
+
+		return $query;
+
+	}
 
 }
