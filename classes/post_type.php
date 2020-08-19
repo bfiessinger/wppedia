@@ -20,6 +20,7 @@ class post_type {
 	 * Public variables
 	 */
 	public $post_type = 'wppedia_term';
+	private $post_limit = 200;
 
   /**
    * Static variable for instanciation
@@ -44,6 +45,12 @@ class post_type {
 
 		// Create Post type
 		add_action( 'init', [ $this, 'register_wiki_post_type' ] );
+
+		// Setup a post creation limit
+		if ( $this->post_limit ) {
+			add_action( 'publish_' . $this->post_type , [ $this, 'limit_num_posts' ] );
+			add_action( 'admin_notices', [ $this, 'limit_reached_msg_notice' ] );
+		}
 
 		// Rewrite Rules for initial Characters
 		add_filter('generate_rewrite_rules', [ $this, 'wppedia_cpt_generate_rewrite_rules' ] );
@@ -129,6 +136,57 @@ class post_type {
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
 		\register_post_type( $this->post_type, $args );
+
+	}
+
+	/**
+	 * Setup a post creation limit as the free version does not offer an index which might cause
+	 * the crosslink generation to be very slow
+	 * 
+	 * @since 1.0.0
+	 */
+	function limit_num_posts( $post_id ) {
+
+		global $wpdb;
+		$thepost = get_post($post_id);
+		
+		$query_num_posts = "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = '$this->post_type' AND post_status = 'publish' ";
+		$num_published = $wpdb->get_var($query_num_posts);
+			
+		// Check the limit
+		if( $num_published > $this->post_limit ) {
+
+			$upost = array();
+			$upost['ID'] = $post_id;
+			$upost['post_status'] = 'draft';	//force it back to draft
+			wp_update_post($upost);
+				
+			//show an error message
+			add_filter('redirect_post_location', [ $this, 'do_limit_reached_msg' ] );		
+
+		}
+
+	}
+
+	function do_limit_reached_msg($loc) {
+
+		//message=6 is the published message
+		if( strpos( $loc, '&message=6' ) )
+			return add_query_arg( [
+					'message'=>'1', 
+					'wppedia_limit_reached'=>'1' 
+				], $loc
+			);			
+		else
+			return add_query_arg('wppedia_limit_reached', '1', $loc);	
+
+	}
+
+	function limit_reached_msg_notice() {
+
+		if( ! empty( $_REQUEST['wppedia_limit_reached'] ) && $_REQUEST['wppedia_limit_reached'] == '1' ) {
+			echo '<div class="error"><p>You have reached your post creation limit. <strong>This post was not published.</strong> Upgrade to PRO to remove limitations.</p></div>';
+		}
 
 	}
 
