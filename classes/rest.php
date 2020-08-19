@@ -39,7 +39,10 @@ class rest extends \WP_REST_Controller {
 			'methods' => 'GET',
 			'callback' => function() { 
 				return helper::getInstance()->get_wiki_entry_searchables(); 
-			}
+			},
+			'args' => [
+				'permission_callback' => '__return_true'
+			]
 		] );
 
 	}
