@@ -49,7 +49,7 @@ $rest_utils = new bf\wpPedia\rest();
 $rest_utils->start();
 
 /**
- * Instantiate Controller
+ * Instantiate Query Controller
  * 
  * @since 1.0.0
  */

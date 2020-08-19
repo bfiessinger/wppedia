@@ -14,7 +14,7 @@ use bf\wpPedia\post_type;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class controller {
+class query_control {
 
   /**
    * Static variable for instanciation
