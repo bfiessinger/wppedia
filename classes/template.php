@@ -209,15 +209,18 @@ class template {
 		$post_type = post_type::getInstance()->post_type;
 		$searchUrl = get_post_type_archive_link( $post_type );
 
-		$default = [
+		/**
+		 * Predefined attributes
+		 */
+		$_attrs = [
 			'role'		=> apply_filters( 'wppedia_searchform_attrs__role', 'search' ),
 			'method' 	=> apply_filters( 'wppedia_searchform_attrs__method', 'GET' ),
 			'class' 	=> apply_filters( 'wppedia_searchform_attrs__class', 'search-form wppedia-search' ),
 			'id' 			=> apply_filters( 'wppedia_searchform_attrs__id', 'wppedia_searchform' ),
-			'action' 	=> apply_filters( 'wppedia_searchform_attrs__action', $searchUrl )
+			'action' 	=> $searchUrl
 		];
 
-		$attrs = array_merge( $default, $attrs );
+		$attrs = array_merge( $attrs, $_attrs );
 
 		if ( $tostring ) {
 
