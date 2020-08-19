@@ -40,7 +40,7 @@ With this quality content you can significantly improve your website’s SEO and
 * let the plugin generate the archive page for you or use a static page with contents defined by you.
 * all scripts run on vanilla JavaScript. No jQuery needed.
 * add styles inline to avoid render blocking CSS
-* **2** additional Shortcode
+* **2** additional Shortcodes
 * **more coming soon**
 
 ## Sponsors
