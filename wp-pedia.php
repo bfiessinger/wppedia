@@ -4,7 +4,7 @@
  * setupMyWP
  *
  * @wordpress-plugin
- * Plugin Name: WP Pedia
+ * Plugin Name: WPPedia
  * Description: Simple Glossary for Wordpress
  * Author: Bastian Fießinger
  * AuthorURI: https://github.com/bfiessinger/
