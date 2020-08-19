@@ -5,7 +5,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WPPedia
- * Description: Simple Glossary for Wordpress
+ * Description: The most advanced Glossary solution for WordPress!
  * Author: Bastian Fießinger
  * AuthorURI: https://github.com/bfiessinger/
  * Version: 1.0.0
