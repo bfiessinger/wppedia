@@ -13,16 +13,12 @@ defined( 'ABSPATH' ) or die();
 
 class deactivation {
 
-	function __construct() {
+	function __construct() {}
 
-		register_deactivation_hook( wpPediaPluginFile, [ $this, 'on_deactivate' ] );
+	public static function deactivate() {
 
-	}
-
-	public function on_deactivate() {
-
-		\flush_rewrite_rules();
-
+		flush_rewrite_rules();
+		
 	}
 
 }

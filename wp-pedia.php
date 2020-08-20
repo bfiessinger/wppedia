@@ -19,9 +19,6 @@ defined( 'ABSPATH' ) or die();
 if ( ! defined('wpPediaPluginVersion') )
 	define('wpPediaPluginVersion', '1.0.0');
 
-if ( ! defined('wpPediaPluginFile') )
-	define('wpPediaPluginFile', __FILE__);
-
 if ( ! defined('wpPediaPluginDir') )
   define('wpPediaPluginDir', plugin_dir_path(__FILE__));
 
@@ -101,14 +98,6 @@ new bf\wpPedia\modules\crosslinks(
 new bf\wpPedia\modules\tooltip();
 
 /**
- * Plugin activation / deactivation
- * 
- * @since 1.0.0
- */
-new bf\wpPedia\activation();
-new bf\wpPedia\deactivation();
-
-/**
  * Load Template Tags
  * 
  * @since 1.0.0
@@ -135,3 +124,19 @@ require_once wpPediaPluginDir . 'inc/public-functions.php';
  * @since 1.0.0
  */
 require_once wpPediaPluginDir . 'inc/shortcodes.php';
+
+/**
+ * The code that runs during plugin activation.
+ * 
+ * @since 1.0.0
+ */
+require_once wpPediaPluginDir . 'inc/class.activation.php';
+register_activation_hook( __FILE__, [ 'bf\\wpPedia\\activation', 'activate' ] );
+
+/**
+ * The code that runs during plugin deactivation.
+ * 
+ * @since 1.0.0
+ */
+require_once wpPediaPluginDir . 'inc/class.deactivation.php';
+register_deactivation_hook( __FILE__, [ 'bf\\wpPedia\\deactivation', 'deactivate' ] );
