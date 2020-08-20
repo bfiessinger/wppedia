@@ -1,6 +1,6 @@
-<img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/wppedia-logo.svg?sanitize=true" alt="WPPedia" width="150">
-
-___
+<p align="center">
+	<img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/wppedia-logo.svg?sanitize=true" alt="WPPedia" width="150">	
+</p>
 
 # WPPedia - The WordPress Wiki Solution
 
