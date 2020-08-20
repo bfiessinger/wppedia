@@ -38,8 +38,23 @@ class template {
 	protected function __construct() {}
 	
 	public function start() {
-		add_filter( 'template_include', [ $this, 'template_include' ] );
+
 		add_filter( 'body_class', [ $this, 'body_class' ] );
+
+		/**
+		 * Custom Templates
+		 * 
+		 * @since 1.0.0
+		 */
+		add_filter( 'template_include', [ $this, 'custom_index_php' ] );
+		add_filter( 'template_include', [ $this, 'custom_search_php' ] );
+
+		/**
+		 * Load default Templates
+		 * 
+		 * @since 1.0.0
+		 */
+
 	}
 
 	/**
@@ -54,7 +69,7 @@ class template {
 	 * 
 	 * @return string $template - the current Template file in your theme's Root folder
 	 */
-	public function template_include( $template ) {
+	public function custom_index_php( $template ) {
 
 		$custom_index_include = true;
 
@@ -109,6 +124,30 @@ class template {
 		// and no other template should override it
 		if ( locate_template('index-wppedia.php') && $custom_index_include )
 			return get_query_template('index-wppedia');
+
+		return $template;
+
+	}
+
+	/**
+	 * Use a custom search template for the WP Template Hierarchy.
+	 * If possible the plugin will try to include the template search-wppedia.php
+	 * from your theme structure
+	 * 
+	 * @see https://wphierarchy.com/
+	 * 
+	 * @since 1.0.0
+	 * 
+	 * @return string $template - the current Template file in your theme's Root folder
+	 */
+	public function custom_search_php( $template ) {
+
+		/**
+		 * Return custom search for WPPedia if the file exists
+		 * and we are on a wiki search
+		 */
+		if ( locate_template('search-wppedia.php') && helper::is_wiki_search() )
+			return get_query_template('search-wppedia');
 
 		return $template;
 
