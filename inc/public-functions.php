@@ -66,7 +66,7 @@ function wppedia_template() {
 /**
  * Prints the Template for the Searchform
  * 
- * @uses helper::get_searchform()
+ * @uses template::get_search_form()
  * @see bf\wpPedia\template
  * 
  * @return void
@@ -74,7 +74,7 @@ function wppedia_template() {
  * @since 1.0.0
  */
 function get_wppedia_searchform() {
-	bf\wpPedia\template::getInstance()->get_searchform();
+	bf\wpPedia\template::getInstance()->get_search_form();
 }
 
 /**
