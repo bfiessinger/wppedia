@@ -13,11 +13,11 @@
  */
 function wppedia_enqueue_scripts() {
 
-	if ( ! wppedia_utils()->is_wiki_post_type() )
+	if ( ! bf\wpPedia\helper::getInstance()->is_wiki_post_type() )
 		return;
 
 	// Load Styles
-	if ( 'on' == wppedia_utils()->get_option( \bf\wpPedia\options\plugin_settings::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
+	if ( 'on' == bf\wpPedia\helper::getInstance()->get_option( \bf\wpPedia\options\plugin_settings::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
 
 		// Initial Letter Navigation Component
 		wppedia_add_inline_style( 'wppedia_component_navigation', wpPediaPluginDir . 'dist/css/components_navigation.min.css' );
