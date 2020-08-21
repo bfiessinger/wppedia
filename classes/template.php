@@ -58,10 +58,16 @@ class template {
 	}
 
 	/**
+	 * This function adds a new template to the wordpress template hierarchy.
+	 * it works like index.php but only if the requested page is related to WPPedia.
+	 * 
 	 * Use a custom default template for the WP Template Hierarchy.
 	 * If no custom template for singular posts, custom post type
 	 * archives or taxonomy archives was found try to use the template
 	 * index-wppedia.php
+	 * 
+	 * Usage:
+	 * Create a custom index-wppedia.php file in the root of your WordPress Theme.
 	 * 
 	 * @see https://wphierarchy.com/
 	 * 
@@ -71,9 +77,16 @@ class template {
 	 */
 	public function custom_index_php( $template ) {
 
-		$custom_index_include = true;
+		// Return custom index for WPPedia Pages if the file exists
+		// and no other template should override it
+		if ( locate_template('index-wppedia.php') && ! $this->current_template_exists_in_theme() )
+			return get_query_template('index-wppedia');
 
-		/**
+		return $template;
+
+	}
+
+	/**
 		 * This function adds a new template to the wordpress template hierarchy.
 		 * it works like index.php but only if the requested page is related to WPPedia.
 		 * 
@@ -93,9 +106,11 @@ class template {
 		 * 
 		 * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
 		 */
+	private function current_template_exists_in_theme() {
+
 		if ( 
 			// Return the Default Template for all non WPPedia Posts
-			! helper::getInstance()->is_wiki_post_type() ||
+			helper::getInstance()->is_wiki_post_type() ||
 			// Post Type Archive
 			( 
 				is_post_type_archive( 'wppedia_term' ) && 
@@ -118,12 +133,9 @@ class template {
 				)
 			)
 		)
-			$custom_index_include = false;
+			return true;
 
-		// Return custom index for WPPedia Pages if the file exists
-		// and no other template should override it
-		if ( locate_template('index-wppedia.php') && $custom_index_include )
-			return get_query_template('index-wppedia');
+		return false;
 
 		return $template;
 
