@@ -60,7 +60,7 @@ class plugin_settings {
 		// Create the admin-page for Glossary Settings
     $wiki_settings_page = new_cmb2_box( [
 			'id'           		=> 'wppedia_page_settings_general',
-			'title'						=> __('Wiki Settings', 'wppedia'),
+			'title'						=> __('WPPedia Settings', 'wppedia'),
 			'object_types'		=> [ 'options-page' ],
 			'option_key'			=> self::$settings_general_page,
       'parent_slug'			=> 'edit.php?post_type=wppedia_term',
