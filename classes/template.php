@@ -165,6 +165,42 @@ class template {
 
 	}
 
+	/**
+	 * Determine if WPPedia is using a sidebar
+	 * 
+	 * @return bool
+	 * 
+	 * @since 1.0.0
+	 */
+	public function wppedia_has_sidebar() {
+
+		// Determine if a sidebar can be used
+		if ( ! is_active_sidebar( 'sidebar_wppedia' ) && helper::getInstance()->is_wiki_post_type() )
+			return false;
+
+		return true;
+
+	}
+
+	/**
+	 * Register WPPedia Sidebar
+	 * 
+	 * @since 1.0.0
+	 */
+	public function register_sidebar() {
+
+		register_sidebar( [
+			'name'					=> __( 'WPPedia Sidebar', 'wppedia' ),
+			'id'						=> 'sidebar_wppedia',
+			'description'		=> __( 'Widgets in this area will be shown on Single WPPedia Entries', 'wppedia' ),
+			'before_widget'	=> apply_filters( 'wppedia_sidebar_widget_before', '<li id="%1$s" class="wppedia_widget %2$s">' ),
+			'after_widget'	=> apply_filters( 'wppedia_sidebar_widget_after', '</li>' ),
+			'before_title'	=> apply_filters( 'wppedia_sidebar_widget_title_before', '<span class="wppedia_widget_title">' ),
+			'after_title'		=> apply_filters( 'wppedia_sidebar_widget_title_after', '</span>' )
+		] );
+
+	}
+
   /**
    * Get a specific View
    * 
