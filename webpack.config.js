@@ -47,6 +47,7 @@ module.exports = [
     mode: 'production',
     entry: {
 			style: './source/scss/_main.scss',
+			base: './source/scss/base.scss',
 			components_navigation: './source/scss/components/initial-char-navigation.scss',
 			components_search: './source/scss/components/searchbar.scss',
 			components_tooltip: './source/scss/components/tooltip.scss',

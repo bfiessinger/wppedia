@@ -1,0 +1,9 @@
+#wppedia_page_wrap, .wppedia_container {
+	width: 1210px; 
+	width: var(--wppedia-content-width);
+	max-width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 20px;
+	padding-right: 20px;
+}
