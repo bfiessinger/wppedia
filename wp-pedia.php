@@ -102,7 +102,7 @@ new bf\wpPedia\modules\tooltip();
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . 'template-tags/template-functions.php';
+require_once wpPediaPluginDir . 'inc/tpl-hooks.php';
 
 /**
  * Enqueue Assets

@@ -1,38 +1,53 @@
 <?php
+/**
+ * The main template file.
+ *
+ * This is the default Template for WPPedia Pages.
+ * All Template functions are available in inc/tpl-hooks.php
+ * 
+ * Learn more: https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package wppedia
+ */
 
-get_header();
+get_header(); 
+
+/**
+ * wppedia_do_template_wrapper_start hook
+ *
+ * @hooked wppedia_template_wrapper_start -  10
+ *
+ */
+do_action( 'wppedia_do_template_wrapper_start' );
 
 ?>
 
-<main id="main" role="main">
-			
-	<div class="container">
-		<header class="flex justify-between">
-			<h1><?php echo __('Glossary', 'wppedia'); ?></h1>
-			<?php get_wppedia_searchform(); ?>
-		</header>
-
 		<?php
+		if ( have_posts() ) {
 
-		/**
-		 * wppedia_tpl_initial_nav hook
-		 *
-		 * @hooked wppedia_tpl_initial_nav -  10
-		 *
-		 */
-		do_action( 'wppedia_tpl_initial_nav' ); ?>
+			/**
+			 * wppedia_do_template_the_loop hook
+			 *
+			 * @hooked wppedia_template_the_loop -  10
+			 *
+			 */
+			do_action( 'wppedia_do_template_the_loop' );
 
-		<?php
-		/**
-		 * wppedia_tpl_list_entries hook
-		 * 
-		 * @hooked wppedia_tpl_list_entries - 10
-		 * 
-		 */
-		do_action( 'wppedia_tpl_list_entries' ); ?>
-	</div>
+    } else {
 
-</main>
+			get_template_part( 'template-parts/content', 'none' );
+
+    }
+		?>
 
 <?php
+
+/**
+ * wppedia_do_template_wrapper_end hook
+ *
+ * @hooked wppedia_template_wrapper_end -  10
+ *
+ */
+do_action( 'wppedia_do_template_wrapper_end' );
+
 get_footer();
