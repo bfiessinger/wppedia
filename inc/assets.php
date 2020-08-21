@@ -20,15 +20,15 @@ function wppedia_enqueue_scripts() {
 	if ( 'on' == wppedia_utils()->get_option( \bf\wpPedia\options\plugin_settings::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
 
 		// Initial Letter Navigation Component
-		wppedia_add_inline_style( wpPediaPluginDir . 'dist/css/components_navigation.min.css' );
+		wppedia_add_inline_style( 'wppedia_component_navigation', wpPediaPluginDir . 'dist/css/components_navigation.min.css' );
 
 		// Searchbar
-		wppedia_add_inline_style( wpPediaPluginDir . 'dist/css/components_search.min.css' );
+		wppedia_add_inline_style( 'wppedia_component_searchbar', wpPediaPluginDir . 'dist/css/components_search.min.css' );
 
-		if ( is_wppedia() && is_singular() ) {
+		if ( is_singular() ) {
 
 			// Tooltips
-			wppedia_add_inline_style( wpPediaPluginDir . 'dist/css/components_tooltip.min.css' );
+			wppedia_add_inline_style( 'wppedia_component_tooltip', wpPediaPluginDir . 'dist/css/components_tooltip.min.css' );
 
 		}
 

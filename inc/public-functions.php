@@ -100,9 +100,9 @@ function get_wppedia_searchform_attrs( array $attrs = [], bool $tostring = true 
  * 
  * @since 1.0.0
  */
-function wppedia_add_inline_style( string $stylesheet ) {
+function wppedia_add_inline_style( string $handle, string $stylesheet ) {
 	
-	if ( bf\wpPedia\inline_style_collector::getInstance( $stylesheet ) )
+	if ( bf\wpPedia\inline_style_collector::getInstance()->add( $handle, $stylesheet ) )
 		return true;
 
 	return false;

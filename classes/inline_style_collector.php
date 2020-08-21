@@ -14,7 +14,8 @@ defined( 'ABSPATH' ) or die();
 
 class inline_style_collector {
 
-	public static $final_css = '';
+	public $stylesheets = [];
+	public $final_css = '';
 
   /**
    * Static variable for instanciation
@@ -28,10 +29,7 @@ class inline_style_collector {
 	 * 
 	 * @return self
    */
-  public static function getInstance( string $stylesheet = null ) {
-
-		if ( null !== $stylesheet )
-			self::add( $stylesheet );
+  public static function getInstance() {
 
     if ( null === self::$instance ) {
       self::$instance = new self;
@@ -54,7 +52,7 @@ class inline_style_collector {
 	 * 
 	 * @since 1.0.0
 	 */
-	private static function add( string $stylesheet ) {
+	public function add( string $handle, string $stylesheet ) {
 
 		$css_string = '';
 
@@ -74,7 +72,7 @@ class inline_style_collector {
 				$css_string = preg_replace( $css_file_url_regex, 'url(\'' . wpPediaPluginUrl . 'dist/css/$1\')', $css_string );
 			}
 
-			self::merge_inline_styles( $css_string );
+			$this->collect_inline_styles(  $handle, $css_string );
 
 			return true;
 
@@ -84,20 +82,61 @@ class inline_style_collector {
 
 	}
 
-	/**
-	 * Collect stylesheets for merging on the current view
+	/** 
+	 * Remove a registered Stylesheet
 	 * 
-	 * @param string $handle - CSS handle
-	 * @param string $css_string - string to add
+	 * @param string $handle - The registered handle
 	 * 
 	 * @since 1.0.0
 	 */
-	private static function merge_inline_styles( string $css_string ) {
-		self::$final_css .= $css_string;
+	public function remove( string $handle ) {
+
+		unset( $this->stylesheets[ $handle ] );
+		$this->stylesheets = self::$stylesheets;
+
 	}
 
+	/**
+	 * Collect stylesheets and save them to a public Array
+	 * 
+	 * @param string $handle
+	 * @param string $css
+	 * 
+	 * @return array - associative array with handle and CSS
+	 * 
+	 * @since 1.0.0
+	 */
+	private function collect_inline_styles( string $handle, string $css ) {
+
+		$this->stylesheets[ $handle ] = $css;
+
+	}
+
+	/**
+	 * Merge stylesheets after all modifications
+	 * 
+	 * @return string final CSS string
+	 * 
+	 * @since 1.0.0
+	 */
+	private function merge_inline_styles() {
+
+		$css_string = '';
+
+		foreach ( $this->stylesheets as $handle => $css ) {
+			$css_string .= $css;
+		}
+
+		$this->final_css = $css_string;
+	}
+
+
 	public function get_final_css() {
-		return self::$final_css;
+
+		$this->merge_inline_styles();
+
+		return $this->final_css;
+
 	}
 
 }
