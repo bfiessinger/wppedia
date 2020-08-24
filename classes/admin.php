@@ -40,9 +40,6 @@ class admin {
 		// Add Text to the glossary archive page
 		add_action( 'display_post_states', [ $this, 'wppedia_archive_post_state' ], 10, 2 );
 
-    // Sort Wiki Entries by postname
-    add_action( 'pre_get_posts', [ $this, 'default_wiki_entries_orderby' ] );
-
   }
 
 	/**
@@ -59,26 +56,5 @@ class admin {
 		return $post_states;
 
 	}
-
-  /**
-   * Set default sorting for WP List Table on wiki entries
-   * 
-   * @since 1.0.0
-   */
-  function default_wiki_entries_orderby( $query ) {
-
-    // Be sure that we are on the Backend
-    if( ! is_admin() || ! $query->is_main_query() || $query->query_vars['post_type'] !== 'wppedia_term' )
-      return;
-  
-    // Orderby should not be manually modified
-    if ( $query->get('orderby') == '' ) {
-
-      $query->set( 'orderby', 'title' );
-      $query->set( 'order', 'asc' );
-
-    }
-
-  }
 
 }

@@ -48,6 +48,9 @@ class query_control {
 		// Allow searching in glossary entries only
 		add_filter( 'pre_get_posts', [ $this, 'search_wppedia' ], 202 );
 
+    // Sort Wiki Entries by postname
+    add_action( 'pre_get_posts', [ $this, 'default_wiki_entries_orderby' ] );
+
 	}
 
 	/**
@@ -106,5 +109,25 @@ class query_control {
 		return $query;
 
 	}
+
+  /**
+   * Set default sorting for WP List Table on wiki entries
+   * 
+   * @since 1.0.0
+   */
+  function default_wiki_entries_orderby( $query ) {
+
+    if( ! $query->is_main_query() || ( isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type'] !== post_type::getInstance()->post_type ) )
+      return;
+  
+    // Orderby should not be manually modified
+    if ( $query->get('orderby') == '' ) {
+
+      $query->set( 'orderby', 'title' );
+      $query->set( 'order', 'asc' );
+
+    }
+
+  }
 
 }
