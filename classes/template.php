@@ -40,6 +40,7 @@ class template {
 	public function start() {
 
 		add_filter( 'body_class', [ $this, 'body_class' ] );
+		add_filter( 'post_class', [ $this, 'post_class' ], 10,3 );
 
 		/**
 		 * Custom Templates
@@ -177,6 +178,22 @@ class template {
 
 		return $classes;
 
+	}
+
+	/**
+	 * Add custom post Classes
+	 * 
+	 * @since 1.0.0
+	 */
+	function post_class( $classes, $class, $post_id ) {
+
+		if ( is_admin() || ! helper::getInstance()->is_wiki_post_type() )
+			return $classes;
+
+		$classes[] = 'wppedia-initial-letter_' . helper::getInstance()->post_initial_letter( $post_id );
+
+		return $classes;
+			
 	}
 
 	/**
