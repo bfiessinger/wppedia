@@ -22,11 +22,11 @@
     "tippy.js": "^6.2.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.1",
+    "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "autoprefixer": "^9.8.6",
     "babel-loader": "^8.1.0",
-    "css-loader": "^4.2.1",
+    "css-loader": "^4.2.2",
     "csso-webpack-plugin": "^2.0.0-beta.1",
     "file-loader": "^6.0.0",
     "glob-all": "^3.2.1",
