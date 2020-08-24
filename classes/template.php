@@ -56,6 +56,13 @@ class template {
 		 * @since 1.0.0
 		 */
 
+		/**
+		 * WPPedia Sidebar
+		 * 
+		 * @since 1.0.0
+		 */
+		add_action( 'widgets_init', [ $this, 'register_sidebar' ] );
+
 	}
 
 	/**
