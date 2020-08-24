@@ -6,12 +6,12 @@
  * @since 1.0.0
  */
 
-namespace bf\wpPedia\options;
+namespace bf\wpPedia;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class plugin_settings {
+class options {
 
   /**
    * Static variable for instanciation
@@ -45,6 +45,9 @@ class plugin_settings {
 		// Admin Page Assets
 		add_action( 'admin_enqueue_scripts', [ $this, 'do_admin_scripts' ] );
 
+		// Custom Permalinks Section
+		add_action('admin_init', [ $this, 'wppedia_permalink_settings' ], 999999 );
+
 	}
 	
   /**
@@ -73,11 +76,11 @@ class plugin_settings {
 					'icon' 	=> 'dashicons-text-page', // Dashicon
 				],
 				'layout' => [
-					'label' => __( 'Layout and Functionality', 'wppedia' ),
+					'label' => __( 'Layout', 'wppedia' ),
 					'icon' 	=> 'dashicons-admin-customizer', // Dashicon
 				],
-				'permalink' => [
-					'label'	=> __( 'Permalink structure', 'wppedia' ),
+				'crosslinks' => [
+					'label'	=> __( 'Crosslinks', 'wppedia' ),
 					'icon'	=> 'dashicons-admin-links', // Dashicon
 				],
 			],
@@ -97,23 +100,6 @@ class plugin_settings {
 			'tab'  							=> 'content',
 			'show_option_none' 	=> true,
 			'options_cb'				=> [ $this, 'dropdown_pages' ]
-		] );
-
-		$wiki_settings_page->add_field( [
-			'name'			=> __( 'Activate Crosslinking', 'wppedia' ),
-			'desc'			=> __( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.','wppedia' ),
-			'id'				=> 'wppedia_crosslinking_active',
-			'type'			=> 'switch_button',
-			'default'		=> 'on',
-			'tab'				=> 'content',
-		] );
-
-		$wiki_settings_page->add_field( [
-			'name'			=> __( 'Prefer Single Words', 'wppedia' ),
-			'desc'			=> __( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.','wppedia' ),
-			'id'				=> 'wppedia_crosslinking_prefer-single-words',
-			'type'			=> 'switch_button',
-			'tab'				=> 'content',
 		] );
 
 		/**
@@ -140,17 +126,42 @@ class plugin_settings {
 		] );
 
 		/**
-		 * Tab Permalink
+		 * Crosslinks Permalink
 		 * Options related to the permalink structure
 		 * 
 		 * @since 1.0.0
 		 */
 		$wiki_settings_page->add_field( [
-			'name'	=> __( 'Permalink Settings' ),
-			'desc'	=> sprintf( __( 'Adjust the permalink structure. If you want to edit the permalink base visit %s', 'wppedia' ), '<a href="' . admin_url('options-permalink.php') . '" target="_blank">' . __( 'Permalink Settings' ) . '</a>' ),
-			'type'	=> 'title',
-			'id'		=> 'wppedia_title_permalink',
-			'tab'		=> 'permalink',
+			'name'			=> __( 'Activate Crosslinking', 'wppedia' ),
+			'desc'			=> __( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.','wppedia' ),
+			'id'				=> 'wppedia_crosslinking_active',
+			'type'			=> 'switch_button',
+			'default'		=> 'on',
+			'tab'				=> 'crosslinks',
+		] );
+
+		$wiki_settings_page->add_field( [
+			'name'			=> __( 'Prefer Single Words', 'wppedia' ),
+			'desc'			=> __( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.','wppedia' ),
+			'id'				=> 'wppedia_crosslinking_prefer-single-words',
+			'type'			=> 'switch_button',
+			'tab'				=> 'crosslinks',
+		] );
+
+		$wiki_settings_page->add_field( [
+			'name'			=> __( 'create crosslinks for these Posttypes', 'wppedia' ),
+			'desc'			=> '',
+			'id'				=> 'wppedia_crosslinking_post-types',
+			'type'    => 'multicheck',
+			'options' => array(
+				'check1' => 'Check One',
+				'check2' => 'Check Two',
+				'check3' => 'Check Three',
+			),
+			'attributes'	=> [
+				'disabled'	=> true
+			],
+			'tab'				=> 'crosslinks',
 		] );
 
 	}
@@ -187,6 +198,87 @@ class plugin_settings {
 			\CMB_Extension_Hookup::enqueue_cmb_css();
 			\CMB_Extension_Hookup::enqueue_cmb_js();
 		}
+
+	}
+
+	/**
+	 * Add a custom options section to the permalinks admin screen
+	 * 
+	 * @uses add_settings_section()
+	 * 
+	 * @since 1.0.0
+	 */
+	function wppedia_permalink_settings() {
+
+		add_option( 
+			'wppedia_permalink_base', 
+			'/glossary/', 
+			'', 
+			true 
+		);
+
+		// Register glossary Base Setting
+		register_setting(
+			'permalink', 
+			'wppedia_permalink_base',
+			[ $this, 'wppedia_permalink_part_sanitize' ]
+		);
+
+		add_settings_section(
+			'wppedia_permalink_structure', // ID
+			__( 'WPPedia Permalinks', 'wppedia' ),// Section title
+			[ $this, 'wppedia_permalink_settings_cb' ], // Callback for your function
+			'permalink' // Location (Settings > Permalinks)
+		);
+
+		add_settings_field( 
+			'wppedia_permalink_base_setting', 
+			__( 'WPPedia base', 'wppedia' ), 
+			[ $this, 'wppedia_setting_permalink_base_cb' ], 
+			'permalink', 
+			'wppedia_permalink_structure'
+		);
+
+		// Save options to database
+		if ( isset( $_POST['wppedia_permalink_base'] ) || isset( $_POST['wppedia_permalink_term_base'] ) ) {
+
+			check_admin_referer('update-permalink');
+
+			$option_page = 'permalink';
+
+			$capability = 'manage_options';
+			$capability = apply_filters( "option_page_capability_{$option_page}", $capability );
+
+			if ( !current_user_can( $capability ) )
+				wp_die(__('Cheatin&#8217; uh?'));
+
+			if ( isset( $_POST['wppedia_permalink_base'] ) )
+				update_option( 'wppedia_permalink_base', $_POST['wppedia_permalink_base'] );
+
+		}
+
+	}
+
+	function wppedia_permalink_settings_cb() {
+		echo wpautop( __( 'If you like, you may enter custom structures for your WPPedia URLs here.', 'wppedia' ) );
+	}
+
+	function wppedia_setting_permalink_base_cb() { ?>
+		<input type="text" name="wppedia_permalink_base" value="<?php echo get_option('wppedia_permalink_base'); ?>" class="regular-text code" />
+	<?php	}
+
+	function wppedia_permalink_part_sanitize( $input ) {
+
+		$sanitized = $input;
+
+		$inputLen = strlen( $input );
+		if ( \strpos($input, '/') === false || \strpos($input, '/') != 0 )
+			$sanitized = '/' . $sanitized;
+
+		if ( \strpos($input, '/', 1) != $inputLen - 1 )
+			$sanitized .= '/';
+
+		return $sanitized;
 
 	}
 

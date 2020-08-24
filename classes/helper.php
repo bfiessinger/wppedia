@@ -9,7 +9,7 @@
 namespace bf\wpPedia;
 
 use bf\wpPedia\post_type;
-use bf\wpPedia\options\plugin_settings;
+use bf\wpPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -331,11 +331,11 @@ class helper {
 	 */
 	public function has_static_archive_page() {
 
-		if ( FALSE === $this->get_option( plugin_settings::$settings_general_page, 'wppedia_archive_page' ) ) {
+		if ( FALSE === $this->get_option( options::$settings_general_page, 'wppedia_archive_page' ) ) {
 			return false;
 		}
 
-		return $this->get_option( plugin_settings::$settings_general_page, 'wppedia_archive_page' );
+		return $this->get_option( options::$settings_general_page, 'wppedia_archive_page' );
 
 	}
 	

@@ -9,7 +9,7 @@
 namespace bf\wpPedia;
 
 use bf\wpPedia\helper;
-use bf\wpPedia\options\plugin_settings;
+use bf\wpPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -52,7 +52,7 @@ class admin {
 	 */
 	function wppedia_archive_post_state( $post_states, $post ) {
 
-		if( $post->ID == helper::getInstance()->get_option( plugin_settings::$settings_general_page, 'wppedia_archive_page' ) ) {
+		if( $post->ID == helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_archive_page' ) ) {
 			$post_states[] = __( 'Glossary', 'wppedia' );
 		}
 	

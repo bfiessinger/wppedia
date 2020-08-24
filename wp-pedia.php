@@ -66,8 +66,7 @@ bf\wpPedia\admin::getInstance();
  * 
  * @since 1.0.0
  */
-bf\wpPedia\options\WP_Options::getInstance();
-bf\wpPedia\options\plugin_settings::getInstance();
+bf\wpPedia\options::getInstance();
 
 /**
  * Instantiate Post Type
@@ -82,8 +81,8 @@ bf\wpPedia\post_type::getInstance();
  * 
  * @since 1.0.0
  */
-$crosslinks_module_active = ( bf\wpPedia\helper::getInstance()->get_option( bf\wpPedia\options\plugin_settings::$settings_general_page, 'wppedia_crosslinking_active' ) == 'on' ) ? true : false;
-$prefer_single_words = ( bf\wpPedia\helper::getInstance()->get_option( bf\wpPedia\options\plugin_settings::$settings_general_page, 'wppedia_crosslinking_prefer-single-words' ) == 'on' ) ? true : false;
+$crosslinks_module_active = ( bf\wpPedia\helper::getInstance()->get_option( bf\wpPedia\options::$settings_general_page, 'wppedia_crosslinking_active' ) == 'on' ) ? true : false;
+$prefer_single_words = ( bf\wpPedia\helper::getInstance()->get_option( bf\wpPedia\options::$settings_general_page, 'wppedia_crosslinking_prefer-single-words' ) == 'on' ) ? true : false;
 
 new bf\wpPedia\modules\crosslinks( 
 	$crosslinks_module_active,
