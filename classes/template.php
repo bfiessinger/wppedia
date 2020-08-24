@@ -167,6 +167,8 @@ class template {
 
 	/**
 	 * Add a body class to WPPedia Pages
+	 * 
+	 * @since 1.0.0
 	 */
 	function body_class( $classes ) {
 
