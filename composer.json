@@ -17,7 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-            "bf\\wpPedia\\": "classes/"
+            "bf\\wpPedia\\": "classes/",
+						"bf\\wpPedia\\pro\\": "pro/classes/"
 				},
 				"files": [
 						"vendor/cmb2/cmb2/init.php",

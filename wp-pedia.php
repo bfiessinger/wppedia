@@ -99,41 +99,56 @@ new bf\wpPedia\modules\tooltip();
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . 'inc/tpl-hooks.php';
+require_once wpPediaPluginDir . 'core/inc/tpl-hooks.php';
 
 /**
  * Enqueue Assets
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . 'inc/assets.php';
+require_once wpPediaPluginDir . 'core/inc/assets.php';
 
 /**
  * Public functions
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . 'inc/public-functions.php';
+require_once wpPediaPluginDir . 'core/inc/public-functions.php';
 
 /**
  * Shortcodes
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . 'inc/shortcodes.php';
+require_once wpPediaPluginDir . 'core/inc/shortcodes.php';
 
 /**
  * The code that runs during plugin activation.
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . 'inc/class.activation.php';
+require_once wpPediaPluginDir . 'core/inc/class.activation.php';
 register_activation_hook( __FILE__, [ 'bf\\wpPedia\\activation', 'activate' ] );
+
+/**
+ * Flush rewrite rules if the previously added flag exists,
+ * and then remove the flag.
+ */
+add_action( 'init', function() {
+
+	if ( get_option( 'wppedia_flush_rewrite_rules_flag' ) ) {
+		flush_rewrite_rules();
+		delete_option( 'wppedia_flush_rewrite_rules_flag' );
+	}
+
+}, 20 );
+
+
 
 /**
  * The code that runs during plugin deactivation.
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . 'inc/class.deactivation.php';
+require_once wpPediaPluginDir . 'core/inc/class.deactivation.php';
 register_deactivation_hook( __FILE__, [ 'bf\\wpPedia\\deactivation', 'deactivate' ] );

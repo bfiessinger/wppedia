@@ -17,7 +17,9 @@ class activation {
 
 	public static function activate() {
 		
-		flush_rewrite_rules();
+    if ( ! get_option( 'wppedia_flush_rewrite_rules_flag' ) ) {
+			add_option( 'wppedia_flush_rewrite_rules_flag', true );
+		}
 		
 	}
 
