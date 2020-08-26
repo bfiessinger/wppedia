@@ -88,8 +88,6 @@ class query_control {
 
     if ( '' !== $initial_letter ) {
 
-      global $wpdb;
-
 			$where .= " AND (wtt.taxonomy = 'wppedia_initial_letter') AND (wt.name = '$initial_letter')";
 
 		}
