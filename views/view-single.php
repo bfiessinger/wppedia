@@ -1,8 +1,8 @@
 <?php
 /**
- * The default archive template file.
+ * The default singular template file.
  *
- * This is the default Template for WPPedia Archive Pages.
+ * This is the default Template for WPPedia Singular Pages.
  * All Template functions are available in inc/tpl-hooks.php
  * 
  * Learn more: https://developer.wordpress.org/themes/basics/template-hierarchy/
@@ -22,18 +22,13 @@ do_action( 'wppedia_do_template_wrapper_start' );
 
 if ( have_posts() ) {
 
-	$layout_option = 'default'; // -> MUST BE MANAGED PER OPTION
-
 	/**
-	 * wppedia_do_template_archive_layout__{$layout_option} hook
+	 * wppedia_do_template_singular_layout hook
 	 *
-	 * @hooked wppedia_do_template_archive_layout__{$layout_option} -  10
+	 * @hooked wppedia_do_template_singular_layout -  10
 	 * 
-	 * Default available Layout options:
-	 * - TODO: Define Layout options
-	 *
 	 */
-	do_action( "wppedia_do_template_archive_layout__{$layout_option}" );
+	do_action( 'wppedia_do_template_singular_layout' );
 
 } else {
 

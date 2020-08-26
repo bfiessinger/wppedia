@@ -17,7 +17,7 @@ function wppedia_enqueue_scripts() {
 		return;
 
 	// Load Styles
-	if ( 'on' == bf\wpPedia\helper::getInstance()->get_option( \bf\wpPedia\options\plugin_settings::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
+	if ( 'on' == bf\wpPedia\helper::getInstance()->get_option( \bf\wpPedia\options::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
 
 		// WPPedia Base
 		wppedia_add_inline_style( 'wppedia_base', wpPediaPluginDir . 'dist/css/base.min.css' );
@@ -33,6 +33,11 @@ function wppedia_enqueue_scripts() {
 			// Tooltips
 			wppedia_add_inline_style( 'wppedia_component_tooltip', wpPediaPluginDir . 'dist/css/components_tooltip.min.css' );
 
+		} else {
+
+			// Columnset
+			wppedia_add_inline_style( 'wppedia_columns_3', wpPediaPluginDir . 'dist/css/columns_3.min.css' );
+
 		}
 
 	} else {
@@ -40,6 +45,14 @@ function wppedia_enqueue_scripts() {
 		wp_enqueue_style( 'wppedia-base', wpPediaPluginUrl . 'dist/css/style.min.css', [], null );
 
 	}
+
+	// TODO: 
+	// Add options to set the content width
+	// the number of columns in list layout
+	// +++
+	$theme_overrides = '';
+
+	wppedia_add_inline_style( 'wppedia_theme_overrides', $theme_overrides );
 
 	// Scripts
 	if ( is_singular() ) {
@@ -75,7 +88,7 @@ add_action( 'wp_enqueue_scripts', 'wppedia_enqueue_scripts' );
  */
 function wppedia_print_inline_styles() {
 
-	if ( 'on' != wppedia_utils()->get_option( \bf\wpPedia\options\plugin_settings::$settings_general_page, 'wppedia_layout_use-inline-styles' ) )
+	if ( 'on' != wppedia_utils()->get_option( \bf\wpPedia\options::$settings_general_page, 'wppedia_layout_use-inline-styles' ) )
 		return;
 
 	$final_css = \bf\wpPedia\inline_style_collector::getInstance()->get_final_css();

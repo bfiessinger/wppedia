@@ -18,20 +18,20 @@
 		&:hover {
 			span {
 				z-index: 1;
-				color: lighten($main-color, 5%);
-				background-color: darken($main-color, 10%);
+				color: lighten($secondary-color, 5%);
+				background-color: darken($secondary-color, 10%);
 			}
 		}
 		a.active, &:hover a {
 			z-index: 1;
 			color: lighten($main-color, 5%);
-			background-color: $secondary-color;
-			border: solid 1px $secondary-color;
+			background-color: $main-color;
+			border: solid 1px $main-color;
 		}
 		a, span {
 			position: relative;
-			border: solid 1px darken($main-color, 10%);
-			color: darken($main-color, 45%);
+			border: solid 1px darken($secondary-color, 10%);
+			color: darken($secondary-color, 45%);
 			text-decoration: none;
 			text-transform: uppercase;
 			display: block;
@@ -49,7 +49,7 @@
 		background-size: 19px;
 		background-repeat: no-repeat;
 		background-position: center;
-		background-color: darken($main-color, 10%);
-		border-color: darken($main-color, 10%);
+		background-color: darken($secondary-color, 10%);
+		border-color: darken($secondary-color, 10%);
 	}
 }

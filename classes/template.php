@@ -55,6 +55,7 @@ class template {
 		 * 
 		 * @since 1.0.0
 		 */
+		//add_filter( 'template_include', [ $this, 'template_include' ] );
 
 		/**
 		 * WPPedia Sidebar
@@ -168,6 +169,38 @@ class template {
 		 */
 		if ( locate_template('search-wppedia.php') && helper::is_wiki_search() )
 			return get_query_template('search-wppedia');
+
+		return $template;
+
+	}
+
+	/**
+	 * Load WPPedia default Templates
+	 * 
+	 * @since 1.0.0
+	 * 
+	 * @return string $template
+	 */
+	public function template_include( $template ) {
+
+		if ( 
+			! $this->current_template_exists_in_theme() || 
+			( 
+				locate_template('search-wppedia.php') && 
+				helper::is_wiki_search() 
+			) ||
+			locate_template('index-wppedia.php')
+		)
+			return $template;
+
+		// TODO: Add an Option to determine if the default Theme templates should be used over the WPPedia Archive styles
+		if ( is_archive() && false !== $this->get_view( 'archive', [], false ) ) {
+			// Load default Archive view
+			return $this->get_view( 'archive', [], false );
+		} elseif ( is_singular() && false !== $this->get_view( 'single', [], false ) ) {
+			// Load default Single view
+			return $this->get_view( 'single', [], false );
+		}
 
 		return $template;
 

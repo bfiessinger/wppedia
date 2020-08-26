@@ -8,19 +8,20 @@
 	width: 100%;
 	max-width: 600px;
 	margin: 0 auto 2rem auto;
-  display: flex;
+	display: flex;
+	background: #FFF;
 	.search-field {
 		border: solid rgba(0, 0, 0, 0.54);
 		border-width: 1px 0 1px 1px;
 		width: 100%;
 		padding: .75rem .6rem;
 		&:focus {
-			outline: 2px solid $secondary-color;
+			outline: 2px solid $main-color;
 		}
 	}
 	.search-submit {
 		padding: 0 2rem;
-		background: $secondary-color;
+		background: $main-color;
 		text-indent: -9999px;
 		background-image: url('../../../assets/img/search.svg');
 		background-size: 1.5rem;

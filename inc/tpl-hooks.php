@@ -13,16 +13,25 @@
  */
 if ( ! function_exists( 'wppedia_template_wrapper_start' ) ) {
 
-	function wppedia_template_wrapper_start() { 
-		
-		if ( bf\wpPedia\template::getInstance()->wppedia_has_sidebar() ): ?>
+	function wppedia_template_wrapper_start() { ?>
 
-			<div id="wppedia_page_wrap">
+		<div id="wppedia-page-header">
+			<?php
+				// Search form
+				bf\wpPedia\template::getInstance()->get_search_form();
+				// Navigation
+				bf\wpPedia\template::getInstance()->get_char_navigation();
+			?>
+		</div>
+
+		<?php if ( bf\wpPedia\template::getInstance()->wppedia_has_sidebar() ): ?>
+
+			<div id="wppedia-layout-wrap">
 
 		<?php endif; ?>
 
-				<main id="wppedia_primary">
-					<div class="wppedia_container">
+				<main id="primary">
+					<div class="wppedia-entry-content">
 
 	<?php }
 
@@ -36,7 +45,18 @@ add_action( 'wppedia_do_template_wrapper_start', 'wppedia_template_wrapper_start
  */
 if ( ! function_exists( 'wppedia_template_wrapper_end' ) ) {
 
-	function wppedia_template_wrapper_end() { ?>
+	function wppedia_template_wrapper_end() {
+
+				/**
+				 * Pagination
+				 */
+				$pagination_args = array(
+					'type'      => 'list',
+					'next_text' => _x( 'Next', 'Next post', 'wppedia' ),
+					'prev_text' => _x( 'Previous', 'Previous post', 'wppedia' ),
+				);
+
+				the_posts_pagination( $pagination_args ); ?>
 
 				</div>
 			</main><!-- #wppedia_primary -->
@@ -73,7 +93,7 @@ if ( ! function_exists( 'wppedia_template_sidebar' ) ) {
 
 	function wppedia_template_sidebar() { ?>
 
-		<aside id="wppedia_secondary" role="complementary">
+		<aside id="secondary" role="complementary">
 			<?php dynamic_sidebar( 'sidebar_wppedia' ); ?>
 		</aside>
 
@@ -87,44 +107,75 @@ add_action( 'wppedia_do_template_sidebar', 'wppedia_template_sidebar', 10 );
  * 
  * @since 1.0.0
  */
-if ( ! function_exists( 'wppedia_template_the_loop' ) ) {
+if ( ! function_exists( 'wppedia_template_archive_layout__default' ) ) {
 
-	function wppedia_template_the_loop() {
+	function wppedia_template_archive_layout__default() { ?>
 
-    while ( have_posts() ) {
+		<div class="wppedia-entry-wrapper wppedia-layout-default wppedia-columns wppedia-columns-3">
 
-      the_post();
-    
-      if ( is_archive() ) {
+		<?php while ( have_posts() ) {
 
-				$layout_option = 'list'; // -> MUST BE OPTIONAL
-
+			the_post();
+			
+			?>
+			
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<a href="<?php echo get_the_permalink(); ?>" title="<?php echo esc_html( get_the_title() ); ?>">
+				<?php 
+					// Print the title
+					the_title('<h2 class="wppedia-post-title">', '</h2>'); 
+					// Print the excerpt
+					bf\wpPedia\template::getInstance()->the_excerpt( null, 25, false );
 				?>
-				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-					<?php do_action( "wppedia_do_template_archive_layout__{$layout_option}" ); ?>
-				</article>
-				<?php
+				</a>
+			</article>
+			
+			<?php
 
-			} elseif ( is_singular() ) {
+		} ?>
 
-				// Single View
+	</div>
 
-			}
-
-    }
+		<?php
 
 	}
 
 }
-add_action( 'wppedia_do_template_the_loop', 'wppedia_template_the_loop', 10 );
+add_action( 'wppedia_do_template_archive_layout__default', 'wppedia_template_archive_layout__default', 10 );
 
-if ( ! function_exists( 'wppedia_template_archive_layout__list' ) ) {
+if ( ! function_exists( 'wppedia_template_singular_layout' ) ) {
 
-	function wppedia_template_archive_layout__list() {
+	function wppedia_template_singular_layout() {
 
-		echo get_the_title();
-
+		the_title('<h1 class="wppedia-title">', '</h1>');
+	
+		the_content(
+			sprintf(
+				wp_kses(
+					/* translators: %s: Name of current post. Only visible to screen readers */
+					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'prox' ),
+					array(
+						'span' => array(
+							'class' => array(),
+						),
+					)
+				),
+				get_the_title()
+			)
+		);
+				
+		wp_link_pages(
+			array(
+				'before' => '<div class="site-links">',
+				'after'  => '</div>',
+				'link_before'      => '<div class="site-link">',
+				'link_after'       => '</div>',
+				'nextpagelink'     => __( 'Next page', 'domino'),
+				'previouspagelink' => __( 'Previous page', 'domino' ),
+			)
+		);
+	
 	}
 
 }
-add_action( 'wppedia_do_template_archive_layout__list', 'wppedia_template_archive_layout__list', 10 );
+add_action( 'wppedia_do_template_singular_layout', 'wppedia_template_singular_layout', 10 );
