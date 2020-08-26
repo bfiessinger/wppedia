@@ -118,7 +118,7 @@ class query_control {
   function default_wiki_entries_orderby( $query ) {
 
     if( ! $query->is_main_query() || ( isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type'] !== post_type::getInstance()->post_type ) )
-      return;
+      return $query;
   
     // Orderby should not be manually modified
     if ( $query->get('orderby') == '' ) {
@@ -126,8 +126,10 @@ class query_control {
       $query->set( 'orderby', 'title' );
       $query->set( 'order', 'asc' );
 
-    }
+		}
+		
+		return $query;
 
-  }
+	}
 
 }
