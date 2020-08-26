@@ -96,25 +96,21 @@ class template {
 	}
 
 	/**
-		 * This function adds a new template to the wordpress template hierarchy.
-		 * it works like index.php but only if the requested page is related to WPPedia.
-		 * 
-		 * Usage:
-		 * Create a custom index-wppedia.php file in the root of your WordPress Theme.
-		 * 
-		 * Check for the following Templates first:
-		 * 
-		 * - Posttype Archive: 
-		 * 			archive-wppedia_term.php
-		 * - Initial Character Taxonomy: 
-		 * 			taxonomy-wppedia_initial_letter.php OR 
-		 * 			taxonomy-wppedia_initial_letter-{initial_letter}.php
-		 * - Singular Posts: 
-		 * 			single-wppedia_term.php OR 
-		 * 			single-wppedia_term-{post_name}.php
-		 * 
-		 * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
-		 */
+	 * Check whether or not a custom index-wppedia.php can get loaded
+	 * 
+	 * Check for the following Templates first:
+	 * 
+	 * - Posttype Archive: 
+	 * 			archive-wppedia_term.php
+	 * - Initial Character Taxonomy: 
+	 * 			taxonomy-wppedia_initial_letter.php OR 
+	 * 			taxonomy-wppedia_initial_letter-{initial_letter}.php
+	 * - Singular Posts: 
+	 * 			single-wppedia_term.php OR 
+	 * 			single-wppedia_term-{post_name}.php
+	 * 
+	 * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+	 */
 	private function current_template_exists_in_theme() {
 
 		if ( 
@@ -145,8 +141,6 @@ class template {
 			return true;
 
 		return false;
-
-		return $template;
 
 	}
 
@@ -264,10 +258,10 @@ class template {
 			'name'					=> __( 'WPPedia Sidebar', 'wppedia' ),
 			'id'						=> 'sidebar_wppedia',
 			'description'		=> __( 'Widgets in this area will be shown on Single WPPedia Entries', 'wppedia' ),
-			'before_widget'	=> apply_filters( 'wppedia_sidebar_widget_before', '<li id="%1$s" class="wppedia_widget %2$s">' ),
-			'after_widget'	=> apply_filters( 'wppedia_sidebar_widget_after', '</li>' ),
-			'before_title'	=> apply_filters( 'wppedia_sidebar_widget_title_before', '<span class="wppedia_widget_title">' ),
-			'after_title'		=> apply_filters( 'wppedia_sidebar_widget_title_after', '</span>' )
+			'before_widget'	=> apply_filters( 'wppedia_sidebar_widget_before', '<div id="%1$s" class="wppedia_widget widget %2$s">' ),
+			'after_widget'	=> apply_filters( 'wppedia_sidebar_widget_after', '</div>' ),
+			'before_title'	=> apply_filters( 'wppedia_sidebar_widget_title_before', '<div class="wppedia_widget_title widget-title">' ),
+			'after_title'		=> apply_filters( 'wppedia_sidebar_widget_title_after', '</div>' )
 		] );
 
 	}
