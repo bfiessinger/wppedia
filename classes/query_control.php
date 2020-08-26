@@ -132,4 +132,18 @@ class query_control {
 
 	}
 
+	/**
+	 * Set default posts per page on WPPedia Frontend Archives
+	 * 
+	 * @since 1.0.0
+	 */
+	function default_posts_per_page( $query ) {
+
+		if ( $query->is_post_type_archive( post_type::getInstance()->post_type ) && ! is_admin() && $query->is_main_query() )
+			$query->set( 'posts_per_page', '100' );
+
+		return $query;
+
+	}
+
 }
