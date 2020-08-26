@@ -51,6 +51,9 @@ class query_control {
     // Sort Wiki Entries by postname
     add_action( 'pre_get_posts', [ $this, 'default_wiki_entries_orderby' ] );
 
+		// Set default posts per page on WPPedia frontend archives
+		add_action( 'pre_get_posts', [ $this, 'default_posts_per_page' ] );
+
 	}
 
 	/**
