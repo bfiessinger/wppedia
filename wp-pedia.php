@@ -1,8 +1,6 @@
 <?php
 
 /**
- * setupMyWP
- *
  * @wordpress-plugin
  * Plugin Name: WPPedia
  * Description: The most advanced Glossary solution for WordPress!
