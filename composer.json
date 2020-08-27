@@ -1,5 +1,5 @@
 {
-    "name": "bf/wp-pedia",
+    "name": "bf/wppedia",
     "description": "Basic Glossary for WordPress",
     "type": "wordpress-plugin",
     "license": "GPLv3",
@@ -17,8 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "bf\\wpPedia\\": "classes/",
-						"bf\\wpPedia\\pro\\": "pro/classes/"
+            "bf\\wpPedia\\": "core/classes"
 				},
 				"files": [
 						"vendor/cmb2/cmb2/init.php",
