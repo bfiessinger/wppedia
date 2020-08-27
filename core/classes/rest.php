@@ -21,6 +21,23 @@ class rest extends \WP_REST_Controller {
 	// Public Endpoints
 	public $rest_endpoint_search = null;
 
+  /**
+   * Static variable for instanciation
+   */
+  protected static $instance = null;
+
+  /**
+   * Get current Instance
+   */
+  public static function getInstance() {
+
+    if ( null === self::$instance ) {
+      self::$instance = new self;
+    }
+    return self::$instance;
+
+  }
+
 	public function __construct() {
 
 		$this->rest_namespace = 'wppedia/v1';
