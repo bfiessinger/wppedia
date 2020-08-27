@@ -39,10 +39,14 @@ class crosslinks {
 		if ( $crosslink_activated !== null )
 			$this->crosslink_activated = $crosslink_activated;
 
+	}
+	
+	public function init() {
+
 		if ( $this->crosslink_activated )
 			add_filter( 'the_content', [$this, 'the_post_content_links'] );
 
-  }
+	}
 
   /**
    * Get Posts available for crosslink content
