@@ -112,9 +112,10 @@ class WPPedia {
 		$crosslinks_module_active = ( helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_crosslinking_active' ) == 'on' ) ? true : false;
 		$prefer_single_words = ( helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_crosslinking_prefer-single-words' ) == 'on' ) ? true : false;
 
-		$crosslinks = new crosslinks( 
+		$module_crosslinks = crosslinks::getInstance();
+		$module_crosslinks->init(
 			$crosslinks_module_active,
-			$prefer_single_words
+			$prefer_single_words		
 		);
 		$crosslinks->init();
 
