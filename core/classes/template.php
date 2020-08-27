@@ -340,6 +340,17 @@ class template {
 				// Add some filters to the text
 				$str = \strip_shortcodes( $str );
 				$str = str_replace(']]&gt;', ']]&gt;', $str);
+				$str = strip_tags( 
+					$str, 
+					[ 
+						'em', 
+						'i', 
+						'strong', 
+						'b',
+						'p',
+						'br'
+					] 
+				);
 
 				// Trim and format the string
 				if ( $force_balanced_tags )
