@@ -20,7 +20,7 @@ class post_type {
 	 * Public variables
 	 */
 	public $post_type = 'wppedia_term';
-	private $post_limit = 200;
+	public $post_limit = 200;
 
   /**
    * Static variable for instanciation
@@ -41,13 +41,13 @@ class post_type {
 
   protected function __clone() {}
 
-  protected function __construct() {
+  protected function __construct() {		
 
 		// Create Post type
 		add_action( 'init', [ $this, 'register_wiki_post_type' ] );
 
 		// Setup a post creation limit
-		if ( $this->post_limit ) {
+		if ( null !== $this->post_limit ) {
 			add_action( 'publish_' . $this->post_type , [ $this, 'limit_num_posts' ] );
 			add_action( 'admin_notices', [ $this, 'limit_reached_msg_notice' ] );
 		}
