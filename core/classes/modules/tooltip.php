@@ -18,6 +18,23 @@ class tooltip {
 
 	private $excerpt_length = 40;
 
+  /**
+   * Static variable for instanciation
+   */
+  protected static $instance = null;
+
+  /**
+   * Get current Instance
+   */
+  public static function getInstance() {
+
+    if ( null === self::$instance ) {
+      self::$instance = new self;
+    }
+    return self::$instance;
+
+  }
+
 	public function __construct() {
 
 		add_action( 'wp_ajax_nopriv_wppedia_generate_tooltip', [ $this, '__generate_tooltip' ] );

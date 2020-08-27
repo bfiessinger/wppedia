@@ -70,7 +70,7 @@ class WPPedia {
 		 * 
 		 * @since 1.0.0
 		 */
-		$rest_utils = new rest();
+		$rest_utils = rest::getInstance();
 		$rest_utils->start();
 
 		/**
@@ -117,14 +117,13 @@ class WPPedia {
 			$crosslinks_module_active,
 			$prefer_single_words		
 		);
-		$crosslinks->init();
 
 		/**
 		 * Tooltips
 		 * 
 		 * @since 1.0.0
 		 */
-		new tooltip();
+		tooltip::getInstance();
 
 	}
 
