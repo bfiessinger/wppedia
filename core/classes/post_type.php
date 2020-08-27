@@ -41,7 +41,7 @@ class post_type {
 
   protected function __clone() {}
 
-  protected function __construct() {		
+  protected function __construct() {	
 
 		// Create Post type
 		add_action( 'init', [ $this, 'register_wiki_post_type' ] );
