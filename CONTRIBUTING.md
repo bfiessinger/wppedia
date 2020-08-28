@@ -9,7 +9,7 @@ We only accept issues that are bug reports or feature requests. Bugs must be
 isolated and reproducible problems that can be fixed within the Hammer.js.
 Please read the following guidelines before opening any issue.
 
-1. [**Read the documentation**](https://hammerjs.github.io)
+1. [**Read the documentation**](#) *available soon*
 
 2. **Does your issue already exist?** Before reporting an issue please check if someone 
 else has reported it.
