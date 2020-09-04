@@ -55,7 +55,7 @@ class WPPedia {
 
 	}
 
-	private function init() {
+	public function init() {
 
 		/**
 		 * Instantiate Template Utils
