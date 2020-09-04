@@ -153,11 +153,7 @@ class options {
 			'desc'			=> '',
 			'id'				=> 'wppedia_crosslinking_post-types',
 			'type'    => 'multicheck',
-			'options' => array(
-				'check1' => 'Check One',
-				'check2' => 'Check Two',
-				'check3' => 'Check Three',
-			),
+			'options_cb' => [ $this, 'get_public_posttypes' ],
 			'attributes'	=> [
 				'disabled'	=> true
 			],
@@ -181,6 +177,29 @@ class options {
 		}
 
 		return $options;
+
+	}
+
+	/**
+	 * Custom options Callback to get all public posttypes
+	 * 
+	 * @since 1.0.0
+	 */
+	function get_public_posttypes() {
+
+		$return_arr = [];
+		$post_types = get_post_types( [
+			'public' => true,
+		] );
+
+		foreach ( $post_types as $pt ) {
+
+			$obj = get_post_type_object( $pt );
+			$return_arr[$pt] = $obj->labels->name;
+
+		}
+
+		return $return_arr;
 
 	}
 
