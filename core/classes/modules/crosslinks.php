@@ -16,6 +16,9 @@ defined( 'ABSPATH' ) or die();
 
 class crosslinks {
 
+	/**
+	 * Public Settings variables
+	 */
 	public $crosslink_activated = true;
 	public $prefer_single_words = false;
 	public $require_full_words = true;
@@ -214,8 +217,8 @@ class crosslinks {
 
 		}
 		
-		/*
-		 *  get only the body tag with its contents, then trim the body tag itself to get only the original content
+		/**
+		 * get only the body tag with its contents, then trim the body tag itself to get only the original content
 		 */
 		$bodyNode = $xpath->query('//body')->item(0);
 
@@ -227,7 +230,7 @@ class crosslinks {
 			$intermalHtml = $newDom->saveHTML();
 			$content = mb_substr(trim($intermalHtml), 6, (mb_strlen($intermalHtml) - 14), "UTF-8");
 
-			/*
+			/**
 			 * Fixing the self-closing which is lost due to a bug in DOMDocument->saveHtml() (caused a conflict with NextGen)
 			 */
 			$content = preg_replace('#(<img[^>]*[^/])>#Ui', '$1/>', $content);
