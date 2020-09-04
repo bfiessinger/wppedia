@@ -23,7 +23,6 @@ class crosslinks {
 	public $prefer_single_words = false;
 	public $require_full_words = true;
 	public $post_types = [];
-	public $myVar = null;
 
   /**
    * Static variable for instanciation
@@ -48,9 +47,6 @@ class crosslinks {
 
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;
-
-		if ( $post_types !== null )
-			$this->post_types = $post_types;
 
 		// Push the main post type to the array if not already given
 		if ( ! in_array( post_type::getInstance()->post_type, $this->post_types ) )
