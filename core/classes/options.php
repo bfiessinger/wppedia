@@ -231,16 +231,26 @@ class options {
 
 		add_option( 
 			'wppedia_permalink_base', 
-			'/glossary/', 
+			'glossary', 
 			'', 
 			true 
 		);
 
-		// Register glossary Base Setting
+		/**
+		 * Glossary permalink base setting
+		 */
 		register_setting(
 			'permalink', 
 			'wppedia_permalink_base',
 			[ $this, 'wppedia_permalink_part_sanitize' ]
+		);
+
+		/**
+		 * Settings field for using the initial character in the URL
+		 */
+		register_setting(
+			'permalink',
+			'wppedia_use_initial_character_permalink'
 		);
 
 		add_settings_section(
@@ -254,6 +264,14 @@ class options {
 			'wppedia_permalink_base_setting', 
 			__( 'WPPedia base', 'wppedia' ), 
 			[ $this, 'wppedia_setting_permalink_base_cb' ], 
+			'permalink', 
+			'wppedia_permalink_structure'
+		);
+
+		add_settings_field(
+			'wppedia_permalink_use_initial_character', 
+			__( 'use initial character in URL', 'wppedia' ), 
+			[ $this, 'wppedia_setting_permalink_use_initial_character_cb' ], 
 			'permalink', 
 			'wppedia_permalink_structure'
 		);
@@ -286,19 +304,14 @@ class options {
 		<input type="text" name="wppedia_permalink_base" value="<?php echo get_option('wppedia_permalink_base'); ?>" class="regular-text code" />
 	<?php	}
 
+	function wppedia_setting_permalink_use_initial_character_cb() { ?>
+		<input type="checkbox" name="wppedia_permalink_use_initial_character" checked value="1" disabled />
+	<?php }
+
 	function wppedia_permalink_part_sanitize( $input ) {
-
-		$sanitized = $input;
-
-		$inputLen = strlen( $input );
-		if ( \strpos($input, '/') === false || \strpos($input, '/') != 0 )
-			$sanitized = '/' . $sanitized;
-
-		if ( \strpos($input, '/', 1) != $inputLen - 1 )
-			$sanitized .= '/';
-
-		return $sanitized;
-
+		$input = esc_html( $input );
+		$input = urlencode( $input );
+		return $input;
 	}
 
 }
