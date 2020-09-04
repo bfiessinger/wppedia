@@ -476,4 +476,30 @@ class helper {
 
 	}
 
+	/**
+	 * Helper function to sort post titles by length
+	 * 
+	 * @param stdClass $posts - self generated post array
+	 * @param bool $prefer_single_words - Whether to check for single words or phrases first
+	 * 
+	 * @since 1.0.0
+	 */
+	function sort_post_titles( $posts, bool $prefer_single_words ) {
+
+		usort($posts, function($a, $b) use ( $prefer_single_words ) {
+
+			$a_len = mb_strlen($a->title);
+			$b_len = mb_strlen($b->title);
+
+			if ( $prefer_single_words )
+				return $a_len - $b_len;
+
+			return $b_len - $a_len;
+
+		});
+
+		return $posts;
+
+	}
+
 }
