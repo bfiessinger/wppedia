@@ -44,7 +44,7 @@ class crosslinks {
 
 	protected function __construct() {}
 
-	public function init( bool $crosslink_activated = null, bool $prefer_single_words = null, bool $require_full_words = null, array $post_types = null ) {
+	public function init( bool $crosslink_activated = null, bool $prefer_single_words = null, bool $require_full_words = null ) {
 
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;
@@ -104,7 +104,7 @@ class crosslinks {
    * 
    * @since 1.0.0
    */
-  private function prepare_link_phrase( string $str ) {
+  public function prepare_link_phrase( string $str ) {
 
     $str = trim($str);
     $str = wptexturize($str);
@@ -157,7 +157,7 @@ class crosslinks {
 
 	}
 
-	private function parse_content_xml( $content, $link_phrase, $post ) {
+	public function parse_content_xml( $content, $link_phrase, $post ) {
 
 		$dom = new \DOMDocument();
 		
