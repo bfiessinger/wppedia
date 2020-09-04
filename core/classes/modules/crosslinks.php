@@ -126,17 +126,7 @@ class crosslinks {
 		$posts = $this->get_crosslink_posts();
 
 		// Sort available posts by title length
-		usort($posts, function($a, $b) {
-
-			$a_len = mb_strlen($a->title);
-			$b_len = mb_strlen($b->title);
-
-			if ( $this->prefer_single_words )
-				return $a_len - $b_len;
-
-			return $b_len - $a_len;
-
-		});
+		$posts = helper::getInstance()->sort_post_titles( $posts, $this->prefer_single_words );
 
 		// Loop over available posts and add crosslinks
 		foreach ( $posts as $post ) {
