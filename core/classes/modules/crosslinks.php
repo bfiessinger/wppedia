@@ -54,7 +54,7 @@ class crosslinks {
 
 		// Push the main post type to the array if not already given
 		if ( ! in_array( post_type::getInstance()->post_type, $this->post_types ) )
-			$this->post_types[] = post_type::getInstance()->post_type;
+			array_unshift( $this->post_types, post_type::getInstance()->post_type );
 
 		if ( $require_full_words !== null )
 			$this->require_full_words = $require_full_words;
