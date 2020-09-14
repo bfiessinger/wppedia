@@ -1,12 +1,17 @@
 <?php
 
 /**
+ * WPPedia - The most advanced Glossary solution for WordPress! 
+ * 
+ * @since				1.0.0
+ * 
  * @wordpress-plugin
+ * 
  * Plugin Name: WPPedia
  * Description: The most advanced Glossary solution for WordPress!
- * Author: Bastian Fießinger
- * AuthorURI: https://github.com/bfiessinger/
- * Version: 1.0.0
+ * Author: 			Bastian Fießinger
+ * AuthorURI: 	https://github.com/bfiessinger/
+ * Version: 		1.0.0
  * Text Domain: wppedia
  */
 
