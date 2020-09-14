@@ -38,6 +38,8 @@ class WPPedia {
 
 		$this->define_constants();
 
+		add_action( 'after_setup_theme', [ $this, 'setup' ] );
+
 		$this->init();
 
 	}
@@ -57,6 +59,12 @@ class WPPedia {
 
 		if ( ! defined('wpPediaPluginUrl') )
 			define('wpPediaPluginUrl', plugin_dir_url(__FILE__));
+
+	}
+
+	public function setup() {
+
+		load_plugin_textdomain( 'wppedia', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 	}
 
