@@ -7,7 +7,7 @@
 	position: relative;
 	width: 100%;
 	max-width: 600px;
-	margin: 0 auto 2rem auto;
+	margin: 0 auto 2rem;
 	display: flex;
 	background: #FFF;
 	.search-field {
@@ -38,7 +38,7 @@
   position: absolute;
   margin: 0;
 	border: solid rgba(0, 0, 0, 0.54);
-	border-width: 0 1px 1px 1px;
+	border-width: 0 1px 1px;
   padding: 0;
   width: 100%;
   z-index: 2;
@@ -51,10 +51,10 @@
 			background: rgba(0, 0, 0, 0.12);
 		}
 	}
-	a { 
+	a {
 		display: block;
 		padding: .6rem;
-		color: inherit; 
+		color: inherit;
 	}
 }
 
