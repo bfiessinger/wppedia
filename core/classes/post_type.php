@@ -147,6 +147,9 @@ class post_type {
 	 */
 	function limit_num_posts( $post_id ) {
 
+		if ( NULL === $this->post_limit )
+			return;
+
 		global $wpdb;
 		$thepost = get_post($post_id);
 		
