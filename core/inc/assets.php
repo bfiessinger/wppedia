@@ -19,9 +19,6 @@ function wppedia_enqueue_scripts() {
 	// Load Styles
 	if ( 'on' == bf\wpPedia\helper::getInstance()->get_option( \bf\wpPedia\options::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
 
-		// WPPedia Base
-		wppedia_add_inline_style( 'wppedia_base', wpPediaPluginDir . 'dist/css/base.min.css' );
-
 		// Initial Letter Navigation Component
 		wppedia_add_inline_style( 'wppedia_component_navigation', wpPediaPluginDir . 'dist/css/components_navigation.min.css' );
 
