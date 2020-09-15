@@ -16,30 +16,7 @@ defined( 'ABSPATH' ) or die();
 
 class query_control {
 
-  /**
-   * Static variable for instanciation
-   */
-  protected static $instance = null;
-
-  /**
-   * Get current Instance
-	 * 
-	 * @since 1.0.0
-	 * 
-	 * @return self
-   */
-  public static function getInstance() {
-
-    if ( null === self::$instance ) {
-      self::$instance = new self;
-    }
-    return self::$instance;
-
-	}
-	
-  protected function __clone() {}
-
-  protected function __construct() {
+  public function __construct() {
 
 		// Modify the default query output
 		add_filter( 'posts_join', [ $this, 'posts_join_get_posts_by_initial_letter' ], 10, 2 );

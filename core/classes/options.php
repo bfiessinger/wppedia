@@ -13,15 +13,15 @@ defined( 'ABSPATH' ) or die();
 
 class options {
 
-  /**
-   * Static variable for instanciation
-   */
-	protected static $instance = null;
-
 	/**
 	 * Public Variables
 	 */
 	public static $settings_general_page = 'wppedia_settings_general';
+
+  /**
+   * Static variable for instanciation
+   */
+	protected static $instance = null;
 
   /**
    * Get current Instance
@@ -46,7 +46,7 @@ class options {
 		add_action( 'admin_enqueue_scripts', [ $this, 'do_admin_scripts' ] );
 
 		// Custom Permalinks Section
-		add_action('admin_init', [ $this, 'wppedia_permalink_settings' ], 999999 );
+		add_action( 'admin_init', [ $this, 'wppedia_permalink_settings' ], 999999 );
 
 		// Flush rewrite rules onsave
 		add_action( 'cmb2_save_options-page_fields_' . self::$settings_general_page, 'flush_rewrite_rules' );

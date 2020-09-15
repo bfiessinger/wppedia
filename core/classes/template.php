@@ -33,14 +33,17 @@ class template {
 
   }
 
-  protected function __clone() {}
+	protected function __clone() {}
 
-	protected function __construct() {}
-	
-	public function start() {
+	protected function __construct() {
 
+		/**
+		 * Add custom Classes to the body and each post
+		 * 
+		 * @since 1.0.0
+		 */
 		add_filter( 'body_class', [ $this, 'body_class' ] );
-		add_filter( 'post_class', [ $this, 'post_class' ], 10,3 );
+		add_filter( 'post_class', [ $this, 'post_class' ], 10, 3 );
 
 		/**
 		 * Custom Templates

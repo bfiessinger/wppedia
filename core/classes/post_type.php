@@ -22,6 +22,8 @@ class post_type {
 	public $post_type = 'wppedia_term';
 	public $post_limit = 200;
 
+	public $taxonomy = 'wppedia_initial_letter';
+
   /**
    * Static variable for instanciation
    */

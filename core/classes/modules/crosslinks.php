@@ -24,26 +24,7 @@ class crosslinks {
 	public $require_full_words = true;
 	public $post_types = [];
 
-  /**
-   * Static variable for instanciation
-   */
-  protected static $instance = null;
-
-  /**
-   * Get current Instance
-   */
-  public static function getInstance() {
-
-    if ( null === self::$instance ) {
-      self::$instance = new self;
-    }
-    return self::$instance;
-
-	}
-
-	protected function __construct() {}
-
-	public function init( bool $crosslink_activated = null, bool $prefer_single_words = null, bool $require_full_words = null ) {
+	public function __construct( bool $crosslink_activated = null, bool $prefer_single_words = null, bool $require_full_words = null ) {
 
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;

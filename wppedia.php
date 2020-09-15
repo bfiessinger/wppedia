@@ -75,23 +75,21 @@ class WPPedia {
 		 * 
 		 * @since 1.0.0
 		 */
-		$template_utils = template::getInstance();
-		$template_utils->start();
+		template::getInstance();
 
 		/**
 		 * Instantiate REST Class
 		 * 
 		 * @since 1.0.0
 		 */
-		$rest_utils = rest::getInstance();
-		$rest_utils->start();
+		new rest();
 
 		/**
 		 * Instantiate Query Controller
 		 * 
 		 * @since 1.0.0
 		 */
-		query_control::getInstance();
+		new query_control();
 
 		/**
 		 * Instatiate Admin View
@@ -99,7 +97,7 @@ class WPPedia {
 		 * 
 		 * @since 1.0.0
 		 */
-		admin::getInstance();
+		new admin();
 
 		/**
 		 * Options
@@ -122,12 +120,11 @@ class WPPedia {
 		 * 
 		 * @since 1.0.0
 		 */
-		$crosslinks_module_active = ( helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_crosslinking_active' ) == 'on' ) ? true : false;
+		$crosslinks_active = ( helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_crosslinking_active' ) == 'on' ) ? true : false;
 		$prefer_single_words = ( helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_crosslinking_prefer-single-words' ) == 'on' ) ? true : false;
 
-		$module_crosslinks = crosslinks::getInstance();
-		$module_crosslinks->init(
-			$crosslinks_module_active,
+		new crosslinks(
+			$crosslinks_active,
 			$prefer_single_words		
 		);
 
@@ -136,7 +133,7 @@ class WPPedia {
 		 * 
 		 * @since 1.0.0
 		 */
-		tooltip::getInstance();
+		new tooltip();
 
 	}
 

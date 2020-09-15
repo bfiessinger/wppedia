@@ -16,26 +16,9 @@ defined( 'ABSPATH' ) or die();
 
 class admin {
 
-  /**
-   * Static variable for instanciation
-   */
-	protected static $instance = null;
-
-  /**
-   * Get current Instance
-   */
-  public static function getInstance() {
-
-    if ( null === self::$instance ) {
-      self::$instance = new self;
-    }
-    return self::$instance;
-
-  }
-
   protected function __clone() {}
 
-  protected function __construct() {
+  public function __construct() {
 
 		// Add Text to the glossary archive page
 		add_action( 'display_post_states', [ $this, 'wppedia_archive_post_state' ], 10, 2 );
