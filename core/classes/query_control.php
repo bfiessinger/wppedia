@@ -95,7 +95,7 @@ class query_control {
    */
   function default_wiki_entries_orderby( $query ) {
 
-    if( ! $query->is_main_query() || ( isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type'] !== post_type::getInstance()->post_type ) )
+    if( ! $query->is_main_query() || ! helper::getInstance()->is_wiki_post_type() )
       return $query;
   
     // Orderby should not be manually modified
