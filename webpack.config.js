@@ -52,8 +52,6 @@ module.exports = [
 			components_navigation: './source/scss/components/initial-char-navigation.scss',
 			components_search: './source/scss/components/searchbar.scss',
 			components_tooltip: './source/scss/components/tooltip.scss',
-			// Columnsets
-			columns_3: './source/scss/columnset/col-3/index.scss',
     },
     output: {
       path: path.resolve(__dirname, 'dist/css'),

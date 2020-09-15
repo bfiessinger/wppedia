@@ -33,11 +33,6 @@ function wppedia_enqueue_scripts() {
 			// Tooltips
 			wppedia_add_inline_style( 'wppedia_component_tooltip', wpPediaPluginDir . 'dist/css/components_tooltip.min.css' );
 
-		} else {
-
-			// Columnset
-			wppedia_add_inline_style( 'wppedia_columns_3', wpPediaPluginDir . 'dist/css/columns_3.min.css' );
-
 		}
 
 	} else {
