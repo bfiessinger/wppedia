@@ -238,7 +238,7 @@ class post_type {
 			'rewrite' => $rewrite
 		];
 
-		\register_taxonomy( 'wppedia_initial_letter', [ $this->post_type ], $args );
+		\register_taxonomy( $this->taxonomy, [ $this->post_type ], $args );
 
 	}
 
@@ -255,7 +255,7 @@ class post_type {
 
 		$cur_initial = helper::getInstance()->post_initial_letter( $post_ID );
 
-		$taxonomy = 'wppedia_initial_letter';
+		$taxonomy = $this->taxonomy;
 		$cur_initial_encoded = helper::getInstance()->slugify( $cur_initial );
 		
 		// Create a new term based on the initial letter
@@ -299,7 +299,7 @@ class post_type {
 		$rules = array();
 
 		$terms = get_terms( array(
-			'taxonomy' => 'wppedia_initial_letter',
+			'taxonomy' => $this->taxonomy,
 			'hide_empty' => false,
 		) );
 
@@ -316,7 +316,7 @@ class post_type {
 
 		if( $post->post_type == 'wppedia_term' ) {
 
-			$resource_terms = get_the_terms( $post, 'wppedia_initial_letter' );
+			$resource_terms = get_the_terms( $post, $this->taxonomy );
 			$term_slug = '';
 
 			if( ! empty( $resource_terms ) ) {
