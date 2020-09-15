@@ -48,6 +48,9 @@ class options {
 		// Custom Permalinks Section
 		add_action('admin_init', [ $this, 'wppedia_permalink_settings' ], 999999 );
 
+		// Flush rewrite rules onsave
+		add_action( 'cmb2_save_options-page_fields_' . self::$settings_general_page, 'flush_rewrite_rules' );
+
 	}
 	
   /**
