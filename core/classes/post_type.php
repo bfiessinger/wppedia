@@ -48,18 +48,16 @@ class post_type {
 		// Create Post type
 		add_action( 'init', [ $this, 'register_wiki_post_type' ], 10 );
 
+		// Create Fake Taxonomy to query by initial letter
+		add_action( 'init', [ $this, 'create_wppedia_initial_letter_tax' ], 202 );
+
 		// Setup a post creation limit
-		if ( null !== $this->post_limit ) {
-			add_action( 'publish_' . $this->post_type , [ $this, 'limit_num_posts' ] );
-			add_action( 'admin_notices', [ $this, 'limit_reached_msg_notice' ] );
-		}
+		add_action( 'publish_' . $this->post_type , [ $this, 'limit_num_posts' ] );
+		add_action( 'admin_notices', [ $this, 'limit_reached_msg_notice' ] );
 
 		// Rewrite Rules for initial Characters
 		add_filter('generate_rewrite_rules', [ $this, 'wppedia_cpt_generate_rewrite_rules' ] );
 		add_filter('post_type_link', [ $this, 'wppedia_cpt_link' ], 10, 2);
-
-		// Create Fake Taxonomy to query by initial letter
-		add_action( 'init', [ $this, 'create_wppedia_initial_letter_tax' ] );
 
 		// Set Initial Letter Taxonomy on post save
 		add_action( 'save_post_wppedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
