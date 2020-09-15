@@ -13,7 +13,7 @@
 		display: flex;
 		flex-wrap: wrap;
 	}
-	li { 
+	li {
 		margin: .25rem 0 .25rem -1px;
 		&:hover {
 			span {
@@ -42,7 +42,7 @@
 			user-select: none;
 		}
 	}
-	.wppedia_navigation_home { 
+	.wppedia_navigation_home {
 		margin-right: 1rem;
 		text-indent: -9999px;
 		background-image: url('../../../assets/img/encyclopedia.svg');
