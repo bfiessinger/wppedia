@@ -38,14 +38,6 @@ function wppedia_enqueue_scripts() {
 
 	}
 
-	// TODO: 
-	// Add options to set the content width
-	// the number of columns in list layout
-	// +++
-	$theme_overrides = '';
-
-	wppedia_add_inline_style( 'wppedia_theme_overrides', $theme_overrides );
-
 	// Scripts
 	if ( is_singular() ) {
 
