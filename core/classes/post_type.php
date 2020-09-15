@@ -186,7 +186,7 @@ class post_type {
 
 	function limit_reached_msg_notice() {
 
-		if( ! empty( $_REQUEST['wppedia_limit_reached'] ) && $_REQUEST['wppedia_limit_reached'] == '1' ) {
+		if( NULL !== $this->post_limit && ! empty( $_REQUEST['wppedia_limit_reached'] ) && $_REQUEST['wppedia_limit_reached'] == '1' ) {
 			echo '<div class="error"><p>You have reached your post creation limit. <strong>This post was not published.</strong> Upgrade to PRO to remove limitations.</p></div>';
 		}
 
