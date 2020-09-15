@@ -151,7 +151,6 @@ class post_type {
 			return;
 
 		global $wpdb;
-		$thepost = get_post($post_id);
 		
 		$query_num_posts = "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = '$this->post_type' AND post_status = 'publish' ";
 		$num_published = $wpdb->get_var($query_num_posts);
