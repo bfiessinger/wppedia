@@ -56,8 +56,8 @@ class post_type {
 		add_action( 'admin_notices', [ $this, 'limit_reached_msg_notice' ] );
 
 		// Rewrite Rules for initial Characters
-		add_filter('generate_rewrite_rules', [ $this, 'wppedia_cpt_generate_rewrite_rules' ] );
-		add_filter('post_type_link', [ $this, 'wppedia_cpt_link' ], 10, 2);
+		add_filter( 'generate_rewrite_rules', [ $this, 'wppedia_cpt_generate_rewrite_rules' ] );
+		add_filter( 'post_type_link', [ $this, 'wppedia_cpt_link' ], 10, 2 );
 
 		// Set Initial Letter Taxonomy on post save
 		add_action( 'save_post_wppedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
