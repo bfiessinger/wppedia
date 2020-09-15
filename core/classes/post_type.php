@@ -62,7 +62,7 @@ class post_type {
 		// Set Initial Letter Taxonomy on post save
 		add_action( 'save_post_wppedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
 
-  }
+	}
 
   /**
    * Register Wiki Custom Post type
