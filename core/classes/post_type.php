@@ -304,7 +304,7 @@ class post_type {
 		) );
 
 		foreach ($terms as $term) {    
-    	$rules[ ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $this->post_type. '&name=$matches[1]';
+			$rules[ ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $this->post_type. '&name=$matches[1]';
 		}
 
     // merge with global rules
