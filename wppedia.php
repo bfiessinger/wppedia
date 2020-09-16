@@ -60,11 +60,14 @@ class WPPedia {
 		if ( ! defined('wpPediaPluginUrl') )
 			define('wpPediaPluginUrl', plugin_dir_url(__FILE__));
 
+		if ( ! defined('wpPediaPluginBaseName') )
+			define('wpPediaPluginBaseName', plugin_basename( __FILE__ ));
+
 	}
 
 	public function setup() {
 
-		load_plugin_textdomain( 'wppedia', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'wppedia', false, dirname( wpPediaPluginBaseName ) . '/languages' );
 
 	}
 
