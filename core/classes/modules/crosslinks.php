@@ -9,6 +9,7 @@
 namespace bf\wpPedia\modules;
 
 use bf\wpPedia\helper;
+use bf\wpPedia\options;
 use bf\wpPedia\post_type;
 
 // Make sure this file runs only from within WordPress.
