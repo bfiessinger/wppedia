@@ -78,14 +78,14 @@ class options {
 					'label' => __( 'Content', 'wppedia' ),
 					'icon' 	=> 'dashicons-text-page', // Dashicon
 				],
-				'layout' => [
-					'label' => __( 'Layout', 'wppedia' ),
+				'assets' => [
+					'label' => __( 'Design & Functionality', 'wppedia' ),
 					'icon' 	=> 'dashicons-admin-customizer', // Dashicon
 				],
 				'crosslinks' => [
 					'label'	=> __( 'Crosslinks', 'wppedia' ),
-					'icon'	=> 'dashicons-admin-links', // Dashicon
-				],
+					'icon'	=> 'dashicons-networking', // Dashicon
+				]
 			],
 		] );
 
@@ -106,18 +106,18 @@ class options {
 		] );
 
 		/**
-		 * Tab Layout
+		 * Tab assets
 		 * Options related to stylesheets and scripts
 		 * 
 		 * @since 1.0.0
 		 */
 		$wiki_settings_page->add_field( [
 			'name'			=> __( 'Load base CSS', 'wppedia' ),
-			'desc'			=> __( 'Enqueue the base CSS Stylesheet.','wppedia' ),
+			'desc'			=> __( 'Enqueue the base CSS Stylesheet.', 'wppedia' ),
 			'id'				=> 'wppedia_layout_enqueue-base-style',
 			'type'			=> 'switch_button',
 			'default'		=> 'on',
-			'tab'				=> 'layout',
+			'tab'				=> 'assets',
 		] );
 
 		$wiki_settings_page->add_field( [
@@ -125,12 +125,34 @@ class options {
 			'desc'			=> __( 'This option ensures that you are only loading styles required for the current view. All styles will be displayed inline without the need to request an additional stylesheet.','wppedia' ),
 			'id'				=> 'wppedia_layout_use-inline-styles',
 			'type'			=> 'switch_button',
-			'tab'				=> 'layout',
+			'tab'				=> 'assets',
+		] );
+
+		$wiki_settings_page->add_field( [
+			'name'			=> __( 'Load Char Navigation CSS', 'wppedia' ),
+			'desc'			=> __( 'Add Initial Character Navigation Stylesheet to inline styles.', 'wppedia' ) . 
+										'<br>' . 
+										__( 'only considered if styles are loaded inline.', 'wppedia' ),
+			'id'				=> 'wppedia_layout_enqueue-char-nav-style',
+			'type'			=> 'switch_button',
+			'default'		=> 'on',
+			'tab'				=> 'assets',
+		] );
+
+		$wiki_settings_page->add_field( [
+			'name'			=> __( 'Load Searchform CSS', 'wppedia' ),
+			'desc'			=> __( 'Add the Searchform Stylesheet to inline styles.', 'wppedia' ) . 
+										'<br>' . 
+										__( 'only considered if styles are loaded inline.', 'wppedia' ),
+			'id'				=> 'wppedia_layout_enqueue-searchform-style',
+			'type'			=> 'switch_button',
+			'default'		=> 'on',
+			'tab'				=> 'assets',
 		] );
 
 		/**
-		 * Crosslinks Permalink
-		 * Options related to the permalink structure
+		 * Tab Crosslinks
+		 * Options related to the crosslinks feature
 		 * 
 		 * @since 1.0.0
 		 */
@@ -280,7 +302,7 @@ class options {
 		);
 
 		// Save options to database
-		if ( isset( $_POST['wppedia_permalink_base'] ) || isset( $_POST['wppedia_permalink_term_base'] ) ) {
+		if ( isset( $_POST['wppedia_permalink_base'] ) || isset( $_POST['wppedia_permalink_use_initial_character'] ) ) {
 
 			check_admin_referer('update-permalink');
 
@@ -295,6 +317,9 @@ class options {
 			if ( isset( $_POST['wppedia_permalink_base'] ) )
 				update_option( 'wppedia_permalink_base', $_POST['wppedia_permalink_base'] );
 
+			if ( isset( $_POST['wppedia_permalink_use_initial_character'] ) )
+				update_option( 'wppedia_permalink_use_initial_character', $_POST['wppedia_permalink_use_initial_character'] );
+
 		}
 
 	}
@@ -308,7 +333,7 @@ class options {
 	<?php	}
 
 	function wppedia_setting_permalink_use_initial_character_cb() { ?>
-		<input type="checkbox" name="wppedia_permalink_use_initial_character" checked value="1" disabled />
+		<input type="checkbox" name="wppedia_permalink_use_initial_character" checked value="<?php echo get_option('wppedia_permalink_use_initial_character', 'on'); ?>" disabled />
 	<?php }
 
 	function wppedia_permalink_part_sanitize( $input ) {
