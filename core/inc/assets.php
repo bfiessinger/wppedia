@@ -13,17 +13,21 @@
  */
 function wppedia_enqueue_scripts() {
 
-	if ( ! bf\wpPedia\helper::getInstance()->is_wiki_post_type() )
+	$helper = bf\wpPedia\helper::getInstance();
+
+	if ( ! $helper->is_wiki_post_type() )
 		return;
 
 	// Load Styles
-	if ( 'on' == bf\wpPedia\helper::getInstance()->get_option( \bf\wpPedia\options::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
+	if ( 'on' == $helper->get_option( \bf\wpPedia\options::$settings_general_page, 'wppedia_layout_use-inline-styles' ) ) {
 
 		// Initial Letter Navigation Component
-		wppedia_add_inline_style( 'wppedia_component_navigation', wpPediaPluginDir . 'dist/css/components_navigation.min.css' );
+		if ( 'on' == $helper->get_option( \bf\wpPedia\options::$settings_general_page, 'wppedia_layout_enqueue-char-nav-style' ) )
+			wppedia_add_inline_style( 'wppedia_component_navigation', wpPediaPluginDir . 'dist/css/components_navigation.min.css' );
 
 		// Searchbar
-		wppedia_add_inline_style( 'wppedia_component_searchbar', wpPediaPluginDir . 'dist/css/components_search.min.css' );
+		if ( 'on' == $helper->get_option( \bf\wpPedia\options::$settings_general_page, 'wppedia_layout_enqueue-searchform-style' ) )
+			wppedia_add_inline_style( 'wppedia_component_searchbar', wpPediaPluginDir . 'dist/css/components_search.min.css' );
 
 		if ( is_singular() ) {
 
@@ -32,9 +36,9 @@ function wppedia_enqueue_scripts() {
 
 		}
 
-	} else {
+	} elseif ( 'on' == $helper->get_option( \bf\wpPedia\options::$settings_general_page, 'wppedia_layout_enqueue-base-style' ) ) {
 
-		wp_enqueue_style( 'wppedia-base', wpPediaPluginUrl . 'dist/css/style.min.css', [], null );
+		wp_enqueue_style( 'wppedia-style', wpPediaPluginUrl . 'dist/css/style.min.css', [], null );
 
 	}
 
