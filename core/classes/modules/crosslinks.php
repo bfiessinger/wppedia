@@ -29,9 +29,17 @@ class crosslinks {
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;
 
-		// Push the main post type to the array if not already given
-		if ( ! in_array( post_type::getInstance()->post_type, $this->post_types ) )
+		$post_types = helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_crosslinking_post-types');
+		if ( is_array( $post_types ) )
+			$this->post_types = $post_types;
+		else
+			$this->post_types = [ post_type::getInstance()->post_type ];
+	
+		// Set the main post type on the first place in the posttype array
+		if ( in_array( post_type::getInstance()->post_type, $this->post_types ) ) {
+			unset( $this->post_types[post_type::getInstance()->post_type] );
 			array_unshift( $this->post_types, post_type::getInstance()->post_type );
+		}
 
 		if ( $require_full_words !== null )
 			$this->require_full_words = $require_full_words;
