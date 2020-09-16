@@ -313,9 +313,6 @@ class options {
 			if ( isset( $_POST['wppedia_permalink_base'] ) )
 				update_option( 'wppedia_permalink_base', $_POST['wppedia_permalink_base'] );
 
-			if ( isset( $_POST['wppedia_permalink_use_initial_character'] ) )
-				update_option( 'wppedia_permalink_use_initial_character', $_POST['wppedia_permalink_use_initial_character'] );
-
 		}
 
 	}
@@ -329,7 +326,7 @@ class options {
 	<?php	}
 
 	function wppedia_setting_permalink_use_initial_character_cb() { ?>
-		<input type="checkbox" name="wppedia_permalink_use_initial_character" checked value="<?php echo get_option('wppedia_permalink_use_initial_character', 'on'); ?>" disabled />
+		<input type="checkbox" name="wppedia_permalink_use_initial_character" checked value="on" />
 	<?php }
 
 	function wppedia_permalink_part_sanitize( $input ) {
