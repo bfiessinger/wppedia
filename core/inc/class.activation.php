@@ -20,6 +20,21 @@ class activation {
     if ( ! get_option( 'wppedia_flush_rewrite_rules_flag' ) ) {
 			add_option( 'wppedia_flush_rewrite_rules_flag', true );
 		}
+
+		if ( ! get_option( 'wppedia_settings_general' ) ) {
+			
+			$opt_defaults = [
+				// Assets
+				'wppedia_layout_enqueue-base-style' => 'on',
+				'wppedia_layout_enqueue-char-nav-style' => 'on',
+				'wppedia_layout_enqueue-searchform-style' => 'on',
+				// Crosslinking
+				'wppedia_crosslinking_active' => 'on'
+			];
+
+			add_option( 'wppedia_settings_general', $opt_defaults );
+
+		}
 		
 	}
 

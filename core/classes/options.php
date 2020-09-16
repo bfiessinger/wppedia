@@ -116,7 +116,6 @@ class options {
 			'desc'			=> __( 'Enqueue the base CSS Stylesheet.', 'wppedia' ),
 			'id'				=> 'wppedia_layout_enqueue-base-style',
 			'type'			=> 'switch_button',
-			'default'		=> 'on',
 			'tab'				=> 'assets',
 		] );
 
@@ -135,7 +134,6 @@ class options {
 										__( 'only considered if styles are loaded inline.', 'wppedia' ),
 			'id'				=> 'wppedia_layout_enqueue-char-nav-style',
 			'type'			=> 'switch_button',
-			'default'		=> 'on',
 			'tab'				=> 'assets',
 		] );
 
@@ -146,7 +144,6 @@ class options {
 										__( 'only considered if styles are loaded inline.', 'wppedia' ),
 			'id'				=> 'wppedia_layout_enqueue-searchform-style',
 			'type'			=> 'switch_button',
-			'default'		=> 'on',
 			'tab'				=> 'assets',
 		] );
 
@@ -161,7 +158,6 @@ class options {
 			'desc'			=> __( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.','wppedia' ),
 			'id'				=> 'wppedia_crosslinking_active',
 			'type'			=> 'switch_button',
-			'default'		=> 'on',
 			'tab'				=> 'crosslinks',
 		] );
 
