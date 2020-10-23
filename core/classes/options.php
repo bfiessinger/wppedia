@@ -330,8 +330,9 @@ class options {
 	<?php }
 
 	function wppedia_permalink_part_sanitize( $input ) {
-		$input = esc_html( $input );
-		$input = urlencode( $input );
+		$input = str_replace( ' ', '-', $input );
+		$input = esc_url_raw( $input );
+		
 		return $input;
 	}
 
