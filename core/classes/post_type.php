@@ -328,7 +328,7 @@ class post_type {
 
 			}
 
-			$permalink = get_home_url() ."/" . ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term_slug . '/' . $post->post_name;
+			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term_slug . '/' . $post->post_name;
 
 		}
 
