@@ -16,7 +16,7 @@ add_shortcode( 'wppedia_navigation', 'create_wppedia_navigation_shortcode' );
 function create_wppedia_searchform_shortcode() {
 
 	ob_start();
-	bf\wpPedia\template::getInstance()->get_search_form();
+	wppedia_get_template_part('search/form');
 	return ob_get_clean();
 
 }

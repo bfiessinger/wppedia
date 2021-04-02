@@ -39,6 +39,7 @@ class options {
 
   protected function __construct() {
 
+		/*
     // Setup Admin Pages
 		add_action( 'cmb2_admin_init', [ $this, 'add_wiki_admin_pages' ] );
 		
@@ -51,8 +52,47 @@ class options {
 		// Flush rewrite rules onsave
 		add_action( 'cmb2_save_options-page_fields_' . self::$settings_general_page, 'flush_rewrite_rules' );
 
+		*/
+
+		add_action( 'admin_menu', [ $this, 'settings_page' ] );
+		add_action( 'admin_init', [ $this, 'settings_init' ] );
+
 	}
 	
+	function settings_page() {
+		add_submenu_page( 
+			'edit.php?post_type=' . \wppedia_get_post_type(), 
+			'WPPedia Settings',
+			'WPPedia Settings', 
+			'manage_options', 
+			'options_wppedia', 
+			[ $this, 'settings_cb' ],
+			null
+		);
+	}
+
+	function settings_cb() { ?>
+		<div class="wrap">
+			<h2>Settings</h2>
+			<p>Modify WPPedia Settings</p>
+			<?php settings_errors(); ?>
+
+			<form method="post" action="options.php">
+				<?php
+					settings_fields( 'settings_option_group' );
+					do_settings_sections( 'settings-admin' );
+					submit_button();
+				?>
+			</form>
+		</div>
+	<?php }
+
+	function settings_init() {
+
+		register_setting('wppedia_settings', 'wppedia_frontpage', [ $this, 'sanitize_option_frontpage' ]);
+
+	}
+
   /**
    * Create WP Wiki Admin Pages
    *

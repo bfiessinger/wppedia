@@ -53,6 +53,32 @@ class crosslinks {
 
 	}
 
+	/**
+	 * Helper function to sort post titles by length
+	 * 
+	 * @param stdClass $posts - self generated post array
+	 * @param bool $prefer_single_words - Whether to check for single words or phrases first
+	 * 
+	 * @since 1.0.0
+	 */
+	private function sort_post_titles( $posts, bool $prefer_single_words ) {
+
+		usort($posts, function($a, $b) use ( $prefer_single_words ) {
+
+			$a_len = mb_strlen($a->title);
+			$b_len = mb_strlen($b->title);
+
+			if ( $prefer_single_words )
+				return $a_len - $b_len;
+
+			return $b_len - $a_len;
+
+		});
+
+		return $posts;
+
+	}
+
   /**
    * Get Posts available for crosslink content
    * 
@@ -61,7 +87,7 @@ class crosslinks {
   public function get_crosslink_posts() {
 
     // Query all available posts
-    $posts_query = helper::getInstance()->get_wiki_entries([
+    $posts_query = wppedia_get_posts([
       'post_type'     => $this->post_types,
       'post_status'   => 'publish',
       'post__not_in'  => [get_the_ID()]
@@ -112,7 +138,7 @@ class crosslinks {
 		$posts = $this->get_crosslink_posts();
 
 		// Sort available posts by title length
-		$posts = helper::getInstance()->sort_post_titles( $posts, $this->prefer_single_words );
+		$posts = $this->sort_post_titles( $posts, $this->prefer_single_words );
 
 		// Loop over available posts and add crosslinks
 		foreach ( $posts as $post ) {

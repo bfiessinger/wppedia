@@ -138,7 +138,8 @@ if ( search_input ) {
 			const _this = e.target;
 			const str = _this.value;
 			const search_results = get_results( str, wppedia_search_props.search_options );
-			render_results( search_results, _this );
+
+			render_results( search_results, _this.form.lastChild );
 		
 		} );
 

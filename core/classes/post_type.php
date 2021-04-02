@@ -187,7 +187,10 @@ class post_type {
 	function limit_reached_msg_notice() {
 
 		if( NULL !== $this->post_limit && ! empty( $_REQUEST['wppedia_limit_reached'] ) && $_REQUEST['wppedia_limit_reached'] == '1' ) {
-			echo '<div class="error"><p>You have reached your post creation limit. <strong>This post was not published.</strong> Upgrade to PRO to remove limitations.</p></div>';
+			echo '<div class="wppedia-admin-message wppedia-admin-message-flex error">';
+			echo '<img class="wppedia-pro-logo" src="' . wpPediaPluginUrl . '/assets/wppedia-pro-logo.svg">';
+			echo '<p>You have reached your post creation limit. <strong>This post has not been published.</strong> Upgrade to PRO to remove limitations.</p>';
+			echo '</div>';
 		}
 
 	}

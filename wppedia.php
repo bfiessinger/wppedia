@@ -18,8 +18,15 @@
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
+/**
+ * Core WPPedia functions
+ * 
+ * @since 1.0.0
+ */
+require_once plugin_dir_path(__FILE__) . 'core/inc/core-functions.php';
+
 use bf\wpPedia\template;
-use bf\wpPedia\rest;
+use bf\wpPedia\rest_controller;
 use bf\wpPedia\query_control;
 use bf\wpPedia\admin;
 use bf\wpPedia\options;
@@ -30,19 +37,26 @@ use bf\wpPedia\modules\tooltip;
 
 class WPPedia {
 
-	function __construct() {
+  /**
+   * Static variable for instanciation
+   */
+  protected static $instance = null;
 
-		// psr4 Autoloader
-		$loader = require "vendor/autoload.php";
-		$loader->addPsr4('bf\\wpPedia\\', __DIR__);
+  /**
+   * Get current Instance
+   */
+  public static function getInstance() {
 
-		$this->define_constants();
+    if ( null === self::$instance ) {
+      self::$instance = new self;
+    }
+    return self::$instance;
 
-		add_action( 'after_setup_theme', [ $this, 'setup' ] );
+  }
 
-		$this->init();
+  protected function __clone() {}
 
-	}
+  protected function __construct() {}
 
 	/**
 	 * Define Plugin Constants
@@ -51,18 +65,16 @@ class WPPedia {
 	 */
 	private function define_constants() {
 
-		if ( ! defined('wpPediaPluginVersion') )
-			define('wpPediaPluginVersion', '1.0.0');
+		wppedia_maybe_define_constant('wpPediaPluginVersion', '1.0.0');
 
-		if ( ! defined('wpPediaPluginDir') )
-			define('wpPediaPluginDir', plugin_dir_path(__FILE__));
+		// Path Constants
+		wppedia_maybe_define_constant('wpPediaPluginDir', plugin_dir_path(__FILE__));
+		wppedia_maybe_define_constant('wpPediaPluginUrl', plugin_dir_url(__FILE__));
+		wppedia_maybe_define_constant('wpPediaPluginBaseName', plugin_basename( __FILE__ ));
 
-		if ( ! defined('wpPediaPluginUrl') )
-			define('wpPediaPluginUrl', plugin_dir_url(__FILE__));
-
-		if ( ! defined('wpPediaPluginBaseName') )
-			define('wpPediaPluginBaseName', plugin_basename( __FILE__ ));
-
+		// Env Constants
+		wppedia_maybe_define_constant('WPPedia_TEMPLATE_DEBUG_MODE', false);
+		
 	}
 
 	public function setup() {
@@ -73,6 +85,14 @@ class WPPedia {
 
 	public function init() {
 
+		// psr4 Autoloader
+		$loader = require "vendor/autoload.php";
+		$loader->addPsr4('bf\\wpPedia\\', __DIR__);
+
+		$this->define_constants();
+
+		add_action( 'after_setup_theme', [ $this, 'setup' ] );
+
 		/**
 		 * Instantiate Template Utils
 		 * 
@@ -81,11 +101,11 @@ class WPPedia {
 		template::getInstance();
 
 		/**
-		 * Instantiate REST Class
+		 * Instantiate REST API Controller Class
 		 * 
 		 * @since 1.0.0
 		 */
-		new rest();
+		new rest_controller();
 
 		/**
 		 * Instantiate Query Controller
@@ -140,16 +160,31 @@ class WPPedia {
 
 	}
 
+	/**
+	 * Get default path for templates in themes
+	 */
+	public function template_path() {
+    return apply_filters( 'wppedia_template_path', 'wppedia/' );
+  }
+
+	/**
+	 * Get default plugin path
+	 */
+	public function plugin_path() {
+		return (defined('wpPediaPluginDir')) ? wpPediaPluginDir : plugin_dir_path(__FILE__);
+	}
+
 }
 
-new WPPedia();
+$WPPedia = WPPedia::getInstance();
+$WPPedia->init();
 
 /**
- * Load Template Tags
+ * Template Hooks
  * 
  * @since 1.0.0
  */
-require_once wpPediaPluginDir . 'core/inc/tpl-hooks.php';
+require_once wpPediaPluginDir . 'template-hooks/hooks.php';
 
 /**
  * Enqueue Assets
@@ -157,13 +192,6 @@ require_once wpPediaPluginDir . 'core/inc/tpl-hooks.php';
  * @since 1.0.0
  */
 require_once wpPediaPluginDir . 'core/inc/assets.php';
-
-/**
- * Public functions
- * 
- * @since 1.0.0
- */
-require_once wpPediaPluginDir . 'core/inc/public-functions.php';
 
 /**
  * Shortcodes
@@ -192,8 +220,6 @@ add_action( 'init', function() {
 	}
 
 }, 20 );
-
-
 
 /**
  * The code that runs during plugin deactivation.

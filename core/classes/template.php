@@ -8,11 +8,10 @@
 
 namespace bf\wpPedia;
 
-use bf\wpPedia\helper;
 use bf\wpPedia\post_type;
 
 // Make sure this file runs only from within WordPress.
-defined( 'ABSPATH' ) or die();
+defined( 'ABSPATH' ) || die();
 
 class template {
 
@@ -50,15 +49,15 @@ class template {
 		 * 
 		 * @since 1.0.0
 		 */
-		add_filter( 'template_include', [ $this, 'custom_index_php' ] );
-		add_filter( 'template_include', [ $this, 'custom_search_php' ] );
+		//add_filter( 'template_include', [ $this, 'custom_index_php' ] );
+		//add_filter( 'template_include', [ $this, 'custom_search_php' ] );
 
 		/**
 		 * Load default Templates
 		 * 
 		 * @since 1.0.0
 		 */
-		//add_filter( 'template_include', [ $this, 'template_include' ] );
+		add_filter( 'template_include', [ $this, 'template_include' ] );
 
 		/**
 		 * WPPedia Sidebar
@@ -87,14 +86,14 @@ class template {
 	 * 
 	 * @return string $template - the current Template file in your theme's Root folder
 	 */
-	public function custom_index_php( $template ) {
+	public function custom_index_php() {
 
 		// Return custom index for WPPedia Pages if the file exists
 		// and no other template should override it
-		if ( locate_template('index-wppedia.php') && ! $this->current_template_exists_in_theme() )
-			return get_query_template('index-wppedia');
+		if ( locate_template(apply_filters('wppedia_custom_index_file', 'index-wppedia.php')) && ! $this->current_template_exists_in_theme() )
+			return get_query_template(apply_filters('wppedia_custom_index_file', 'index-wppedia.php'));
 
-		return $template;
+		return false;
 
 	}
 
@@ -118,7 +117,7 @@ class template {
 
 		if ( 
 			// Return the Default Template for all non WPPedia Posts
-			helper::getInstance()->is_wiki_post_type() ||
+			is_wppedia_page() ||
 			// Post Type Archive
 			( 
 				is_post_type_archive( 'wppedia_term' ) && 
@@ -164,7 +163,7 @@ class template {
 		 * Return custom search for WPPedia if the file exists
 		 * and we are on a wiki search
 		 */
-		if ( locate_template('search-wppedia.php') && helper::is_wiki_search() )
+		if ( locate_template('search-wppedia.php') && is_wppedia_search() )
 			return get_query_template('search-wppedia');
 
 		return $template;
@@ -180,23 +179,15 @@ class template {
 	 */
 	public function template_include( $template ) {
 
-		if ( 
-			! $this->current_template_exists_in_theme() || 
-			( 
-				locate_template('search-wppedia.php') && 
-				helper::is_wiki_search() 
-			) ||
-			locate_template('index-wppedia.php')
-		)
+		if ( ! $this->current_template_exists_in_theme() )
 			return $template;
 
-		// TODO: Add an Option to determine if the default Theme templates should be used over the WPPedia Archive styles
-		if ( is_archive() && false !== $this->get_view( 'archive', [], false ) ) {
+		if ( is_archive() && false !== wppedia_locate_template( 'archive.php' ) ) {
 			// Load default Archive view
-			return $this->get_view( 'archive', [], false );
-		} elseif ( is_singular() && false !== $this->get_view( 'single', [], false ) ) {
+			return wppedia_locate_template( 'archive.php' );
+		} elseif ( is_singular() && false !== wppedia_locate_template( 'single.php' ) ) {
 			// Load default Single view
-			return $this->get_view( 'single', [], false );
+			return wppedia_locate_template( 'single.php' );
 		}
 
 		return $template;
@@ -210,8 +201,8 @@ class template {
 	 */
 	function body_class( $classes ) {
 
-		if ( helper::getInstance()->is_wiki_post_type() )
-			$classes[] = apply_filters( 'wppedia_body_class', 'wppedia-page' );
+		if ( is_wppedia_page() )
+			$classes[] = apply_filters( 'wppedia_body_class', 'wppedia-page wppedia' );
 
 		return $classes;
 
@@ -224,30 +215,15 @@ class template {
 	 */
 	function post_class( $classes, $class, $post_id ) {
 
-		if ( is_admin() || ! helper::getInstance()->is_wiki_post_type() )
+		if ( is_admin() || ! is_wppedia_page() )
 			return $classes;
 
-		$classes[] = 'wppedia-initial-letter_' . helper::getInstance()->post_initial_letter( $post_id );
+		$classes[] = 'wppedia-initial-letter_' . wppedia_get_post_initial_letter( $post_id );
+
+		$classes = apply_filters('wppedia_post_class', $classes);
 
 		return $classes;
 			
-	}
-
-	/**
-	 * Determine if WPPedia is using a sidebar
-	 * 
-	 * @return bool
-	 * 
-	 * @since 1.0.0
-	 */
-	public function wppedia_has_sidebar() {
-
-		// Determine if a sidebar can be used
-		if ( ! is_active_sidebar( 'sidebar_wppedia' ) && helper::getInstance()->is_wiki_post_type() )
-			return false;
-
-		return true;
-
 	}
 
 	/**
@@ -259,7 +235,7 @@ class template {
 
 		register_sidebar( [
 			'name'					=> __( 'WPPedia Sidebar', 'wppedia' ),
-			'id'						=> 'sidebar_wppedia',
+			'id'						=> 'wppedia',
 			'description'		=> __( 'Widgets in this area will be shown on Single WPPedia Entries', 'wppedia' ),
 			'before_widget'	=> apply_filters( 'wppedia_sidebar_widget_before', '<div id="%1$s" class="wppedia_widget widget %2$s">' ),
 			'after_widget'	=> apply_filters( 'wppedia_sidebar_widget_after', '</div>' ),
@@ -268,274 +244,17 @@ class template {
 		] );
 
 	}
-
-  /**
-   * Get a specific View
-   * 
-   * @since 1.0.0
-   */
-  public function get_view(string $view, array $args = [], bool $display = true) {
-
-    $view_file = wpPediaPluginDir . 'views/view-' . $view . '.php';
-
-    if ( file_exists( $view_file ) ) {
-
-			if ( $display )
-				require_once $view_file;
-			else
-				return $view_file;
-
-		}
-
-		return false;
-
-  }
-
-  /**
-   * Get a partial view
-   * 
-   * @since 1.0.0
-   */
-  public function get_partial(string $partial, array $args = [], bool $display = true) {
-
-    $partial_file = wpPediaPluginDir . 'partials/partial-' . $partial . '.php';
-
-    if ( file_exists( $partial_file ) ) {
-
-			if ( $display )
-				require_once $partial_file;
-			else
-				return $partial_file;
-
-		}
-			
-		return false;
-
-	}
-
-	/**
-	 * Get the excerpt with fallback generated from the content
-	 * 
-	 * @param WP_Post|int $post - Post ID or object
-	 * @param bool $force_balanced_tags - If true try to keep bold or other formatting
-	 * 
-	 * @since 1.0.0
-	 */
-	public function get_the_excerpt( $post = null, int $excerpt_length = 40, bool $force_balanced_tags = false ) {
-
-		$str = '';
-
-		// setup Postdata
-    $post = get_post( $post );
-    if ( empty( $post ) )
-      return;
-
-		if ( ! has_excerpt( $post ) ) {
-
-			// Get the Post Content (formatted)
-			setup_postdata( $post );
-			$str = get_the_content( null, false, $post );
-			wp_reset_postdata( $post );
-
-			// Check if Text is not empty
-			if ( '' != $str && $str ) {
-
-				// Add some filters to the text
-				$str = \strip_shortcodes( $str );
-				$str = str_replace(']]&gt;', ']]&gt;', $str);
-				$str = strip_tags( 
-					$str, 
-					[ 
-						'em', 
-						'i', 
-						'strong', 
-						'b',
-						'p',
-						'br'
-					] 
-				);
-
-				// Trim and format the string
-				if ( $force_balanced_tags )
-					$str = force_balance_tags( html_entity_decode( wp_trim_words( htmlentities( $str ), $excerpt_length, null ) ) );
-				else
-					$str = wp_trim_words( $str, $excerpt_length, null );
-
-			}
-
-		} else {
-
-			// If an excerpt was specified just add some p tags
-			$str = wpautop( $post->post_excerpt );
-
-		}
-
-		return apply_filters( 'wppedia_tooltip_get_excerpt', $str );
-
-	}
-
-	/**
-	 * Display the autogenerated excerpt
-	 * 
-	 * @param WP_Post|int $post - Post ID or object
-	 * 
-	 * @since 1.0.0
-	 */
-	public function the_excerpt( $post = null, int $excerpt_length = 40, bool $force_balanced_tags = false) {
-
-		echo apply_filters( 'wppedia_tooltip_excerpt', $this->get_the_excerpt( $post, $excerpt_length, $force_balanced_tags ) );
-
-	}
-
-	/**
-	 * Template functions related to the Searchform
-	 */
-
-	/**
-	 * Get the template for WPPedia Searchform
-	 * 
-	 * @return void
-	 * 
-	 * @since 1.0.0
-	 */
-	public function get_search_form() {
-
-		// Don't modify the template if specified in the current Theme
-		if ( locate_template(['wppedia-searchform.php']) ) {
-
-			locate_template(['wppedia-searchform.php'], true);
-			return;
-
-		}
-
-		// print searchform
-		$this->get_partial( 'searchform' );		
-
-	}
-
-	/**
-	 * Get searchform attributes
-	 * 
-	 * @param array $attrs - Additional Attributes
-	 * @param boolean $tostring - Whether to render the Attributes as a string or return an Array
-	 * 
-	 * @since 1.0.0
-	 */
-	public function get_search_form_attrs( array $attrs = [], bool $tostring = true ) {
-
-		$post_type = post_type::getInstance()->post_type;
-		$searchUrl = get_post_type_archive_link( $post_type );
-
-		/**
-		 * Predefined attributes
-		 */
-		$_attrs = [
-			'role'		=> apply_filters( 'wppedia_searchform_attrs__role', 'search' ),
-			'method' 	=> apply_filters( 'wppedia_searchform_attrs__method', 'GET' ),
-			'class' 	=> apply_filters( 'wppedia_searchform_attrs__class', 'search-form wppedia-search' ),
-			'id' 			=> apply_filters( 'wppedia_searchform_attrs__id', 'wppedia_searchform' ),
-			'action' 	=> $searchUrl
-		];
-
-		$attrs = array_merge( $attrs, $_attrs );
-
-		if ( $tostring ) {
-
-			$final = '';
-
-			$attr_index = 0;
-			$attr_count = count( $attrs );
-			foreach ( $attrs as $k => $v ) {
-				$attr_index++;
-				$final .= $k . '="' . $v . '"';
-				if ( $attr_index < $attr_count )
-					$final .= ' ';
-			}
-
-			return $final;
-
-		}
-
-		return $attrs;
-
-	}
-
-	public function __filtered_search_input_id() {
-		return apply_filters( 'wppedia_search_input_id', 'wppedia_search_input' );
-	}
-
-	/**
-	 * Print Search input field with autosuggest renderer
-	 * 
-	 * @since 1.0.0
-	 */
-	public function render_search_input() { ?>
-		<div class="wppedia-search-field-wrapper">
-			<input type="search" class="search-field" id="<?php echo $this->__filtered_search_input_id(); ?>" placeholder="<?php _e('Search glossary', 'wppedia'); ?>" value="<?php echo get_search_query() ?>" name="s" title="<?php _e('Search for', 'wppedia'); ?>:" autocomplete="off" />
-			<?php
-			/**
-			 * If any nice search is active try to get around this and
-			 * add a query parameter.
-			 */
-			global $wp_rewrite;
-			if ( isset( $wp_rewrite->search_structure ) ): ?>
-			<input type="hidden" name="WPPedia" value="true" />
-			<?php endif; ?>
-		</div>
-	<?php }
-
-	/**
-	 * Print the whole searchform
-	 * 
-	 * @since 1.0.0
-	 */
-	function render_searchform() { ?>
-
-		<form <?php echo $this->get_search_form_attrs(); ?>>
-			<label class="screen-reader-text"><?php _e('Search glossary', 'wppedia'); ?></label>
-			<?php 
-			// Render the search input
-			$this->render_search_input();
-			?>
-			<input type="submit" class="search-submit" value="Search" />
-		</form>
-
-	<?php
-	
-	}
 	
 	/**
 	 * Template functions related to the Initial char navigation
 	 */
 
 	/**
-	 * Get the template for WPPedia Initial char navigation
-	 * 
-	 * @return void
-	 * 
-	 * @since 1.0.0
-	 */
-	function get_char_navigation() {
-
-		// Don't modify the template if specified in the current Theme
-		if ( locate_template(['wppedia-navigation.php']) ) {
-
-			locate_template(['wppedia-navigation.php'], true);
-			return;
-
-		}
-
-		// print searchform
-		$this->get_partial( 'initial-letter-navigation' );		
-
-	}
-
-	/**
-	 * Get a single Navigation link
+	 * Generate a single Navigation link
 	 * 
 	 * @param string $term_slug - Initial Character taxonomy slug
 	 */
-	function get_char_navigation_link( string $term_slug ) {
+	function generate_char_navigation_link( string $term_slug ) {
 
 		$output = '';
 
@@ -560,11 +279,11 @@ class template {
 		if ( 'home' == $term_slug ) {
 
 			$link_name = __( 'home', 'wppedia' );
-			$link_url = ( helper::getInstance()->has_static_archive_page() ) ? get_permalink( helper::getInstance()->has_static_archive_page() ) : get_post_type_archive_link( 'wppedia_term' );
+			$link_url = ( wppedia_has_static_frontpage() ) ? get_permalink( wppedia_has_static_frontpage() ) : get_post_type_archive_link( 'wppedia_term' );
 			$link_title = __( 'home', 'wppedia' );
 			$link_classes[] = 'wppedia_navigation_home';
 
-			if ( helper::getInstance()->is_wiki_home() )
+			if ( is_wppedia_frontpage() )
 				$link_classes[] = $active_class;
 
 			$output .= $this->get_char_navigation_link_anchor( $link_name, $link_url, $link_title, $link_classes );

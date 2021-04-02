@@ -5,6 +5,11 @@
 
 #wppedia_searchform {
 	position: relative;
+}
+
+/*
+#wppedia_searchform {
+	position: relative;
 	width: 100%;
 	max-width: 600px;
 	margin: 0 auto 2rem;
@@ -33,9 +38,12 @@
 .wppedia-search-field-wrapper {
 	flex: 1;
 }
+*/
 
 #wppedia_results_rendered {
   position: absolute;
+	top: 100%;
+	left: 0;
   margin: 0;
 	border: solid rgba(0, 0, 0, 0.54);
 	border-width: 0 1px 1px;
