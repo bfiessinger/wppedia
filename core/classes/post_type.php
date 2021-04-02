@@ -256,10 +256,10 @@ class post_type {
 	 */
 	function manage_initial_character_onsave( int $post_ID, \WP_POST $post, bool $update ) {
 
-		$cur_initial = helper::getInstance()->post_initial_letter( $post_ID );
+		$cur_initial = wppedia_get_post_initial_letter( $post_ID );
 
 		$taxonomy = $this->taxonomy;
-		$cur_initial_encoded = helper::getInstance()->slugify( $cur_initial );
+		$cur_initial_encoded = wppedia_slugify( $cur_initial );
 		
 		// Create a new term based on the initial letter
 		\wp_insert_term( 
