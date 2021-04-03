@@ -33,7 +33,7 @@ class admin {
 	function wppedia_archive_post_state( $post_states, $post ) {
 
 		if( $post->ID == helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_archive_page' ) ) {
-			$post_states[] = __( 'Glossary', 'wppedia' );
+			$post_states[] = __( 'Glossary page', 'wppedia' );
 		}
 	
 		return $post_states;
