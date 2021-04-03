@@ -49,8 +49,8 @@ class template {
 		 * 
 		 * @since 1.0.0
 		 */
-		//add_filter( 'template_include', [ $this, 'custom_index_php' ] );
-		//add_filter( 'template_include', [ $this, 'custom_search_php' ] );
+		add_filter( 'template_include', [ $this, 'custom_index_php' ] );
+		add_filter( 'template_include', [ $this, 'custom_search_php' ] );
 
 		/**
 		 * Load default Templates
