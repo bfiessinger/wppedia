@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-get_header('wppedia'); 
+get_header('wppedia');
 
 /**
  * Hook: wppedia_before_main_content.
