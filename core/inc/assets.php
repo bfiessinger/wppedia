@@ -13,8 +13,6 @@
  */
 function wppedia_enqueue_frontend_assets() {
 
-	$helper = bf\wpPedia\helper::getInstance();
-
 	if ( ! is_wppedia_page() )
 		return;
 
