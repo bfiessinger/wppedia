@@ -63,6 +63,7 @@ With this quality content you can significantly improve your website’s SEO and
 * **more coming soon**
 
 <h2>PRO Features <img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/pro-badge.svg?sanitize=true" width="35" /></h2>
+
 * Extended permalink settings
 * Let WPPedia create a crosslink index for each post. This allows the page creation to be a lot faster on large Glossary pages
 * Allow crosslinking to other post types (not just glossary terms)
