@@ -285,7 +285,7 @@ class options {
 				'id' => $option,
 				'key' => $key
 			]);
-			echo '<label for="' . $option . '[' . $key . ']' . '">' . $label . '</label>';
+			echo '<label for="' . $option . '[' . $key . ']">' . $label . '</label>';
 			echo '</div>';
 		}
 
