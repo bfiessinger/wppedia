@@ -27,6 +27,11 @@
 	}
 }
 
+.wppedia-option-description {
+	color: $grey;
+	margin-top: .5em;
+}
+
 @supports((-webkit-appearance: none) or (-moz-appearance: none)) and (--css: variables) {
   input.wppedia-switch-button {
     --active: #{$wp_primary};
