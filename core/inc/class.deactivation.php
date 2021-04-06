@@ -16,10 +16,7 @@ class deactivation {
 	function __construct() {}
 
 	public static function deactivate() {
-
-		delete_option('wppedia_flush_rewrite_rules_flag');
 		flush_rewrite_rules();
-		
 	}
 
 }
