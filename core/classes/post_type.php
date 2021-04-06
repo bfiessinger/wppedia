@@ -132,7 +132,7 @@ class post_type {
       'rewrite' => $rewrite
 		];
 
-		if ( FALSE === get_option('wppedia_frontpage',  false) )
+		if ( false == get_option('wppedia_frontpage',  false) )
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
 		\register_post_type( $this->post_type, $args );
