@@ -30,7 +30,7 @@ class activation {
 				'wppedia_layout_enqueue-searchform-style' => 'on',
 				// Crosslinking
 				'wppedia_crosslinking_active' => 'on',
-				'wppedia_crosslinking_post-types' => [ post_type::getInstance()->post_type ],
+				'wppedia_crosslinking_post-types' => [ wppedia_get_post_type() ],
 			];
 
 			add_option( 'wppedia_settings_general', $opt_defaults );

@@ -1,0 +1,82 @@
+.wppedia-page {
+	#wpcontent {
+		padding: 0;
+	}
+	.wrap {
+		margin: 0;
+	}
+
+	.ui-tabs.ui-tabs-vertical {
+    padding: 0;
+    width: 100%;
+	}
+	.ui-tabs.ui-tabs-vertical .ui-widget-header {
+			border: none;
+	}
+	.ui-tabs.ui-tabs-vertical .ui-tabs-nav {
+			float: left;
+			width: 120px;
+	}
+	.ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
+			clear: left;
+			width: 100%;
+			margin: 0;
+			border: 0;
+			overflow: hidden;
+			position: relative;
+			right: 0;
+			z-index: 2;
+	}
+	.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
+			display: block;
+			padding: 0.6em 1em;
+	}
+	.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
+			cursor: pointer;
+	}
+	.ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+			padding-bottom: 0;
+	}
+	.ui-tabs.ui-tabs-vertical .ui-tabs-panel {
+			float: left;
+			width: calc(100% - 160px);
+			padding: 20px; 
+			border-radius: 0;
+			position: relative;
+			background: #FFF;
+	}
+
+	.submit {
+		clear: both;
+	}
+
+}
+
+.wppedia-layout-header {
+	position: fixed;
+	z-index: 999;
+	top: 32px;
+	display: flex;
+	align-items: center;
+	padding: 0 0 0 40px;
+	flex: 1 auto;
+	background: #fff;
+	font-weight: 600;
+	font-size: 14px;
+	text-transform: capitalize;
+	width: calc(100% - 160px);
+	.wppedia-logo {
+		padding: 1em 0;
+	}
+}
+
+.folded {
+	.wppedia-layout-header {
+		width: calc(100% - 36px);
+	}
+}
+
+.wppedia-layout-content {
+	margin: 100px 20px 0 2px;
+	padding-left: 20px;
+}

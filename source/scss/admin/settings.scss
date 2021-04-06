@@ -1,0 +1,87 @@
+.wppedia-checkbox-group {
+	&-item {
+		display: block;
+		input {
+			display: inline-block;
+		}
+	}
+}
+
+@supports((-webkit-appearance: none) or (-moz-appearance: none)) and (--css: variables) {
+  input.wppedia-switch-button {
+    --active: #{rgba($primary, .6)};
+    --active-inner: #fff;
+    --focus: 2px #{rgba( darken( $primary, 10% ), 0.3 )};
+    --border: #{$grey};
+    --border-hover: #{darken( $primary, 10% )};
+    --background: #fff;
+    --disabled: #{$grey};
+    --disabled-inner: #E1E6F9;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 21px;
+    outline: none;
+    vertical-align: top;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+    border: 1px solid var(--bc, var(--border));
+    background: var(--b, var(--background));
+    transition: background .3s, border-color .3s, box-shadow .2s;
+		margin-right: .5rem;
+		width: 38px;
+		border-radius: 11px;
+		&:checked:before {
+			content: none;
+		}
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
+			left: 2px;
+			top: 2px;
+			border-radius: 50%;
+			width: 15px;
+			height: 15px;
+			background: var(--ab, var(--border));
+			transform: translateX(var(--x, 0));
+    }
+    &:checked {
+      --b: var(--active);
+      --bc: var(--active);
+      --d-o: .3s;
+      --d-t: .6s;
+      --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+			--ab: var(--active-inner);
+			--x: 17px;
+    }
+    &:disabled {
+      --b: var(--disabled);
+      cursor: not-allowed;
+      opacity: .9;
+      &:checked {
+        --b: var(--disabled-inner);
+        --bc: var(--border);
+      }
+      & + label {
+        cursor: not-allowed;
+      }
+			&:not(:checked) {
+				&:after {
+					opacity: .6;
+				}
+			}
+    }
+    &:hover {
+      &:not(:checked) {
+        &:not(:disabled) {
+          --bc: var(--border-hover);
+        }
+      }
+    }
+    &:focus {
+      box-shadow: 0 0 0 var(--focus);
+    }
+  }
+}

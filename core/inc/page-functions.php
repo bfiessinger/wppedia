@@ -147,12 +147,6 @@ function is_wppedia_frontpage() {
  * 
  * @return boolean|int Returns false if a cpt archive is used or the post ID of the static page
  */
-function wppedia_has_static_frontpage() {
-	
-	if ( FALSE === bf\wpPedia\helper::getInstance()->get_option( bf\wpPedia\options::$settings_general_page, 'wppedia_archive_page' ) ) {
-		return false;
-	}
-	
-	return $this->get_option( bf\wpPedia\options::$settings_general_page, 'wppedia_archive_page' );
-	
+function wppedia_has_static_frontpage() {	
+	return get_option('wppedia_frontpage', false);
 }

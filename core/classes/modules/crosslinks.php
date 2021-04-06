@@ -8,10 +8,6 @@
 
 namespace bf\wpPedia\modules;
 
-use bf\wpPedia\helper;
-use bf\wpPedia\options;
-use bf\wpPedia\post_type;
-
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
@@ -30,16 +26,12 @@ class crosslinks {
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;
 
-		$post_types = helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_crosslinking_post-types');
-		if ( is_array( $post_types ) )
-			$this->post_types = $post_types;
-		else
-			$this->post_types = [ post_type::getInstance()->post_type ];
+		$post_types = apply_filters('wppedia_crosslink_posttypes', [wppedia_get_post_type()]);
 	
 		// Set the main post type on the first place in the posttype array
-		if ( in_array( post_type::getInstance()->post_type, $this->post_types ) ) {
-			unset( $this->post_types[post_type::getInstance()->post_type] );
-			array_unshift( $this->post_types, post_type::getInstance()->post_type );
+		if ( in_array( wppedia_get_post_type(), $this->post_types ) ) {
+			unset( $this->post_types[wppedia_get_post_type()] );
+			array_unshift( $this->post_types, wppedia_get_post_type() );
 		}
 
 		if ( $require_full_words !== null )
@@ -253,7 +245,7 @@ class crosslinks {
 		// Bail early if the current post is not a wiki entry
 		if ( 
 			is_admin() || 
-			! is_singular( post_type::getInstance()->post_type ) ||
+			! is_singular( wppedia_get_post_type() ) ||
 			doing_action('wpseo_head')
 		)
 			return $content;

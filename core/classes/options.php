@@ -39,24 +39,12 @@ class options {
 
   protected function __construct() {
 
-		/*
-    // Setup Admin Pages
-		add_action( 'cmb2_admin_init', [ $this, 'add_wiki_admin_pages' ] );
-		
-		// Admin Page Assets
-		add_action( 'admin_enqueue_scripts', [ $this, 'do_admin_scripts' ] );
-
-		// Custom Permalinks Section
-		add_action( 'admin_init', [ $this, 'wppedia_permalink_settings' ], 999999 );
-
-		// Flush rewrite rules onsave
-		add_action( 'cmb2_save_options-page_fields_' . self::$settings_general_page, 'flush_rewrite_rules' );
-
-		*/
-
 		add_action( 'admin_menu', [ $this, 'settings_page' ] );
 		add_action( 'admin_init', [ $this, 'settings_init' ] );
 
+		// Admin Page Assets
+		add_action( 'admin_enqueue_scripts', [ $this, 'do_admin_scripts' ] );
+		
 	}
 	
 	function settings_page() {
@@ -65,7 +53,7 @@ class options {
 			'WPPedia Settings',
 			'WPPedia Settings', 
 			'manage_options', 
-			'options_wppedia', 
+			'wppedia_settings_general', 
 			[ $this, 'settings_cb' ],
 			null
 		);
@@ -73,153 +61,310 @@ class options {
 
 	function settings_cb() { ?>
 		<div class="wrap">
-			<h2>Settings</h2>
-			<p>Modify WPPedia Settings</p>
-			<?php settings_errors(); ?>
+			<div class="wppedia-layout-header">
+				<img class="wppedia-logo" src="<?php echo wpPediaPluginUrl; ?>assets/img/wppedia-logo.svg" width="60">
+			</div>
 
-			<form method="post" action="options.php">
-				<?php
-					settings_fields( 'settings_option_group' );
-					do_settings_sections( 'settings-admin' );
-					submit_button();
-				?>
-			</form>
+			<div class="wppedia-layout-content">
+
+				<h1 class="screen-reader-text"><?php echo _x('WPPedia Settings', 'options', 'wppedia'); ?></h1>
+
+				<?php settings_errors(); ?>
+
+				<form method="post" action="options.php">
+					<?php settings_fields( 'wppedia_settings_general' ); ?>
+					<?php $this->do_settings_sections_tabbed( 'wppedia_settings_general', true ); ?>
+					<?php submit_button(); ?>
+				</form>
+			</div>
 		</div>
 	<?php }
 
 	function settings_init() {
 
-		register_setting('wppedia_settings', 'wppedia_frontpage', [ $this, 'sanitize_option_frontpage' ]);
+		// Settings section: Glossary front page
+		add_settings_section( 
+			'wppedia_settings_page', 
+			_x('Page Settings', 'options', 'wppedia'), 
+			[ $this, 'settings_section_callback' ], 
+			'wppedia_settings_general' 
+		);
+
+		// Settings field: Front page
+		add_settings_field( 
+			'wppedia_frontpage', 
+			_x('Glossary frontpage', 'options', 'wppedia'),
+			[ $this, 'create_select' ],
+			'wppedia_settings_general', 
+			'wppedia_settings_page',
+			[
+				'id' => 'wppedia_frontpage',
+				'options' => $this->dropdown_pages(true)
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general', 
+			'wppedia_frontpage'
+		);
+
+		// Settings section: Crosslinking
+		add_settings_section(
+			'wppedia_settings_crosslinks',
+			_x('Crosslinking', 'options', 'wppedia'),
+			[ $this, 'settings_section_callback' ],
+			'wppedia_settings_general'
+		);
+
+		// Settings field: Activate crosslinking
+		add_settings_field(
+			'wppedia_feature_crosslinks',
+			_x( 'Activate Crosslinking', 'options', 'wppedia' ),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_crosslinks',
+			[
+				'id' => 'wppedia_feature_crosslinks', 
+				'switch' => true
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_feature_crosslinks'
+		);
+
+		// Settings field: prefer single words for crosslinks
+		add_settings_field(
+			'wppedia_crosslinks_prefer_single_words',
+			_x( 'Prefer single words', 'options', 'wppedia' ),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_crosslinks',
+			[
+				'id' => 'wppedia_crosslinks_prefer_single_words', 
+				'switch' => true
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_crosslinks_prefer_single_words'
+		);
+
+		// Settings field: Create crosslinks for posttypes
+		add_settings_field(
+			'wppedia_crosslinks_posttypes',
+			_x( 'Create crosslinks to post types', 'options', 'wppedia' ),
+			[ $this, 'create_checkbox_group' ],
+			'wppedia_settings_general',
+			'wppedia_settings_crosslinks',
+			[
+				'id' => 'wppedia_crosslinks_posttypes',
+				'options' => $this->get_public_posttypes()
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_crosslinks_posttypes',
+			[ $this, 'sanitize_checkbox_group' ]
+		);
+
+		// Settings section: Archive
+		add_settings_section( 
+			'wppedia_archive_settings', 
+			__('Archive settings', 'wppedia'), 
+			[ $this, 'settings_section_callback' ], 
+			'wppedia_settings_archive'
+		);
+
+		// Settings section: Single articles
+		add_settings_section(
+			'wppedia_settings_singular',
+			__('Single article settings', 'wppedia'),
+			[ $this, 'settings_section_callback' ],
+			'wppedia_settings_singular'
+		);
 
 	}
 
-  /**
-   * Create WP Wiki Admin Pages
-   *
-   * @uses new_cmb2_box()
-	 * @see https://cmb2.io/
-   *
-   * @since 1.0.0
-   */
-  function add_wiki_admin_pages() {
+	function settings_section_callback($section) {
+		switch ($section['id']) {
+			case 'wppedia_settings_page':
+				echo '<p>testing page settings section</p>';
+				break;
+			case 'wppedia_settings_crosslinks':
+				echo '<p>testing crosslinks section</p>';
+			default:
+				break;
+		}		
+	}
 
-		// Create the admin-page for Glossary Settings
-    $wiki_settings_page = new_cmb2_box( [
-			'id'           		=> 'wppedia_page_settings_general',
-			'title'						=> __('WPPedia Settings', 'wppedia'),
-			'object_types'		=> [ 'options-page' ],
-			'option_key'			=> self::$settings_general_page,
-      'parent_slug'			=> 'edit.php?post_type=wppedia_term',
-      'capability'			=> 'manage_options',
-			'position'				=> null,
-			'tab_style' 			=> 'default',
-			'tabs' 						=> [
-				'content' => [
-					'label' => __( 'Content', 'wppedia' ),
-					'icon' 	=> 'dashicons-text-page', // Dashicon
-				],
-				'assets' => [
-					'label' => __( 'Design & Functionality', 'wppedia' ),
-					'icon' 	=> 'dashicons-admin-customizer', // Dashicon
-				],
-				'crosslinks' => [
-					'label'	=> __( 'Crosslinks', 'wppedia' ),
-					'icon'	=> 'dashicons-networking', // Dashicon
-				]
-			],
-		] );
+	/**
+	 * Create a select field
+	 * 
+	 * @param string $option - option name
+	 * @param array $values - possible select values
+	 * 
+	 * @since 1.0.0
+	 */
+	function create_select(array $args) {
+		if (
+			!isset($args['id']) || 
+			!isset($args['options']) || 
+			!count($args['options'])
+		)
+			return;
 
-		/**
-		 * Tab Content
-		 * All options related to views and content modification goes here
-		 * 
-		 * @since 1.0.0
-		 */
-		$wiki_settings_page->add_field( [
-			'name'          		=> __( 'Glossary Page', 'wppedia' ),
-			'desc'          		=> __( 'Select the page that is used to display the glossary archive.', 'wppedia' ),
-			'id'            		=> 'wppedia_archive_page',
-			'type'          		=> 'select',
-			'tab'  							=> 'content',
-			'show_option_none' 	=> true,
-			'options_cb'				=> [ $this, 'dropdown_pages' ]
-		] );
+		$option = $args['id'];
+		$values = $args['options'];
+			
+		echo '<select name="' . $option . '" id="' . $option . '">';
+		foreach ($values as $value => $label) {
+			echo '<option value="' . $value . '" ' . selected( get_option($option), $value, true ) . '>' . esc_html( $label ) . '</option>';
+		}
+		echo '</select>';
+	}
 
-		/**
-		 * Tab assets
-		 * Options related to stylesheets and scripts
-		 * 
-		 * @since 1.0.0
-		 */
-		$wiki_settings_page->add_field( [
-			'name'			=> __( 'Load base CSS', 'wppedia' ),
-			'desc'			=> __( 'Enqueue the base CSS Stylesheet.', 'wppedia' ),
-			'id'				=> 'wppedia_layout_enqueue-base-style',
-			'type'			=> 'switch_button',
-			'tab'				=> 'assets',
-		] );
+	/**
+	 * Create a checkbox field
+	 * 
+	 * @param string $option - option name
+	 * @param bool $switch - render the checkbox as a switch button
+	 * 
+	 * @since 1.0.0
+	 */
+	function create_checkbox(array $args) {
+		if (!isset($args['id']) || (!isset($args['key']) && !isset($args['id'])))
+			return;
 
-		$wiki_settings_page->add_field( [
-			'name'			=> __( 'Load styles inline', 'wppedia' ),
-			'desc'			=> __( 'This option ensures that you are only loading styles required for the current view. All styles will be displayed inline without the need to request an additional stylesheet.','wppedia' ),
-			'id'				=> 'wppedia_layout_use-inline-styles',
-			'type'			=> 'switch_button',
-			'tab'				=> 'assets',
-		] );
+		$option = $args['id'];
+		$option_id = (isset($args['id']) && isset($args['key'])) ? $args['id'] . '[' . $args['key'] . ']' : $option;
 
-		$wiki_settings_page->add_field( [
-			'name'			=> __( 'Load Char Navigation CSS', 'wppedia' ),
-			'desc'			=> __( 'Add Initial Character Navigation Stylesheet to inline styles.', 'wppedia' ) . 
-										'<br>' . 
-										__( 'only considered if styles are loaded inline.', 'wppedia' ),
-			'id'				=> 'wppedia_layout_enqueue-char-nav-style',
-			'type'			=> 'switch_button',
-			'tab'				=> 'assets',
-		] );
+		$switch = (isset($args['switch']) && false !== $args['switch']) ? true : false;
 
-		$wiki_settings_page->add_field( [
-			'name'			=> __( 'Load Searchform CSS', 'wppedia' ),
-			'desc'			=> __( 'Add the Searchform Stylesheet to inline styles.', 'wppedia' ) . 
-										'<br>' . 
-										__( 'only considered if styles are loaded inline.', 'wppedia' ),
-			'id'				=> 'wppedia_layout_enqueue-searchform-style',
-			'type'			=> 'switch_button',
-			'tab'				=> 'assets',
-		] );
+		$get_option = maybe_unserialize(get_option($option, false));
+		if (is_array($get_option)) {
+			if (in_array($args['key'], $get_option)) {
+				$get_option = true;
+			} else {
+				$get_option = false;
+			}
+		}
 
-		/**
-		 * Tab Crosslinks
-		 * Options related to the crosslinks feature
-		 * 
-		 * @since 1.0.0
-		 */
-		$wiki_settings_page->add_field( [
-			'name'			=> __( 'Activate Crosslinking', 'wppedia' ),
-			'desc'			=> __( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.','wppedia' ),
-			'id'				=> 'wppedia_crosslinking_active',
-			'type'			=> 'switch_button',
-			'tab'				=> 'crosslinks',
-		] );
+		echo '<input name="' . $option_id . '" id="' . $option_id . '" type="checkbox" value="1" ' . checked( $get_option, true, false );
+		if ($switch) {
+			echo ' class="wppedia-switch-button"';
+		}
+		echo '>';
+	}
 
-		$wiki_settings_page->add_field( [
-			'name'			=> __( 'Prefer Single Words', 'wppedia' ),
-			'desc'			=> __( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.','wppedia' ),
-			'id'				=> 'wppedia_crosslinking_prefer-single-words',
-			'type'			=> 'switch_button',
-			'tab'				=> 'crosslinks',
-		] );
+	function create_checkbox_group(array $args) {
+		if (
+			!isset($args['id']) || 
+			!isset($args['options']) || 
+			!count($args['options'])
+		)
+			return;
 
-		$wiki_settings_page->add_field( [
-			'name'			=> __( 'create crosslinks for these Posttypes', 'wppedia' ),
-			'desc'			=> '',
-			'id'				=> 'wppedia_crosslinking_post-types',
-			'type'    => 'multicheck',
-			'options_cb' => [ $this, 'get_public_posttypes' ],
-			'attributes'	=> [
-				'disabled'	=> true
-			],
-			'tab'				=> 'crosslinks',
-		] );
+		$option = $args['id'];
+		$values = $args['options'];
+
+		if (!count($values))
+			return;
+
+		echo '<div class="wppedia-checkbox-group">';
+
+		foreach($values as $v) {
+			$key = (isset($v['key'])) ? $v['key'] : $v;
+			$label = (isset($v['label'])) ? $v['label'] : $v;
+
+			echo '<div class="wppedia-checkbox-group-item">';
+			$this->create_checkbox([
+				'id' => $option,
+				'key' => $key
+			]);
+			echo '<label for="' . $option . '[' . $key . ']' . '">' . $label . '</label>';
+			echo '</div>';
+		}
+
+		echo '</div>';
+	}
+
+	function sanitize_checkbox_group($data) {
+		return array_keys($data);
+	} 
+
+	/**
+	 * Custom implementation of do_settings_sections for usage
+	 * with tabs
+	 * 
+	 * @see https://developer.wordpress.org/reference/functions/do_settings_sections/
+	 * 
+	 * @since 1.0.0
+	 */
+	private function do_settings_sections_tabbed( $page, bool $vertical = false ) {
+		global $wp_settings_sections, $wp_settings_fields;
+
+		if ( ! isset( $wp_settings_sections[ $page ] ) ) {
+			return;
+		}
+		
+		// Enqueue required scripts
+		wp_enqueue_script("jquery");
+		wp_enqueue_script("jquery-ui-core");
+		wp_enqueue_script("jquery-ui-tabs");
+		wp_add_inline_script( 
+			'jquery-ui-tabs',
+			'jQuery("document").ready(function() {
+				jQuery( ".wppedia-settings-tabs" ).tabs();
+			});'
+		);
+
+		echo '<div class="wppedia-settings-tabs';
+		if ($vertical) {
+			echo ' ui-tabs-vertical';
+		}
+		echo '">';
+
+		// Build Tabs HTML
+		echo '<ul class="wppedia-settings-tabs-wrapper">';
+		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+
+			echo '<li class="wppedia-settings-tab">';
+			echo '<a href="#settings_tab_' . $section['id'] . '">' . $section['title'] . '</a>';
+			echo '</li>';
+
+		}
+		echo '</ul>';
+
+		// Build Tab content HTML
+		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+			
+			echo '<div class="wppedia-settings-tab-content" id="settings_tab_' . $section['id'] . '">';
+			
+			if ( $section['title'] ) {
+				echo "<h2>{$section['title']}</h2>\n";
+			}
+
+			if ( $section['callback'] ) {
+				call_user_func( $section['callback'], $section );
+			}
+
+			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
+				continue;
+			}
+
+			echo '<table class="form-table" role="presentation">';
+			do_settings_fields( $page, $section['id'] );
+			echo '</table>';
+				
+			echo '</div>';
+			
+		}
+
+		echo '</div>';
 
 	}
 
@@ -228,11 +373,11 @@ class options {
 	 * 
 	 * @since 1.0.0
 	 */
-	function dropdown_pages() {
+	function dropdown_pages(bool $add_option_none = false) {
 
 		$options = [];
 		$pages = get_pages();
-		
+	
 		foreach ( $pages as $page ) {
 			$options[$page->ID] = get_the_title( $page->ID );
 		}
@@ -256,7 +401,10 @@ class options {
 		foreach ( $post_types as $pt ) {
 
 			$obj = get_post_type_object( $pt );
-			$return_arr[$pt] = $obj->labels->name;
+			$return_arr[] = [
+				'key' => $pt,
+				'label' => $obj->labels->name 
+			];
 
 		}
 
@@ -270,15 +418,9 @@ class options {
 	 * @since 1.0.0
 	 */
 	function do_admin_scripts( $hook ) {
-
-		if ( 
-			class_exists( 'CMB_Extension_Hookup' ) && 
-			$hook == 'wppedia_term_page_wppedia_settings_general' 
-		) {
-			\CMB_Extension_Hookup::enqueue_cmb_css();
-			\CMB_Extension_Hookup::enqueue_cmb_js();
+		if ( 'wppedia_term_page_wppedia_settings_general' === $hook ) {
+			wp_enqueue_style( 'wppedia-admin', wpPediaPluginUrl . 'dist/css/admin.min.css', wppedia_get_version(), null );
 		}
-
 	}
 
 	/**

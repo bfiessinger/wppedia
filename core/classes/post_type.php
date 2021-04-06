@@ -132,7 +132,7 @@ class post_type {
       'rewrite' => $rewrite
 		];
 
-		if ( FALSE === helper::getInstance()->get_option( options::$settings_general_page, 'wppedia_archive_page' ) )
+		if ( FALSE === get_option('wppedia_frontpage',  false) )
 			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
 
 		\register_post_type( $this->post_type, $args );
@@ -187,9 +187,12 @@ class post_type {
 	function limit_reached_msg_notice() {
 
 		if( NULL !== $this->post_limit && ! empty( $_REQUEST['wppedia_limit_reached'] ) && $_REQUEST['wppedia_limit_reached'] == '1' ) {
-			echo '<div class="wppedia-admin-message wppedia-admin-message-flex error">';
-			echo '<img class="wppedia-pro-logo" src="' . wpPediaPluginUrl . '/assets/wppedia-pro-logo.svg">';
+			echo '<div class="wppedia-admin-message wppedia-admin-message-flex notice notice-error is-dismissible">';
+			echo '<div>';
 			echo '<p>You have reached your post creation limit. <strong>This post has not been published.</strong> Upgrade to PRO to remove limitations.</p>';
+			echo '<p><strong>PRO will be available soon!</strong></p>';
+			echo '</div>';
+			echo '<img class="wppedia-pro-logo" src="' . wpPediaPluginUrl . 'assets/img/wppedia-pro-logo.svg">';
 			echo '</div>';
 		}
 
