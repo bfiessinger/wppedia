@@ -9,11 +9,10 @@
 
 @supports((-webkit-appearance: none) or (-moz-appearance: none)) and (--css: variables) {
   input.wppedia-switch-button {
-    --active: #{rgba($primary, .6)};
+    --active: #{$primary};
     --active-inner: #fff;
-    --focus: 2px #{rgba( darken( $primary, 10% ), 0.3 )};
     --border: #{$grey};
-    --border-hover: #{darken( $primary, 10% )};
+    --border-hover: #{$highlight};
     --background: #fff;
     --disabled: #{$grey};
     --disabled-inner: #E1E6F9;
@@ -81,7 +80,7 @@
       }
     }
     &:focus {
-      box-shadow: 0 0 0 var(--focus);
+      box-shadow: 0 0 0 2px rgba($primary, .3);
     }
   }
 }
