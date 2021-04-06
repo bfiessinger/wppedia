@@ -1,10 +1,6 @@
-<p align="center">
-	<img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/wppedia-logo.svg?sanitize=true" alt="WPPedia" width="150">	
-</p>
+<img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/wppedia-logo.svg?sanitize=true" alt="WPPedia" width="150">
 
 # WPPedia - The WordPress Wiki Solution
-
-> Be your own WikiPedia!
 
 ## Description
 With WPPedia you can build a Glossary on your WordPress with ease. Just install, setup some quality posts and you are ready to go.
@@ -13,6 +9,8 @@ Having a glossary on your site can significantly increase your User Experience, 
 If you are searching for a feature rich Wiki plugin for Wordpress you just found it.
 
 WPPedia offers a good out of the box system for creating a glossary on your Website and comes with a **free** and a **PRO** Version to fit all your needs.
+
+> Be your own WikiPedia!
 
 ## What can WPPedia do for you?
 
@@ -64,7 +62,7 @@ With this quality content you can significantly improve your website’s SEO and
 * **2** additional Shortcodes
 * **more coming soon**
 
-## PRO Features
+<h2>PRO Features <img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/pro-badge.svg?sanitize=true" width="35" /></h2>
 * Extended permalink settings
 * Let WPPedia create a crosslink index for each post. This allows the page creation to be a lot faster on large Glossary pages
 * Allow crosslinking to other post types (not just glossary terms)
