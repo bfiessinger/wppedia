@@ -1,4 +1,7 @@
 .wppedia-page {
+	/**
+	 * Page
+	 */
 	#wpcontent {
 		padding: 0;
 	}
@@ -6,46 +9,91 @@
 		margin: 0;
 	}
 
-	.ui-tabs.ui-tabs-vertical {
-    padding: 0;
-    width: 100%;
-	}
-	.ui-tabs.ui-tabs-vertical .ui-widget-header {
-		border: none;
-	}
-	.ui-tabs.ui-tabs-vertical .ui-tabs-nav {
-		float: left;
-		width: 120px;
-	}
-	.ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
-		clear: left;
-		width: 100%;
-		margin: 0;
-		border: 0;
-		overflow: hidden;
-		position: relative;
-		right: 0;
-		z-index: 2;
-	}
-	.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
-		display: block;
-		padding: 0.6em 1em;
-	}
-	.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
-		cursor: pointer;
-	}
-	.ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
-		padding-bottom: 0;
-	}
-	.ui-tabs.ui-tabs-vertical .ui-tabs-panel {
-		float: left;
-		width: calc(100% - 160px);
-		padding: 20px; 
-		border-radius: 0;
-		position: relative;
-		background: #FFF;
+	/**
+	 * Forms
+	 */
+	.form-table {
+		.wppedia-pro-feature {
+			> th {
+				display: flex;
+				&:after {
+					content: '';
+					background-image: url('../../../assets/img/pro-badge.svg');
+					display: block;
+					width: 35px;
+					height: 15px;
+					margin: .25em 0 0 1em;
+					flex: 0 0 35px;
+				}
+			}
+		}
 	}
 
+
+	/**
+	 * Tabs
+	 */
+	$tab_width: 200px;
+	.ui-tabs {
+		*, *:before, *:after {
+			box-sizing: border-box;
+		}
+		&.ui-tabs-vertical {
+			padding: 0;
+			width: 100%;
+			.ui-widget-header {
+				border: none;
+			}
+			.ui-tabs-nav {
+				float: left;
+				width: $tab_width;
+				li {
+					clear: left;
+					width: 100%;
+					margin: -1px 0 0 0;
+					border: 0;
+					overflow: hidden;
+					position: relative;
+					right: 0;
+					z-index: 2;
+					border-width: 1px 0 1px 4px;
+					border-left-color: transparent;
+					border-top-color: $grey;
+					border-bottom-color: $grey;
+					border-style: solid;
+					&:first-child {
+						border-top: 0;
+						margin-top: 0;
+					}
+					&:last-child {
+						border-bottom: 0;
+					}
+					&.ui-tabs-active, &:hover {
+						background: #FFF;
+						border-left-color: $primary;
+						a{
+							color: $primary;
+						}
+					}
+					a {
+						display: block;
+						padding: 0.6em 1em;
+						&:hover {
+							cursor: pointer;
+						}
+					}
+				}
+			}
+			.ui-tabs-panel {
+				float: left;
+				width: calc(100% - #{$tab_width + 40px});
+				padding: 20px; 
+				border-radius: 0;
+				position: relative;
+				background: #FFF;
+			}
+		}
+	}
 	.submit {
 		clear: both;
 	}

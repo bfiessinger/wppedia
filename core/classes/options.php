@@ -14,9 +14,9 @@ defined( 'ABSPATH' ) or die();
 class options {
 
 	/**
-	 * Public Variables
+	 * Private variables
 	 */
-	public static $settings_general_page = 'wppedia_settings_general';
+	private static $pro_feature_className = 'wppedia-pro-feature';
 
   /**
    * Static variable for instanciation
@@ -161,7 +161,8 @@ class options {
 			'wppedia_settings_crosslinks',
 			[
 				'id' => 'wppedia_crosslinks_posttypes',
-				'options' => $this->get_public_posttypes()
+				'options' => $this->get_public_posttypes(),
+				'class' => self::$pro_feature_className,
 			]
 		);
 
@@ -217,10 +218,12 @@ class options {
 		)
 			return;
 
+		$pro_only = (isset($args['class']) && false !== strpos($args['class'], self::$pro_feature_className)) ? true : false;
+
 		$option = $args['id'];
 		$values = $args['options'];
 			
-		echo '<select name="' . $option . '" id="' . $option . '">';
+		echo '<select name="' . $option . '" id="' . $option . '"' . $this->restrict_pro($pro_only) . '>';
 		foreach ($values as $value => $label) {
 			echo '<option value="' . $value . '" ' . selected( get_option($option), $value, true ) . '>' . esc_html( $label ) . '</option>';
 		}
@@ -238,6 +241,8 @@ class options {
 	function create_checkbox(array $args) {
 		if (!isset($args['id']) || (!isset($args['key']) && !isset($args['id'])))
 			return;
+
+		$pro_only = (isset($args['class']) && false !== strpos($args['class'], self::$pro_feature_className)) ? true : false;
 
 		$option = $args['id'];
 		$option_id = (isset($args['id']) && isset($args['key'])) ? $args['id'] . '[' . $args['key'] . ']' : $option;
@@ -257,7 +262,7 @@ class options {
 		if ($switch) {
 			echo ' class="wppedia-switch-button"';
 		}
-		echo '>';
+		echo $this->restrict_pro($pro_only) . '>';
 	}
 
 	function create_checkbox_group(array $args) {
@@ -280,16 +285,34 @@ class options {
 			$key = (isset($v['key'])) ? $v['key'] : $v;
 			$label = (isset($v['label'])) ? $v['label'] : $v;
 
-			echo '<div class="wppedia-checkbox-group-item">';
-			$this->create_checkbox([
+			$checkbox_args = [
 				'id' => $option,
 				'key' => $key
-			]);
+			];
+
+			$checkbox_args = array_merge($args, $checkbox_args);
+
+			echo '<div class="wppedia-checkbox-group-item">';
+			$this->create_checkbox($checkbox_args);
 			echo '<label for="' . $option . '[' . $key . ']">' . $label . '</label>';
 			echo '</div>';
 		}
 
 		echo '</div>';
+	}
+
+	/**
+	 * Return disabled attribute for pro features
+	 * 
+	 * @param bool $disable
+	 * 
+	 * @since 1.0.0
+	 */
+	private function restrict_pro(bool $disable = false) {
+		if (!$disable)
+			return;
+		
+		return apply_filters('__wppedia_settings_set_disabled_attribute', ' disabled="disabled"');
 	}
 
 	function sanitize_checkbox_group($data) {
