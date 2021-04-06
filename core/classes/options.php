@@ -39,11 +39,18 @@ class options {
 
   protected function __construct() {
 
+		// Main Plugin Settings
 		add_action( 'admin_menu', [ $this, 'settings_page' ] );
 		add_action( 'admin_init', [ $this, 'settings_init' ] );
 
+		// Custom Permalinks Section
+		add_action( 'admin_init', [ $this, 'wppedia_permalink_settings' ], 999999 );
+
 		// Admin Page Assets
 		add_action( 'admin_enqueue_scripts', [ $this, 'do_admin_scripts' ] );
+
+		// Set flush rewrite rules flag for some options
+		add_action( 'update_option_wppedia_frontpage', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
 		
 	}
 	
@@ -402,7 +409,7 @@ class options {
 		$pages = get_pages();
 
 		if ($add_option_none) {
-			$options[] = '-';
+			$options[''] = '-';
 		}
 	
 		foreach ( $pages as $page ) {
@@ -447,6 +454,18 @@ class options {
 	function do_admin_scripts( $hook ) {
 		if ( 'wppedia_term_page_wppedia_settings_general' === $hook ) {
 			wp_enqueue_style( 'wppedia-admin', wpPediaPluginUrl . 'dist/css/admin.min.css', wppedia_get_version(), null );
+		}
+	}
+
+	/**
+	 * Set a flag for flushing rewrite rules on the next
+	 * pageload
+	 * 
+	 * @since 1.0.0
+	 */
+	function set_flush_rewrite_rules_flag($old_value, $value) {
+		if ( $old_value !== $value && ! get_option( 'wppedia_flush_rewrite_rules_flag' ) ) {
+			add_option( 'wppedia_flush_rewrite_rules_flag', true );
 		}
 	}
 
