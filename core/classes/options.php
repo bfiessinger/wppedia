@@ -377,6 +377,10 @@ class options {
 
 		$options = [];
 		$pages = get_pages();
+
+		if ($add_option_none) {
+			$options[] = '-';
+		}
 	
 		foreach ( $pages as $page ) {
 			$options[$page->ID] = get_the_title( $page->ID );
