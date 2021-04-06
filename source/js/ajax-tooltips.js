@@ -8,6 +8,9 @@ import tippy from 'tippy.js';
  */
 import { fetch_response__text } from './utils';
 
+// Halt requests for later usage
+const requested = [];
+
 tippy(document.querySelectorAll('.wppedia-crosslink'), {
 	content: '<div class="wppedia-tooltip-loading">Loading&hellip;</div>',
 	theme: 'light',
@@ -34,6 +37,13 @@ tippy(document.querySelectorAll('.wppedia-crosslink'), {
 
 		const cur_ref = instance.reference;
 
+		// Skip Ajax loading if the request has been done before
+		if (cur_ref.getAttribute('data-request') && requested[cur_ref.getAttribute('data-request')]) {
+			instance.setContent(requested[cur_ref.getAttribute('data-request')]);
+			instance._isFetching = false;
+			return;
+		}
+
 		fetch_response__text( wppedia_tooltip_props.ajaxurl, {
 			action: 'wppedia_generate_tooltip',
 			post_id: cur_ref.getAttribute( 'data-post_id' )
@@ -41,6 +51,8 @@ tippy(document.querySelectorAll('.wppedia-crosslink'), {
 			.then( ( response ) => {
 
 				instance.setContent( response );
+				requested.push(response);
+				cur_ref.setAttribute('data-request', requested.length - 1);
 
 			} )
 			.catch( ( error ) => {
