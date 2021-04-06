@@ -68,7 +68,7 @@ class admin {
 	 */
 	function wppedia_admin_body_class( $classes ) {
 		$current_screen_pt = $this->current_screen_post_type();
-		if ( is_admin() && ( 'wppedia_term' == $current_screen_pt ) ) {
+		if (is_admin() && 'wppedia_term' == $current_screen_pt) {
 			$classes .= ' wppedia-page';
 		}
 		return $classes;
