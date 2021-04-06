@@ -106,7 +106,8 @@ class options {
 			'wppedia_settings_page',
 			[
 				'id' => 'wppedia_frontpage',
-				'options' => $this->dropdown_pages(true)
+				'options' => $this->dropdown_pages(true),
+				'desc' => _x( 'Select the page that is used to display the glossary archive.', 'options', 'wppedia' ),
 			]
 		);
 
@@ -132,7 +133,8 @@ class options {
 			'wppedia_settings_crosslinks',
 			[
 				'id' => 'wppedia_feature_crosslinks', 
-				'switch' => true
+				'switch' => true,
+				'desc' => _x( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.', 'options', 'wppedia' ),
 			]
 		);
 
@@ -150,7 +152,8 @@ class options {
 			'wppedia_settings_crosslinks',
 			[
 				'id' => 'wppedia_crosslinks_prefer_single_words', 
-				'switch' => true
+				'switch' => true,
+				'desc' => __( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.', 'options', 'wppedia' ),
 			]
 		);
 
@@ -169,7 +172,7 @@ class options {
 			[
 				'id' => 'wppedia_crosslinks_posttypes',
 				'options' => $this->get_public_posttypes(),
-				'class' => self::$pro_feature_className,
+				'class' => self::$pro_feature_className
 			]
 		);
 
@@ -230,11 +233,19 @@ class options {
 		$option = $args['id'];
 		$values = $args['options'];
 			
+		// Render the field
 		echo '<select name="' . $option . '" id="' . $option . '"' . $this->restrict_pro($pro_only) . '>';
 		foreach ($values as $value => $label) {
 			echo '<option value="' . $value . '" ' . selected( get_option($option), $value, true ) . '>' . esc_html( $label ) . '</option>';
 		}
 		echo '</select>';
+
+		// Show field description
+		if (isset($args['desc']) && '' !== $args['desc']) {
+			echo '<div class="wppedia-option-description">';
+			echo $args['desc'];
+			echo '</div>';
+		}
 	}
 
 	/**
@@ -265,11 +276,19 @@ class options {
 			}
 		}
 
+		// Render the field
 		echo '<input name="' . $option_id . '" id="' . $option_id . '" type="checkbox" value="1" ' . checked( $get_option, true, false );
 		if ($switch) {
 			echo ' class="wppedia-switch-button"';
 		}
 		echo $this->restrict_pro($pro_only) . '>';
+
+		// Show field description
+		if (isset($args['desc']) && '' !== $args['desc']) {
+			echo '<div class="wppedia-option-description">';
+			echo $args['desc'];
+			echo '</div>';
+		}
 	}
 
 	function create_checkbox_group(array $args) {
@@ -286,6 +305,7 @@ class options {
 		if (!count($values))
 			return;
 
+		// Render the field
 		echo '<div class="wppedia-checkbox-group">';
 
 		foreach($values as $v) {
@@ -294,7 +314,8 @@ class options {
 
 			$checkbox_args = [
 				'id' => $option,
-				'key' => $key
+				'key' => $key,
+				'desc' => null // null description to avoid duplicates
 			];
 
 			$checkbox_args = array_merge($args, $checkbox_args);
@@ -306,6 +327,13 @@ class options {
 		}
 
 		echo '</div>';
+
+		// Show field description
+		if (isset($args['desc']) && '' !== $args['desc']) {
+			echo '<div class="wppedia-option-description">';
+			echo $args['desc'];
+			echo '</div>';
+		}
 	}
 
 	/**
