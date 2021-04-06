@@ -26,6 +26,9 @@ class activation {
 			// Crosslinking
 			'wppedia_feature_crosslinks' => true,
 			'wppedia_crosslinks_prefer_single_words' => false,
+			// Permalinks
+			'wppedia_permalink_base_setting' => 'glossary',
+			'wppedia_permalink_use_initial_character' => true,
 		];
 
 		foreach ($default_options as $option_key => $option_value) {
