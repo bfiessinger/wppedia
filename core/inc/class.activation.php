@@ -16,27 +16,23 @@ class activation {
 	function __construct() {}
 
 	public static function activate() {
-		
     if ( ! get_option( 'wppedia_flush_rewrite_rules_flag' ) ) {
 			add_option( 'wppedia_flush_rewrite_rules_flag', true );
 		}
 
-		if ( ! get_option( 'wppedia_settings_general' ) ) {
-			
-			$opt_defaults = [
-				// Assets
-				'wppedia_layout_enqueue-base-style' => 'on',
-				'wppedia_layout_enqueue-char-nav-style' => 'on',
-				'wppedia_layout_enqueue-searchform-style' => 'on',
-				// Crosslinking
-				'wppedia_crosslinking_active' => 'on',
-				'wppedia_crosslinking_post-types' => [ wppedia_get_post_type() ],
-			];
+		$default_options = [
+			// Pages
+			'wppedia_frontpage' => false,
+			// Crosslinking
+			'wppedia_feature_crosslinks' => true,
+			'wppedia_crosslinks_prefer_single_words' => false,
+		];
 
-			add_option( 'wppedia_settings_general', $opt_defaults );
-
-		}
-		
+		foreach ($default_options as $option_key => $option_value) {
+			if (!get_option($option_key)) {
+				add_option( $option_key, $option_value, '', false );
+			}
+		}		
 	}
 
 }
