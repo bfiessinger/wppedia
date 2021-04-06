@@ -10,27 +10,6 @@
 	}
 
 	/**
-	 * Forms
-	 */
-	.form-table {
-		.wppedia-pro-feature {
-			> th {
-				display: flex;
-				&:after {
-					content: '';
-					background-image: url('../../../assets/img/pro-badge.svg');
-					display: block;
-					width: 35px;
-					height: 15px;
-					margin: .25em 0 0 1em;
-					flex: 0 0 35px;
-				}
-			}
-		}
-	}
-
-
-	/**
 	 * Tabs
 	 */
 	$tab_width: 200px;
