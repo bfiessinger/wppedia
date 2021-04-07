@@ -259,16 +259,31 @@ class options {
 
 	}
 
+	/**
+	 * Default settings section callback
+	 * show text and other content right before the 
+	 * settings section
+	 * 
+	 * @since 1.0.0
+	 */
 	function settings_section_callback($section) {
 		switch ($section['id']) {
 			case 'wppedia_settings_page':
-				echo '<p>testing page settings section</p>';
+				echo '<p>Setup WPPedia pages</p>';
 				break;
 			case 'wppedia_settings_crosslinks':
-				echo '<p>testing crosslinks section</p>';
+				echo '<p>Modify WPPedia crosslink module settings</p>';
+				break;
+			case 'wppedia_settings_archive':
+				echo '<p>Content on glossary archives.</p>';
+				break;
+			case 'wppedia_settings_singular':
+				echo '<p>Content on glossary single pages.</p>';
+				break;
 			default:
 				break;
-		}		
+		}
+		echo '<hr />';
 	}
 
 	/**
