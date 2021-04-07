@@ -86,14 +86,14 @@ class template {
 	 * 
 	 * @return string $template - the current Template file in your theme's Root folder
 	 */
-	public function custom_index_php() {
+	public function custom_index_php( $template ) {
 
 		// Return custom index for WPPedia Pages if the file exists
 		// and no other template should override it
 		if ( locate_template(apply_filters('wppedia_custom_index_file', 'index-wppedia.php')) && ! $this->current_template_exists_in_theme() )
 			return get_query_template(apply_filters('wppedia_custom_index_file', 'index-wppedia.php'));
 
-		return false;
+		return $template;
 
 	}
 
