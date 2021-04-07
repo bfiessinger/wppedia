@@ -32,6 +32,14 @@ Speed matters! WPPedia works completely without the use of jQuery. All scripts a
 ### Need more?
 We are constantly updating this plugin to offer as many features as possible.
 
+## Template System/Structure
+WPPedia template files contain the markup and template structure for the frontend of your glossary. All template files contain several actions you can use to add/move/remove parts of the WPPedia Template or even restructure it completely.
+
+Just copy files from /plugins/wppedia/templates/x.php to /themes/yourtheme/wppedia/x.php and give it your own look.
+They might also left completely untouched.
+
+Another way to restructure WPPedia is to use it's actions and filters to modify content. More about this will be available soon in the Documentation.
+
 ## Getting started
 ### Installation
 #### via Download
@@ -52,6 +60,7 @@ Glossaries are a great option to give your users valuable content about your nic
 With this quality content you can significantly improve your website’s SEO and ranking on search engines like Google, etc.
 
 ## Free Features
+* Easy to understand template system / structure that can be adjusted via your theme or childtheme
 * Full support for the Gutenberg Block Editor out of the box.
 * support for all popular pagebuilder plugins.
 * powerfull and adjustable crosslinking solution to create links between your articles on the fly.
