@@ -83,7 +83,7 @@ class admin {
 	}
 
 	function create_colorscheme_css_vars() {
-		global $_wp_admin_css_colors;
+		global $current_screen, $_wp_admin_css_colors;
 
 		$current_screen_pt = $this->current_screen_post_type();
 
@@ -95,7 +95,8 @@ class admin {
 
 		$var_prefix = '--wppedia-wp-color';
 
-		if (is_admin() && 'wppedia_term' == $current_screen_pt ) {
+		if (is_admin() && ('wppedia_term' == $current_screen_pt || 'options-permalink' == $current_screen->id)) {
+
 			$vars = [];
 
 			foreach ($colors as $k => $col) {
@@ -150,11 +151,10 @@ class admin {
 	}
 
 	function enqueue_colorscheme_css() {
-		$current_screen_pt = $this->current_screen_post_type();
 
-		if (!is_admin() || 'wppedia_term' != $current_screen_pt || '' === self::$colorscheme_css )
+		if ('' === self::$colorscheme_css)
 			return;
-		
+
 		wp_register_style( 'wppedia-admin-colorscheme', false );
 		wp_enqueue_style( 'wppedia-admin-colorscheme' );
 		wp_add_inline_style( 'wppedia-admin-colorscheme', self::$colorscheme_css );
