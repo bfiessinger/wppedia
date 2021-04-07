@@ -32,6 +32,9 @@ class activation {
 			// Permalinks
 			'wppedia_permalink_base_setting' => 'glossary',
 			'wppedia_permalink_use_initial_character' => true,
+			// Layout
+			'wppedia_singular_use_templates' => true,
+			'wppedia_archive_use_templates' => true
 		];
 
 		foreach ($default_options as $option_key => $option_value) {
