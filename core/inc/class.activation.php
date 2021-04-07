@@ -34,7 +34,11 @@ class activation {
 			'wppedia_permalink_use_initial_character' => true,
 			// Layout
 			'wppedia_singular_use_templates' => true,
-			'wppedia_archive_use_templates' => true
+			'wppedia_archive_use_templates' => true,
+			'wppedia_archive_show_navigation' => true,
+			'wppedia_singular_show_navigation' => false,
+			'wppedia_archive_show_searchbar' => true,
+			'wppedia_singular_show_searchbar' => false
 		];
 
 		foreach ($default_options as $option_key => $option_value) {

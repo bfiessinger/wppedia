@@ -230,6 +230,44 @@ class options {
 			'wppedia_archive_use_templates'
 		);
 
+		// Settings field: Show navigation on archive pages
+		add_settings_field(
+			'wppedia_archive_show_navigation',
+			_x('Show navigation', 'options', 'wppedia'),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_archive',
+			[
+				'id' => 'wppedia_archive_show_navigation',
+				'switch' => true,
+				'desc' => _x('', 'options', 'wppedia')
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_archive_show_navigation'
+		);
+
+		// Settings field: Show searchbar on archive pages
+		add_settings_field(
+			'wppedia_archive_show_searchbar',
+			_x('Show searchbar', 'options', 'wppedia'),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_archive',
+			[
+				'id' => 'wppedia_archive_show_searchbar',
+				'switch' => true,
+				'desc' => _x('', 'options', 'wppedia')
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_archive_show_searchbar'
+		);
+
 		// Settings section: Single articles
 		add_settings_section(
 			'wppedia_settings_singular',
@@ -238,7 +276,7 @@ class options {
 			'wppedia_settings_general'
 		);
 
-		// Settings field: Prefer WPPedia templates for archives
+		// Settings field: Prefer WPPedia templates for single pages
 		add_settings_field(
 			'wppedia_singular_use_templates',
 			_x('use WPPedia Templates', 'options', 'wppedia'),
@@ -255,6 +293,44 @@ class options {
 		register_setting(
 			'wppedia_settings_general',
 			'wppedia_singular_use_templates'
+		);
+	
+		// Settings field: Show navigation on archive pages
+		add_settings_field(
+			'wppedia_singular_show_navigation',
+			_x('Show navigation', 'options', 'wppedia'),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_singular',
+			[
+				'id' => 'wppedia_singular_show_navigation',
+				'switch' => true,
+				'desc' => _x('', 'options', 'wppedia')
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_singular_show_navigation'
+		);
+
+		// Settings field: Show searchbar on archive pages
+		add_settings_field(
+			'wppedia_singular_show_searchbar',
+			_x('Show searchbar', 'options', 'wppedia'),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_singular',
+			[
+				'id' => 'wppedia_singular_show_searchbar',
+				'switch' => true,
+				'desc' => _x('', 'options', 'wppedia')
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_singular_show_searchbar'
 		);
 
 	}
