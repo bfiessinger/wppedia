@@ -78,6 +78,12 @@ With this quality content you can significantly improve your website’s SEO and
 * Allow crosslinking to other post types (not just glossary terms)
 * **more coming soon**
 
+### Support
+We offer dedicated support for all buyers of the **PRO** version.
+If you have any questions, suggestions or whatever bothers you we will try to assist you as quick as possible.
+
+Support requests for the free version will be treated with less priority. We ask for your understanding. 
+
 ## Sponsors
 <a href="https://www.steinrein.com/" target="_blank">
 	<img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/steinrein-logo.svg?sanitize=true" alt="SteinRein" width="150">
