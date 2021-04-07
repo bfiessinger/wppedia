@@ -36,6 +36,7 @@ tippy(document.querySelectorAll('.wppedia-crosslink'), {
 		instance._isFetching = true;
 
 		const cur_ref = instance.reference;
+		const similar_refs = document.querySelectorAll('[data-post_id="' + cur_ref.getAttribute('data-post_id') + '"]');
 
 		// Skip Ajax loading if the request has been done before
 		if (cur_ref.getAttribute('data-request') && requested[cur_ref.getAttribute('data-request')]) {
@@ -52,7 +53,12 @@ tippy(document.querySelectorAll('.wppedia-crosslink'), {
 
 				instance.setContent( response );
 				requested.push(response);
-				cur_ref.setAttribute('data-request', requested.length - 1);
+
+				if (similar_refs) {
+					Array.prototype.forEach(similar_refs, (ref) => {
+						ref.setAttribute('data-request', requested.length - 1);
+					});
+				}
 
 			} )
 			.catch( ( error ) => {
