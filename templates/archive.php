@@ -43,18 +43,7 @@ if ( have_posts() ) {
 
 	while ( have_posts() ) {
 		the_post();
-
-		/**
-		 * wppedia_loop_content hook
-		 *
-		 * @hooked wppedia_loop_item_wrapper_start -  10
-		 * @hooked wppedia_loop_title -  20
-		 * @hooked wppedia_loop_excerpt -  30
-		 * @hooked wppedia_loop_item_wrapper_end -  30
-		 *
-		 */
-		do_action( 'wppedia_loop_content' );
-
+		wppedia_get_template_part('content', 'archive');
 	}
 
 	/**
@@ -78,8 +67,8 @@ if ( have_posts() ) {
 /**
  * wppedia_after_main_content hook
  *
- * @hooked wppedia_loop_pagination -  10
- * @hooked wppedia_wrapper_end -  20 (outputs closing divs for the content)
+ * @hooked wppedia_loop_pagination -  20
+ * @hooked wppedia_wrapper_end -  10 (outputs closing divs for the content)
  */
 do_action( 'wppedia_after_main_content' );
 

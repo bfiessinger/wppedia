@@ -77,9 +77,7 @@ class WPPedia {
 	}
 
 	public function setup() {
-
 		load_plugin_textdomain( 'wppedia', false, dirname( wpPediaPluginBaseName ) . '/languages' );
-
 	}
 
 	public function init() {
