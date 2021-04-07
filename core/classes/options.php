@@ -205,10 +205,29 @@ class options {
 
 		// Settings section: Archive
 		add_settings_section( 
-			'wppedia_archive_settings', 
+			'wppedia_settings_archive', 
 			_x('Archive settings', 'options', 'wppedia'), 
 			[ $this, 'settings_section_callback' ], 
-			'wppedia_settings_archive'
+			'wppedia_settings_general'
+		);
+
+		// Settings field: Prefer WPPedia templates for archives
+		add_settings_field(
+			'wppedia_archive_use_templates',
+			_x('use WPPedia Templates', 'options', 'wppedia'),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_archive',
+			[
+				'id' => 'wppedia_archive_use_templates',
+				'switch' => true,
+				'desc' => _x('If disabled WPPedia the Layout and content of WPPedia\'s Archive will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Archive pages.', 'options', 'wppedia')
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_archive_use_templates'
 		);
 
 		// Settings section: Single articles
@@ -216,7 +235,26 @@ class options {
 			'wppedia_settings_singular',
 			_x('Single article settings', 'options', 'wppedia'),
 			[ $this, 'settings_section_callback' ],
-			'wppedia_settings_singular'
+			'wppedia_settings_general'
+		);
+
+		// Settings field: Prefer WPPedia templates for archives
+		add_settings_field(
+			'wppedia_singular_use_templates',
+			_x('use WPPedia Templates', 'options', 'wppedia'),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_singular',
+			[
+				'id' => 'wppedia_singular_use_templates',
+				'switch' => true,
+				'desc' => _x('If disabled WPPedia the Layout and content of WPPedia\'s Single pages will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Singular pages.', 'options', 'wppedia')
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_singular_use_templates'
 		);
 
 	}
