@@ -184,10 +184,11 @@ class crosslinks {
 
 		foreach( $xpath->query($query) as $node ) {
 
-			if ( $this->require_full_words && 0 === preg_match( '/(^|\s|(?!\>)|\#|\@|\+)' . $link_phrase . '(\?|\!|\;|,|\.|(?=\<)|\s|$)/imsu', $node->wholeText ) )
-				continue;
+			$regex_flags = 'imsu';
+			$regex = ($this->require_full_words) ? '/(?!^|\s|\>|\#|\@|\+)' . $link_phrase . '(?=\?|\!|\;|,|\.|\<|\s|$)/' : '/' . 
+			$regex .= $regex . $regex_flags;
 
-			$replaced = preg_replace_callback( '/' . $link_phrase . '/imsu', function( $match ) use ( $post ) {
+			$replaced = preg_replace_callback( $regex, function( $match ) use ( $post ) {
 
 				if ( ! empty( $match[0] ) ) {
 
