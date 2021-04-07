@@ -105,7 +105,7 @@ function is_wppedia_archive( $query = false ) {
 		$query = $wp_query;
 	}
 
-	if ( ! $query->is_post_type_archive() && get_post_type() == wppedia_get_post_type() )
+	if ( $query->is_archive() && get_post_type() == wppedia_get_post_type() )
 		return true;
 
 	return false;
@@ -119,7 +119,7 @@ function is_wppedia_singular( $query = false ) {
 		$query = $wp_query;
 	}
 
-	if ( ! $query->is_singular() && get_post_type() == wppedia_get_post_type() )
+	if ( $query->is_singular() && get_post_type() == wppedia_get_post_type() )
 		return true;
 
 	return false;
