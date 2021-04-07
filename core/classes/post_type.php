@@ -45,6 +45,11 @@ class post_type {
 
   protected function __construct() {
 
+		$this->permalink_base = get_option( 'wppedia_permalink_base', 'glossary' );
+		if ( '' === $this->permalink_base ) {
+			$this->permalink_base = 'glossary';
+		}
+
 		// Create Post type
 		add_action( 'init', [ $this, 'register_wiki_post_type' ], 10 );
 
@@ -133,12 +138,7 @@ class post_type {
 		];
 
 		if ( false == get_option('wppedia_frontpage',  false) ) {
-			$permalink_base = get_option( 'wppedia_permalink_base', 'glossary' );
-			if ( '' === $permalink_base ) {
-				$permalink_base = 'glossary';
-			}
-			
-			$args['has_archive'] = ltrim( rtrim( $permalink_base, '/' ), '/' );
+			$args['has_archive'] = ltrim( rtrim( $this->permalink_base, '/' ), '/' );
 		}
 			
 
@@ -230,7 +230,7 @@ class post_type {
 		];
 
 		$rewrite = [
-			'slug' => ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ),
+			'slug' => ltrim( rtrim( $this->permalink_base, '/' ), '/' ),
 			'with_front' => false,
 			'hierarchical' => false,
 		];
@@ -317,7 +317,7 @@ class post_type {
 		) );
 
 		foreach ($terms as $term) {    
-			$rules[ ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $this->post_type. '&name=$matches[1]';
+			$rules[ ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $this->post_type. '&name=$matches[1]';
 		}
 
     // merge with global rules
@@ -341,7 +341,7 @@ class post_type {
 
 			}
 
-			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' ) . '/' . $term_slug . '/' . $post->post_name;
+			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $term_slug . '/' . $post->post_name;
 
 		}
 
