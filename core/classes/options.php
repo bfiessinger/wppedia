@@ -75,7 +75,6 @@ class options {
 			<div class="wppedia-layout-wrap">
 
 				<h1 class="screen-reader-text"><?php echo _x('WPPedia Settings', 'options', 'wppedia'); ?></h1>
-
 				<?php settings_errors(); ?>
 
 				<div class="wppedia-layout-flex-container">
@@ -189,10 +188,19 @@ class options {
 			]
 		);
 
-		register_setting(
+		// Settings Title: Crosslink Index
+		add_settings_field(
+			'wppedia_crosslinks_index',
+			_x('Crosslink Index', 'options', 'wppedia'),
+			[ $this, 'create_checkbox' ],
 			'wppedia_settings_general',
-			'wppedia_crosslinks_posttypes',
-			[ $this, 'sanitize_checkbox_group' ]
+			'wppedia_settings_crosslinks',
+			[
+				'id' => 'wppedia_crosslinks_index',
+				'class' => self::$pro_feature_className,
+				'switch' => true,
+				'desc' => _x('If enabled WPPedia will create automatic indexes with all links created for each post. This ensures a significant faster loading time!', 'options', 'wppedia')
+			]
 		);
 
 		// Settings section: Archive
@@ -554,6 +562,7 @@ class options {
 			'wppedia_permalink_structure',
 			[
 				'id' => 'wppedia_permalink_use_initial_character',
+				'switch' => true,
 				'class' => self::$pro_feature_className,
 			]
 		);
