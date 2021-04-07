@@ -55,7 +55,7 @@ tippy(document.querySelectorAll('.wppedia-crosslink'), {
 				requested.push(response);
 
 				if (similar_refs) {
-					Array.prototype.forEach(similar_refs, (ref) => {
+					Array.prototype.forEach.call(similar_refs, (ref) => {
 						ref.setAttribute('data-request', requested.length - 1);
 					});
 				}
