@@ -11,18 +11,12 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "cmb2/cmb2": "^2.7",
-        "polupraneeth/cmb2-extension": "^1.0",
         "neilime/php-css-lint": "^2.2"
     },
     "autoload": {
         "psr-4": {
             "bf\\wpPedia\\": "core/classes"
-				},
-				"files": [
-						"vendor/cmb2/cmb2/init.php",
-						"vendor/polupraneeth/cmb2-extension/init.php"
-				]
+				}
     },
     "require-dev": {
 		}
