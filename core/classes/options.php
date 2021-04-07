@@ -458,13 +458,11 @@ class options {
 		// Render the field
 		echo '<div class="wppedia-checkbox-group">';
 
-		foreach($values as $v) {
-			$key = (isset($v['key'])) ? $v['key'] : $v;
-			$label = (isset($v['label'])) ? $v['label'] : $v;
+		foreach($values as $k => $v) {
 
 			$checkbox_args = [
 				'id' => $option,
-				'key' => $key,
+				'key' => $k,
 				'desc' => null // null description to avoid duplicates
 			];
 
@@ -472,7 +470,7 @@ class options {
 
 			echo '<div class="wppedia-checkbox-group-item">';
 			$this->create_checkbox($checkbox_args);
-			echo '<label for="' . $option . '[' . $key . ']">' . $label . '</label>';
+			echo '<label for="' . $option . '[' . $k . ']">' . $v . '</label>';
 			echo '</div>';
 		}
 
@@ -613,10 +611,7 @@ class options {
 		foreach ( $post_types as $pt ) {
 
 			$obj = get_post_type_object( $pt );
-			$return_arr[] = [
-				'key' => $pt,
-				'label' => $obj->labels->name 
-			];
+			$return_arr[$pt] = $obj->label->name;
 
 		}
 
