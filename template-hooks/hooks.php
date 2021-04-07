@@ -56,7 +56,7 @@ add_action('wp', function() {
 		(is_wppedia_archive() && false != get_option('wppedia_archive_show_navigation', true)) || 
 		(is_wppedia_singular() && false != get_option('wppedia_singular_show_navigation', false))
 	) {
-		add_action( 'wppedia_before_main_content', 'wppedia_navigation', 20 );	
+		add_action( 'wppedia_before_main_content', 'wppedia_navigation', 20 );
 	}
 	
 	if (
