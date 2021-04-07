@@ -124,7 +124,7 @@ function get_the_excerpt_wppedia( $post = null, int $excerpt_length = 40, bool $
 		
 	}
 	
-	return apply_filters( 'get_the_excerpt_wppedia', $str );
+	return apply_filters( 'wppedia_tooltip_excerpt', $str );
 	
 }
 
@@ -136,9 +136,7 @@ function get_the_excerpt_wppedia( $post = null, int $excerpt_length = 40, bool $
  * @since 1.0.0
  */
 function the_excerpt_wppedia( $post = null, int $excerpt_length = 40, bool $force_balanced_tags = false) {
-	
-	echo apply_filters( 'wppedia_tooltip_excerpt', get_the_excerpt_wppedia( $post, $excerpt_length, $force_balanced_tags ) );
-	
+	echo get_the_excerpt_wppedia( $post, $excerpt_length, $force_balanced_tags );
 }
 
 /**
