@@ -365,8 +365,12 @@ class options {
 	/**
 	 * Create a select field
 	 * 
-	 * @param string $option - option name
-	 * @param array $values - possible select values
+	 * @property array $args {
+	 * 	@param string 'id' - the main option name
+	 * 	@param array 'options' - select options
+	 * 	@param string 'class' - className
+	 * 	@param string 'desc' - field description
+	 * } 
 	 * 
 	 * @since 1.0.0
 	 */
@@ -401,8 +405,13 @@ class options {
 	/**
 	 * Create a checkbox field
 	 * 
-	 * @param string $option - option name
-	 * @param bool $switch - render the checkbox as a switch button
+	 * @property array $args {
+	 * 	@param string 'id' - the main option name
+	 * 	@param string 'key' - if stored as a json serialized array this is used as the key
+	 * 	@param string 'class' - className
+	 *  @param bool 'switch' - whether or not to render the checkbox as a switch
+	 * 	@param string 'desc' - field description
+	 * } 
 	 * 
 	 * @since 1.0.0
 	 */
@@ -441,6 +450,27 @@ class options {
 		}
 	}
 
+	/**
+	 * Creates a group of checkbox elements
+	 * Items saved using this method share the same option name and will therefor
+	 * be saved as json to the database.
+	 * 
+	 * Most properties from the $args array will be passed over to the
+	 * create_checkbox method.
+	 * 
+	 * @property array $args {
+	 * 	@param string 'id' - the main option name
+	 * 	@param array 'options' - array of options with key value pairs. Whereas key will be used
+	 * 	as the key in the json array where the option is saved and label as a checkbox label		 
+	 * 	@param string 'class' - className
+	 *  @param bool 'switch' - whether or not to render the checkbox as a switch
+	 * 	@param string 'desc' - field description
+	 * } 
+	 * 
+	 * @uses create_checkbox()
+	 * 
+	 * @since 1.0.0
+	 */
 	function create_checkbox_group(array $args) {
 		if (
 			!isset($args['id']) || 
