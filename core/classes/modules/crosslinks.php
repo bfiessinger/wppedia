@@ -178,8 +178,8 @@ class crosslinks {
 		];
 
 		$query = '//text()';
-			foreach ( $ignore_tags as $tag ) {
-				$query .= '[not(ancestor::' . $tag . ')]';
+		foreach ( $ignore_tags as $tag ) {
+			$query .= '[not(ancestor::' . $tag . ')]';
 		}
 
 		foreach( $xpath->query($query) as $node ) {
