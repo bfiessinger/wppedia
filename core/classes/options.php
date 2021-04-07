@@ -69,7 +69,7 @@ class options {
 	function settings_cb() { ?>
 		<div class="wrap">
 			<div class="wppedia-layout-header">
-				<img class="wppedia-logo" src="<?php echo wpPediaPluginUrl; ?>assets/img/wppedia-logo.svg" width="60">
+				<?php do_action('wppedia_admin_settings_page_header_content'); ?>
 			</div>
 
 			<div class="wppedia-layout-content">

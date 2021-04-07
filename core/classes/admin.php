@@ -29,6 +29,9 @@ class admin {
 		add_action( 'admin_head', [ $this, 'create_colorscheme_css_vars' ] );
 		add_action( 'admin_footer', [ $this, 'enqueue_colorscheme_css' ] );
 
+		// Show WPPedia Logo in Settings
+		add_action( 'wppedia_admin_settings_page_header_content', [ $this, 'settings_header_logo' ], 10 );
+
   }
 
 	/**
@@ -156,5 +159,9 @@ class admin {
 		wp_enqueue_style( 'wppedia-admin-colorscheme' );
 		wp_add_inline_style( 'wppedia-admin-colorscheme', self::$colorscheme_css );
 	}
+
+	function settings_header_logo() { ?>
+		<img class="wppedia-logo" src="<?php echo wpPediaPluginUrl; ?>assets/img/wppedia-logo.svg" width="60">
+	<?php }
 
 }
