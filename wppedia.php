@@ -31,7 +31,6 @@ use bf\wpPedia\query_control;
 use bf\wpPedia\admin;
 use bf\wpPedia\options;
 use bf\wpPedia\post_type;
-use bf\wpPedia\helper;
 use bf\wpPedia\modules\crosslinks;
 use bf\wpPedia\modules\tooltip;
 
