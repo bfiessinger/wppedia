@@ -185,7 +185,7 @@ class options {
 		// Settings section: Archive
 		add_settings_section( 
 			'wppedia_archive_settings', 
-			__('Archive settings', 'wppedia'), 
+			_x('Archive settings', 'options', 'wppedia'), 
 			[ $this, 'settings_section_callback' ], 
 			'wppedia_settings_archive'
 		);
@@ -193,7 +193,7 @@ class options {
 		// Settings section: Single articles
 		add_settings_section(
 			'wppedia_settings_singular',
-			__('Single article settings', 'wppedia'),
+			_x('Single article settings', 'options', 'wppedia'),
 			[ $this, 'settings_section_callback' ],
 			'wppedia_settings_singular'
 		);
