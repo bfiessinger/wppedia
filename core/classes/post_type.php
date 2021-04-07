@@ -132,8 +132,15 @@ class post_type {
       'rewrite' => $rewrite
 		];
 
-		if ( false == get_option('wppedia_frontpage',  false) )
-			$args['has_archive'] = ltrim( rtrim( get_option( 'wppedia_permalink_base', 'glossary' ), '/' ), '/' );
+		if ( false == get_option('wppedia_frontpage',  false) ) {
+			$permalink_base = get_option( 'wppedia_permalink_base', 'glossary' );
+			if ( '' === $permalink_base ) {
+				$permalink_base = 'glossary';
+			}
+			
+			$args['has_archive'] = ltrim( rtrim( $permalink_base, '/' ), '/' );
+		}
+			
 
 		\register_post_type( $this->post_type, $args );
 
