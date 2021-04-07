@@ -188,7 +188,7 @@ class options {
 			]
 		);
 
-		// Settings Title: Crosslink Index
+		// Settings field: Crosslink Index
 		add_settings_field(
 			'wppedia_crosslinks_index',
 			_x('Crosslink Index', 'options', 'wppedia'),
