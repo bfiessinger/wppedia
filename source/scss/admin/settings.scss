@@ -5,6 +5,7 @@
 	.wppedia-pro-feature {
 		> th {
 			display: flex;
+			justify-content: space-between;
 			&:after {
 				content: '';
 				background-image: url('../../../assets/img/pro-badge.svg');

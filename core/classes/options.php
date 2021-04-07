@@ -72,18 +72,31 @@ class options {
 				<?php do_action('wppedia_admin_settings_page_header_content'); ?>
 			</div>
 
-			<div class="wppedia-layout-content">
+			<div class="wppedia-layout-wrap">
 
 				<h1 class="screen-reader-text"><?php echo _x('WPPedia Settings', 'options', 'wppedia'); ?></h1>
 
 				<?php settings_errors(); ?>
 
-				<form method="post" action="options.php">
-					<?php settings_fields( 'wppedia_settings_general' ); ?>
-					<?php $this->do_settings_sections_tabbed( 'wppedia_settings_general', true ); ?>
-					<?php submit_button(); ?>
-				</form>
+				<div class="wppedia-layout-flex-container">
+					<div class="wppedia-layout-content">
+
+						<form method="post" action="options.php">
+							<?php settings_fields( 'wppedia_settings_general' ); ?>
+							<?php $this->do_settings_sections_tabbed( 'wppedia_settings_general', true ); ?>
+							<?php submit_button(); ?>
+						</form>
+					</div>
+
+					<div class="wppedia-layout-sidebar">
+						<div class="wppedia-sidebar-widget">
+							<img src="<?php echo wpPediaPluginUrl; ?>assets/img/WPPedia-pro-teaser.png" width="200" />
+						</div>
+					</div>
+				</div>
+
 			</div>
+
 		</div>
 	<?php }
 

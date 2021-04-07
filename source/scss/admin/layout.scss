@@ -64,7 +64,7 @@
 			}
 			.ui-tabs-panel {
 				float: left;
-				width: calc(100% - #{$tab_width + 40px});
+				width: calc(100% - #{$tab_width});
 				padding: 20px; 
 				border-radius: 0;
 				position: relative;
@@ -102,7 +102,24 @@
 	}
 }
 
-.wppedia-layout-content {
+.wppedia-layout-wrap {
 	margin: 100px 20px 0 2px;
 	padding-left: 20px;
+}
+
+.wppedia-layout-flex-container {
+	display: flex;
+	align-items: flex-start;
+}
+
+.wppedia-layout-content {
+	width: 100%;
+	margin-right: 2em;
+}
+
+.wppedia-layout-sidebar {
+	width: 200px;
+	flex: 0 0 200px;
+	position: sticky;
+	top: 120px;
 }
