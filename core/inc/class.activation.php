@@ -38,7 +38,9 @@ class activation {
 			'wppedia_archive_show_navigation' => true,
 			'wppedia_singular_show_navigation' => false,
 			'wppedia_archive_show_searchbar' => true,
-			'wppedia_singular_show_searchbar' => false
+			'wppedia_singular_show_searchbar' => false,
+			// Query
+			'wppedia_posts_per_page' => 25
 		];
 
 		foreach ($default_options as $option_key => $option_value) {

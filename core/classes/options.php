@@ -268,6 +268,25 @@ class options {
 			'wppedia_archive_show_searchbar'
 		);
 
+		// Settings field: Manage posts per page
+		add_settings_field(
+			'wppedia_posts_per_page',
+			_x('Posts per page', 'options', 'wppedia'),
+			[ $this, 'create_basic_input' ],
+			'wppedia_settings_general',
+			'wppedia_settings_archive',
+			[
+				'id' => 'wppedia_posts_per_page',
+				'type' => 'number',
+				'desc' => _x('Manage how much posts should be available per page at a glossary archive', 'options', 'wppedia')
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_posts_per_page'
+		);
+
 		// Settings section: Single articles
 		add_settings_section(
 			'wppedia_settings_singular',
@@ -360,6 +379,58 @@ class options {
 				break;
 		}
 		echo '<hr />';
+	}
+
+	/**
+	 * Create a basic input field
+	 * This function works for most basic textual inputs like
+	 * email, url, number, ...
+	 * 
+	 * @property array $args {
+	 * 	@param string 'id' - the main option name
+	 * 	@param string 'type' - input type allowed values are
+	 * 	email, number, password, tel, text and url. If no value is added
+	 * 	or the value is not one of these types it will fall back to text
+	 * 	@param string 'class' - className
+	 * 	@param string 'desc' - field description
+	 * }
+	 * 
+	 * @since 1.0.0
+	 */
+	function create_basic_input(array $args) {
+		if (!isset($args['id']))
+			return;
+
+		$allowed_types = [
+			'email',
+			'number',
+			'password',
+			'tel',
+			'text',
+			'url'
+		];
+
+		// if type is not supported fall back to text
+		if (!isset($args['type']) || !in_array($args['type'], $allowed_types)) {
+			$type = 'text';
+		} else {
+			$type = $args['type'];
+		}
+
+		$pro_only = (isset($args['class']) && false !== strpos($args['class'], self::$pro_feature_className)) ? true : false;
+
+		$option = $args['id'];
+
+		// Render the field
+		echo '<input type="' . $type . '" name="' . $option . '" id="' . $option . '" value="' . get_option($option) . '"' . $this->restrict_pro($pro_only) . '>';
+		
+		// Show field description
+		if (isset($args['desc']) && '' !== $args['desc']) {
+			echo '<div class="wppedia-option-description">';
+			echo $args['desc'];
+			echo '</div>';
+		}
+
 	}
 
 	/**
