@@ -221,7 +221,7 @@ class options {
 			[
 				'id' => 'wppedia_archive_use_templates',
 				'switch' => true,
-				'desc' => _x('If disabled WPPedia the Layout and content of WPPedia\'s Archive will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Archive pages.', 'options', 'wppedia')
+				'desc' => _x('If disabled WPPedia the Layout and content of WPPedia\'s Archive will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Archive pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia')
 			]
 		);
 
@@ -286,7 +286,7 @@ class options {
 			[
 				'id' => 'wppedia_singular_use_templates',
 				'switch' => true,
-				'desc' => _x('If disabled WPPedia the Layout and content of WPPedia\'s Single pages will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Singular pages.', 'options', 'wppedia')
+				'desc' => _x('If disabled WPPedia the Layout and content of WPPedia\'s Single pages will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Singular pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia')
 			]
 		);
 
