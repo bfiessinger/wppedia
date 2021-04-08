@@ -240,7 +240,7 @@ class options {
 			[
 				'id' => 'wppedia_archive_show_navigation',
 				'switch' => true,
-				'desc' => _x('', 'options', 'wppedia')
+				'desc' => _x('Show or hide WPPedia\'s navigation on archive pages.', 'options', 'wppedia')
 			]
 		);
 
@@ -259,7 +259,7 @@ class options {
 			[
 				'id' => 'wppedia_archive_show_searchbar',
 				'switch' => true,
-				'desc' => _x('', 'options', 'wppedia')
+				'desc' => _x('Show or hide WPPedia\'s searchbar on archive pages.', 'options', 'wppedia')
 			]
 		);
 
@@ -305,7 +305,7 @@ class options {
 			[
 				'id' => 'wppedia_singular_show_navigation',
 				'switch' => true,
-				'desc' => _x('', 'options', 'wppedia')
+				'desc' => _x('Show or hide WPPedia\'s navigation on single pages.', 'options', 'wppedia')
 			]
 		);
 
@@ -324,7 +324,7 @@ class options {
 			[
 				'id' => 'wppedia_singular_show_searchbar',
 				'switch' => true,
-				'desc' => _x('', 'options', 'wppedia')
+				'desc' => _x('Show or hide WPPedia\'s searchbar on single pages.', 'options', 'wppedia')
 			]
 		);
 
