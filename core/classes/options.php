@@ -751,7 +751,7 @@ class options {
 	function wppedia_permalink_settings() {
 
 		add_settings_section(
-			'wppedia_permalink_structure', // ID
+			'wppedia_settings_permalink', // ID
 			__( 'WPPedia Permalinks', 'wppedia' ),// Section title
 			[ $this, 'wppedia_permalink_settings_cb' ], // Callback for your function
 			'permalink' // Location (Settings > Permalinks)
@@ -761,11 +761,15 @@ class options {
 		 * Glossary permalink base setting
 		 */
 		add_settings_field( 
-			'wppedia_permalink_base_setting', 
+			'wppedia_permalink_base', 
 			__( 'WPPedia base', 'wppedia' ), 
-			[ $this, 'wppedia_setting_permalink_base_cb' ], 
+			[ $this, 'create_basic_input' ], 
 			'permalink', 
-			'wppedia_permalink_structure'
+			'wppedia_settings_permalink',
+			[
+				'id' => 'wppedia_permalink_base',
+				'type' => 'text',
+			]
 		);
 
 		register_setting(
@@ -782,7 +786,7 @@ class options {
 			__( 'use initial character in URL', 'wppedia' ), 
 			[ $this, 'create_checkbox' ], 
 			'permalink', 
-			'wppedia_permalink_structure',
+			'wppedia_settings_permalink',
 			[
 				'id' => 'wppedia_permalink_use_initial_character',
 				'switch' => true,
@@ -790,26 +794,22 @@ class options {
 			]
 		);
 
-		register_setting(
-			'permalink',
-			'wppedia_use_initial_character_permalink'
-		);
-
 		// Save options to database
 		if ( isset( $_POST['wppedia_permalink_base'] ) || isset( $_POST['wppedia_permalink_use_initial_character'] ) ) {
 
 			check_admin_referer('update-permalink');
 
-			$option_page = 'permalink';
-
-			$capability = 'manage_options';
-			$capability = apply_filters( "option_page_capability_{$option_page}", $capability );
-
-			if ( !current_user_can( $capability ) )
+			if ( !current_user_can('manage_options') )
 				wp_die(__('Cheatin&#8217; uh?'));
 
-			if ( isset( $_POST['wppedia_permalink_base'] ) )
-				update_option( 'wppedia_permalink_base', $_POST['wppedia_permalink_base'] );
+			if ( isset( $_POST['wppedia_permalink_base'] ) ) {
+				$sanitized_permalink_base = wppedia_permalink_part_sanitize($_POST['wppedia_permalink_base']);
+				if ('' !== $sanitized_permalink_base) {
+					update_option( 'wppedia_permalink_base', $sanitized_permalink_base );
+				} else {
+					delete_option( 'wppedia_permalink_base' );
+				}
+			}
 
 		}
 
@@ -819,12 +819,7 @@ class options {
 		echo wpautop( __( 'If you like, you may enter custom structures for your WPPedia URLs here.', 'wppedia' ) );
 	}
 
-	function wppedia_setting_permalink_base_cb() { ?>
-		<input type="text" name="wppedia_permalink_base" value="<?php echo get_option('wppedia_permalink_base'); ?>" class="regular-text code" />
-	<?php	}
-
 	function wppedia_permalink_part_sanitize( $input ) {
-
 		// Add leading slash to prevent `esc_url_raw` adding a protocol
 		$input = '/' . $input;
 		// replace all whitespaces with `-`
