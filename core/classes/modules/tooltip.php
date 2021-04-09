@@ -28,9 +28,11 @@ class tooltip {
 	function __generate_tooltip() {
 
 		// The Post ID delivered through the AJAX request
-		$post_id = $_POST['post_id'];
+		$post_id = absint($_POST['post_id']);
+		if (!$post_id || empty(get_post($post_id)))
+			die;
 
-		$this->tooltip_thumbnail( $post_id );
+		$this->tooltip_thumbnail($post_id);
 
 		echo apply_filters( 'wppedia_tooltip_before_excerpt', '<div class="wppedia-tooltip-content">' );
 		the_excerpt_wppedia( $post_id, $this->excerpt_length, true );
