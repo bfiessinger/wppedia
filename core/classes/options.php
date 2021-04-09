@@ -803,7 +803,7 @@ class options {
 				wp_die(__('Cheatin&#8217; uh?'));
 
 			if ( isset( $_POST['wppedia_permalink_base'] ) ) {
-				$sanitized_permalink_base = wppedia_permalink_part_sanitize($_POST['wppedia_permalink_base']);
+				$sanitized_permalink_base = $this->wppedia_permalink_part_sanitize($_POST['wppedia_permalink_base']);
 				if ('' !== $sanitized_permalink_base) {
 					update_option( 'wppedia_permalink_base', $sanitized_permalink_base );
 				} else {
