@@ -710,10 +710,8 @@ class options {
 		] );
 
 		foreach ( $post_types as $pt ) {
-
 			$obj = get_post_type_object( $pt );
-			$return_arr[$pt] = $obj->label->name;
-
+			$return_arr[$pt] = $obj->labels->name;
 		}
 
 		return $return_arr;
