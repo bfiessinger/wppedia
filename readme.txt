@@ -23,25 +23,25 @@ WPPedia offers a good out of the box system for creating a glossary on your Webs
 
 ### What can WPPedia do for you?
 
-#### Automated crosslinking
+#### ⛓️ Automated crosslinking
 WPPedia comes with a powerful automatic crosslinking solution that builds links to other Posts directly from your content. No need for time consuming manual internal linking.
 
-#### Beautifully styled tooltips
+#### ℹ️ Beautifully styled tooltips
 All automatic generated links are rendered with tooltips just like it's known from pages like Wikipedia.
 
-#### Live updating glossary terms search
+#### 🔎 Live updating glossary terms search
 WPPedia comes with an easy to use searchbar with autosuggestions. No need to submit a search form to get the expected results. Just click on a result while searching and you get redirected to the matching term.
 
-#### Support for Gutenberg and other page builders
+#### ✍️ Support for Gutenberg and other page builders
 Of course the plugin is 100% compatible with Gutenberg and other page builders out of the box - You don't need to worry about this.
 
-#### Only vanilla JavaScript
+#### 🍦 Only vanilla JavaScript
 Speed matters! WPPedia works completely without the use of jQuery. All scripts are running on good old plain (yet modern) JavaScript.
 
-#### Need more?
+#### 💖 Need more?
 We are constantly updating this plugin to offer as many features as possible.
 
-#### Template System/Structure
+### Template System/Structure
 WPPedia template files contain the markup and template structure for the frontend of your glossary. All template files contain several actions you can use to add/move/remove parts of the WPPedia Template or even restructure it completely.
 
 Just copy files from /plugins/wppedia/templates/x.php to /themes/yourtheme/wppedia/x.php and give it your own look.
