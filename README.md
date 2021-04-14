@@ -50,7 +50,9 @@ Another way to restructure WPPedia is to use it's actions and filters to modify 
 5. Activate the plugin.
 
 #### via the WordPress Plugin Repository
-*coming soon!*
+1. go to https://wordpress.org/plugins/wppedia/ or search for WPPedia in the WordPress plugin directory
+2. Download and reupload the plugin to `wp-content/plugins/wppedia`
+3. Install and activate
 
 ### Documentation
 *coming soon!*
