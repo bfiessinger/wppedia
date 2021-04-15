@@ -32,6 +32,9 @@ class admin {
 		// Show WPPedia Logo in Settings
 		add_action( 'wppedia_admin_settings_page_header_content', [ $this, 'settings_header_logo' ], 10 );
 
+		// Add plugin action links
+		add_filter( 'plugin_action_links_' . wpPediaPluginBaseName, [ $this, 'plugin_action_links' ] );
+
   }
 
 	/**
@@ -181,5 +184,16 @@ class admin {
 	function settings_header_logo() { ?>
 		<img class="wppedia-logo" src="<?php echo wpPediaPluginUrl; ?>assets/img/wppedia-logo.svg" width="60">
 	<?php }
+
+	/**
+	 * Add plugin action links on the plugins
+	 * screen
+	 * 
+	 * @since 1.0.0
+	 */
+	function plugin_action_links(array $actions) {
+		$actions[] = '<a href="'. esc_url(get_admin_url(null, 'edit.php?post_type=' . wppedia_get_post_type())) .'">' . __('Manage glossary', 'wppedia') . '</a>';
+		return $actions;
+	}
 
 }
