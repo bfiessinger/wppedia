@@ -1,6 +1,6 @@
 === WPPedia ===
 Contributors: bastianfiessinger
-Tested up to: 5.7
+Tested up to: 5.7.1
 Stable tag: 1.0.0
 Tags: glossary, encyclopedia, wiki, vocabulary, dictionary, tooltip, lexicon
 License: GPLv3 or later
