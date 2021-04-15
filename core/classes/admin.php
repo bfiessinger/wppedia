@@ -82,6 +82,12 @@ class admin {
 		return $classes;
 	}
 
+	/**
+	 * Setup colorscheme CSS variables based on
+	 * the selected colorscheme of the current user
+	 * 
+	 * @since 1.0.0
+	 */
 	function create_colorscheme_css_vars() {
 		global $current_screen, $_wp_admin_css_colors;
 
@@ -150,6 +156,12 @@ class admin {
 		}
 	}
 
+	/**
+	 * Enqueue the colorscheme created in
+	 * create_colorscheme_css_vars method
+	 * 
+	 * @since 1.0.0
+	 */
 	function enqueue_colorscheme_css() {
 
 		if ('' === self::$colorscheme_css)
@@ -160,6 +172,12 @@ class admin {
 		wp_add_inline_style( 'wppedia-admin-colorscheme', self::$colorscheme_css );
 	}
 
+	/**
+	 * Show the WPPedia logo in the header section
+	 * of WPPedia Settings screen
+	 * 
+	 * @since 1.0.0
+	 */
 	function settings_header_logo() { ?>
 		<img class="wppedia-logo" src="<?php echo wpPediaPluginUrl; ?>assets/img/wppedia-logo.svg" width="60">
 	<?php }
