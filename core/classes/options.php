@@ -117,7 +117,6 @@ class options {
 			'wppedia_settings_general', 
 			'wppedia_settings_page',
 			[
-				'id' => 'wppedia_frontpage',
 				'options' => $this->dropdown_pages(true),
 				'desc' => _x( 'Select the page that is used to display the glossary archive.', 'options', 'wppedia' ),
 			]
@@ -128,87 +127,13 @@ class options {
 			'wppedia_frontpage'
 		);
 
-		// Settings section: Crosslinking
-		add_settings_section(
-			'wppedia_settings_crosslinks',
-			_x('Crosslinking', 'options', 'wppedia'),
-			[ $this, 'settings_section_callback' ],
-			'wppedia_settings_general'
-		);
-
-		// Settings field: Activate crosslinking
+		// Archive Settings title
 		add_settings_field(
-			'wppedia_feature_crosslinks',
-			_x( 'Activate Crosslinking', 'options', 'wppedia' ),
-			[ $this, 'create_checkbox' ],
+			'__title_archive_settings',
+			_x('Archive settings ', 'options', 'wppedia'),
+			[ $this, 'create_arbitrary_title_field' ],
 			'wppedia_settings_general',
-			'wppedia_settings_crosslinks',
-			[
-				'id' => 'wppedia_feature_crosslinks', 
-				'switch' => true,
-				'desc' => _x( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.', 'options', 'wppedia' ),
-			]
-		);
-
-		register_setting(
-			'wppedia_settings_general',
-			'wppedia_feature_crosslinks'
-		);
-
-		// Settings field: prefer single words for crosslinks
-		add_settings_field(
-			'wppedia_crosslinks_prefer_single_words',
-			_x( 'Prefer single words', 'options', 'wppedia' ),
-			[ $this, 'create_checkbox' ],
-			'wppedia_settings_general',
-			'wppedia_settings_crosslinks',
-			[
-				'id' => 'wppedia_crosslinks_prefer_single_words', 
-				'switch' => true,
-				'desc' => _x( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.', 'options', 'wppedia' ),
-			]
-		);
-
-		register_setting(
-			'wppedia_settings_general',
-			'wppedia_crosslinks_prefer_single_words'
-		);
-
-		// Settings field: Create crosslinks for posttypes
-		add_settings_field(
-			'wppedia_crosslinks_posttypes',
-			_x( 'Create crosslinks to post types', 'options', 'wppedia' ),
-			[ $this, 'create_checkbox_group' ],
-			'wppedia_settings_general',
-			'wppedia_settings_crosslinks',
-			[
-				'id' => 'wppedia_crosslinks_posttypes',
-				'options' => $this->get_public_posttypes(),
-				'class' => self::$pro_feature_className
-			]
-		);
-
-		// Settings field: Crosslink Index
-		add_settings_field(
-			'wppedia_crosslinks_index',
-			_x('Crosslink Index', 'options', 'wppedia'),
-			[ $this, 'create_checkbox' ],
-			'wppedia_settings_general',
-			'wppedia_settings_crosslinks',
-			[
-				'id' => 'wppedia_crosslinks_index',
-				'class' => self::$pro_feature_className,
-				'switch' => true,
-				'desc' => _x('If enabled WPPedia will create automatic indexes with all links created for each post. This ensures a significant faster loading time!', 'options', 'wppedia')
-			]
-		);
-
-		// Settings section: Archive
-		add_settings_section( 
-			'wppedia_settings_archive', 
-			_x('Archive settings', 'options', 'wppedia'), 
-			[ $this, 'settings_section_callback' ], 
-			'wppedia_settings_general'
+			'wppedia_settings_page'
 		);
 
 		// Settings field: Prefer WPPedia templates for archives
@@ -217,9 +142,8 @@ class options {
 			_x('use WPPedia Templates', 'options', 'wppedia'),
 			[ $this, 'create_checkbox' ],
 			'wppedia_settings_general',
-			'wppedia_settings_archive',
+			'wppedia_settings_page',
 			[
-				'id' => 'wppedia_archive_use_templates',
 				'switch' => true,
 				'desc' => _x('If disabled WPPedia the Layout and content of WPPedia\'s Archive will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Archive pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia')
 			]
@@ -236,9 +160,8 @@ class options {
 			_x('Show navigation', 'options', 'wppedia'),
 			[ $this, 'create_checkbox' ],
 			'wppedia_settings_general',
-			'wppedia_settings_archive',
+			'wppedia_settings_page',
 			[
-				'id' => 'wppedia_archive_show_navigation',
 				'switch' => true,
 				'desc' => _x('Show or hide WPPedia\'s navigation on archive pages.', 'options', 'wppedia')
 			]
@@ -257,7 +180,6 @@ class options {
 			'wppedia_settings_general',
 			'wppedia_settings_archive',
 			[
-				'id' => 'wppedia_archive_show_searchbar',
 				'switch' => true,
 				'desc' => _x('Show or hide WPPedia\'s searchbar on archive pages.', 'options', 'wppedia')
 			]
@@ -274,25 +196,25 @@ class options {
 			_x('Posts per page', 'options', 'wppedia'),
 			[ $this, 'create_basic_input' ],
 			'wppedia_settings_general',
-			'wppedia_settings_archive',
+			'wppedia_settings_page',
 			[
-				'id' => 'wppedia_posts_per_page',
 				'type' => 'number',
 				'desc' => _x('Manage how much posts should be available per page at a glossary archive', 'options', 'wppedia')
 			]
 		);
-
+	
 		register_setting(
 			'wppedia_settings_general',
 			'wppedia_posts_per_page'
 		);
 
-		// Settings section: Single articles
-		add_settings_section(
-			'wppedia_settings_singular',
-			_x('Single article settings', 'options', 'wppedia'),
-			[ $this, 'settings_section_callback' ],
-			'wppedia_settings_general'
+		// Singular page settings title
+		add_settings_field(
+			'__title_singular_settings',
+			_x('Single article settings ', 'options', 'wppedia'),
+			[ $this, 'create_arbitrary_title_field' ],
+			'wppedia_settings_general',
+			'wppedia_settings_page'
 		);
 
 		// Settings field: Prefer WPPedia templates for single pages
@@ -301,9 +223,8 @@ class options {
 			_x('use WPPedia Templates', 'options', 'wppedia'),
 			[ $this, 'create_checkbox' ],
 			'wppedia_settings_general',
-			'wppedia_settings_singular',
+			'wppedia_settings_page',
 			[
-				'id' => 'wppedia_singular_use_templates',
 				'switch' => true,
 				'desc' => _x('If disabled WPPedia the Layout and content of WPPedia\'s Single pages will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Singular pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia')
 			]
@@ -320,9 +241,8 @@ class options {
 			_x('Show navigation', 'options', 'wppedia'),
 			[ $this, 'create_checkbox' ],
 			'wppedia_settings_general',
-			'wppedia_settings_singular',
+			'wppedia_settings_page',
 			[
-				'id' => 'wppedia_singular_show_navigation',
 				'switch' => true,
 				'desc' => _x('Show or hide WPPedia\'s navigation on single pages.', 'options', 'wppedia')
 			]
@@ -339,9 +259,8 @@ class options {
 			_x('Show searchbar', 'options', 'wppedia'),
 			[ $this, 'create_checkbox' ],
 			'wppedia_settings_general',
-			'wppedia_settings_singular',
+			'wppedia_settings_page',
 			[
-				'id' => 'wppedia_singular_show_searchbar',
 				'switch' => true,
 				'desc' => _x('Show or hide WPPedia\'s searchbar on single pages.', 'options', 'wppedia')
 			]
@@ -350,6 +269,77 @@ class options {
 		register_setting(
 			'wppedia_settings_general',
 			'wppedia_singular_show_searchbar'
+		);
+
+		// Settings section: Crosslinking
+		add_settings_section(
+			'wppedia_settings_crosslinks',
+			_x('Crosslinking', 'options', 'wppedia'),
+			[ $this, 'settings_section_callback' ],
+			'wppedia_settings_general'
+		);
+
+		// Settings field: Activate crosslinking
+		add_settings_field(
+			'wppedia_feature_crosslinks',
+			_x( 'Activate Crosslinking', 'options', 'wppedia' ),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_crosslinks',
+			[
+				'switch' => true,
+				'desc' => _x( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.', 'options', 'wppedia' ),
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_feature_crosslinks'
+		);
+
+		// Settings field: prefer single words for crosslinks
+		add_settings_field(
+			'wppedia_crosslinks_prefer_single_words',
+			_x( 'Prefer single words', 'options', 'wppedia' ),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_crosslinks',
+			[ 
+				'switch' => true,
+				'desc' => _x( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.', 'options', 'wppedia' ),
+			]
+		);
+
+		register_setting(
+			'wppedia_settings_general',
+			'wppedia_crosslinks_prefer_single_words'
+		);
+
+		// Settings field: Create crosslinks for posttypes
+		add_settings_field(
+			'wppedia_crosslinks_posttypes',
+			_x( 'Create crosslinks to post types', 'options', 'wppedia' ),
+			[ $this, 'create_checkbox_group' ],
+			'wppedia_settings_general',
+			'wppedia_settings_crosslinks',
+			[
+				'options' => $this->get_public_posttypes(),
+				'class' => self::$pro_feature_className
+			]
+		);
+
+		// Settings field: Crosslink Index
+		add_settings_field(
+			'wppedia_crosslinks_index',
+			_x('Crosslink Index', 'options', 'wppedia'),
+			[ $this, 'create_checkbox' ],
+			'wppedia_settings_general',
+			'wppedia_settings_crosslinks',
+			[
+				'class' => self::$pro_feature_className,
+				'switch' => true,
+				'desc' => _x('If enabled WPPedia will create automatic indexes with all links created for each post. This ensures a significant faster loading time!', 'options', 'wppedia')
+			]
 		);
 
 	}
@@ -382,6 +372,53 @@ class options {
 	}
 
 	/**
+	 * Create an arbitrary title field
+	 * 
+	 * @property array $args {
+	 * 	@param string 'hl' - headline type. allowed values are
+	 * 	h1, h2, h3, h4, h5 and h6
+	 * 	@param string 'before_title' - HTML to display before the title
+	 * 	@param string 'after_title' - HTML to display after the title
+	 * 	@param string 'class' - className
+	 * 	@param string 'desc' - field description
+	 * }
+	 * 
+	 * @since 1.1.0
+	 */
+	function create_arbitrary_title_field($args, string $settings_id, string $title) {
+		$allowed_h_tags = [
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6'
+		];
+
+		$heading_lvl = (!isset($args['hl']) || !in_array($args['hl'], $allowed_h_tags)) ? 'h2' : $args['hl'];
+
+		// Render the title
+		if (isset($args['before_title']) && '' !== $args['before_title']) {
+			echo $args['before_title'];
+		}
+
+		echo '<' . $heading_lvl . '>';
+		echo $title;
+		echo '</' . $heading_lvl . '>';
+
+		if (isset($args['after_title']) && '' !== $args['after_title']) {
+			echo $args['after_title'];
+		}
+
+		// Show field description
+		if (isset($args['desc']) && '' !== $args['desc']) {
+			$this->display_field_description($args['desc']);
+		}
+
+		echo '<hr>';
+	}
+
+	/**
 	 * Create a basic input field
 	 * This function works for most basic textual inputs like
 	 * email, url, number, ...
@@ -395,12 +432,9 @@ class options {
 	 * 	@param string 'desc' - field description
 	 * }
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-	function create_basic_input(array $args) {
-		if (!isset($args['id']))
-			return;
-
+	function create_basic_input(array $args, string $settings_id, string $title) {
 		$allowed_types = [
 			'email',
 			'number',
@@ -419,18 +453,15 @@ class options {
 
 		$pro_only = (isset($args['class']) && false !== strpos($args['class'], self::$pro_feature_className)) ? true : false;
 
-		$option = $args['id'];
+		$option = $settings_id;
 
 		// Render the field
 		echo '<input type="' . $type . '" name="' . $option . '" id="' . $option . '" value="' . get_option($option) . '"' . $this->restrict_pro($pro_only) . '>';
 		
 		// Show field description
 		if (isset($args['desc']) && '' !== $args['desc']) {
-			echo '<div class="wppedia-option-description">';
-			echo $args['desc'];
-			echo '</div>';
+			$this->display_field_description($args['desc']);
 		}
-
 	}
 
 	/**
@@ -443,11 +474,10 @@ class options {
 	 * 	@param string 'desc' - field description
 	 * } 
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-	function create_select(array $args) {
+	function create_select(array $args, string $settings_id, string $title) {
 		if (
-			!isset($args['id']) || 
 			!isset($args['options']) || 
 			!count($args['options'])
 		)
@@ -455,7 +485,7 @@ class options {
 
 		$pro_only = (isset($args['class']) && false !== strpos($args['class'], self::$pro_feature_className)) ? true : false;
 
-		$option = $args['id'];
+		$option = $settings_id;
 		$values = $args['options'];
 			
 		// Render the field
@@ -467,9 +497,7 @@ class options {
 
 		// Show field description
 		if (isset($args['desc']) && '' !== $args['desc']) {
-			echo '<div class="wppedia-option-description">';
-			echo $args['desc'];
-			echo '</div>';
+			$this->display_field_description($args['desc']);
 		}
 	}
 
@@ -477,29 +505,25 @@ class options {
 	 * Create a checkbox field
 	 * 
 	 * @property array $args {
-	 * 	@param string 'id' - the main option name
 	 * 	@param string 'key' - if stored as a json serialized array this is used as the key
 	 * 	@param string 'class' - className
 	 *  @param bool 'switch' - whether or not to render the checkbox as a switch
 	 * 	@param string 'desc' - field description
 	 * } 
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-	function create_checkbox(array $args) {
-		if (!isset($args['id']) || (!isset($args['key']) && !isset($args['id'])))
-			return;
-
+	function create_checkbox(array $args, string $settings_id, string $title) {
 		$pro_only = (isset($args['class']) && false !== strpos($args['class'], self::$pro_feature_className)) ? true : false;
 
-		$option = $args['id'];
-		$option_id = (isset($args['id']) && isset($args['key'])) ? $args['id'] . '[' . $args['key'] . ']' : $option;
+		$option = $settings_id;
+		$option_id = (isset($args['key'])) ? $option . '[' . $args['key'] . ']' : $option;
 
 		$switch = (isset($args['switch']) && false !== $args['switch']) ? true : false;
 
 		$get_option = maybe_unserialize(get_option($option, false));
 		if (is_array($get_option)) {
-			if (in_array($args['key'], $get_option)) {
+			if (isset($args['key']) && in_array($args['key'], $get_option)) {
 				$get_option = true;
 			} else {
 				$get_option = false;
@@ -515,9 +539,7 @@ class options {
 
 		// Show field description
 		if (isset($args['desc']) && '' !== $args['desc']) {
-			echo '<div class="wppedia-option-description">';
-			echo $args['desc'];
-			echo '</div>';
+			$this->display_field_description($args['desc']);
 		}
 	}
 
@@ -530,7 +552,6 @@ class options {
 	 * create_checkbox method.
 	 * 
 	 * @property array $args {
-	 * 	@param string 'id' - the main option name
 	 * 	@param array 'options' - array of options with key value pairs. Whereas key will be used
 	 * 	as the key in the json array where the option is saved and label as a checkbox label		 
 	 * 	@param string 'class' - className
@@ -540,17 +561,16 @@ class options {
 	 * 
 	 * @uses create_checkbox()
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-	function create_checkbox_group(array $args) {
+	function create_checkbox_group(array $args, string $settings_id, string $title) {
 		if (
-			!isset($args['id']) || 
 			!isset($args['options']) || 
 			!count($args['options'])
 		)
 			return;
 
-		$option = $args['id'];
+		$option = $settings_id;
 		$values = $args['options'];
 
 		if (!count($values))
@@ -570,7 +590,7 @@ class options {
 			$checkbox_args = array_merge($args, $checkbox_args);
 
 			echo '<div class="wppedia-checkbox-group-item">';
-			$this->create_checkbox($checkbox_args);
+			$this->create_checkbox($checkbox_args, $option, $title);
 			echo '<label for="' . $option . '[' . $k . ']">' . $v . '</label>';
 			echo '</div>';
 		}
@@ -579,10 +599,19 @@ class options {
 
 		// Show field description
 		if (isset($args['desc']) && '' !== $args['desc']) {
-			echo '<div class="wppedia-option-description">';
-			echo $args['desc'];
-			echo '</div>';
+			$this->display_field_description($args['desc']);
 		}
+	}
+
+	/**
+	 * Display an options description
+	 * 
+	 * @since 1.1.0
+	 */
+	private function display_field_description(string $desc) {
+		echo '<div class="wppedia-option-description">';
+		echo $desc;
+		echo '</div>';
 	}
 
 	/**
@@ -664,7 +693,7 @@ class options {
 			}
 
 			echo '<table class="form-table" role="presentation">';
-			do_settings_fields( $page, $section['id'] );
+			$this->do_settings_fields( $page, $section['id'] );
 			echo '</table>';
 				
 			echo '</div>';
@@ -673,6 +702,53 @@ class options {
 
 		echo '</div>';
 
+	}
+
+	/**
+	 * Custom implementation of do_settings_sections for usage
+	 * with tabs
+	 * 
+	 * @see https://developer.wordpress.org/reference/functions/do_settings_sections/
+	 * 
+	 * @since 1.1.0
+	 */
+	private function do_settings_fields( $page, $section ) {
+	  global $wp_settings_fields;
+	
+		if ( ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
+			return;
+		}
+	
+	  foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
+
+			$single_column = false;
+			$tdColspan = '';
+			if (isset($field['callback'][1]) && $field['callback'][1] === 'create_arbitrary_title_field') {
+				$single_column = true;
+				$tdColspan = ' colspan="2"';
+			}
+
+			$class = '';
+
+			if ( ! empty( $field['args']['class'] ) ) {
+				$class = ' class="' . esc_attr( $field['args']['class'] ) . '"';
+			}
+
+			echo "<tr{$class}>";
+
+			if (!$single_column) {
+				if ( ! empty( $field['args']['label_for'] ) ) {
+					echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . $field['title'] . '</label></th>';
+				} else {
+					echo '<th scope="row">' . $field['title'] . '</th>';
+				}
+			}
+
+			echo "<td{$tdColspan}>";
+			call_user_func( $field['callback'], $field['args'], $field['id'], $field['title'] );
+			echo '</td>';
+			echo '</tr>';
+	  }
 	}
 
 	/**
