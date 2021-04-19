@@ -8,7 +8,6 @@
 
 namespace bf\wpPedia;
 
-use bf\wpPedia\helper;
 use bf\wpPedia\post_type;
 
 // Make sure this file runs only from within WordPress.
