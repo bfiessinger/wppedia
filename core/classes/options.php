@@ -79,7 +79,6 @@ class options {
 
 				<div class="wppedia-layout-flex-container">
 					<div class="wppedia-layout-content">
-
 						<form method="post" action="options.php">
 							<?php settings_fields( 'wppedia_settings_general' ); ?>
 							<?php $this->do_settings_sections_tabbed( 'wppedia_settings_general', true ); ?>
