@@ -8,7 +8,7 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const externals = {
-	jquery: 'jQuery',
+	jquery: 'jquery',
 	'@yaireo/tagify': 'Tagify',
 	// WordPress Packages.
 	'@wordpress/hooks': 'wp.hooks',

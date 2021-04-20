@@ -19,7 +19,7 @@
   "dependencies": {
     "@yaireo/tagify": "^4.0.5",
     "fuse.js": "^6.4.1",
-    "jQuery": "^1.7.4",
+    "jquery": "^3.6.0",
     "micro-dash": "^8.1.0",
     "tippy.js": "^6.2.6"
   },
