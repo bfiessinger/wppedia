@@ -54,3 +54,16 @@ function wppedia_enqueue_frontend_assets() {
 
 }
 add_action( 'wp_enqueue_scripts', 'wppedia_enqueue_frontend_assets' );
+
+/**
+ * TODO: THIS HAS TO BE SEPERATED!!!
+ */
+add_action('admin_enqueue_scripts', function($hook) {
+	/*
+	if ( 'edit.php' !== $hook && wppedia_get_post_type() !== get_post_type() ) {
+		return;
+	}
+	*/
+	wp_register_script('tagify', wpPediaPluginUrl . 'some/path/to/tagify.js', [], '4.0.5', true);
+	wp_enqueue_script('wppedia_edit', wpPediaPluginUrl . 'dist/js/edit.bundle.js', ['jquery', 'tagify'], wpPediaPluginVersion, true);
+});

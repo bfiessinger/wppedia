@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 
 // Plugins
@@ -6,14 +7,26 @@ const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
+const externals = {
+	jquery: 'jQuery',
+	'@yaireo/tagify': 'Tagify',
+	// WordPress Packages.
+	'@wordpress/hooks': 'wp.hooks',
+}
+
+const entryPoints = {
+	// Frontend
+	ajax_tooltip: './source/js/ajax-tooltips.js',
+	search: './source/js/wppedia-search.js',
+	// Backend
+	edit: './source/js/admin/edit/edit.js'
+};
+
 module.exports = [
 	// Compile Javascript
 	{
 		mode: 'production',
-		entry: {
-			ajax_tooltip: './source/js/ajax-tooltips.js',
-			search: './source/js/wppedia-search.js'
-		},
+		entry: entryPoints,
 		optimization: {
 			minimize: true,
 			minimizer: [
@@ -32,6 +45,7 @@ module.exports = [
 			path: path.resolve(__dirname, 'dist/js'),
 			filename: '[name].bundle.js'
 		},
+		externals: externals,
 		module: {
 			rules: [
 				{
