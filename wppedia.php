@@ -30,6 +30,7 @@ use bf\wpPedia\rest_controller;
 use bf\wpPedia\query_control;
 use bf\wpPedia\admin;
 use bf\wpPedia\options;
+use bf\wpPedia\post_meta;
 use bf\wpPedia\post_type;
 use bf\wpPedia\modules\crosslinks;
 use bf\wpPedia\modules\tooltip;
@@ -115,7 +116,7 @@ class WPPedia {
 		 * Instatiate Admin View
 		 * Used to edit post or edit views in wp_admin
 		 * 
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		new admin();
 
@@ -123,9 +124,17 @@ class WPPedia {
 		 * Options
 		 * Setup options and settings pages
 		 * 
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		options::getInstance();
+
+		/**
+		 * Post meta
+		 * Setup custom postmeta for WPPedia articles
+		 * 
+		 * @since 1.1.0 
+		 */
+		new post_meta();
 
 		/**
 		 * Instantiate Post Type
