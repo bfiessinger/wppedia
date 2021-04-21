@@ -2,7 +2,7 @@
 Contributors: bastianfiessinger
 Tested up to: 5.7.1
 Stable tag: 1.0.0
-Tags: glossary, encyclopedia, wiki, vocabulary, dictionary, tooltip, lexicon
+Tags: glossary, encyclopedia, wiki, vocabulary, dictionary, tooltip, lexicon, clavis
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
