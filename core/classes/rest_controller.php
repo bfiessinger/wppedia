@@ -72,20 +72,23 @@ class rest_controller extends \WP_REST_Controller {
 		if ( ! $the_query->have_posts() )
 			return null;
 
-		$title_array = [];
+		$searchables = [];
 		while ( $the_query->have_posts() ) {
 
 			$the_query->the_post();
-			$title_array[] = [
-				'post_id'			=> get_the_ID(),
+
+			$post_id = get_the_ID();
+
+			$searchables[] = [
+				'post_id'			=> $post_id,
 				'post_title'	=> get_the_title(),
 				'url'					=> get_permalink(),
-				'tags'				=> []
+				'tags'				=> array_column(json_decode(get_post_meta($post_id, 'wppedia_post_alt_tags', true)), 'value')
 			];
 
 		}
 
-		return $title_array;
+		return $searchables;
 
 	}
 

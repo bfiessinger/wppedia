@@ -35,7 +35,8 @@ function wppedia_enqueue_frontend_assets() {
 		'postlist_url' 		=> $rest_controller->get_endpoint_url( $rest_controller->rest_endpoint_search ),
 		'search_options'	=> json_encode( [
 			'keys' => [ 
-				'post_title' 
+				'post_title',
+				'tags'
 			],
 			'threshold' => 0.5,
 		] ),
