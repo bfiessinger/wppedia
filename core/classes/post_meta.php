@@ -11,15 +11,13 @@ namespace bf\wpPedia;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-use options;
-
-class post_meta {
-	private $config;
+class post_meta extends options {
+	private $post_meta_config;
 
 	public function __construct() {
-		$this->config = [
+		$this->post_meta_config = [
 			'title' 			=> 'WPPedia post settings',
-			'description' => 'my super neat description',
+			'description' => '',
 			'meta_prefix' => "wppedia_post_",
 			'class_name' 	=> 'WPPedia_Post_Settings',
 			'post-type' 	=> [\wppedia_get_post_type()],
@@ -28,8 +26,8 @@ class post_meta {
 			'fields' 			=> [
 				[
 					'id'			=> 'wppedia_post_alt_tags',
-					'type' 		=> 'text',
-					'label' 	=> 'Test Label'
+					'type' 		=> 'textarea',
+					'label' 	=> 'Alternative terms'
 				]
 			]
 		];
@@ -40,27 +38,27 @@ class post_meta {
 	}
 
 	public function add_meta_boxes() {
-		foreach ( $this->config['post-type'] as $screen ) {
+		foreach ( $this->post_meta_config['post-type'] as $screen ) {
 			add_meta_box(
-				sanitize_title( $this->config['title'] ),
-				$this->config['title'],
+				sanitize_title( $this->post_meta_config['title'] ),
+				$this->post_meta_config['title'],
 				[ $this, 'add_meta_box_callback' ],
 				$screen,
-				$this->config['context'],
-				$this->config['priority']
+				$this->post_meta_config['context'],
+				$this->post_meta_config['priority']
 			);
 		}
 	}
 
 	public function admin_head() {
 		global $typenow;
-		if ( in_array( $typenow, $this->config['post-type'] ) ) {
+		if ( in_array( $typenow, $this->post_meta_config['post-type'] ) ) {
 			?><?php
 		}
 	}
 
 	public function save_post( $post_id ) {
-		foreach ( $this->config['fields'] as $field ) {
+		foreach ( $this->post_meta_config['fields'] as $field ) {
 			switch ( $field['type'] ) {
 				default:
 					if ( isset( $_POST[ $field['id'] ] ) ) {
@@ -72,14 +70,14 @@ class post_meta {
 	}
 
 	public function add_meta_box_callback() {
-		echo '<div class="rwp-description">' . $this->config['description'] . '</div>';
+		echo '<div class="rwp-description">' . $this->post_meta_config['description'] . '</div>';
 		$this->fields_table();
 	}
 
 	private function fields_table() {
 		?><table class="form-table" role="presentation">
 			<tbody><?php
-				foreach ( $this->config['fields'] as $field ) {
+				foreach ( $this->post_meta_config['fields'] as $field ) {
 					?><tr>
 						<th scope="row"><?php $this->label( $field ); ?></th>
 						<td><?php $this->field( $field ); ?></td>
@@ -99,56 +97,7 @@ class post_meta {
 		}
 	}
 
-	private function field( $field ) {
-		switch ( $field['type'] ) {
-			case 'select':
-				$this->select( $field );
-				break;
-			default:
-				$this->input( $field );
-		}
-	}
-
-	private function input( $field ) {
-		printf(
-			'<input class="regular-text %s" id="%s" name="%s" %s type="%s" value="%s">',
-			isset( $field['class'] ) ? $field['class'] : '',
-			$field['id'], $field['id'],
-			isset( $field['pattern'] ) ? "pattern='{$field['pattern']}'" : '',
-			$field['type'],
-			$this->value( $field )
-		);
-	}
-
-	private function select( $field ) {
-		printf(
-			'<select id="%s" name="%s">%s</select>',
-			$field['id'], $field['id'],
-			$this->select_options( $field )
-		);
-	}
-
-	private function select_selected( $field, $current ) {
-		$value = $this->value( $field );
-		if ( $value === $current ) {
-			return 'selected';
-		}
-		return '';
-	}
-
-	private function select_options( $field ) {
-		$output = [];
-		foreach ( $field['options'] as $option => $label ) {
-			$output[] = sprintf(
-				'<option %s value="%s"> %s</option>',
-				$this->select_selected( $field, $option ),
-				$option, $label
-			);
-		}
-		return implode( '<br>', $output );
-	}
-
-	private function value( $field ) {
+	public function value( $field ) {
 		global $post;
 		if ( metadata_exists( 'post', $post->ID, $field['id'] ) ) {
 			$value = get_post_meta( $post->ID, $field['id'], true );
