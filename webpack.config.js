@@ -62,13 +62,13 @@ module.exports = [
 			]
 		},
 	},
-  // Compile CSS
-  {
-    mode: 'production',
-    entry: cssEntryPoints,
-    output: {
-      path: path.resolve(__dirname, 'dist/css'),
-      filename: '[name].bundle.js'
+	// Compile CSS
+	{
+		mode: 'production',
+		entry: cssEntryPoints,
+		output: {
+			path: path.resolve(__dirname, 'dist/css'),
+			filename: '[name].bundle.js'
 		},
 		optimization: {
 			minimize: true,
@@ -84,11 +84,11 @@ module.exports = [
 				new CssMinimizerPlugin({})
 			],
 		},
-    module: {
-      rules: [
-        {
-          test: /\.(png|jpg|jpeg|gif|ico)$/,
-          use: [
+		module: {
+			rules: [
+				{
+					test: /\.(png|jpg|jpeg|gif|ico)$/,
+					use: [
 						{
 							loader: 'file-loader',
 							options: {
@@ -113,39 +113,39 @@ module.exports = [
 						}
 					],
 				},
-        {
-          test: /\.(pc|sa|sc|c)ss$/,
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                esModule: false
-              }
-            },
-            'css-loader',
+				{
+					test: /\.(pc|sa|sc|c)ss$/,
+					use: [
+						{
+							loader: MiniCssExtractPlugin.loader,
+							options: {
+								esModule: false
+							}
+						},
+						'css-loader',
 						'postcss-loader',
 						'resolve-url-loader',
 						'sass-loader',
-          ],
-        },
-      ],
-    },
+					],
+				},
+			],
+		},
 		plugins: [
-      new MiniCssExtractPlugin({
-        filename: '[name].css',
-        chunkFilename: '[id].css'
+			new MiniCssExtractPlugin({
+				filename: '[name].css',
+				chunkFilename: '[id].css'
 			}),
-      new CssoWebpackPlugin({
-        pluginOutputPostfix: 'min'
-      })
-    ],
-  },
+			new CssoWebpackPlugin({
+				pluginOutputPostfix: 'min'
+			})
+		],
+	},
 	{
 		mode: 'production',
-    entry: {},
-    output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: '[name].bundle.js'
+		entry: {},
+		output: {
+			path: path.resolve(__dirname, 'dist'),
+			filename: '[name].bundle.js'
 		},
 		plugins: [
 			new CopyWebpackPlugin({
