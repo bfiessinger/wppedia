@@ -47,9 +47,6 @@ class options {
 		// Custom Permalinks Section
 		add_action( 'admin_init', [ $this, 'wppedia_permalink_settings_save' ], 999999 );
 
-		// Admin Page Assets
-		add_action( 'admin_enqueue_scripts', [ $this, 'do_admin_scripts' ] );
-
 		// Set flush rewrite rules flag for some options
 		add_action( 'update_option_wppedia_frontpage', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
 		
@@ -347,7 +344,7 @@ class options {
 	 * show text and other content right before the 
 	 * settings section
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	function settings_section_callback($section) {
 		$output = false;
@@ -703,17 +700,6 @@ class options {
 
 		return $return_arr;
 
-	}
-
-	/**
-	 * Add admin scripts and styles
-	 * 
-	 * @since 1.0.0
-	 */
-	function do_admin_scripts( $hook ) {
-		if ( $hook === 'wppedia_term_page_wppedia_settings_general' || $hook === 'options-permalink.php' ) {
-			wp_enqueue_style( 'wppedia-admin', wpPediaPluginUrl . 'dist/css/admin.min.css', wppedia_get_version(), null );
-		}
 	}
 
 	/**

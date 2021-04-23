@@ -54,17 +54,40 @@ function wppedia_enqueue_frontend_assets() {
 	}
 
 }
-add_action( 'wp_enqueue_scripts', 'wppedia_enqueue_frontend_assets' );
+add_action('wp_enqueue_scripts', 'wppedia_enqueue_frontend_assets');
 
 /**
  * TODO: THIS HAS TO BE SEPERATED!!!
  */
-add_action('admin_enqueue_scripts', function($hook) {
-	/*
-	if ( 'edit.php' !== $hook && wppedia_get_post_type() !== get_post_type() ) {
+function wppedia_enqueue_admin_assets($hook) {
+	$is_edit = false;
+	$is_option = false;
+
+	if ('post.php' === $hook && wppedia_get_post_type() === get_post_type()) {
+		$is_edit = true;
+	}
+	
+	if ('wppedia_term_page_wppedia_settings_general' === $hook || 'options-permalink.php' === $hook) {
+		$is_option = true;
+	}
+
+	if (!$is_edit && !$is_option) {
 		return;
 	}
-	*/
-	wp_register_script('tagify', wpPediaPluginUrl . 'some/path/to/tagify.js', [], '4.0.5', true);
-	wp_enqueue_script('wppedia_edit', wpPediaPluginUrl . 'dist/js/edit.bundle.js', ['jquery', 'tagify'], wpPediaPluginVersion, true);
-});
+
+	if ($is_edit) {
+		wp_register_style('tagify', wpPediaPluginUrl . 'dist/vendor/tagify.css', [], '4.0.5');
+		wp_enqueue_style('tagify');
+		wp_register_script('tagify', wpPediaPluginUrl . 'dist/vendor/tagify.min.js', [], '4.0.5', true);
+		wp_enqueue_script('wppedia_edit', wpPediaPluginUrl . 'dist/js/edit.bundle.js', ['jquery', 'tagify'], wppedia_get_version(), null, true);
+	}
+
+	if ($is_option) {
+
+	}
+
+	if ($is_edit || $is_option) {
+		wp_enqueue_style( 'wppedia-admin', wpPediaPluginUrl . 'dist/css/admin.min.css', wppedia_get_version(), null );
+	}
+}
+add_action('admin_enqueue_scripts', 'wppedia_enqueue_admin_assets');

@@ -5,15 +5,16 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const TerserJSPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const externals = {
+const jsExternals = {
 	jquery: 'jQuery',
 	'@yaireo/tagify': 'Tagify',
 	// WordPress Packages.
 	'@wordpress/hooks': 'wp.hooks',
 }
 
-const entryPoints = {
+const jsEntryPoints = {
 	// Frontend
 	ajax_tooltip: './source/js/ajax-tooltips.js',
 	search: './source/js/wppedia-search.js',
@@ -21,11 +22,18 @@ const entryPoints = {
 	edit: './source/js/admin/edit/edit.js'
 };
 
+const cssEntryPoints = {
+	// Frontend
+	style: './source/scss/_main.scss',
+	// Backend
+	admin: './source/scss/admin/_main.scss'
+};
+
 module.exports = [
 	// Compile Javascript
 	{
 		mode: 'production',
-		entry: entryPoints,
+		entry: jsEntryPoints,
 		optimization: {
 			minimize: true,
 			minimizer: [
@@ -43,7 +51,7 @@ module.exports = [
 			path: path.resolve(__dirname, 'dist/js'),
 			filename: '[name].bundle.js'
 		},
-		externals: externals,
+		externals: jsExternals,
 		module: {
 			rules: [
 				{
@@ -52,17 +60,12 @@ module.exports = [
 					use: ['babel-loader']
 				},
 			]
-		}
+		},
 	},
   // Compile CSS
   {
     mode: 'production',
-    entry: {
-			// Frontend
-			style: './source/scss/_main.scss',
-			// Components
-			admin: './source/scss/admin/_main.scss'
-    },
+    entry: cssEntryPoints,
     output: {
       path: path.resolve(__dirname, 'dist/css'),
       filename: '[name].bundle.js'
@@ -136,5 +139,24 @@ module.exports = [
         pluginOutputPostfix: 'min'
       })
     ],
-  }
+  },
+	{
+		mode: 'production',
+    entry: {},
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: '[name].bundle.js'
+		},
+		plugins: [
+			new CopyWebpackPlugin({
+				patterns: [
+					{
+						from: 'tagify.(min.js|css)',
+						to: path.resolve(__dirname, 'dist/vendor'),
+						context: path.resolve(__dirname, 'node_modules/@yaireo/tagify/dist')
+					}
+				]
+			})
+		]
+	}
 ];

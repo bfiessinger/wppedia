@@ -29,6 +29,7 @@
     "@wordpress/hooks": "^2.12.2",
     "autoprefixer": "^10.2.5",
     "babel-loader": "^8.1.0",
+    "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.4",
     "css-minimizer-webpack-plugin": "^2.0.0",
     "csso-webpack-plugin": "^2.0.0-beta.3",
