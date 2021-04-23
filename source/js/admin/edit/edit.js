@@ -1,4 +1,4 @@
-import $ from "jquery";
+import jQuery from "jquery";
 
 /**
  * WordPress dependencies
@@ -24,13 +24,13 @@ class WPPedia_Edit {
 
 }
 
-$(() => {
+jQuery(() => {
 	window.WPPedia_Edit = new WPPedia_Edit();
 	window.WPPedia_Edit.setup();
 })
 
-$(window).on('load', () => {
-	$.when( $.ready ).then(() => {
+jQuery(window).on('load', () => {
+	jQuery.when( jQuery.ready ).then(() => {
 		doAction('wppedia_loaded');
 	})
 });

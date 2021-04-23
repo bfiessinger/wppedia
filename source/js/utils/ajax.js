@@ -5,7 +5,7 @@
 /**
  * External Dependencies
  */
-import { isEmpty } from 'micro-dash';
+import { isEmpty } from '@s-libs/micro-dash';
 
 /**
  * Internal Dependencies

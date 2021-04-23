@@ -1,14 +1,13 @@
-const webpack = require('webpack');
 const path = require('path');
 
 // Plugins
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const TerserJSPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const externals = {
-	jquery: 'jquery',
+	jquery: 'jQuery',
 	'@yaireo/tagify': 'Tagify',
 	// WordPress Packages.
 	'@wordpress/hooks': 'wp.hooks',
@@ -31,7 +30,6 @@ module.exports = [
 			minimize: true,
 			minimizer: [
 				new TerserJSPlugin({
-					sourceMap: true,
 					terserOptions: {
 						output: {
 							comments: false,
@@ -73,7 +71,6 @@ module.exports = [
 			minimize: true,
 			minimizer: [
 				new TerserJSPlugin({
-					sourceMap: true,
 					terserOptions: {
 						output: {
 							comments: false,
@@ -81,18 +78,9 @@ module.exports = [
 					},
 					extractComments: false,
 				}), 
-				new OptimizeCSSAssetsPlugin({})
+				new CssMinimizerPlugin({})
 			],
 		},
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: '[name].css',
-        chunkFilename: '[id].css'
-			}),
-      new CssoWebpackPlugin({
-        pluginOutputPostfix: 'min'
-      })
-    ],
     module: {
       rules: [
         {
@@ -102,7 +90,7 @@ module.exports = [
 							loader: 'file-loader',
 							options: {
 								name: '[name].[ext]',
-								outputPath: 'images'
+								outputPath: '../images'
 							}
 						}
 					],
@@ -114,7 +102,7 @@ module.exports = [
 							loader: 'file-loader',
 							options: {
 								name: '[name].[ext]',
-								outputPath: 'images'
+								outputPath: '../images'
 							}
 						},
 						{
@@ -139,5 +127,14 @@ module.exports = [
         },
       ],
     },
+		plugins: [
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css'
+			}),
+      new CssoWebpackPlugin({
+        pluginOutputPostfix: 'min'
+      })
+    ],
   }
 ];

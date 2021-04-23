@@ -12,6 +12,7 @@ class WPPedia_Edit_Alt_Terms {
 		this.elem = document.getElementById('wppedia_post_alt_tags');
 
 		const callbacks = {};
+		const templates = {};
 
 		this.tagify = new Tagify( this.elem, {
 			addTagOnBlur: true,
@@ -20,23 +21,7 @@ class WPPedia_Edit_Alt_Terms {
 			transformTag: ( tagData ) => {
 				tagData.value = this.stripTags( tagData.value )
 			},
-			templates: {
-				tag: (tagData) => {
-					console.log(tagData);
-					return `
-						<tag title="${(tagData.title || tagData.value)}"
-							contenteditable='false'
-							spellcheck='false'
-							tabIndex="-1"
-							class="${this.settings.classNames.tag} ${tagData.class ? tagData.class : ""}"
-							${this.getAttributes(tagData)}>
-						<x title='' class="${this.settings.classNames.tagX}" role='button' aria-label='remove tag'></x>
-						<div>
-								<span class="${this.settings.classNames.tagText}">${tagData[this.settings.tagTextProp] || tagData.value}</span>
-						</div>
-					</tag>`
-				},
-			},
+			templates,
 			callbacks,
 		} );
 	}

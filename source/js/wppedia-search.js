@@ -2,7 +2,7 @@
  * External Dependencies
  */
 import Fuse from 'fuse.js/dist/fuse.basic.esm';
-import { isEmpty } from 'micro-dash';
+import { isEmpty } from '@s-libs/micro-dash';
 
 /**
  * Internal Dependencies
