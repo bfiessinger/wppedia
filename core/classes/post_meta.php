@@ -33,7 +33,6 @@ class post_meta extends options {
 		];
 
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
-		add_action( 'admin_head', [ $this, 'admin_head' ] );
 		add_action( 'save_post', [ $this, 'save_post' ] );
 	}
 
