@@ -18,7 +18,7 @@
   "homepage": "https://github.com/bfiessinger/wppedia#readme",
   "dependencies": {
     "@s-libs/micro-dash": "^11.3.0",
-    "@yaireo/tagify": "^4.0.5",
+    "@yaireo/tagify": "^4.1.1",
     "fuse.js": "^6.4.6",
     "jquery": "^3.6.0",
     "tippy.js": "^6.3.1"
@@ -45,7 +45,7 @@
     "svgo": "^2.3.0",
     "svgo-loader": "^3.0.0",
     "terser-webpack-plugin": "^5.1.1",
-    "webpack": "^5.35.0",
+    "webpack": "^5.36.0",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.0"
   }
