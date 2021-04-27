@@ -36,6 +36,22 @@ function wppedia_get_posts(array $query_args = []) {
 }
 
 /**
+ * Retrieve the alternative terms supplied for a
+ * given post_id
+ * 
+ * @since 1.1.0
+ */
+function wppedia_get_post_alternative_terms(int $post_id) {
+	$alt_terms_meta = get_post_meta($post_id, 'wppedia_post_alt_tags', true);
+	if (is_array($alt_terms_meta)) {
+		return array_column(json_decode($alt_terms_meta), 'value');
+	} elseif (is_string($alt_terms_meta)) {
+		return esc_attr($alt_terms_meta);
+	}
+	return null;
+}
+
+/**
  * Get the initial letter from an post
  * 
  * @uses wppedia_list_chars

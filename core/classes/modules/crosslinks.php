@@ -3,7 +3,7 @@
 /**
  * Modify the_content
  * 
- * @since 1.0.0
+ * @since 1.1.0
  */
 
 namespace bf\wpPedia\modules;
@@ -74,7 +74,7 @@ class crosslinks {
   /**
    * Get Posts available for crosslink content
    * 
-   * @since 1.0.0
+   * @since 1.1.0
    */
   public function get_crosslink_posts() {
 
@@ -88,18 +88,35 @@ class crosslinks {
     // Get Posts
     $posts = $posts_query->posts;
 
-    // Reduce to titles
-    $post_titles = array_map(function ($posts) {
+    // Reduce to the necessary parts
+    $post_data = array_map(function ($p) {
 
-      $post_title = new \stdClass();
-      $post_title->ID = $posts->ID;
-      $post_title->title = $posts->post_title;
+			$data = [];
 
-      return $post_title;
+			$post_id = $p->ID;
+
+      $post = new \stdClass();
+      $post->ID = $post_id;
+      $post->title = $p->post_title;
+
+			array_push($data, $post);
+
+			$alternative_terms = wppedia_get_post_alternative_terms($post_id);
+			if (!empty($alternative_terms)) {
+				foreach($alternative_terms as $at) {
+					$alt_post = new \stdClass();
+					$alt_post->ID = $post_id;
+					$alt_post->title = $at;
+
+					array_push($data, $alt_post);
+				}
+			}
+
+      return $data;
 
     }, $posts);
 
-    return $post_titles;
+    return array_reduce($post_data, 'array_merge', []);
 
   }
 

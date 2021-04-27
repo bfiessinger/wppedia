@@ -83,7 +83,7 @@ class rest_controller extends \WP_REST_Controller {
 				'post_id'			=> $post_id,
 				'post_title'	=> get_the_title(),
 				'url'					=> get_permalink(),
-				'tags'				=> array_column(json_decode(get_post_meta($post_id, 'wppedia_post_alt_tags', true)), 'value')
+				'tags'				=> wppedia_get_post_alternative_terms($post_id)
 			];
 
 		}
