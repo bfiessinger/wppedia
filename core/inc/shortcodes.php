@@ -5,7 +5,7 @@
 function create_wppedia_navigation_shortcode() {
 
 	ob_start();
-	bf\wpPedia\template::getInstance()->get_char_navigation();
+	wppedia_get_template_part('nav/char', 'navigation');
 	return ob_get_clean();
 
 }
