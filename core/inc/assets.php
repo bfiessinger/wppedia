@@ -57,7 +57,9 @@ function wppedia_enqueue_frontend_assets() {
 add_action('wp_enqueue_scripts', 'wppedia_enqueue_frontend_assets');
 
 /**
- * TODO: THIS HAS TO BE SEPERATED!!!
+ * Enqueue admin assets
+ * 
+ * @since 1.1.0 
  */
 function wppedia_enqueue_admin_assets($hook) {
 	$is_edit = false;
