@@ -3,7 +3,7 @@
 /**
  * WPPedia post meta settings
  * 
- * @since 1.0.0
+ * @since 1.1.0
  */
 
 namespace bf\wpPedia;
@@ -37,6 +37,11 @@ class post_meta extends options {
 		add_action( 'save_post', [ $this, 'save_post' ] );
 	}
 
+	/**
+	 * Create WPPedia metaboxes
+	 * 
+	 * @since 1.1.0
+	 */
 	public function add_meta_boxes() {
 		foreach ( $this->post_meta_config['post-type'] as $screen ) {
 			add_meta_box(
@@ -50,13 +55,11 @@ class post_meta extends options {
 		}
 	}
 
-	public function admin_head() {
-		global $typenow;
-		if ( in_array( $typenow, $this->post_meta_config['post-type'] ) ) {
-			?><?php
-		}
-	}
-
+	/**
+	 * Save custom field values
+	 * 
+	 * @since 1.1.0
+	 */
 	public function save_post( $post_id ) {
 		foreach ( $this->post_meta_config['fields'] as $field ) {
 			switch ( $field['type'] ) {
@@ -69,11 +72,21 @@ class post_meta extends options {
 		}
 	}
 
+	/**
+	 * Print metabox contents
+	 * 
+	 * @since 1.1.0
+	 */
 	public function add_meta_box_callback() {
 		echo '<div class="rwp-description">' . $this->post_meta_config['description'] . '</div>';
 		$this->fields_table();
 	}
 
+	/**
+	 * Wrap individual fields in WordPress option tables
+	 * 
+	 * @since 1.1.0
+	 */
 	private function fields_table() {
 		?><table class="form-table" role="presentation">
 			<tbody><?php
@@ -87,6 +100,11 @@ class post_meta extends options {
 		</table><?php
 	}
 
+	/**
+	 * Create field labels
+	 * 
+	 * @since 1.1.0
+	 */
 	private function label( $field ) {
 		switch ( $field['type'] ) {
 			default:
@@ -97,6 +115,11 @@ class post_meta extends options {
 		}
 	}
 
+	/**
+	 * Retrieve custom field values
+	 * 
+	 * @since 1.1.0
+	 */
 	public function value( $field ) {
 		global $post;
 		if ( metadata_exists( 'post', $post->ID, $field['id'] ) ) {
