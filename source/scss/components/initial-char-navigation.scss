@@ -24,7 +24,7 @@
 		}
 		a.active, &:hover a {
 			z-index: 1;
-			color: lighten($main-color, 5%);
+			color: #FFF;
 			background-color: $main-color;
 			border: solid 1px $main-color;
 		}
