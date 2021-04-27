@@ -72,7 +72,6 @@ Providing educational and informational quality content you can significantly im
 * **more coming soon**
 
 ### PRO Features
-
 * All the features in the free version
 * Extended permalink settings
 * Let WPPedia create a crosslink index for each post. This allows the page creation to be a lot faster on large Glossary pages
