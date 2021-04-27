@@ -46,7 +46,7 @@ function wppedia_get_post_alternative_terms(int $post_id) {
 	if (is_array($alt_terms_meta)) {
 		return array_column(json_decode($alt_terms_meta), 'value');
 	} elseif (is_string($alt_terms_meta)) {
-		return esc_attr($alt_terms_meta);
+		return [esc_attr($alt_terms_meta)];
 	}
 	return null;
 }
