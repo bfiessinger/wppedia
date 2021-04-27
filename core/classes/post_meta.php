@@ -77,7 +77,7 @@ class post_meta extends options {
 	 * @since 1.1.0
 	 */
 	public function add_meta_box_callback() {
-		echo '<div class="rwp-description">' . $this->post_meta_config['description'] . '</div>';
+		echo '<div class="wppedia-metabox-description">' . $this->post_meta_config['description'] . '</div>';
 		$this->fields_table();
 	}
 
