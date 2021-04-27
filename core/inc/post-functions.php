@@ -42,9 +42,9 @@ function wppedia_get_posts(array $query_args = []) {
  * @since 1.1.0
  */
 function wppedia_get_post_alternative_terms(int $post_id) {
-	$alt_terms_meta = get_post_meta($post_id, 'wppedia_post_alt_tags', true);
+	$alt_terms_meta = json_decode(get_post_meta($post_id, 'wppedia_post_alt_tags', true));
 	if (is_array($alt_terms_meta)) {
-		return array_column(json_decode($alt_terms_meta), 'value');
+		return array_column($alt_terms_meta, 'value');
 	} elseif (is_string($alt_terms_meta)) {
 		return [esc_attr($alt_terms_meta)];
 	}
