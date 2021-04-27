@@ -79,7 +79,10 @@ function wppedia_enqueue_admin_assets($hook) {
 		wp_register_style('tagify', wpPediaPluginUrl . 'dist/vendor/tagify.css', [], '4.0.5');
 		wp_enqueue_style('tagify');
 		wp_register_script('tagify', wpPediaPluginUrl . 'dist/vendor/tagify.min.js', [], '4.0.5', true);
-		wp_enqueue_script('wppedia_edit', wpPediaPluginUrl . 'dist/js/edit.bundle.js', ['jquery', 'tagify'], wppedia_get_version(), null, true);
+
+		$edit_script_asset_file = wpPediaPluginDir . 'dist/js/edit.bundle.asset.php';
+		$edit_script_asset = (file_exists($edit_script_asset_file)) ? require($edit_script_asset_file) : ['dependencies' => [], 'version' => filemtime($edit_script_asset_file)];
+		wp_enqueue_script('wppedia_edit', wpPediaPluginUrl . 'dist/js/edit.bundle.js', array_merge($edit_script_asset['dependencies'], ['tagify']), wppedia_get_version(), null, true);
 	}
 
 	if ($is_option) {

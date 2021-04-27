@@ -7,6 +7,8 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
+
 const jsExternals = {
 	jquery: 'jQuery',
 	'@yaireo/tagify': 'Tagify',
@@ -61,6 +63,9 @@ module.exports = [
 				},
 			]
 		},
+		plugins: [
+			new DependencyExtractionWebpackPlugin(),
+		]
 	},
 	// Compile CSS
 	{
