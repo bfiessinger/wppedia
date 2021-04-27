@@ -3,7 +3,7 @@
 /**
  * Admin View
  * 
- * @since 1.0.0
+ * @since 1.1.0
  */
 
 namespace bf\wpPedia;
@@ -144,7 +144,21 @@ class options {
 				'type' 							=> 'select',
 				'options'						=> $this->dropdown_pages(true),
 				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'settings_page' 		=> 'wppedia_settings_general',
+				'desc'							=> function () {
+					if (false !== get_option('wppedia_frontpage') && get_post_field('post_name', get_post(get_option('wppedia_frontpage'))) !== get_option('wppedia_permalink_base_setting')) {
+						$message = '<span style="color:#f00">';
+						$message .= sprintf(
+							_x('Attention! Your permalink base ("%s") does not match the slug of your glossary frontpage ("%s")', 'options', 'wppedia'),
+							get_option('wppedia_permalink_base_setting'),
+							get_post_field('post_name', get_post(get_option('wppedia_frontpage')))
+						);
+						$message .= '</span>';
+
+						return $message;
+					}
+					return false;
+				}
 			],
 			// Section title: Archive settings
 			[
@@ -520,7 +534,15 @@ class options {
 	 * 
 	 * @since 1.1.0
 	 */
-	public function display_field_description(string $desc) {
+	public function display_field_description($desc) {
+		if (is_callable($desc)) {
+			$desc = call_user_func($desc);
+		}
+
+		if (!is_string($desc)) {
+			return;
+		}
+
 		echo '<div class="wppedia-option-description">';
 		echo $desc;
 		echo '</div>';
@@ -531,7 +553,7 @@ class options {
 	 * 
 	 * @param bool $disable
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function restrict_pro($field) {
 		if (isset($field['class']) && false !== strpos($field['class'], self::$pro_feature_className)) {
@@ -719,7 +741,7 @@ class options {
 	 * 
 	 * @uses add_settings_section()
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	function wppedia_permalink_settings_save() {
 
@@ -744,6 +766,11 @@ class options {
 
 	}
 
+	/**
+	 * Sanitize permalink base option
+	 * 
+	 * @since 1.0.0
+	 */
 	function wppedia_permalink_part_sanitize( $input ) {
 		// Add leading slash to prevent `esc_url_raw` adding a protocol
 		$input = '/' . $input;
