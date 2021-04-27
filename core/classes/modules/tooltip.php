@@ -25,6 +25,11 @@ class tooltip {
 
 	}
 
+	/**
+	 * Generate WPPedia Tooltip HTML
+	 * 
+	 * @since 1.0.0
+	 */
 	function __generate_tooltip() {
 
 		// The Post ID delivered through the AJAX request
