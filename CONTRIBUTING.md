@@ -6,7 +6,7 @@ Looking to contribute something to WPPedia? **Here's how!**
 ## Reporting issues
 
 We only accept issues that are bug reports or feature requests. Bugs must be
-isolated and reproducible problems that can be fixed within the Hammer.js.
+isolated and reproducible problems that can be fixed within WPPedia.
 Please read the following guidelines before opening any issue.
 
 1. [**Read the documentation**](#) *available soon*
