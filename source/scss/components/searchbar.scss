@@ -5,40 +5,22 @@
 
 #wppedia_searchform {
 	position: relative;
-}
-
-/*
-#wppedia_searchform {
-	position: relative;
-	width: 100%;
-	max-width: 600px;
-	margin: 0 auto 2rem;
 	display: flex;
-	background: #FFF;
+	margin-bottom: 1.5rem;
+	.search-field, .search-submit {
+		margin: 0;
+	}
 	.search-field {
-		border: solid rgba(0, 0, 0, 0.54);
-		border-width: 1px 0 1px 1px;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
 		width: 100%;
-		padding: .75rem .6rem;
-		&:focus {
-			outline: 2px solid $main-color;
-		}
 	}
 	.search-submit {
-		padding: 0 2rem;
-		background: $main-color;
-		text-indent: -9999px;
-		background-image: url('../../../assets/img/search.svg');
-		background-size: 1.5rem;
-		background-repeat: no-repeat;
-		background-position: center;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		flex: 0 0 auto;
 	}
 }
-
-.wppedia-search-field-wrapper {
-	flex: 1;
-}
-*/
 
 #wppedia_results_rendered {
   position: absolute;
