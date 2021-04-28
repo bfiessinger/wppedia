@@ -123,3 +123,26 @@
 	position: sticky;
 	top: 120px;
 }
+
+.wppedia-spacer {
+	display: block;
+	height: 1rem;
+	&-1 {
+		height: .25rem;
+	}
+	&-2 {
+		height: .5rem;
+	}
+	&-3 {
+		height: .75rem;
+	}
+	&-4 {
+		height: 1rem;
+	}
+	&-5 {
+		height: 1.25rem;
+	}
+	&-6 {
+		height: 1.5rem;
+	}
+}
