@@ -211,7 +211,7 @@ class crosslinks {
 
 					$post_title_link = get_permalink( $post->ID );
 
-					return '<a href="' . $post_title_link . '" title="' . esc_html( $match[0] ) . '" class="wppedia-crosslink" data-post_id="' . $post->ID . '">' . $match[0] . '</a>';
+					return '<a href="' . $post_title_link . '" title="' . esc_html( $match[0] ) . '" tabindex="0" class="wppedia-crosslink" data-post_id="' . $post->ID . '">' . $match[0] . '</a>';
 
 				}
 
