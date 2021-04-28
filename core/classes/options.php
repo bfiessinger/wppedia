@@ -50,6 +50,9 @@ class options {
 		// Set flush rewrite rules flag for some options
 		add_action( 'update_option_wppedia_frontpage', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
 		
+		// Admin notices
+		add_action( 'admin_notices', [ $this, 'frontpage_slug_not_matching_permalink_settings_notice' ] );
+
 	}
 	
 	function settings_page() {
@@ -145,22 +148,6 @@ class options {
 				'options'						=> $this->dropdown_pages(true),
 				'settings_section' 	=> 'wppedia_settings_page',
 				'settings_page' 		=> 'wppedia_settings_general',
-				'desc'							=> function () {
-					if (false !== get_option('wppedia_frontpage') && get_post_field('post_name', get_post(get_option('wppedia_frontpage'))) !== get_option('wppedia_permalink_base_setting')) {
-						$message = '<span style="color:#f00">';
-						$message .= sprintf(
-							_x('Attention! Your permalink base %s does not match the slug of your glossary frontpage %s', 'options', 'wppedia'),
-							'<code>' . get_option('wppedia_permalink_base_setting') . '</code>',
-							'<code>' . get_post_field('post_name', get_post(get_option('wppedia_frontpage'))) . '</code>'
-						);
-						$message .= '</span>';
-						$message .= '<span class="wppedia-spacer wppedia-spacer-4"></span>';
-						$message .= '<a class="button" href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Manage permalinks') . '</a>';
-
-						return $message;
-					}
-					return false;
-				}
 			],
 			// Section title: Archive settings
 			[
@@ -795,6 +782,25 @@ class options {
 		$input = substr($input, 1);
 
 		return $input;
+	}
+
+	function frontpage_slug_not_matching_permalink_settings_notice() {
+		if (false !== get_option('wppedia_frontpage') && get_post_field('post_name', get_post(get_option('wppedia_frontpage'))) !== get_option('wppedia_permalink_base_setting')) {
+			echo '<div class="wppedia-admin-message notice notice-warning is-dismissible">';
+			echo '<p>';
+			printf(
+				_x('Attention! Your permalink base %s does not match the slug of your glossary frontpage %s', 'options', 'wppedia'),
+				'<code>' . get_option('wppedia_permalink_base_setting') . '</code>',
+				'<code>' . get_post_field('post_name', get_post(get_option('wppedia_frontpage'))) . '</code>'
+			);
+			echo '</p>';
+			echo '<p>';
+			echo '<a class="button" href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Manage permalinks') . '</a>';
+			echo '</p>';
+			echo '</div>';
+		}
+
+		return false;
 	}
 
 }
