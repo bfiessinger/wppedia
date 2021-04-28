@@ -149,11 +149,13 @@ class options {
 					if (false !== get_option('wppedia_frontpage') && get_post_field('post_name', get_post(get_option('wppedia_frontpage'))) !== get_option('wppedia_permalink_base_setting')) {
 						$message = '<span style="color:#f00">';
 						$message .= sprintf(
-							_x('Attention! Your permalink base ("%s") does not match the slug of your glossary frontpage ("%s")', 'options', 'wppedia'),
-							get_option('wppedia_permalink_base_setting'),
-							get_post_field('post_name', get_post(get_option('wppedia_frontpage')))
+							_x('Attention! Your permalink base %s does not match the slug of your glossary frontpage %s', 'options', 'wppedia'),
+							'<code>' . get_option('wppedia_permalink_base_setting') . '</code>',
+							'<code>' . get_post_field('post_name', get_post(get_option('wppedia_frontpage'))) . '</code>'
 						);
 						$message .= '</span>';
+						$message .= '<span class="wppedia-spacer wppedia-spacer-4"></span>';
+						$message .= '<a class="button" href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Manage permalinks') . '</a>';
 
 						return $message;
 					}
