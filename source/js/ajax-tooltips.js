@@ -12,6 +12,7 @@ import { fetch_response__text } from './utils';
 const requested = [];
 
 tippy(document.querySelectorAll('.wppedia-crosslink'), {
+	appendTo: document.body,
 	content: '<div class="wppedia-tooltip-loading">Loading&hellip;</div>',
 	theme: 'light',
 	maxWidth: 320,
