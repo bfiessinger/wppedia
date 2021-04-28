@@ -26,7 +26,7 @@ class crosslinks {
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;
 
-		$this->post_types = apply_filters('wppedia_crosslink_posttypes', [wppedia_get_post_type()]);
+		$this->post_types = get_option('wppedia_crosslinks_posttypes', [wppedia_get_post_type()]);
 
 		// Set the main post type on the first place in the posttype array
 		if ( in_array( wppedia_get_post_type(), $this->post_types ) ) {
