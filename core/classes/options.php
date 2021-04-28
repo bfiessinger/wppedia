@@ -583,8 +583,20 @@ class options {
 		wp_enqueue_script("jquery-ui-tabs");
 		wp_add_inline_script( 
 			'jquery-ui-tabs',
-			'jQuery("document").ready(function() {
-				jQuery( ".wppedia-settings-tabs" ).tabs();
+			'jQuery("document").ready(function($) {
+				var wppedia_tabs = $(".wppedia-settings-tabs");
+				var wppedia_tabs_anchor = wppedia_tabs.find(".wppedia-settings-tabs-wrapper > li > a");
+
+				wppedia_tabs.tabs();
+
+				wppedia_tabs_anchor.on("click", function(e) {
+					e.preventDefault();
+					if(history.pushState) {
+						history.pushState(null, null, this.href);
+					} else {
+						location.hash = this.href;
+					}
+				});
 			});'
 		);
 
