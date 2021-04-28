@@ -53,10 +53,17 @@ They might also left completely untouched.
 
 Another way to restructure WPPedia is to use it's actions and filters to modify content. More about this will be available soon in the Documentation.
 
-### How can your website benefit from a glossary?
+### What is a glossary?
+A glossary, often called encyclopedia or wiki is an industry-specific word list with the corresponding explanations. 
+It's very important that the terms defined are easy to understand and comprehensible.
+
+#### How can your website benefit from a glossary?
 Your website is likely filled with blog posts, shop products, case studies and more. Everything you need to get conversions, leads, etc.
-Having a glossary on the other hand can help you getting more website visitors which then may convert into customers. 
-Providing educational and informational quality content you can significantly improve your website’s SEO and ranking on search engines like Google, Bing, etc.
+Providing a glossary on your website on the other hand is an ideal way to pass expert knowledge about a specific topic.  
+It is a win-win situation for everyone involved: The user finds everything in one place and does not have to pull information "externally", you, the website owner, keep your visitors on your page. 
+These visitors are then more likely to convert into customers.
+
+However, by providing educational and informational quality content you can significantly improve your website’s SEO and ranking on search engines like Google, Bing, etc.
 
 ### Free Features
 * Alphabetical glossary index / archive
