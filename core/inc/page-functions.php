@@ -74,7 +74,7 @@ function is_wppedia_search() {
  * @since 1.1.0
  */
 function is_wppedia_archive() {
-	return is_post_type_archive(wppedia_get_post_type());
+	return (is_post_type_archive(wppedia_get_post_type()) || (is_tax() && get_post_type() === wppedia_get_post_type()));
 }
 
 /**
