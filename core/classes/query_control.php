@@ -113,12 +113,10 @@ class query_control {
 	 * @since 1.0.0
 	 */
 	function default_posts_per_page( $query ) {
-
-		if ( ! is_admin() && $query->is_main_query() && $query->is_archive() )
+		if (!is_admin() && $query->is_main_query() && $query->is_archive() && ($query->get('post_type') === wppedia_get_post_type() || $query->get('wppedia_initial_letter') !== ''))
 			$query->set( 'posts_per_page', get_option('wppedia_posts_per_page', 25) );
 
 		return $query;
-
 	}
 
 }
