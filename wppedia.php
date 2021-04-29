@@ -218,14 +218,16 @@ register_activation_hook( __FILE__, [ 'bf\\wpPedia\\activation', 'activate' ] );
  * Flush rewrite rules if the previously added flag exists,
  * and then remove the flag.
  */
-add_action( 'init', function() {
+add_action('init', function() {
 
 	if ( get_option( 'wppedia_flush_rewrite_rules_flag' ) ) {
 		flush_rewrite_rules();
 		delete_option( 'wppedia_flush_rewrite_rules_flag' );
 	}
 
-}, 20 );
+}, 20);
+
+new bf\wpPedia\WPPedia_Upgrade();
 
 /**
  * The code that runs during plugin deactivation.

@@ -99,6 +99,37 @@ class options {
 		</div>
 	<?php }
 
+	static function get_option_defaults() {
+		return [
+			// Pages
+			'wppedia_front_page_id' => false,
+			// Crosslinking
+			'wppedia_feature_crosslinks' => true,
+			'wppedia_crosslinks_prefer_single_words' => false,
+			'wppedia_crosslinks_posttypes' => [
+				\wppedia_get_post_type()
+			],
+			// Permalinks
+			'wppedia_permalink_base_setting' => 'glossary',
+			'wppedia_permalink_use_initial_character' => true,
+			// Layout
+			'wppedia_singular_use_templates' => true,
+			'wppedia_archive_use_templates' => true,
+			'wppedia_archive_show_navigation' => true,
+			'wppedia_singular_show_navigation' => false,
+			'wppedia_archive_show_searchbar' => true,
+			'wppedia_singular_show_searchbar' => false,
+			// Query
+			'wppedia_posts_per_page' => 25
+		];
+	}
+
+	static function get_deprecated_options() {
+		return [
+			'wppedia_frontpage' => 'wppedia_front_page_id'
+		];
+	}
+
 	function settings_init() {
 
 		/**
