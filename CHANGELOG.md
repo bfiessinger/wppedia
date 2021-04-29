@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+### Bug fixes
+- fixed posts per page was unable to change on glossary archives
+- fixed orderby was set wrong in some situations
+
 ## 1.1.0
 ### New Features
 - allow up to 3 seperate alternative post terms (in addition to the post's title) that can be used for crosslinking and searching

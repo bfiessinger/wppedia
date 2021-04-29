@@ -1,7 +1,7 @@
 === WPPedia ===
 Contributors: bastianfiessinger
 Tested up to: 5.7.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Tags: glossary, encyclopedia, wiki, vocabulary, dictionary, tooltip, lexicon, clavis
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -122,6 +122,11 @@ or
 3. Go and manage your glossary...
 
 == Changelog ==
+
+= 1.1.1 =
+### Bug fixes
+- fixed posts per page was unable to change on glossary archives
+- fixed orderby was set wrong in some situations
 
 = 1.1.0 =
 ### New Features
