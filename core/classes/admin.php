@@ -3,7 +3,7 @@
 /**
  * Admin View
  * 
- * @since 1.0.0
+ * @since 1.1.0
  */
 
 namespace bf\wpPedia;
@@ -189,7 +189,7 @@ class admin {
 	 * Add plugin action links on the plugins
 	 * screen
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	function plugin_action_links(array $actions) {
 		$actions[] = '<a href="'. esc_url(get_admin_url(null, 'edit.php?post_type=' . wppedia_get_post_type())) .'">' . __('Manage glossary', 'wppedia') . '</a>';

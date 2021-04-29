@@ -1,7 +1,7 @@
 === WPPedia ===
 Contributors: bastianfiessinger
 Tested up to: 5.7.1
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 Tags: glossary, encyclopedia, wiki, vocabulary, dictionary, tooltip, lexicon, clavis
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -59,6 +59,7 @@ It's very important that the terms defined are easy to understand and comprehens
 
 #### How can your website benefit from a glossary?
 Your website is likely filled with blog posts, shop products, case studies and more. Everything you need to get conversions, leads, etc.
+
 Providing a glossary on your website on the other hand is an ideal way to pass expert knowledge about a specific topic.  
 It is a win-win situation for everyone involved: The user finds everything in one place and does not have to pull information "externally", you, the website owner, keep your visitors on your page. 
 These visitors are then more likely to convert into customers.
@@ -85,11 +86,27 @@ However, by providing educational and informational quality content you can sign
 * Allow crosslinking to other post types (not just glossary terms)
 * **more coming soon**
 
-#### Support
+### Support
 We offer dedicated support for all buyers of the **PRO** version.
 If you have any questions, suggestions or whatever bothers you we will try to assist you as quick as possible.
 
 Support requests for the free version will be treated with less priority. We ask for your understanding.
+
+== Frequently Asked Questions ==
+
+= Will WPPedia work with my theme? =
+
+most likely, yes. However we cannot guarantee this for every theme out there (there are so many).
+
+If you encounter any problems with WPPedia and your theme do not hesitate and contact us!
+
+= Can I setup my glossary with Gutenberg? =
+
+Of course you can! In fact, WPPedia works great in addition with Gutenberg.
+
+= How do I get support? =
+
+If you have trouble with the WPPedia WordPress plugin, you can get help on the support forums here at [wordpress.org](https://wordpress.org/support/plugin/wppedia/) or on [GitHub](https://github.com/bfiessinger/wppedia/).
 
 == Installation ==
 
@@ -106,5 +123,35 @@ or
 
 == Changelog ==
 
-## 1.0.0
+= 1.1.0 =
+### New Features
+- allow up to 3 seperate alternative post terms (in addition to the post's title) that can be used for crosslinking and searching
+- added plugin version upgrade mechanism for deprecations
+
+### Enhancements
+- added a plugin action link to the edit screen of WPPedia
+- added a plugin action link to the settings screen of WPPedia
+- added a helper message to notify users if their glossary frontpage slug does not match the glossaries permalink base setting
+- enhanced accessability for tooltips
+- enabled hash navigation for options page tabs
+- enhanced default glossary styling
+- restructured options pages
+
+### Bug fixes
+- fixed a styling issue with disabled switch buttons in wp-admin
+- fixed a bug where crosslinks could not be created case insensitive
+- fixed a bug where crosslinks could not be created at the start of the content
+- fixed a bug where crosslinks could not be created inside HTML tags
+- fixed a bug where conditional page functions would give wrong results in some situations
+
+### Code Quality
+- added some missing comments
+- applied more consistency in usage of internal methods
+
+### Various
+- change default primary color
+
+= 1.0.0 =
 - Initial Realease
+
+== Developer Notes ==

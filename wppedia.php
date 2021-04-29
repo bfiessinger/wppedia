@@ -3,7 +3,7 @@
 /**
  * WPPedia - The most advanced Glossary solution for WordPress! 
  * 
- * @since				1.0.0
+ * @since				1.1.0
  * 
  * @wordpress-plugin
  * 
@@ -11,7 +11,7 @@
  * Description: The most advanced Glossary solution for WordPress!
  * Author: 			Bastian Fießinger
  * AuthorURI: 	https://github.com/bfiessinger/
- * Version: 		1.0.0
+ * Version: 		1.1.0
  * Text Domain: wppedia
  */
 
@@ -65,7 +65,7 @@ class WPPedia {
 	 */
 	private function define_constants() {
 
-		wppedia_maybe_define_constant('wpPediaPluginVersion', '1.0.0');
+		wppedia_maybe_define_constant('wpPediaPluginVersion', '1.1.0');
 
 		// Path Constants
 		wppedia_maybe_define_constant('wpPediaPluginDir', plugin_dir_path(__FILE__));

@@ -116,7 +116,7 @@ class query_control {
 	 */
 	function default_posts_per_page( $query ) {
 
-		if ( $query->is_post_type_archive( wppedia_get_post_type() ) && ! is_admin() && $query->is_main_query() )
+		if ( ! is_admin() && $query->is_main_query() && $query->is_archive() )
 			$query->set( 'posts_per_page', get_option('wppedia_posts_per_page', 25) );
 
 		return $query;
