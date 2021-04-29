@@ -51,99 +51,48 @@ function is_wppedia_page( $query = false ) {
 	if ( is_404() || ! $query->is_main_query() )
 		return false;
 	
-	$post_type = wppedia_get_post_type();
-	$is_wppedia_post_type = false;
-	
-	global $wp;
-	
-	if ( 
-		/**
-		 * Check for singular and archive pages where there is only
-		 * one given post type
-		 */
-		(
-			! $query->is_search() &&
-			get_post_type() == $post_type
-		) ||
-		/**
-		 * Check for searches in the archive
-		 */
-		(
-			$query->is_post_type_archive() &&
-			rtrim( home_url( $wp->request ), '/' ) == rtrim( get_post_type_archive_link( $post_type ), '/' )
-		) ||
-		/**
-		 * Check for requests to the custom selected static WPPedia front page
-		 */
-		get_the_ID() === intval(wppedia_get_page_id('front'))
-	)
-		$is_wppedia_post_type = $post_type;
-		
-	return $is_wppedia_post_type;
+	if (is_wppedia_frontpage() || is_wppedia_archive() || is_wppedia_singular() || is_wppedia_search()) {
+		return true;
+	}
+
+	return false;
 			
 }
 
 /**
- * Determine if the current view is a wiki search
+ * Determine if the current view is a glossary search
  * 
- * @uses is_wppedia_page
- * 
- * @since 1.0.0
+ * @since 1.1.0
  */
-function is_wppedia_search( $query = false ) {
-	
-	if ( ! $query ) {
-		global $wp_query;
-		$query = $wp_query;
-	}
-	
-	if ( $query->is_search() && is_wppedia_page( $query ) )
-		return true;
-	
-	return false;
-	
-}
-
-function is_wppedia_archive( $query = false ) {
-
-	if ( ! $query ) {
-		global $wp_query;
-		$query = $wp_query;
-	}
-
-	if ( $query->is_archive() && get_post_type() == wppedia_get_post_type() )
-		return true;
-
-	return false;
-
-}
-
-function is_wppedia_singular( $query = false ) {
-
-	if ( ! $query ) {
-		global $wp_query;
-		$query = $wp_query;
-	}
-
-	if ( $query->is_singular() && get_post_type() == wppedia_get_post_type() )
-		return true;
-
-	return false;
-
+function is_wppedia_search() {
+	return (is_wppedia_archive() && is_search());
 }
 
 /**
- * Determine if the currently viewed page is the wiki homepage
+ * Determine if the current view is a glossary archive
+ * 
+ * @since 1.1.0
+ */
+function is_wppedia_archive() {
+	return is_post_type_archive(wppedia_get_post_type());
+}
+
+/**
+ * Determine if the current view is a glossary term
+ * 
+ * @since 1.1.0
+ */
+function is_wppedia_singular() {
+	return is_singular([wppedia_get_post_type()]);
+}
+
+/**
+ * Determine if the currently viewed page is the glossary homepage
  * 
  * @since 1.0.0
  */
 function is_wppedia_frontpage() {
-	
-	if ( is_post_type_archive( 'wppedia_term' ) || get_the_ID() === intval(wppedia_get_page_id('front')) )
-		return true;
-	
-	return false;
-	
+	return is_page(wppedia_get_page_id('front'));	
 }
 
 /**
