@@ -93,8 +93,7 @@ class query_control {
    * @since 1.0.0
    */
   function default_wiki_entries_orderby( $query ) {
-
-    if( ! $query->is_main_query() || ! is_wppedia_page() )
+    if(!$query->is_main_query() || $query->get('post_type') !== wppedia_get_post_type())
       return $query;
   
     // Orderby should not be manually modified
@@ -106,7 +105,6 @@ class query_control {
 		}
 		
 		return $query;
-
 	}
 
 	/**
