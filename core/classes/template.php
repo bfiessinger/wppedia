@@ -279,7 +279,7 @@ class template {
 		if ( 'home' == $term_slug ) {
 
 			$link_name = __( 'home', 'wppedia' );
-			$link_url = ( wppedia_has_static_frontpage() ) ? get_permalink( wppedia_has_static_frontpage() ) : get_post_type_archive_link( 'wppedia_term' );
+			$link_url = ( wppedia_has_static_frontpage() ) ? get_permalink(wppedia_get_page_id('front')) : get_post_type_archive_link( 'wppedia_term' );
 			$link_title = __( 'home', 'wppedia' );
 			$link_classes[] = 'wppedia_navigation_home';
 

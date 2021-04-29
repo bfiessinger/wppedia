@@ -142,7 +142,7 @@ class options {
 
 			// WPPedia frontpage
 			[
-				'id'								=> 'wppedia_frontpage',
+				'id'								=> 'wppedia_front_page_id',
 				'label' 						=> _x('Glossary frontpage', 'options', 'wppedia'),
 				'type' 							=> 'select',
 				'options'						=> $this->dropdown_pages(true),

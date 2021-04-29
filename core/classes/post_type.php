@@ -134,7 +134,7 @@ class post_type {
       'rewrite' => $rewrite
 		];
 
-		if ( false == get_option('wppedia_frontpage',  false) ) {
+		if ( false == wppedia_get_page_id('front') ) {
 			$args['has_archive'] = ltrim( rtrim( $this->permalink_base, '/' ), '/' );
 		}
 			

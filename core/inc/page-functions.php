@@ -2,6 +2,12 @@
 
 defined( 'ABSPATH' ) || die();
 
+
+function wppedia_get_page_id(string $page) {
+	$page_id = get_option('wppedia_' . $page . '_page_id');
+	return ($page_id) ? absint($page_id) : false;
+}
+
 /**
  * Get WPPedia Frontpage URL
  * 
@@ -12,10 +18,10 @@ defined( 'ABSPATH' ) || die();
 function get_wppedia_url( array $query_args = [] ) {
 	
 	$archive_url;
-	if ( FALSE === wppedia_has_static_frontpage() )
+	if ( FALSE === wppedia_get_page_id('front') )
 		$archive_url = get_post_type_archive_link('wppedia_term');
 	else
-		$archive_url = get_permalink( wppedia_has_static_frontpage() );
+		$archive_url = get_permalink(wppedia_get_page_id('front'));
 	
 	if ( ! empty( $query_args ) )
 		$archive_url = add_query_arg( $query_args, $archive_url );
@@ -69,7 +75,7 @@ function is_wppedia_page( $query = false ) {
 		/**
 		 * Check for requests to the custom selected static WPPedia front page
 		 */
-		get_the_ID() === intval( wppedia_has_static_frontpage() )
+		get_the_ID() === intval(wppedia_get_page_id('front'))
 	)
 		$is_wppedia_post_type = $post_type;
 		
@@ -133,7 +139,7 @@ function is_wppedia_singular( $query = false ) {
  */
 function is_wppedia_frontpage() {
 	
-	if ( is_post_type_archive( 'wppedia_term' ) || get_the_ID() === intval( wppedia_has_static_frontpage() ) )
+	if ( is_post_type_archive( 'wppedia_term' ) || get_the_ID() === intval(wppedia_get_page_id('front')) )
 		return true;
 	
 	return false;
@@ -148,8 +154,8 @@ function is_wppedia_frontpage() {
  * @return boolean|int Returns false if a cpt archive is used or the post ID of the static page
  */
 function wppedia_has_static_frontpage() {
-	if (false == get_option('wppedia_frontpage', false))
+	if (false == wppedia_get_page_id('front'))
 		return false;
 		
-	return get_option('wppedia_frontpage', false);
+	return true;
 }

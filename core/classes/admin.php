@@ -44,7 +44,7 @@ class admin {
 	 */
 	function wppedia_archive_post_state( $post_states, $post ) {
 
-		if( $post->ID == get_option('wppedia_frontpage', false) ) {
+		if( $post->ID == wppedia_get_page_id('front') ) {
 			$post_states[] = __( 'Glossary page', 'wppedia' );
 		}
 	
