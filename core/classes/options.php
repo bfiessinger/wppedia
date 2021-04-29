@@ -816,13 +816,13 @@ class options {
 	}
 
 	function frontpage_slug_not_matching_permalink_settings_notice() {
-		if (false !== get_option('wppedia_frontpage') && get_post_field('post_name', get_post(get_option('wppedia_frontpage'))) !== get_option('wppedia_permalink_base_setting')) {
+		if (false !== wppedia_get_page_id('front') && get_post_field('post_name', get_post(wppedia_get_page_id('front'))) !== get_option('wppedia_permalink_base_setting')) {
 			echo '<div class="wppedia-admin-message notice notice-warning is-dismissible">';
 			echo '<p>';
 			printf(
 				_x('Attention! Your permalink base %s does not match the slug of your glossary frontpage %s', 'options', 'wppedia'),
 				'<code>' . get_option('wppedia_permalink_base_setting') . '</code>',
-				'<code>' . get_post_field('post_name', get_post(get_option('wppedia_frontpage'))) . '</code>'
+				'<code>' . get_post_field('post_name', get_post(wppedia_get_page_id('front'))) . '</code>'
 			);
 			echo '</p>';
 			echo '<p>';
