@@ -1,5 +1,5 @@
 === WPPedia ===
-Contributors: bastianfiessinger
+Contributors: steinrein, bastianfiessinger
 Tested up to: 5.7.1
 Stable tag: 1.1.1
 Tags: glossary, encyclopedia, wiki, vocabulary, dictionary, tooltip, lexicon, clavis
