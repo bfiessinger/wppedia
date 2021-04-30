@@ -6,11 +6,11 @@ Tags: glossary, encyclopedia, wiki, vocabulary, dictionary, tooltip, lexicon, cl
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-The ultimate glossary plugin that will fit all your needs. Create your own encyclopedia with superpowers directly from WordPress!
+The ultimate glossary plugin that will fit all your needs. Create your own encyclopedia with superpowers directly from WordPress! 📖
 
 == Description ==
 
-# The ultimate Glossary plugin for WordPress
+## The ultimate Glossary plugin for WordPress 📖
 
 With WPPedia you can build a Glossary / Encyclopedia on your WordPress with ease. Just install, setup some quality posts and you are ready to go.
 Having a glossary on your site can significantly increase your User Experience, SEO and Google Rankings.
