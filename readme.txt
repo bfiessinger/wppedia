@@ -6,7 +6,7 @@ Tags: glossary, encyclopedia, wiki, vocabulary, dictionary, tooltip, lexicon, cl
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-WPPedia is the last glossary plugin you will ever need. Create your own encyclopedia with superpowers directly from WordPress!
+The ultimate glossary plugin that will fit all your needs. Create your own encyclopedia with superpowers directly from WordPress!
 
 == Description ==
 
