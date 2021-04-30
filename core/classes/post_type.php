@@ -17,7 +17,7 @@ class post_type {
 	 * Public variables
 	 */
 	public $post_type = 'wppedia_term';
-	public $post_limit = 200;
+	public $post_limit = 500;
 
 	public $taxonomy = 'wppedia_initial_letter';
 
