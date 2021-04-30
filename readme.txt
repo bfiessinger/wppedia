@@ -158,5 +158,3 @@ or
 
 = 1.0.0 =
 - Initial Realease
-
-== Developer Notes ==
