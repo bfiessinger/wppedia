@@ -1,4 +1,4 @@
-=== WPPedia - Glossary / Encyclopedia / Lexicon ===
+=== Glossary by WPPEDIA ===
 Contributors: steinrein, bastianfiessinger, wppedia
 Tested up to: 5.7.1
 Stable tag: 1.1.1
