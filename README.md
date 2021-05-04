@@ -1,8 +1,8 @@
+[![Version](https://img.shields.io/wordpress/plugin/v/wppedia?logo=wordpress&style=for-the-badge)](https://wordpress.org/plugins/wppedia/)
+
 <img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/wppedia-logo.svg?sanitize=true" alt="WPPedia" width="150">
 
 # WPPedia - The WordPress Wiki Solution
-
-![Version](https://img.shields.io/wordpress/plugin/v/wppedia?logo=wordpress&style=for-the-badge)
 
 ## Description
 With WPPedia you can build a Glossary / Encyclopedia on your WordPress with ease. Just install, setup some quality posts and you are ready to go.
