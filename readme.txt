@@ -123,6 +123,13 @@ or
 
 == Changelog ==
 
+= 1.1.2 =
+### Bug fixes
+- fixed a bug where WPPedia Templates were used on other post types
+
+### Enhancements
+- **We are glad to announce that WPPedia now allows 500 glossary articles in the free plan! 🎉🎉🎉**
+
 = 1.1.1 =
 ### Bug fixes
 - fixed posts per page was unable to change on glossary archives
