@@ -9,7 +9,7 @@
  * Description: The most advanced Glossary solution for WordPress!
  * Author: 			Bastian Fießinger
  * AuthorURI: 	https://github.com/bfiessinger/
- * Version: 		1.1.1
+ * Version: 		1.1.2
  * Text Domain: wppedia
  */
 

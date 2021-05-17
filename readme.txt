@@ -1,7 +1,7 @@
 === Glossary by WPPEDIA ===
 Contributors: steinrein, bastianfiessinger, wppedia
 Tested up to: 5.7.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Tags: glossary, encyclopedia, wiki, vocabulary, dictionary, tooltip, lexicon, clavis
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html

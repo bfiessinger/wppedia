@@ -3,7 +3,7 @@
 /**
  * wpPedia Post Type related
  * 
- * @since 1.0.0
+ * @since 1.1.2
  */
 
 namespace bf\wpPedia;
