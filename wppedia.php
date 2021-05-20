@@ -165,10 +165,17 @@ class WPPedia {
 	}
 
 	/**
-	 * Get default path for templates in themes
+	 * Get default path for templates in themes.
+	 * By default the template path is yourtheme/wppedia
+	 * 
+	 * If you want to override the default behaviour in your theme use
+	 * the filter "wppedia_template_path" and return your preferred folder name
+	 * in the callback.
+	 * 
+	 * @since 1.1.3
 	 */
 	public function template_path() {
-    return apply_filters( 'wppedia_template_path', 'wppedia/' );
+    return trailingslashit(apply_filters( 'wppedia_template_path', 'wppedia' ));
   }
 
 	/**
