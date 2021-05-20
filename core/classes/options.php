@@ -99,8 +99,17 @@ class options {
 		</div>
 	<?php }
 
-	static function get_option_defaults() {
-		return [
+	/**
+	 * Return WPPedia default option as an array
+	 * If $option parameter is set return the option value
+	 * associated with the option name.
+	 * 
+	 * @param string $option - option name
+	 * 
+	 * @since 1.1.3
+	 */
+	static function get_option_defaults(string $option = null) {
+		$defaults = [
 			// Pages
 			'wppedia_front_page_id' => false,
 			// Crosslinking
@@ -122,8 +131,19 @@ class options {
 			// Query
 			'wppedia_posts_per_page' => 25
 		];
+
+		if (!$option) {
+			return $defaults;
+		}
+		
+		return (isset($defaults[$option])) ? $defaults[$option] : null;
 	}
 
+	/**
+	 * Return deprecated options and their new option name
+	 * 
+	 * @since 1.1.0
+	 */
 	static function get_deprecated_options() {
 		return [
 			'wppedia_frontpage' => 'wppedia_front_page_id'
