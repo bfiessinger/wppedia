@@ -12,6 +12,7 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
 const jsExternals = {
 	jquery: 'jQuery',
 	'@yaireo/tagify': 'Tagify',
+	'tippy.js': 'tippy',
 	// WordPress Packages.
 	'@wordpress/hooks': 'wp.hooks',
 }
@@ -157,6 +158,11 @@ module.exports = [
 						from: 'tagify.(min.js|css)',
 						to: path.resolve(__dirname, 'dist/vendor'),
 						context: path.resolve(__dirname, 'node_modules/@yaireo/tagify/dist')
+					},
+					{
+						from: 'tippy(-bundle.umd.js|.css)',
+						to: path.resolve(__dirname, 'dist/vendor'),
+						context: path.resolve(__dirname, 'node_modules/tippy.js/dist')
 					}
 				]
 			})
