@@ -28,6 +28,10 @@ const jsEntryPoints = {
 const cssEntryPoints = {
 	// Frontend
 	style: './source/scss/_main.scss',
+	// Frontend for inline usage
+	'tooltip-theme-light-border': './source/scss/components/tooltip/tippy-theme-light-border.scss',
+	'tooltip-theme-material': './source/scss/components/tooltip/tippy-theme-material.scss',
+	'tooltip-theme-translucent': './source/scss/components/tooltip/tippy-theme-translucent.scss',
 	// Backend
 	admin: './source/scss/admin/_main.scss'
 };

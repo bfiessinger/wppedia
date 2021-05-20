@@ -14,7 +14,7 @@ const requested = [];
 tippy(document.querySelectorAll('.wppedia-crosslink'), {
 	appendTo: document.body,
 	content: '<div class="wppedia-tooltip-loading">Loading&hellip;</div>',
-	theme: 'light',
+	theme: wppedia_tooltip_props.tooltip_theme,
 	maxWidth: 320,
 	animation: 'shift-toward',
 	interactive: true,

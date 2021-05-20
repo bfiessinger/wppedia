@@ -118,6 +118,9 @@ class options {
 			'wppedia_crosslinks_posttypes' => [
 				\wppedia_get_post_type()
 			],
+			// Tooltips
+			'wppedia_feature_tooltips' => true,
+			'wppedia_tooltips_style' => 'light',
 			// Permalinks
 			'wppedia_permalink_base_setting' => 'glossary',
 			'wppedia_permalink_use_initial_character' => true,
@@ -150,6 +153,11 @@ class options {
 		];
 	}
 
+	/**
+	 * Initialize settings sections and fields
+	 * 
+	 * @since 1.0.0
+	 */
 	function settings_init() {
 
 		/**
@@ -168,6 +176,14 @@ class options {
 		add_settings_section(
 			'wppedia_settings_crosslinks',
 			_x('Crosslinking', 'options', 'wppedia'),
+			[ $this, 'settings_section_callback' ],
+			'wppedia_settings_general'
+		);
+
+		// Settings section: Tooltips
+		add_settings_section(
+			'wppedia_settings_tooltips',
+			_x('Tooltips', 'options', 'wppedia'),
 			[ $this, 'settings_section_callback' ],
 			'wppedia_settings_general'
 		);
@@ -333,6 +349,36 @@ class options {
 				'settings_section' 	=> 'wppedia_settings_crosslinks',
 				'settings_page' 		=> 'wppedia_settings_general',
 				'register_setting'	=> false
+			],
+
+			/**
+			 * Tooltip settings
+			 */
+
+			// Activate tooltip feature
+			[
+				'id'								=> 'wppedia_feature_tooltips',
+				'label' 						=> _x( 'Enable tooltip feature', 'options', 'wppedia' ),
+				'type' 							=> 'checkbox',
+				'class'							=> $switch_className,
+				'desc' 							=> _x( 'Enable / Disable the tooltip feature for WPPedia Crosslinks.', 'options', 'wppedia' ),
+				'settings_section' 	=> 'wppedia_settings_tooltips',
+				'settings_page' 		=> 'wppedia_settings_general'
+			],
+			// Select tooltip style
+			[
+				'id'								=> 'wppedia_tooltips_style',
+				'label' 						=> _x( 'Tooltip style', 'options', 'wppedia' ),
+				'type' 							=> 'select',
+				'options'						=> [
+					'light'					=> 'Light',
+					'light-border' 	=> 'Light with border',
+					'material'			=> 'Material',
+					'translucent'		=> 'Translucent'
+				],
+				'desc' 							=> _x( 'Select your preferred tooltip style.', 'options', 'wppedia' ),
+				'settings_section' 	=> 'wppedia_settings_tooltips',
+				'settings_page' 		=> 'wppedia_settings_general'
 			],
 
 			/**
