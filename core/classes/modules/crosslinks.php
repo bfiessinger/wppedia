@@ -178,7 +178,11 @@ class crosslinks {
 		}
 		$xpath = new \DOMXPath($dom);
 
-		$ignore_tags = [
+		/**
+		 * Default ignored HTML tags in which the parser should not search
+		 * for link phrases.
+		 */
+		$ignore_tags = apply_filters( 'wppedia_crosslink_ignored_tags', [
 			'a', 
 			'script', 
 			'style', 
@@ -192,7 +196,7 @@ class crosslinks {
 			'h5',
 			'h6',
 			'textarea'
-		];
+		] );
 
 		$query = '//text()';
 		foreach ( $ignore_tags as $tag ) {
