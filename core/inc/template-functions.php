@@ -32,6 +32,15 @@ function wppedia_locate_template(string $template_name, string $template_path = 
 	
 }
 
+/** 
+ * Get template part. 
+ * 
+ * WPPedia_TEMPLATE_DEBUG_MODE will prevent overrides in themes from taking priority. 
+ * 
+ * @access public 
+ * @param mixed $slug 
+ * @param string $name (default: '') 
+ */ 
 function wppedia_get_template_part( $slug, $name = '' ) { 
 
   $template = ''; 
