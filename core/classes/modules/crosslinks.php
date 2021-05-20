@@ -101,6 +101,7 @@ class crosslinks {
 
 			array_push($data, $post);
 
+			// Check alternative post terms and add them to the posts array as individual posts
 			$alternative_terms = wppedia_get_post_alternative_terms($post_id);
 			if (!empty($alternative_terms)) {
 				foreach($alternative_terms as $at) {
@@ -168,6 +169,12 @@ class crosslinks {
 
 	}
 
+	/**
+	 * Parse post content as XML and return a new version of the_content
+	 * with all crosslinks applied.
+	 * 
+	 * @since 1.1.3
+	 */
 	public function parse_content_xml( $content, $link_phrase, $post ) {
 
 		$dom = new \DOMDocument();
