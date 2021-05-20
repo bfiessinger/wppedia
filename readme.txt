@@ -24,7 +24,7 @@ WPPedia offers a good out of the box system for creating a glossary / encycloped
 ### What can this Glossary plugin do for you?
 
 #### 🅰️ Alphabetical Index / archive
-WPPedia creates glossary archives with post indexed by their initial character.
+WPPedia creates glossary archives with posts indexed by their initial character.
 
 #### ⛓️ Automated crosslinking between glossary articles
 Our Glossary plugin comes with a powerful automatic crosslinking solution that builds links to other Posts directly from your content. No need for time consuming manual internal linking. WPPedia captures all occurances of your post titles and alternative terms provided by you and replaces them with links to the matching article.
