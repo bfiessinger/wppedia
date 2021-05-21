@@ -180,6 +180,8 @@ class WPPedia {
 
 	/**
 	 * Get default plugin path
+	 * 
+	 * @since 1.0.0
 	 */
 	public function plugin_path() {
 		return (defined('wpPediaPluginDir')) ? wpPediaPluginDir : plugin_dir_path(__FILE__);
