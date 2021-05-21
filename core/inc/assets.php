@@ -27,7 +27,7 @@ function wppedia_enqueue_frontend_assets() {
 		wp_enqueue_script( 'wppedia_ajax_tooltips', wpPediaPluginUrl . 'dist/js/ajax_tooltip.bundle.js', [], null, true );
 		wp_localize_script( 'wppedia_ajax_tooltips', 'wppedia_tooltip_props', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'tooltip_theme' => get_option('wppedia_tooltips_theme', options::get_option_defaults('wppedia_tooltips_theme'))
+			'tooltip_theme' => get_option('wppedia_tooltips_style', options::get_option_defaults('wppedia_tooltips_style'))
 		) );
 
 	}
@@ -51,7 +51,7 @@ function wppedia_enqueue_frontend_assets() {
 	wppedia_add_inline_style('wppedia-content-width', '.wppedia .content-area{width:100%;max-width:' . $content_width . 'px;margin-left:auto;margin-right:auto;}');
 
 	// Alternative Tooltip Themes for inline usage
-	switch (get_option('wppedia_tooltips_theme')) {
+	switch (get_option('wppedia_tooltips_style')) {
 		case 'light-border':
 			wppedia_add_inline_style('tooltip-theme', wpPediaPluginDir . 'dist/css/tooltip-theme-light-border.min.css');
 			break;
