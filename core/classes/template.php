@@ -9,6 +9,7 @@
 namespace bf\wpPedia;
 
 use bf\wpPedia\post_type;
+use bf\wpPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) || die();
@@ -182,10 +183,10 @@ class template {
 		if ( ! $this->current_template_exists_in_theme() )
 			return $template;
 
-		if ( is_wppedia_archive() && false != get_option('wppedia_archive_use_templates', true) && false !== wppedia_locate_template( 'archive.php' ) ) {
+		if ( is_wppedia_archive() && false != get_option('wppedia_archive_use_templates', options::get_option_defaults('wppedia_archive_use_templates')) && false !== wppedia_locate_template( 'archive.php' ) ) {
 			// Load default Archive view
 			return wppedia_locate_template( 'archive.php' );
-		} elseif ( is_wppedia_singular() && false != get_option('wppedia_singular_use_templates', true) && false !== wppedia_locate_template( 'single.php' ) ) {
+		} elseif ( is_wppedia_singular() && false != get_option('wppedia_singular_use_templates', options::get_option_defaults('wppedia_singular_use_templates')) && false !== wppedia_locate_template( 'single.php' ) ) {
 			// Load default Single view
 			return wppedia_locate_template( 'single.php' );
 		}

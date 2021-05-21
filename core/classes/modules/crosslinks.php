@@ -11,6 +11,8 @@ namespace bf\wpPedia\modules;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
+use bf\wpPedia\options;
+
 class crosslinks {
 
 	/**
@@ -26,7 +28,7 @@ class crosslinks {
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;
 
-		$this->post_types = maybe_unserialize(get_option('wppedia_crosslinks_posttypes', [wppedia_get_post_type()]));
+		$this->post_types = maybe_unserialize(get_option('wppedia_crosslinks_posttypes', options::get_option_defaults('wppedia_crosslinks_posttypes')));
 
 		// Set the main post type on the first place in the posttype array
 		if ( in_array( wppedia_get_post_type(), $this->post_types ) ) {

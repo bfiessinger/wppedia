@@ -11,6 +11,8 @@ namespace bf\wpPedia;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
+use bf\wpPedia\options;
+
 class post_type {
 
 	/**
@@ -42,7 +44,7 @@ class post_type {
 
   protected function __construct() {
 
-		$this->permalink_base = get_option( 'wppedia_permalink_base', 'glossary' );
+		$this->permalink_base = get_option('wppedia_permalink_base', options::get_option_defaults('wppedia_permalink_base'));
 		if ( '' === $this->permalink_base ) {
 			$this->permalink_base = 'glossary';
 		}

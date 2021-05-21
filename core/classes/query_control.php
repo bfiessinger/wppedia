@@ -9,6 +9,7 @@
 namespace bf\wpPedia;
 
 use bf\wpPedia\post_type;
+use bf\wpPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -114,7 +115,7 @@ class query_control {
 	 */
 	function default_posts_per_page( $query ) {
 		if (!is_admin() && $query->is_main_query() && $query->is_archive() && ($query->get('post_type') === wppedia_get_post_type() || $query->get('wppedia_initial_letter') !== ''))
-			$query->set( 'posts_per_page', get_option('wppedia_posts_per_page', 25) );
+			$query->set( 'posts_per_page', get_option('wppedia_posts_per_page', options::get_option_defaults('wppedia_posts_per_page')) );
 
 		return $query;
 	}

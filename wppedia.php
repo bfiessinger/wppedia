@@ -147,8 +147,8 @@ class WPPedia {
 		 * 
 		 * @since 1.0.0
 		 */
-		$crosslinks_active = ( get_option('wppedia_feature_crosslinks', true) ) ? true : false;
-		$prefer_single_words = ( get_option('wppedia_crosslinks_prefer_single_words', false) ) ? true : false;
+		$crosslinks_active = ( get_option('wppedia_feature_crosslinks', options::get_option_defaults('wppedia_feature_crosslinks')) ) ? true : false;
+		$prefer_single_words = ( get_option('wppedia_crosslinks_prefer_single_words', options::get_option_defaults('wppedia_crosslinks_prefer_single_words')) ) ? true : false;
 
 		new crosslinks(
 			$crosslinks_active,
