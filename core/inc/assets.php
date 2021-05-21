@@ -32,19 +32,24 @@ function wppedia_enqueue_frontend_assets() {
 
 	}
 
-	$rest_controller = new bf\wpPedia\rest_controller();
-	wp_enqueue_script( 'wppedia_search', wpPediaPluginUrl . 'dist/js/search.bundle.js', [], null, true );
-	wp_localize_script( 'wppedia_search', 'wppedia_search_props', [
-		'postlist_url' 		=> $rest_controller->get_endpoint_url( $rest_controller->rest_endpoint_search ),
-		'search_options'	=> json_encode( [
-			'keys' => [ 
-				'post_title',
-				'tags'
-			],
-			'threshold' => 0.5,
-		] ),
-		'searchinput_id'	=> apply_filters( 'wppedia_search_input_id', 'wppedia_search_input' )
-	] );
+	if (
+		(is_wppedia_archive() && false != get_option('wppedia_archive_show_searchbar', options::get_option_defaults('wppedia_archive_show_searchbar'))) ||
+		(is_wppedia_singular() && false != get_option('wppedia_singular_show_searchbar', options::get_option_defaults('wppedia_singular_show_searchbar')))
+	) {
+		$rest_controller = new bf\wpPedia\rest_controller();
+		wp_enqueue_script( 'wppedia_search', wpPediaPluginUrl . 'dist/js/search.bundle.js', [], null, true );
+		wp_localize_script( 'wppedia_search', 'wppedia_search_props', [
+			'postlist_url' 		=> $rest_controller->get_endpoint_url( $rest_controller->rest_endpoint_search ),
+			'search_options'	=> json_encode( [
+				'keys' => [ 
+					'post_title',
+					'tags'
+				],
+				'threshold' => 0.5,
+			] ),
+			'searchinput_id'	=> apply_filters( 'wppedia_search_input_id', 'wppedia_search_input' )
+		] );
+	}
 
 	// Print inline styles
 	global $content_width;
