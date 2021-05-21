@@ -1,5 +1,7 @@
 <?php
 
+use bf\wpPedia\options;
+
 /**
  * Global template hooks
  */
