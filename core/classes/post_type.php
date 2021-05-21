@@ -23,6 +23,11 @@ class post_type {
 
 	public $taxonomy = 'wppedia_initial_letter';
 
+	/**
+	 * Protected variables
+	 */
+	protected $permalink_base;
+
   /**
    * Static variable for instanciation
    */
@@ -44,10 +49,7 @@ class post_type {
 
   protected function __construct() {
 
-		$this->permalink_base = get_option('wppedia_permalink_base', options::get_option_defaults('wppedia_permalink_base'));
-		if ( '' === $this->permalink_base ) {
-			$this->permalink_base = 'glossary';
-		}
+		add_action( 'init', [ $this, 'set_permalink_base' ], 9 );
 
 		// Create Post type
 		add_action( 'init', [ $this, 'register_wiki_post_type' ], 10 );
@@ -66,6 +68,18 @@ class post_type {
 		// Set Initial Letter Taxonomy on post save
 		add_action( 'save_post_wppedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
 
+	}
+
+	/**
+	 * Set permalink base from wp_options
+	 * 
+	 * @since 1.1.3
+	 */
+	function set_permalink_base() {
+		$this->permalink_base = get_option('wppedia_permalink_base_setting');
+		if (!$this->permalink_base) {
+			$this->permalink_base = options::get_option_defaults('wppedia_permalink_base_setting');
+		}
 	}
 
   /**
