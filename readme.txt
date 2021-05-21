@@ -94,6 +94,10 @@ Support requests for the free version will be treated with less priority. We ask
 
 == Frequently Asked Questions ==
 
+= Where can I get the PRO version? =
+
+WPPedia **PRO** is still in beta and will be available soon. But first we try to give you the best possible glossary experience in the free version.
+
 = Will WPPedia work with my theme? =
 
 most likely, yes. However we cannot guarantee this for every theme out there (there are so many).
