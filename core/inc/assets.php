@@ -27,7 +27,7 @@ function wppedia_enqueue_frontend_assets() {
 		wp_enqueue_script( 'wppedia_ajax_tooltips', wpPediaPluginUrl . 'dist/js/ajax_tooltip.bundle.js', [], null, true );
 		wp_localize_script( 'wppedia_ajax_tooltips', 'wppedia_tooltip_props', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'tooltip_theme' => get_option('wppedia_tooltips_theme', 'light')
+			'tooltip_theme' => get_option('wppedia_tooltips_theme', options::get_option_defaults('wppedia_tooltips_theme'))
 		) );
 
 	}
