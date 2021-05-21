@@ -52,7 +52,7 @@ class post_type {
 		add_action( 'init', [ $this, 'set_permalink_base' ], 9 );
 
 		// Create Post type
-		add_action( 'init', [ $this, 'register_wiki_post_type' ], 10 );
+		add_action( 'init', [ $this, 'register_wppedia_post_type' ], 10 );
 
 		// Create Fake Taxonomy to query by initial letter
 		add_action( 'init', [ $this, 'create_wppedia_initial_letter_tax' ], 202 );
@@ -89,7 +89,7 @@ class post_type {
 	 * 
    * @since 1.0.0
    */
-  public function register_wiki_post_type() {
+  public function register_wppedia_post_type() {
 
     $labels = [
 			'name' => _x( 'Glossary', 'Post Type General Name', 'wppedia' ),
@@ -99,21 +99,14 @@ class post_type {
 			'archives' => __( 'Glossary Term Archives', 'wppedia' ),
 			'attributes' => __( 'Glossary Term Attributes', 'wppedia' ),
 			'parent_item_colon' => __( 'Parent Glossary Term:', 'wppedia' ),
-			'all_items' => __( 'All Glossary', 'wppedia' ),
+			'all_items' => __( 'All Glossary Terms', 'wppedia' ),
 			'add_new_item' => __( 'Add New Glossary Term', 'wppedia' ),
-			'add_new' => __( 'Add New', 'wppedia' ),
 			'new_item' => __( 'New Glossary Term', 'wppedia' ),
 			'edit_item' => __( 'Edit Glossary Term', 'wppedia' ),
 			'update_item' => __( 'Update Glossary Term', 'wppedia' ),
 			'view_item' => __( 'View Glossary Term', 'wppedia' ),
 			'view_items' => __( 'View Glossary', 'wppedia' ),
 			'search_items' => __( 'Search Glossary Term', 'wppedia' ),
-			'not_found' => __( 'Not found', 'wppedia' ),
-			'not_found_in_trash' => __( 'Not found in Trash', 'wppedia' ),
-			'featured_image' => __( 'Featured Image', 'wppedia' ),
-			'set_featured_image' => __( 'Set featured image', 'wppedia' ),
-			'remove_featured_image' => __( 'Remove featured image', 'wppedia' ),
-			'use_featured_image' => __( 'Use as featured image', 'wppedia' ),
 			'insert_into_item' => __( 'Insert into Glossary Term', 'wppedia' ),
 			'uploaded_to_this_item' => __( 'Uploaded to this Glossary Term', 'wppedia' ),
 			'items_list' => __( 'Glossary list', 'wppedia' ),
