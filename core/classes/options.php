@@ -48,7 +48,8 @@ class options {
 		add_action( 'admin_init', [ $this, 'wppedia_permalink_settings_save' ], 999999 );
 
 		// Set flush rewrite rules flag for some options
-		add_action( 'update_option_wppedia_frontpage', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
+		add_action( 'update_option_wppedia_front_page_id', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
+		add_action( 'update_option_wppedia_permalink_base_setting', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
 		
 		// Admin notices
 		add_action( 'admin_notices', [ $this, 'frontpage_slug_not_matching_permalink_settings_notice' ] );
