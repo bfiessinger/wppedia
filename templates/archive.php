@@ -43,6 +43,7 @@ if ( have_posts() ) {
 
 	while ( have_posts() ) {
 		the_post();
+		wppedia_get_template_part('loop/char', 'index');
 		wppedia_get_template_part('content', 'archive');
 	}
 

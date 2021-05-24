@@ -53,7 +53,7 @@ function wppedia_enqueue_frontend_assets() {
 
 	// Print inline styles
 	global $content_width;
-	wppedia_add_inline_style('wppedia-content-width', '.wppedia .content-area{width:100%;max-width:' . $content_width . 'px;margin-left:auto;margin-right:auto;}');
+	wppedia_add_inline_style('wppedia-content-width', '.wppedia-page .content-area{width:' . $content_width . 'px;}');
 
 	// Alternative Tooltip Themes for inline usage
 	switch (get_option('wppedia_tooltips_style')) {
