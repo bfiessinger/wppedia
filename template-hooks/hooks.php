@@ -32,19 +32,27 @@ add_action( 'wppedia_sidebar', 'wppedia_sidebar', 10 );
  * Singular page hooks
  */
 add_action( 'wppedia_before_single_post', 'wppedia_entry_content_start', 10 );
-add_action( 'wppedia_single_post', 'wppedia_single_title', 10 );
-add_action( 'wppedia_single_post', 'wppedia_single_content', 20 );
-add_action( 'wppedia_single_post', 'wppedia_single_link_pages', 30 );
+
+add_action( 'wppedia_single_post', 'wppedia_single_featured_image', 10 );
+add_action( 'wppedia_single_post', 'wppedia_single_title', 20 );
+add_action( 'wppedia_single_post', 'wppedia_single_content', 30 );
+add_action( 'wppedia_single_post', 'wppedia_single_link_pages', 40 );
+
 add_action( 'wppedia_after_single_post', 'wppedia_entry_content_end', 10 );
 
 /**
  * Archive page hooks
  */
 add_action( 'wppedia_before_post_loop', 'wppedia_postlist_wrapper_start', 10 );
-add_action( 'wppedia_before_loop_item_title', 'wppedia_loop_postlink_open', 10 );
+
+add_action( 'wppedia_before_loop_item_title', 'wppedia_loop_featured_image', 10 );
+add_action( 'wppedia_before_loop_item_title', 'wppedia_loop_postlink_open', 20 );
+
 add_action( 'wppedia_loop_item_title', 'wppedia_loop_item_title', 10 );
+
 add_action( 'wppedia_after_loop_item_title', 'wppedia_loop_excerpt', 20 );
 add_action( 'wppedia_after_loop_item_title', 'wppedia_loop_postlink_close', 10 );
+
 add_action( 'wppedia_after_post_loop', 'wppedia_postlist_wrapper_end', 10 );
 
 add_action( 'wppedia_after_main_content', 'wppedia_posts_pagination', 10 );

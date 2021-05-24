@@ -56,6 +56,21 @@ if ( ! function_exists( 'wppedia_loop_item_title' ) ) {
 }
 
 /**
+ * Loop Featured Image
+ * 
+ * @since 1.1.3
+ */
+if ( ! function_exists( 'wppedia_loop_featured_image' ) ) {
+	function wppedia_loop_featured_image() {
+		if (has_post_thumbnail()) {
+			echo '<div class="wppedia-thumbnail-wrapper">';
+			the_post_thumbnail('thumbnail', ['class' => 'wppedia-post-thumbnail']);
+			echo '</div>';
+		}
+	}
+}
+
+/**
  * Loop excerpt
  * 
  * @since 1.0.0
