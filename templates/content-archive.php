@@ -33,6 +33,7 @@ defined( 'ABSPATH' ) || exit;
 	 * Hook: woocommerce_before_shop_loop_item_title.
 	 *
 	 * @hooked wppedia_loop_postlink_open - 10
+	 * @hooked wppedia_loop_featured_image - 20
 	 */
 	do_action( 'wppedia_before_loop_item_title' );
 

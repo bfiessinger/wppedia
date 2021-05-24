@@ -19,6 +19,9 @@
 		float: left;
 		clear: left;
 		margin-right: 1em;
+		~ .entry-title {
+			display: inline-block;
+		}
 	}
 	.pagination {
 		ul {
@@ -53,5 +56,14 @@
 		.wppedia-anchor {
 			visibility: visible;
 		}
+	}
+}
+
+/**
+ * Singular
+ */
+.wppedia-page {
+	.wppedia-featured-image-wrapper {
+		margin-bottom: 1.5em;
 	}
 }
