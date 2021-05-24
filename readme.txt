@@ -17,7 +17,7 @@ With WPPedia you can build a Glossary / Encyclopedia / Lexicon in WordPress with
 Having a glossary on your site can be a very efficient way to increase your User Experience, SEO and Google Rankings.
 Glossary by WPPedia combines all the tools you need to build the perfect web glossary solution.
 
-GLossary by WPPedia offers the best out of the box system for creating a glossary / encyclopedia on your Website and comes with a **free** and a **PRO** Version to fit all your needs.
+Glossary by WPPedia offers the best out of the box system for creating a glossary / encyclopedia on your Website and comes with a **free** and a **PRO** Version to fit all your needs.
 
 ### What can this Glossary plugin do for you?
 
