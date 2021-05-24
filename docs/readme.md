@@ -1,5 +1,11 @@
 # WPPedia Documentation
 
-## Quick Links
-- Developer Docs (*coming soon*)
-- User Handbook (*coming soon*)
+## Getting started
+Transform your WordPress website into a thoroughbred encyclopedia.  
+[Learn how](./getting-started.md)
+
+## Codex
+
+## Theming
+
+## Action & Filter Reference

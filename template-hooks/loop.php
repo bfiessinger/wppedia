@@ -73,7 +73,7 @@ if ( ! function_exists( 'wppedia_loop_featured_image' ) ) {
 /**
  * Loop excerpt
  * 
- * @since 1.0.0
+ * @since 1.1.3
  */
 if ( ! function_exists( 'wppedia_loop_excerpt' ) ) {
 	function wppedia_loop_excerpt() {
@@ -90,7 +90,7 @@ if ( ! function_exists( 'wppedia_loop_excerpt' ) ) {
 /**
  * Pagination
  * 
- * @since 1.0.0
+ * @since 1.1.3
  */
 if ( ! function_exists( 'wppedia_posts_pagination' ) ) {
 	function wppedia_posts_pagination() {

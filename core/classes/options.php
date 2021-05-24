@@ -3,7 +3,7 @@
 /**
  * Admin View
  * 
- * @since 1.1.0
+ * @since 1.1.3
  */
 
 namespace bf\wpPedia;

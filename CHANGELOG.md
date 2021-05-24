@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.1.3
+### New Features
+- added new filter "wppedia_crosslink_ignored_tags" where users might add or remove specific HTML tags in which no automatic crosslinks should be created
+- added new option to enable / disable the tooltip feature
+- added new option to select tooltip styles
+- new tooltip style "light-with-border"
+- new tooltip style "material"
+- new tooltip style "translucent"
+- added loop section identifiers
+- added featured image in archive and singular page layouts
+
+### Bug fixes
+- fixed a bug where rewrite rules were not flushed when updating the glossary frontpage or the permalink base setting
+- fixed loop pagination priority
+
+### Enhancements
+- changed behaviour of filter wppedia_template_path: the returned template path must not include a trailing slash anymore
+- excluded wppedia-search script on pages where no searchbar is active
+- removed the excerpt wrapper in post loop if a post has no excerpt content
+- optimized default styles to fix some issues in several themes
+
+### Code Quality
+- improved documentation in the comments
+
 ## 1.1.2
 ### Bug fixes
 - fixed a bug where WPPedia Templates were used on other post types

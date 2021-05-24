@@ -3,7 +3,7 @@
 /**
  * Include Styles and Scripts
  * 
- * @since 1.1.0
+ * @since 1.1.3
  */
 
 use bf\wpPedia\options;
@@ -11,7 +11,7 @@ use bf\wpPedia\options;
 /**
  * Enqueue Assets
  * 
- * @since 1.0.0 
+ * @since 1.1.3 
  */
 function wppedia_enqueue_frontend_assets() {
 

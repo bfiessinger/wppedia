@@ -3,7 +3,7 @@
 /**
  * wpPedia Post Type related
  * 
- * @since 1.1.2
+ * @since 1.1.3
  */
 
 namespace bf\wpPedia;
@@ -87,7 +87,7 @@ class post_type {
    * 
 	 * @uses register_post_type
 	 * 
-   * @since 1.0.0
+   * @since 1.1.3
    */
   public function register_wppedia_post_type() {
 

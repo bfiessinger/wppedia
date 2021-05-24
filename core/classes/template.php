@@ -3,7 +3,7 @@
 /**
  * WP Wiki Template
  * 
- * @since 1.1.0
+ * @since 1.1.3
  */
 
 namespace bf\wpPedia;
@@ -174,7 +174,7 @@ class template {
 	/**
 	 * Load WPPedia default Templates
 	 * 
-	 * @since 1.1.2
+	 * @since 1.1.3
 	 * 
 	 * @return string $template
 	 */
