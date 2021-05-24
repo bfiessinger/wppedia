@@ -62,6 +62,10 @@ if ( ! function_exists( 'wppedia_loop_item_title' ) ) {
  */
 if ( ! function_exists( 'wppedia_loop_excerpt' ) ) {
 	function wppedia_loop_excerpt() {
+		if ('' === get_the_excerpt_wppedia()) {
+			return;
+		}		
+
 		echo '<div class="entry-content">';
 		the_excerpt_wppedia();
 		echo '</div>';
