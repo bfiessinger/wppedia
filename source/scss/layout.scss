@@ -33,6 +33,9 @@
 .wppedia-char-section-indentifier {
 	display: inline-flex;
 	align-items: center;
+	&:not(:first-child) {
+		margin-top: 2em;
+	}
 	.wppedia-anchor {
 		float: left;
     padding-right: 4px;
