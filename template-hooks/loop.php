@@ -77,8 +77,8 @@ if ( ! function_exists( 'wppedia_posts_pagination' ) ) {
 	function wppedia_posts_pagination() {
 		$pagination_args = [
 			'type'      => 'list',
-			'next_text' => _x( 'Next', 'Next post', 'wppedia' ),
-			'prev_text' => _x( 'Previous', 'Previous post', 'wppedia' ),
+			'next_text' => _x( 'Next', 'pagination-args', 'wppedia' ),
+			'prev_text' => _x( 'Previous', 'pagination-args', 'wppedia' ),
 		];
 
 		$pagination_args = apply_filters('wppedia_posts_pagination_arguments', $pagination_args);
