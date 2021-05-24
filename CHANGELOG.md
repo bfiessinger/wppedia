@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.4
+### Enhancements
+- fixed minor styling issues
+
 ## 1.1.3
 ### New Features
 - added new filter "wppedia_crosslink_ignored_tags" where users might add or remove specific HTML tags in which no automatic crosslinks should be created
