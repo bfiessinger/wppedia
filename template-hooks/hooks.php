@@ -23,7 +23,9 @@ require_once __DIR__ . '/search.php';
  * Global template hooks
  */
 add_action( 'wppedia_before_main_content', 'wppedia_wrapper_start', 10 );
-add_action( 'wppedia_after_main_content', 'wppedia_wrapper_end', 10 );
+
+add_action( 'wppedia_after_main_content', 'wppedia_wrapper_end', 20 );
+
 add_action( 'wppedia_sidebar', 'wppedia_sidebar', 10 );
 
 /**
@@ -44,7 +46,8 @@ add_action( 'wppedia_loop_item_title', 'wppedia_loop_item_title', 10 );
 add_action( 'wppedia_after_loop_item_title', 'wppedia_loop_excerpt', 20 );
 add_action( 'wppedia_after_loop_item_title', 'wppedia_loop_postlink_close', 10 );
 add_action( 'wppedia_after_post_loop', 'wppedia_postlist_wrapper_end', 10 );
-add_action( 'wppedia_after_main_content', 'wppedia_posts_pagination', 20 );
+
+add_action( 'wppedia_after_main_content', 'wppedia_posts_pagination', 10 );
 
 /**
  * Template Hooks after init

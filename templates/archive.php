@@ -68,8 +68,8 @@ if ( have_posts() ) {
 /**
  * wppedia_after_main_content hook
  *
- * @hooked wppedia_loop_pagination -  20
- * @hooked wppedia_wrapper_end -  10 (outputs closing divs for the content)
+ * @hooked wppedia_loop_pagination -  10
+ * @hooked wppedia_wrapper_end -  20 (outputs closing divs for the content)
  */
 do_action( 'wppedia_after_main_content' );
 
