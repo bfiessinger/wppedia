@@ -3,7 +3,7 @@
 /**
  * wpPedia Post Type related
  * 
- * @since 1.1.3
+ * @since 1.1.5
  */
 
 namespace bf\wpPedia;
@@ -61,9 +61,10 @@ class post_type {
 		add_action( 'publish_' . $this->post_type , [ $this, 'limit_num_posts' ] );
 		add_action( 'admin_notices', [ $this, 'limit_reached_msg_notice' ] );
 
-		// Rewrite Rules for initial Characters
-		add_filter( 'generate_rewrite_rules', [ $this, 'wppedia_cpt_generate_rewrite_rules' ] );
-		add_filter( 'post_type_link', [ $this, 'wppedia_cpt_link' ], 10, 2 );
+		// Setup rewrite rules
+		add_action( 'init', [ $this, 'add_rewrite_rules' ], 202 );
+		add_filter( 'post_type_link', [ $this, 'post_type_link' ], 10, 2 );
+		add_action( 'save_post_wppedia_term', [ $this, 'set_flush_rewrite_rules_flag' ] );
 
 		// Set Initial Letter Taxonomy on post save
 		add_action( 'save_post_wppedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
@@ -313,46 +314,47 @@ class post_type {
 
 	}
 
-	function wppedia_cpt_generate_rewrite_rules( $wp_rewrite ) {
-
-		$rules = array();
-
-		$terms = get_terms( array(
-			'taxonomy' => $this->taxonomy,
-			'hide_empty' => false,
-		) );
-
-		foreach ($terms as $term) {    
-			$rules[ ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $term->slug . '/([^/]*)$'] = 'index.php?post_type=' . $this->post_type. '&name=$matches[1]';
-		}
-
-    // merge with global rules
-		$wp_rewrite->rules = $rules + $wp_rewrite->rules;
-	
+	/**
+	 * Add rewrite rules
+	 * 
+	 * @since 1.1.5
+	 */
+	function add_rewrite_rules() {
+		add_rewrite_tag('%wppedia_initial_letter%', '([^&]+)', 'wppedia_initial_letter=');
+    add_rewrite_rule(
+			ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/([^/]*)/?',
+			'index.php?post_type=' . $this->post_type . '&wppedia_initial_letter=$matches[1]&name=$matches[2]',
+			'top'
+		);
 	}
 
-	function wppedia_cpt_link( $permalink, $post ) {
+	/**
+	 * Change default post link
+	 * 
+	 * @since 1.1.5
+	 */
+	function post_type_link( $permalink, $post ) {
+    // bail if post type is not wppedia_term
+		if (wppedia_get_post_type() !== $post->post_type)
+			return $permalink;
 
-		if( $post->post_type == 'wppedia_term' ) {
+		$terms = wp_get_post_terms($post->ID, $this->taxonomy);
+		// set location, if no location is found, provide a default value.
+		if ( 0 < count( $terms ))
+			$init_char = $terms[0]->slug;
+		else
+			$init_char = 'other';
 
-			$resource_terms = get_the_terms( $post, $this->taxonomy );
-			$term_slug = '';
-
-			if( ! empty( $resource_terms ) ) {
-
-				foreach ( $resource_terms as $term ) {
-					$term_slug = $term->slug;
-					break;
-				}
-
-			}
-
-			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $term_slug . '/' . $post->post_name;
-
-		}
+		$init_char = urlencode( $init_char );
+		$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $init_char . '/' . $post->post_name;
 
 		return $permalink;
+	}
 
+	function set_flush_rewrite_rules_flag() {
+    if (!get_option('wppedia_flush_rewrite_rules_flag')) {
+			add_option('wppedia_flush_rewrite_rules_flag', true);
+		}
 	}
 
 }
