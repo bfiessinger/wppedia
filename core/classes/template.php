@@ -3,7 +3,7 @@
 /**
  * WP Wiki Template
  * 
- * @since 1.1.3
+ * @since 1.1.5
  */
 
 namespace bf\wpPedia;
@@ -59,13 +59,6 @@ class template {
 		 * @since 1.0.0
 		 */
 		add_filter( 'template_include', [ $this, 'template_include' ] );
-
-		/**
-		 * WPPedia Sidebar
-		 * 
-		 * @since 1.0.0
-		 */
-		add_action( 'widgets_init', [ $this, 'register_sidebar' ] );
 
 	}
 
@@ -225,25 +218,6 @@ class template {
 
 		return $classes;
 			
-	}
-
-	/**
-	 * Register WPPedia Sidebar
-	 * 
-	 * @since 1.0.0
-	 */
-	public function register_sidebar() {
-
-		register_sidebar( [
-			'name'					=> __( 'WPPedia Sidebar', 'wppedia' ),
-			'id'						=> 'wppedia',
-			'description'		=> __( 'Widgets in this area will be shown on Single WPPedia Entries', 'wppedia' ),
-			'before_widget'	=> apply_filters( 'wppedia_sidebar_widget_before', '<div id="%1$s" class="wppedia_widget widget %2$s">' ),
-			'after_widget'	=> apply_filters( 'wppedia_sidebar_widget_after', '</div>' ),
-			'before_title'	=> apply_filters( 'wppedia_sidebar_widget_title_before', '<div class="wppedia_widget_title widget-title">' ),
-			'after_title'		=> apply_filters( 'wppedia_sidebar_widget_title_after', '</div>' )
-		] );
-
 	}
 	
 	/**
