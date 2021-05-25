@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.5
+### Bug fixes
+- fixed a bug where fresh glossary terms would often result in 404 Errors and needed manual saving of permalinks
+
+### Enhancements
+- enhanced default styles
+
+### Code Quality
+- removed unused dependencies
+
 ## 1.1.4
 ### Enhancements
 - fixed minor styling issues

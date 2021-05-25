@@ -1,12 +1,12 @@
 === Glossary by WPPedia - Best Glossary plugin for WordPress ===
 Contributors: steinrein, bastianfiessinger, wppedia
 Tested up to: 5.7.2
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 Tags: glossary, encyclopedia, wiki, lexicon, vocabulary, dictionary, tooltip, clavis
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-The ultimate Glossary plugin that will fit all your needs. Create your own glossary (also called encyclopedia, or wiki) with all the features you need! 📖
+The ultimate Glossary plugin that will fit all your needs. Create your own glossary (aka encyclopedia, or lexicon) with all the features you need! 📖
 
 == Description ==
 
@@ -144,6 +144,16 @@ or
 3. Go and manage your glossary...
 
 == Changelog ==
+
+= 1.1.5 =
+##### Bug fixes
+- fixed a bug where fresh glossary terms would often result in 404 Errors and needed manual saving of permalinks
+
+##### Enhancements
+- enhanced default styles
+
+##### Code Quality
+- removed unused dependencies
 
 = 1.1.4 =
 ##### Enhancements

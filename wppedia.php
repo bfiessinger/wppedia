@@ -9,7 +9,7 @@
  * Description: The most advanced Glossary solution for WordPress!
  * Author: 			Bastian Fießinger & WPPedia Glossary Team
  * AuthorURI: 	https://github.com/bfiessinger/
- * Version: 		1.1.4
+ * Version: 		1.1.5
  * Text Domain: wppedia
  */
 
@@ -18,8 +18,6 @@ defined( 'ABSPATH' ) or die();
 
 /**
  * Core WPPedia functions
- * 
- * @since 1.0.0
  */
 require_once plugin_dir_path(__FILE__) . 'core/inc/core-functions.php';
 
@@ -91,61 +89,45 @@ class WPPedia {
 
 		/**
 		 * Instantiate Template Utils
-		 * 
-		 * @since 1.0.0
 		 */
 		template::getInstance();
 
 		/**
 		 * Instantiate REST API Controller Class
-		 * 
-		 * @since 1.0.0
 		 */
 		new rest_controller();
 
 		/**
 		 * Instantiate Query Controller
-		 * 
-		 * @since 1.0.0
 		 */
 		new query_control();
 
 		/**
 		 * Instatiate Admin View
 		 * Used to edit post or edit views in wp_admin
-		 * 
-		 * @since 1.1.0
 		 */
 		new admin();
 
 		/**
 		 * Options
 		 * Setup options and settings pages
-		 * 
-		 * @since 1.1.0
 		 */
 		options::getInstance();
 
 		/**
 		 * Post meta
 		 * Setup custom postmeta for WPPedia articles
-		 * 
-		 * @since 1.1.0 
 		 */
 		new post_meta();
 
 		/**
 		 * Instantiate Post Type
 		 * Generates the WPPedia Post type and related taxonomies
-		 * 
-		 * @since 1.0.0
 		 */
 		post_type::getInstance();
 
 		/**
 		 * Modify Wiki Content
-		 * 
-		 * @since 1.0.0
 		 */
 		$crosslinks_active = ( get_option('wppedia_feature_crosslinks', options::get_option_defaults('wppedia_feature_crosslinks')) ) ? true : false;
 		$prefer_single_words = ( get_option('wppedia_crosslinks_prefer_single_words', options::get_option_defaults('wppedia_crosslinks_prefer_single_words')) ) ? true : false;
@@ -157,8 +139,6 @@ class WPPedia {
 
 		/**
 		 * Tooltips
-		 * 
-		 * @since 1.0.0
 		 */
 		new tooltip();
 
@@ -194,29 +174,21 @@ $WPPedia->init();
 
 /**
  * Template Hooks
- * 
- * @since 1.0.0
  */
 require_once wpPediaPluginDir . 'template-hooks/hooks.php';
 
 /**
  * Enqueue Assets
- * 
- * @since 1.0.0
  */
 require_once wpPediaPluginDir . 'core/inc/assets.php';
 
 /**
  * Shortcodes
- * 
- * @since 1.0.0
  */
 require_once wpPediaPluginDir . 'core/inc/shortcodes.php';
 
 /**
  * The code that runs during plugin activation.
- * 
- * @since 1.0.0
  */
 require_once wpPediaPluginDir . 'core/inc/class.activation.php';
 register_activation_hook( __FILE__, [ 'bf\\wpPedia\\activation', 'activate' ] );
@@ -238,8 +210,6 @@ new bf\wpPedia\WPPedia_Upgrade();
 
 /**
  * The code that runs during plugin deactivation.
- * 
- * @since 1.0.0
  */
 require_once wpPediaPluginDir . 'core/inc/class.deactivation.php';
 register_deactivation_hook( __FILE__, [ 'bf\\wpPedia\\deactivation', 'deactivate' ] );
