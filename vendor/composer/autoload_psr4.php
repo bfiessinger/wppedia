@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'bf\\wpPedia\\' => array($baseDir . '/core/classes'),
-    'CssLint\\' => array($vendorDir . '/neilime/php-css-lint/src/CssLint'),
 );

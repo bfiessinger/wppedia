@@ -11,10 +11,6 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
         array (
             'bf\\wpPedia\\' => 11,
         ),
-        'C' => 
-        array (
-            'CssLint\\' => 8,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -22,16 +18,10 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
         array (
             0 => __DIR__ . '/../..' . '/core/classes',
         ),
-        'CssLint\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/neilime/php-css-lint/src/CssLint',
-        ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'CssLint\\Linter' => __DIR__ . '/..' . '/neilime/php-css-lint/src/CssLint/Linter.php',
-        'CssLint\\Properties' => __DIR__ . '/..' . '/neilime/php-css-lint/src/CssLint/Properties.php',
         'bf\\wpPedia\\WPPedia_Upgrade' => __DIR__ . '/../..' . '/core/classes/WPPedia_Upgrade.php',
         'bf\\wpPedia\\admin' => __DIR__ . '/../..' . '/core/classes/admin.php',
         'bf\\wpPedia\\inline_style_collector' => __DIR__ . '/../..' . '/core/classes/inline_style_collector.php',

@@ -7,8 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'CssLint\\Linter' => $vendorDir . '/neilime/php-css-lint/src/CssLint/Linter.php',
-    'CssLint\\Properties' => $vendorDir . '/neilime/php-css-lint/src/CssLint/Properties.php',
     'bf\\wpPedia\\WPPedia_Upgrade' => $baseDir . '/core/classes/WPPedia_Upgrade.php',
     'bf\\wpPedia\\admin' => $baseDir . '/core/classes/admin.php',
     'bf\\wpPedia\\inline_style_collector' => $baseDir . '/core/classes/inline_style_collector.php',
