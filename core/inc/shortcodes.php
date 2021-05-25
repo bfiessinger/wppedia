@@ -1,23 +1,14 @@
 <?php
 
-// Create Shortcode wppedia_navigation
-// Shortcode: [wppedia_navigation]
-function create_wppedia_navigation_shortcode() {
+/**
+ * Register custom shortcodes
+ * the code for shortcodes is available in the shortcodes
+ * folder
+ * 
+ * @since 1.1.5
+ */
 
-	ob_start();
-	wppedia_get_template_part('nav/char', 'navigation');
-	return ob_get_clean();
+defined( 'ABSPATH' ) || die();
 
-}
-add_shortcode( 'wppedia_navigation', 'create_wppedia_navigation_shortcode' );
-
-// Create Shortcode wppedia_searchform
-// Shortcode: [wppedia_searchform]
-function create_wppedia_searchform_shortcode() {
-
-	ob_start();
-	wppedia_get_template_part('search/form');
-	return ob_get_clean();
-
-}
-add_shortcode( 'wppedia_searchform', 'create_wppedia_searchform_shortcode' );
+require_once __DIR__ . '/shortcodes/navigation.php';
+require_once __DIR__ . '/shortcodes/searchform.php';
