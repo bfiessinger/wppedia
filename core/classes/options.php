@@ -49,10 +49,7 @@ class options {
 
 		// Set flush rewrite rules flag for some options
 		add_action( 'update_option_wppedia_front_page_id', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
-		add_action( 'update_option_wppedia_permalink_base_setting', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
-		
-		// Admin notices
-		add_action( 'admin_notices', [ $this, 'frontpage_slug_not_matching_permalink_settings_notice' ] );
+		add_action( 'update_option_wppedia_permalink_base', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
 
 	}
 	
@@ -107,7 +104,7 @@ class options {
 	 * 
 	 * @param string $option - option name
 	 * 
-	 * @since 1.1.3
+	 * @since 1.1.6
 	 */
 	static function get_option_defaults(string $option = null) {
 		$defaults = [
@@ -123,7 +120,7 @@ class options {
 			'wppedia_feature_tooltips' => true,
 			'wppedia_tooltips_style' => 'light',
 			// Permalinks
-			'wppedia_permalink_base_setting' => 'glossary',
+			'wppedia_permalink_base' => 'glossary',
 			'wppedia_permalink_use_initial_character' => true,
 			// Layout
 			'wppedia_singular_use_templates' => true,
@@ -133,7 +130,7 @@ class options {
 			'wppedia_archive_show_searchbar' => true,
 			'wppedia_singular_show_searchbar' => false,
 			// Query
-			'wppedia_posts_per_page' => 25
+			'wppedia_posts_per_page' => 25,
 		];
 
 		if (!$option) {
@@ -880,25 +877,6 @@ class options {
 		$input = substr($input, 1);
 
 		return $input;
-	}
-
-	function frontpage_slug_not_matching_permalink_settings_notice() {
-		if (false !== wppedia_get_page_id('front') && get_post_field('post_name', get_post(wppedia_get_page_id('front'))) !== get_option('wppedia_permalink_base_setting')) {
-			echo '<div class="wppedia-admin-message notice notice-warning is-dismissible">';
-			echo '<p>';
-			printf(
-				_x('Attention! Your permalink base %s does not match the slug of your glossary frontpage %s', 'options', 'wppedia'),
-				'<code>' . get_option('wppedia_permalink_base_setting') . '</code>',
-				'<code>' . get_post_field('post_name', get_post(wppedia_get_page_id('front'))) . '</code>'
-			);
-			echo '</p>';
-			echo '<p>';
-			echo '<a class="button" href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Manage permalinks') . '</a>';
-			echo '</p>';
-			echo '</div>';
-		}
-
-		return false;
 	}
 
 }

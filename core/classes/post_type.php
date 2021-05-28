@@ -74,12 +74,12 @@ class post_type {
 	/**
 	 * Set permalink base from wp_options
 	 * 
-	 * @since 1.1.3
+	 * @since 1.1.6
 	 */
 	function set_permalink_base() {
-		$this->permalink_base = get_option('wppedia_permalink_base_setting');
+		$this->permalink_base = get_option('wppedia_permalink_base');
 		if (!$this->permalink_base) {
-			$this->permalink_base = options::get_option_defaults('wppedia_permalink_base_setting');
+			$this->permalink_base = options::get_option_defaults('wppedia_permalink_base');
 		}
 	}
 
