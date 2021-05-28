@@ -1,7 +1,7 @@
 === Glossary by WPPedia - Best Glossary plugin for WordPress ===
 Contributors: steinrein, bastianfiessinger, wppedia
 Tested up to: 5.7.2
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 Tags: glossary, encyclopedia, wiki, lexicon, vocabulary, dictionary, tooltip, clavis
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -48,11 +48,11 @@ The Glossary plugin comes with an easy to use searchbar with autosuggestions. No
 Of course the plugin is **100%** compatible with Gutenberg and other page builders out of the box - You don't need to worry about this.
 
 #### 🍦 Only vanilla JavaScript
-Speed matters! The Glossary works completely without jQuery as a dependency. All frontend scripts are running on good old plain (yet modern) JavaScript.
+Speed matters! Glossary by WPPedia works completely without jQuery as a dependency. All frontend scripts are running on good old plain (yet modern) JavaScript.
 
 #### 💖 Need more?
 We are constantly updating this plugin to offer as many features as possible.  
-Have a feature request? Don't hesitate and contact us!
+Have a feature request? Don't hesitate and [contact us](https://wordpress.org/support/plugin/wppedia/)!
 
 ### Template System/Structure
 WPPedia template files contain the markup and template structure for the frontend of your glossary. All template files contain several actions you can use to add/move/remove parts of the WPPedia Template or even restructure it completely.
@@ -146,6 +146,14 @@ or
 3. Go and manage your glossary...
 
 == Changelog ==
+
+= 1.1.6 =
+##### Bug fixes
+- fixed permalink base setting had no effect on the actual permalinks
+- fixed could not dismiss admin notices
+
+##### Enhancements
+- stabilized query functions
 
 = 1.1.5 =
 ##### Bug fixes

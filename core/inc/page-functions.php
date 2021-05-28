@@ -14,9 +14,10 @@ function wppedia_get_page_id(string $page) {
  * @param array $query_args array with query args to add
  * 
  * @return string final URL
+ * 
+ * @since 1.1.0
  */
-function get_wppedia_url( array $query_args = [] ) {
-	
+function get_wppedia_url(array $query_args = []) {
 	$archive_url;
 	if ( FALSE === wppedia_get_page_id('front') )
 		$archive_url = get_post_type_archive_link('wppedia_term');
@@ -27,7 +28,6 @@ function get_wppedia_url( array $query_args = [] ) {
 		$archive_url = add_query_arg( $query_args, $archive_url );
 	
 	return $archive_url;
-	
 }
 
 /**
@@ -35,7 +35,7 @@ function get_wppedia_url( array $query_args = [] ) {
  * 
  * @uses wppedia_get_post_type
  * 
- * @since 1.0.0
+ * @since 1.1.6
  */
 function is_wppedia_page($query = null) {
 	if ( ! $query ) {
@@ -65,7 +65,7 @@ function is_wppedia_page($query = null) {
 /**
  * Determine if the current view is a glossary search
  * 
- * @since 1.1.0
+ * @since 1.1.6
  */
 function is_wppedia_search($query = null) {
 	if ( ! $query ) {
@@ -86,7 +86,7 @@ function is_wppedia_search($query = null) {
 /**
  * Determine if the current view is a glossary archive
  * 
- * @since 1.1.0
+ * @since 1.1.6
  */
 function is_wppedia_archive($query = null) {
 	if ( ! $query ) {
@@ -107,7 +107,7 @@ function is_wppedia_archive($query = null) {
 /**
  * Determine if the current view is a glossary term
  * 
- * @since 1.1.0
+ * @since 1.1.6
  */
 function is_wppedia_singular($query = null) {
 	if ( ! $query ) {
@@ -128,7 +128,7 @@ function is_wppedia_singular($query = null) {
 /**
  * Determine if the currently viewed page is the glossary homepage
  * 
- * @since 1.0.0
+ * @since 1.1.6
  */
 function is_wppedia_frontpage($query = null) {
 	if ( ! $query ) {

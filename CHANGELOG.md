@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.6
+### Bug fixes
+- fixed permalink base setting had no effect on the actual permalinks
+- fixed could not dismiss admin notices
+
+### Enhancements
+- stabilized query functions
+
 ## 1.1.5
 ### Bug fixes
 - fixed a bug where fresh glossary terms would often result in 404 Errors and needed manual saving of permalinks

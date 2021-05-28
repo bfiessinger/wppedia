@@ -13,3 +13,17 @@ or
 1. go to https://wordpress.org/plugins/wppedia/ or search for **WPPedia** in the WordPress plugin repository
 2. install and activate the plugin
 3. Go and manage your glossary...
+
+Once the plugin is installed you will get update notifications whenever a new Version of Glossary by WPPedia is available.
+
+## Manage your Glossary
+After Glossary by WPPedia is installed and activated you will notice a new item in the WordPress admin menu named "Glossary".
+
+### Manage glossary settings
+
+
+#### Manage glossary permalink settings
+
+
+### Creating glossary terms
+
