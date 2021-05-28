@@ -35,6 +35,14 @@ class admin {
 		// Add plugin action links
 		add_filter( 'plugin_action_links_' . wpPediaPluginBaseName, [ $this, 'plugin_action_links' ] );
 
+		// Admin notices
+		add_action( 'admin_notices', [ $this, 'frontpage_slug_not_matching_permalink_settings_notice' ] );
+		add_action( 'update_option_wppedia_front_page_id', [ $this, 'unset_admin_notice_state_permalink_base_frontpage_slug_check' ], 10 );
+
+		// dismiss notice handler
+		add_action( 'wp_ajax_dismissed_notice_handler', [ $this, 'ajax_dismiss_notice_handler' ] );
+		add_action( 'admin_print_footer_scripts', [ $this, 'ajax_dismiss_notice_print_scripts' ] );
+
   }
 
 	/**
@@ -195,6 +203,153 @@ class admin {
 		$actions[] = '<a href="'. esc_url(get_admin_url(null, 'edit.php?post_type=' . wppedia_get_post_type())) .'">' . __('Manage glossary', 'wppedia') . '</a>';
 		$actions[] = '<a href="'. esc_url(get_admin_url(null, 'edit.php?post_type=' . wppedia_get_post_type() . '&page=wppedia_settings_general')) .'">' . __('Settings') . '</a>';
 		return $actions;
+	}
+
+	/**
+	 * Display an admin notice if the WPPedia frontpage slug
+	 * does not match the permalink base setting
+	 * 
+	 * @since 1.1.6
+	 */
+	function frontpage_slug_not_matching_permalink_settings_notice() {
+
+		$current_state = $this->get_admin_notice_state('permalink_base_frontpage_slug_check');
+		$is_dismissed = (isset($current_state['is_dismissed']) && $current_state['is_dismissed']) ? true : false;
+
+		if (isset($current_state['valid_until']) && strtotime($current_state['valid_until']) > time()) {
+			$this->remove_admin_notice_state('permalink_base_frontpage_slug_check');
+			$is_dismissed = false;
+		}
+
+		if (!$is_dismissed && false !== wppedia_get_page_id('front') && get_post_field('post_name', get_post(wppedia_get_page_id('front'))) !== get_option('wppedia_permalink_base')) {
+			echo '<div class="wppedia-admin-message notice notice-warning is-dismissible" data-wppedia_notice="permalink_base_frontpage_slug_check">';
+			echo '<p>';
+			printf(
+				_x('Attention! Your permalink base %s does not match the slug of your glossary frontpage %s', 'options', 'wppedia'),
+				'<code>' . get_option('wppedia_permalink_base') . '</code>',
+				'<code>' . get_post_field('post_name', get_post(wppedia_get_page_id('front'))) . '</code>'
+			);
+			echo '</p>';
+			echo '<p>';
+			echo '<a class="button" href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Manage permalinks') . '</a>';
+			echo '</p>';
+			echo '</div>';
+		}
+
+		return false;
+	}
+
+	/**
+	 * Unset Admin notice state for permalink_base_frontpage_slug_check
+	 * after updating the wppedia frontpage option
+	 * 
+	 * @since 1.1.6
+	 */
+	function unset_admin_notice_state_permalink_base_frontpage_slug_check() {
+		$this->remove_admin_notice_state('permalink_base_frontpage_slug_check');
+	}
+
+	/**
+	 * Get admin notice state by name
+	 * 
+	 * @since 1.1.6
+	 */
+	public function get_admin_notice_state($name) {
+		$current_states = get_option('wppedia_admin_notice_states');
+		if (!isset($current_states[$name])) {
+			return;
+		}
+		return $current_states[$name];
+	}
+
+	/**
+	 * Set admin notice state
+	 * 
+	 * @since 1.1.6
+	 */
+	public function set_admin_notice_state($name, $state = []) {
+		if (!get_option('wppedia_admin_notice_states')) {
+			add_option('wppedia_admin_notice_states', [], '', false);
+		}
+
+		$default_state = [
+			'is_dismissed' => true, 
+			'valid_until' => null
+		];
+
+		if (!is_array($state) || is_empty($state)) {
+			$state = $default_state;
+		}
+
+		$current_states = get_option('wppedia_admin_notice_states');
+
+		$current_states[$name] = $state;
+		update_option('wppedia_admin_notice_states', $current_states, false);
+	}
+
+	/**
+	 * Remove admin notice state
+	 * 
+	 * @since 1.1.6
+	 */
+	public function remove_admin_notice_state($name) {
+		$current_states = get_option('wppedia_admin_notice_states');
+		if (!isset($current_states[$name])) {
+			return;
+		}
+		unset($current_states[$name]);
+		update_option('wppedia_admin_notice_states', $current_states, false);
+	}
+
+	/**
+	 * Ajax handler to dismiss an admin notice
+	 * 
+	 * @since 1.1.6
+	 */
+	public function ajax_dismiss_notice_handler() {
+		check_ajax_referer('process_wppedia_dismiss_notice_nonce', '_ajax_nonce');
+
+		if (isset($_POST['notice'])) {
+			$valid_until = (isset($_POST['valid_until']) && $_POST['valid_until']) ? $_POST['valid_until'] : null;
+			$this->set_admin_notice_state(
+				$_POST['notice'],
+				[
+					'is_dismissed' => true,
+					'valid_until' => $valid_until
+				]
+			);
+		}
+
+		wp_die();
+	}
+
+	/**
+	 * Print footer scripts to dismiss admin notices
+	 * 
+	 * @since 1.1.6
+	 */
+	public function ajax_dismiss_notice_print_scripts() {
+		$nonce = wp_create_nonce('process_wppedia_dismiss_notice_nonce');
+		?>
+		<script type="text/javascript">
+			jQuery(function($) {
+				$(document).on('click', '.wppedia-admin-message .notice-dismiss', function () {
+					var message_element = $(this).closest('.wppedia-admin-message');
+					var notice_name = message_element.data('wppedia_notice');
+					var valid_until = message_element.data('wppedia_notice_valid_until') || null;
+					$.ajax('<?php echo admin_url('admin-ajax.php'); ?>', {
+						type: 'POST',
+						data: {
+							action: 'dismissed_notice_handler',
+							_ajax_nonce: '<?php echo $nonce; ?>',
+							notice: notice_name,
+							valid_until: valid_until
+						}
+					} );
+				} );
+			});
+		</script>
+		<?php
 	}
 
 }
