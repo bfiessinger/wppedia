@@ -37,8 +37,7 @@ function get_wppedia_url( array $query_args = [] ) {
  * 
  * @since 1.0.0
  */
-function is_wppedia_page( $query = false ) {
-	
+function is_wppedia_page($query = null) {
 	if ( ! $query ) {
 		global $wp_query;
 		$query = $wp_query;
@@ -48,15 +47,19 @@ function is_wppedia_page( $query = false ) {
 	 * No Checks should be performed if the request is 404
 	 * or we are not on the main query
 	 */
-	if ( is_404() || ! $query->is_main_query() )
+	if ( $query->is_404() || !$query->is_main_query() )
 		return false;
 	
-	if (is_wppedia_frontpage() || is_wppedia_archive() || is_wppedia_singular() || is_wppedia_search()) {
+	if (
+		is_wppedia_frontpage($query) || 
+		is_wppedia_archive($query) || 
+		is_wppedia_singular($query) || 
+		is_wppedia_search($query)
+	) {
 		return true;
 	}
 
-	return false;
-			
+	return false;	
 }
 
 /**
@@ -64,8 +67,20 @@ function is_wppedia_page( $query = false ) {
  * 
  * @since 1.1.0
  */
-function is_wppedia_search() {
-	return (is_wppedia_archive() && is_search());
+function is_wppedia_search($query = null) {
+	if ( ! $query ) {
+		global $wp_query;
+		$query = $wp_query;
+	}
+
+	/**
+	 * No Checks should be performed if the request is 404
+	 * or we are not on the main query
+	 */
+	if ( $query->is_404() || !$query->is_main_query() )
+		return false;
+
+	return (is_wppedia_archive() && $query->is_search());
 }
 
 /**
@@ -73,8 +88,20 @@ function is_wppedia_search() {
  * 
  * @since 1.1.0
  */
-function is_wppedia_archive() {
-	return (is_post_type_archive(wppedia_get_post_type()) || (is_tax() && get_post_type() === wppedia_get_post_type()));
+function is_wppedia_archive($query = null) {
+	if ( ! $query ) {
+		global $wp_query;
+		$query = $wp_query;
+	}
+
+	/**
+	 * No Checks should be performed if the request is 404
+	 * or we are not on the main query
+	 */
+	if ( $query->is_404() || !$query->is_main_query() )
+		return false;
+
+	return ($query->is_post_type_archive(wppedia_get_post_type()) || ($query->is_tax() && get_post_type() === wppedia_get_post_type()));
 }
 
 /**
@@ -82,7 +109,19 @@ function is_wppedia_archive() {
  * 
  * @since 1.1.0
  */
-function is_wppedia_singular() {
+function is_wppedia_singular($query = null) {
+	if ( ! $query ) {
+		global $wp_query;
+		$query = $wp_query;
+	}
+
+	/**
+	 * No Checks should be performed if the request is 404
+	 * or we are not on the main query
+	 */
+	if ( $query->is_404() || !$query->is_main_query() )
+		return false;
+
 	return is_singular([wppedia_get_post_type()]);
 }
 
@@ -91,8 +130,20 @@ function is_wppedia_singular() {
  * 
  * @since 1.0.0
  */
-function is_wppedia_frontpage() {
-	return is_page(wppedia_get_page_id('front'));	
+function is_wppedia_frontpage($query = null) {
+	if ( ! $query ) {
+		global $wp_query;
+		$query = $wp_query;
+	}
+
+	/**
+	 * No Checks should be performed if the request is 404
+	 * or we are not on the main query
+	 */
+	if ( $query->is_404() || !$query->is_main_query() )
+		return false;
+
+	return $query->is_page(wppedia_get_page_id('front'));	
 }
 
 /**
