@@ -17,7 +17,7 @@ class activation {
 
 	public static function activate() {
 		add_option('wppedia_installed_version', wppedia_get_version(), '', false);
-		add_option('wppedia_activated_at', time(), false);
+		add_option('wppedia_activated_at', time(), '', false);
 
     if ( ! get_option( 'wppedia_flush_rewrite_rules_flag' ) ) {
 			add_option('wppedia_flush_rewrite_rules_flag', true);
