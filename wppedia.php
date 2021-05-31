@@ -21,15 +21,15 @@ defined( 'ABSPATH' ) or die();
  */
 require_once plugin_dir_path(__FILE__) . 'core/inc/core-functions.php';
 
-use bf\wpPedia\template;
-use bf\wpPedia\rest_controller;
-use bf\wpPedia\query_control;
-use bf\wpPedia\admin;
-use bf\wpPedia\options;
-use bf\wpPedia\post_meta;
-use bf\wpPedia\post_type;
-use bf\wpPedia\modules\crosslinks;
-use bf\wpPedia\modules\tooltip;
+use bf\WPPedia\template;
+use bf\WPPedia\restController;
+use bf\WPPedia\queryControl;
+use bf\WPPedia\admin;
+use bf\WPPedia\options;
+use bf\WPPedia\postMeta;
+use bf\WPPedia\postType;
+use bf\WPPedia\modules\crossLinkModule;
+use bf\WPPedia\modules\tooltipModule;
 
 class WPPedia {
 
@@ -57,16 +57,16 @@ class WPPedia {
 	/**
 	 * Define Plugin Constants
 	 * 
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 */
 	private function define_constants() {
 
-		wppedia_maybe_define_constant('wpPediaPluginVersion', '1.1.1');
+		wppedia_maybe_define_constant('WPPediaPluginVersion', '1.1.1');
 
 		// Path Constants
-		wppedia_maybe_define_constant('wpPediaPluginDir', plugin_dir_path(__FILE__));
-		wppedia_maybe_define_constant('wpPediaPluginUrl', plugin_dir_url(__FILE__));
-		wppedia_maybe_define_constant('wpPediaPluginBaseName', plugin_basename( __FILE__ ));
+		wppedia_maybe_define_constant('WPPediaPluginDir', plugin_dir_path(__FILE__));
+		wppedia_maybe_define_constant('WPPediaPluginUrl', plugin_dir_url(__FILE__));
+		wppedia_maybe_define_constant('WPPediaPluginBaseName', plugin_basename( __FILE__ ));
 
 		// Env Constants
 		wppedia_maybe_define_constant('WPPedia_TEMPLATE_DEBUG_MODE', false);
@@ -74,7 +74,7 @@ class WPPedia {
 	}
 
 	public function setup() {
-		load_plugin_textdomain( 'wppedia', false, dirname( wpPediaPluginBaseName ) . '/languages' );
+		load_plugin_textdomain( 'wppedia', false, dirname( WPPediaPluginBaseName ) . '/languages' );
 	}
 
 	public function init() {
@@ -95,12 +95,12 @@ class WPPedia {
 		/**
 		 * Instantiate REST API Controller Class
 		 */
-		new rest_controller();
+		new restController();
 
 		/**
 		 * Instantiate Query Controller
 		 */
-		new query_control();
+		new queryControl();
 
 		/**
 		 * Instatiate Admin View
@@ -118,13 +118,13 @@ class WPPedia {
 		 * Post meta
 		 * Setup custom postmeta for WPPedia articles
 		 */
-		new post_meta();
+		new postMeta();
 
 		/**
 		 * Instantiate Post Type
 		 * Generates the WPPedia Post type and related taxonomies
 		 */
-		post_type::getInstance();
+		postType::getInstance();
 
 		/**
 		 * Modify Wiki Content
@@ -132,7 +132,7 @@ class WPPedia {
 		$crosslinks_active = ( get_option('wppedia_feature_crosslinks', options::get_option_defaults('wppedia_feature_crosslinks')) ) ? true : false;
 		$prefer_single_words = ( get_option('wppedia_crosslinks_prefer_single_words', options::get_option_defaults('wppedia_crosslinks_prefer_single_words')) ) ? true : false;
 
-		new crosslinks(
+		new crossLinkModule(
 			$crosslinks_active,
 			$prefer_single_words		
 		);
@@ -140,7 +140,7 @@ class WPPedia {
 		/**
 		 * Tooltips
 		 */
-		new tooltip();
+		new tooltipModule();
 
 	}
 
@@ -161,10 +161,10 @@ class WPPedia {
 	/**
 	 * Get default plugin path
 	 * 
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 */
 	public function plugin_path() {
-		return (defined('wpPediaPluginDir')) ? wpPediaPluginDir : plugin_dir_path(__FILE__);
+		return (defined('WPPediaPluginDir')) ? WPPediaPluginDir : plugin_dir_path(__FILE__);
 	}
 
 }
@@ -175,23 +175,23 @@ $WPPedia->init();
 /**
  * Template Hooks
  */
-require_once wpPediaPluginDir . 'template-hooks/hooks.php';
+require_once WPPediaPluginDir . 'template-hooks/hooks.php';
 
 /**
  * Enqueue Assets
  */
-require_once wpPediaPluginDir . 'core/inc/assets.php';
+require_once WPPediaPluginDir . 'core/inc/assets.php';
 
 /**
  * Shortcodes
  */
-require_once wpPediaPluginDir . 'core/inc/shortcodes.php';
+require_once WPPediaPluginDir . 'core/inc/shortcodes.php';
 
 /**
  * The code that runs during plugin activation.
  */
-require_once wpPediaPluginDir . 'core/inc/class.activation.php';
-register_activation_hook( __FILE__, [ 'bf\\wpPedia\\activation', 'activate' ] );
+require_once WPPediaPluginDir . 'core/inc/class.activation.php';
+register_activation_hook( __FILE__, [ 'bf\\WPPedia\\activation', 'activate' ] );
 
 /**
  * Flush rewrite rules if the previously added flag exists,
@@ -206,10 +206,10 @@ add_action('init', function() {
 
 }, 20);
 
-new bf\wpPedia\WPPedia_Upgrade();
+new bf\WPPedia\WPPediaUpgrade();
 
 /**
  * The code that runs during plugin deactivation.
  */
-require_once wpPediaPluginDir . 'core/inc/class.deactivation.php';
-register_deactivation_hook( __FILE__, [ 'bf\\wpPedia\\deactivation', 'deactivate' ] );
+require_once WPPediaPluginDir . 'core/inc/class.deactivation.php';
+register_deactivation_hook( __FILE__, [ 'bf\\WPPedia\\deactivation', 'deactivate' ] );

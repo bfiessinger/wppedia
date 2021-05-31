@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Modify the_content
+ * WPPedia module crosslinks
  * 
- * @since 1.1.0
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia\modules;
+namespace bf\WPPedia\modules;
 
-use bf\wpPedia\options;
+use bf\WPPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class crosslinks {
+class crossLinkModule {
 
 	/**
 	 * Public Settings variables
@@ -28,7 +28,7 @@ class crosslinks {
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;
 
-		$this->post_types = maybe_unserialize(get_option('wppedia_crosslinks_posttypes', \bf\wpPedia\options::get_option_defaults('wppedia_crosslinks_posttypes')));
+		$this->post_types = maybe_unserialize(get_option('wppedia_crosslinks_posttypes', options::get_option_defaults('wppedia_crosslinks_posttypes')));
 
 		// Set the main post type on the first place in the posttype array
 		if ( in_array( wppedia_get_post_type(), $this->post_types ) ) {

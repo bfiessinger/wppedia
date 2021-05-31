@@ -3,10 +3,10 @@
 /**
  * Admin View
  * 
- * @since 1.1.0
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia;
+namespace bf\WPPedia;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -33,7 +33,7 @@ class admin {
 		add_action( 'wppedia_admin_settings_page_header_content', [ $this, 'settings_header_logo' ], 10 );
 
 		// Add plugin action links
-		add_filter( 'plugin_action_links_' . wpPediaPluginBaseName, [ $this, 'plugin_action_links' ] );
+		add_filter( 'plugin_action_links_' . WPPediaPluginBaseName, [ $this, 'plugin_action_links' ] );
 
 		// Admin notices
 		add_action( 'admin_notices', [ $this, 'frontpage_slug_not_matching_permalink_settings_notice' ] );
@@ -187,10 +187,10 @@ class admin {
 	 * Show the WPPedia logo in the header section
 	 * of WPPedia Settings screen
 	 * 
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 */
 	function settings_header_logo() { ?>
-		<img class="wppedia-logo" src="<?php echo wpPediaPluginUrl; ?>assets/img/wppedia-logo.svg" width="60">
+		<img class="wppedia-logo" src="<?php echo WPPediaPluginUrl; ?>assets/img/wppedia-logo.svg" width="60">
 	<?php }
 
 	/**

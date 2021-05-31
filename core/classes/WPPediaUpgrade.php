@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Plugin Activation
+ * Database Upgrade
  * 
- * @since 1.1.0
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia;
+namespace bf\WPPedia;
 
-use bf\wpPedia\options;
+use bf\WPPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class WPPedia_Upgrade {
+class WPPediaUpgrade {
 
 	private $last_version;
 	private $cur_version;

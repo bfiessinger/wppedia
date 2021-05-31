@@ -8,13 +8,13 @@
  * @since 1.0.0
  */
 function wppedia_get_post_type() {
-	return bf\wpPedia\post_type::getInstance()->post_type;
+	return bf\WPPedia\postType::getInstance()->post_type;
 }
 
 /**
  * Get Wiki Entries
  * 
- * @since 1.0.0
+ * @since 1.2.0
  * 
  * @return WP_Query WordPress Query Result
  */

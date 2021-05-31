@@ -3,13 +3,12 @@
 /**
  * WP Wiki Template
  * 
- * @since 1.1.5
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia;
+namespace bf\WPPedia;
 
-use bf\wpPedia\post_type;
-use bf\wpPedia\options;
+use bf\WPPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) || die();

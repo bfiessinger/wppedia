@@ -3,10 +3,10 @@
 /**
  * Admin View
  * 
- * @since 1.1.3
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia;
+namespace bf\WPPedia;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -65,6 +65,11 @@ class options {
 		);
 	}
 
+	/**
+	 * Callback to display the setting page
+	 * 
+	 * @since 1.2.0
+	 */
 	function settings_cb() { ?>
 		<div class="wrap">
 			<div class="wppedia-layout-header">
@@ -87,7 +92,7 @@ class options {
 
 					<div class="wppedia-layout-sidebar">
 						<div class="wppedia-sidebar-widget">
-							<img src="<?php echo wpPediaPluginUrl; ?>assets/img/WPPedia-pro-teaser.png" width="200" />
+							<img src="<?php echo WPPediaPluginUrl; ?>assets/img/WPPedia-pro-teaser.png" width="200" />
 						</div>
 					</div>
 				</div>

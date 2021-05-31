@@ -3,10 +3,10 @@
 /**
  * Plugin Activation
  * 
- * @since 1.1.6
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia;
+namespace bf\WPPedia;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();

@@ -3,15 +3,15 @@
 /**
  * WPPedia post meta settings
  * 
- * @since 1.1.0
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia;
+namespace bf\WPPedia;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class post_meta extends options {
+class postMeta extends options {
 	private $post_meta_config;
 
 	public function __construct() {

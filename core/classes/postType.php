@@ -1,19 +1,19 @@
 <?php
 
 /**
- * wpPedia Post Type related
+ * WPPedia Post Type related
  * 
- * @since 1.1.5
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia;
+namespace bf\WPPedia;
 
-use bf\wpPedia\options;
+use bf\WPPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class post_type {
+class postType {
 
 	/**
 	 * Public variables
@@ -206,7 +206,7 @@ class post_type {
 			echo '<p>You have reached your post creation limit. <strong>This post has not been published.</strong> Upgrade to PRO to remove limitations.</p>';
 			echo '<p><strong>PRO will be available soon!</strong></p>';
 			echo '</div>';
-			echo '<img class="wppedia-pro-logo" src="' . wpPediaPluginUrl . 'assets/img/wppedia-pro-logo.svg">';
+			echo '<img class="wppedia-pro-logo" src="' . WPPediaPluginUrl . 'assets/img/wppedia-pro-logo.svg">';
 			echo '</div>';
 		}
 

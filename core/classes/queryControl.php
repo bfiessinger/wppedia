@@ -3,18 +3,17 @@
 /**
  * WP Wiki Controller
  * 
- * @since 1.0.0
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia;
+namespace bf\WPPedia;
 
-use bf\wpPedia\post_type;
-use bf\wpPedia\options;
+use bf\WPPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class query_control {
+class queryControl {
 
   public function __construct() {
 

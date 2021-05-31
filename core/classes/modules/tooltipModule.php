@@ -3,15 +3,15 @@
 /**
  * WP Wiki Template
  * 
- * @since 1.1.0
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia\modules;
+namespace bf\WPPedia\modules;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class tooltip {
+class tooltipModule {
 
 	private $excerpt_length = 40;
 

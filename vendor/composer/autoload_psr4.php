@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'bf\\wpPedia\\' => array($baseDir . '/core/classes'),
+    'bf\\WPPedia\\' => array($baseDir . '/core/classes'),
 );

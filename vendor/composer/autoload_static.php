@@ -9,12 +9,12 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
     public static $prefixLengthsPsr4 = array (
         'b' => 
         array (
-            'bf\\wpPedia\\' => 11,
+            'bf\\WPPedia\\' => 11,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'bf\\wpPedia\\' => 
+        'bf\\WPPedia\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core/classes',
         ),
@@ -22,17 +22,17 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'bf\\wpPedia\\WPPedia_Upgrade' => __DIR__ . '/../..' . '/core/classes/WPPedia_Upgrade.php',
-        'bf\\wpPedia\\admin' => __DIR__ . '/../..' . '/core/classes/admin.php',
-        'bf\\wpPedia\\inline_style_collector' => __DIR__ . '/../..' . '/core/classes/inline_style_collector.php',
-        'bf\\wpPedia\\modules\\crosslinks' => __DIR__ . '/../..' . '/core/classes/modules/crosslinks.php',
-        'bf\\wpPedia\\modules\\tooltip' => __DIR__ . '/../..' . '/core/classes/modules/tooltip.php',
-        'bf\\wpPedia\\options' => __DIR__ . '/../..' . '/core/classes/options.php',
-        'bf\\wpPedia\\post_meta' => __DIR__ . '/../..' . '/core/classes/post_meta.php',
-        'bf\\wpPedia\\post_type' => __DIR__ . '/../..' . '/core/classes/post_type.php',
-        'bf\\wpPedia\\query_control' => __DIR__ . '/../..' . '/core/classes/query_control.php',
-        'bf\\wpPedia\\rest_controller' => __DIR__ . '/../..' . '/core/classes/rest_controller.php',
-        'bf\\wpPedia\\template' => __DIR__ . '/../..' . '/core/classes/template.php',
+        'bf\\WPPedia\\WPPediaUpgrade' => __DIR__ . '/../..' . '/core/classes/WPPediaUpgrade.php',
+        'bf\\WPPedia\\admin' => __DIR__ . '/../..' . '/core/classes/admin.php',
+        'bf\\WPPedia\\inlineStyleCollector' => __DIR__ . '/../..' . '/core/classes/inlineStyleCollector.php',
+        'bf\\WPPedia\\modules\\crossLinkModule' => __DIR__ . '/../..' . '/core/classes/modules/crossLinkModule.php',
+        'bf\\WPPedia\\modules\\tooltipModule' => __DIR__ . '/../..' . '/core/classes/modules/tooltipModule.php',
+        'bf\\WPPedia\\options' => __DIR__ . '/../..' . '/core/classes/options.php',
+        'bf\\WPPedia\\postMeta' => __DIR__ . '/../..' . '/core/classes/postMeta.php',
+        'bf\\WPPedia\\postType' => __DIR__ . '/../..' . '/core/classes/postType.php',
+        'bf\\WPPedia\\queryControl' => __DIR__ . '/../..' . '/core/classes/queryControl.php',
+        'bf\\WPPedia\\restController' => __DIR__ . '/../..' . '/core/classes/restController.php',
+        'bf\\WPPedia\\template' => __DIR__ . '/../..' . '/core/classes/template.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -4,15 +4,15 @@
  * Style loader Class
  * Used to collect all stylesheets and merging them to inline styles
  * 
- * @since 1.0.0
+ * @since 1.2.0
  */
 
-namespace bf\wpPedia;
+namespace bf\WPPedia;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class inline_style_collector {
+class inlineStyleCollector {
 
 	public $stylesheets = [];
 	public $final_css = '';
@@ -50,7 +50,7 @@ class inline_style_collector {
 	 * 
 	 * @return boolean - returns true if styles where merged, false otherwhise
 	 * 
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 */
 	public function add( string $handle, string $stylesheet ) {
 
@@ -69,7 +69,7 @@ class inline_style_collector {
 			 */
 			$css_file_url_regex = '/url\s*\((?:\'|")?(.*?)(?:\'|")?\)/mi';
 			if ( preg_match($css_file_url_regex, $css_string, $matches, PREG_OFFSET_CAPTURE, 0) ) {
-				$css_string = preg_replace( $css_file_url_regex, 'url(\'' . wpPediaPluginUrl . 'dist/css/$1\')', $css_string );
+				$css_string = preg_replace( $css_file_url_regex, 'url(\'' . WPPediaPluginUrl . 'dist/css/$1\')', $css_string );
 			}
 
 			$this->collect_inline_styles(  $handle, $css_string );
