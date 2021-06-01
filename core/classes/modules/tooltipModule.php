@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WP Wiki Template
+ * WPPedia module Tooltips
  * 
  * @since 1.2.0
  */
