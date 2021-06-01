@@ -5,7 +5,7 @@
  * @since 1.2.0
  */
 
-namespace bf\WPPedia;
+namespace WPPedia;
 
 defined( 'ABSPATH' ) || exit;
 

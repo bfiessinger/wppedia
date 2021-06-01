@@ -6,7 +6,7 @@
  * @since 1.2.0
  */
 
-use bf\wpPedia\options;
+use WPPedia\options;
 
 /**
  * Enqueue Assets
@@ -36,7 +36,7 @@ function wppedia_enqueue_frontend_assets() {
 		(is_wppedia_archive() && false != get_option('wppedia_archive_show_searchbar', options::get_option_defaults('wppedia_archive_show_searchbar'))) ||
 		(is_wppedia_singular() && false != get_option('wppedia_singular_show_searchbar', options::get_option_defaults('wppedia_singular_show_searchbar')))
 	) {
-		$rest_controller = new bf\wpPedia\restController();
+		$rest_controller = new WPPedia\restController();
 		wp_enqueue_script( 'wppedia_search', WPPediaPluginUrl . 'dist/js/search.bundle.js', [], null, true );
 		wp_localize_script( 'wppedia_search', 'wppedia_search_props', [
 			'postlist_url' 		=> $rest_controller->get_endpoint_url( $rest_controller->rest_endpoint_search ),
@@ -70,7 +70,7 @@ function wppedia_enqueue_frontend_assets() {
 			break;
 	}
 
-	$final_css = \bf\WPPedia\inlineStyleCollector::getInstance()->get_final_css();
+	$final_css = WPPedia\inlineStyleCollector::getInstance()->get_final_css();
 	if ( '' != $final_css ) {
 		wp_register_style( 'wppedia-inline-style', false );
 		wp_enqueue_style( 'wppedia-inline-style' );

@@ -6,9 +6,9 @@
  * @since 1.2.0
  */
 
-namespace bf\WPPedia\modules;
+namespace WPPedia\modules;
 
-use bf\WPPedia\options;
+use WPPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();

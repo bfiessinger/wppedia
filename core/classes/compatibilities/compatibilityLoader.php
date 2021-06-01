@@ -6,7 +6,7 @@
  * @since 1.2.0
  */
 
-namespace bf\WPPedia\compatibilities;
+namespace WPPedia\compatibilities;
 
 defined( 'ABSPATH' ) || die();
 

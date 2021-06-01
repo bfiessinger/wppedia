@@ -21,19 +21,19 @@ defined( 'ABSPATH' ) or die();
  */
 require_once plugin_dir_path(__FILE__) . 'core/inc/core-functions.php';
 
-use bf\WPPedia\template;
-use bf\WPPedia\restController;
-use bf\WPPedia\queryControl;
-use bf\WPPedia\admin;
-use bf\WPPedia\options;
-use bf\WPPedia\postMeta;
-use bf\WPPedia\postType;
+use WPPedia\template;
+use WPPedia\restController;
+use WPPedia\queryControl;
+use WPPedia\admin;
+use WPPedia\options;
+use WPPedia\postMeta;
+use WPPedia\postType;
 
 // Modules
-use bf\WPPedia\modules\crossLinkModule;
-use bf\WPPedia\modules\tooltipModule;
+use WPPedia\modules\crossLinkModule;
+use WPPedia\modules\tooltipModule;
 
-use bf\WPPedia\compatibilities\compatibilityCollection;
+use WPPedia\compatibilities\compatibilityCollection;
 
 class WPPedia {
 
@@ -85,7 +85,7 @@ class WPPedia {
 
 		// psr4 Autoloader
 		$loader = require "vendor/autoload.php";
-		$loader->addPsr4('bf\\wpPedia\\', __DIR__);
+		$loader->addPsr4('wpPedia\\', __DIR__);
 
 		$this->define_constants();
 
@@ -196,7 +196,7 @@ require_once WPPediaPluginDir . 'core/inc/shortcodes.php';
  * The code that runs during plugin activation.
  */
 require_once WPPediaPluginDir . 'core/inc/class.activation.php';
-register_activation_hook( __FILE__, [ 'bf\\WPPedia\\activation', 'activate' ] );
+register_activation_hook( __FILE__, [ 'WPPedia\\activation', 'activate' ] );
 
 /**
  * Flush rewrite rules if the previously added flag exists,
@@ -211,10 +211,10 @@ add_action('init', function() {
 
 }, 20);
 
-new bf\WPPedia\WPPediaUpgrade();
+new WPPedia\WPPediaUpgrade();
 
 /**
  * The code that runs during plugin deactivation.
  */
 require_once WPPediaPluginDir . 'core/inc/class.deactivation.php';
-register_deactivation_hook( __FILE__, [ 'bf\\WPPedia\\deactivation', 'deactivate' ] );
+register_deactivation_hook( __FILE__, [ 'WPPedia\\deactivation', 'deactivate' ] );

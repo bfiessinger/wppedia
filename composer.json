@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "bf\\WPPedia\\": "core/classes"
+            "WPPedia\\": "core/classes"
 				}
     },
     "require-dev": {

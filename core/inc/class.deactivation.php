@@ -6,7 +6,7 @@
  * @since 1.2.0
  */
 
-namespace bf\WPPedia;
+namespace WPPedia;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();

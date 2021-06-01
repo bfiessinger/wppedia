@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die();
 
-use bf\WPPedia\inlineStyleCollector;
+use WPPedia\inlineStyleCollector;
 
 require_once __DIR__ . '/template-functions.php';
 require_once __DIR__ . '/page-functions.php';

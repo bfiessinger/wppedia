@@ -6,9 +6,9 @@
  * @since 1.2.0
  */
 
-namespace bf\WPPedia;
+namespace WPPedia;
 
-use bf\WPPedia\options;
+use WPPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -351,6 +351,12 @@ class postType {
 		return $permalink;
 	}
 
+	/**
+	 * Set a custom option that tells WPPedia to flush
+	 * rewrite rules 
+	 * 
+	 * @since 1.1.6
+	 */
 	function set_flush_rewrite_rules_flag() {
     if (!get_option('wppedia_flush_rewrite_rules_flag')) {
 			add_option('wppedia_flush_rewrite_rules_flag', true);

@@ -8,7 +8,7 @@
  * @since 1.0.0
  */
 function wppedia_get_post_type() {
-	return bf\WPPedia\postType::getInstance()->post_type;
+	return WPPedia\postType::getInstance()->post_type;
 }
 
 /**
