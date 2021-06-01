@@ -55,14 +55,14 @@ class postType {
 		add_action( 'init', [ $this, 'register_wppedia_post_type' ], 10 );
 
 		// Create Fake Taxonomy to query by initial letter
-		add_action( 'init', [ $this, 'create_wppedia_initial_letter_tax' ], 202 );
+		add_action( 'init', [ $this, 'create_wppedia_initial_letter_tax' ], 10 );
 
 		// Setup a post creation limit
 		add_action( 'publish_' . $this->post_type , [ $this, 'limit_num_posts' ] );
 		add_action( 'admin_notices', [ $this, 'limit_reached_msg_notice' ] );
 
 		// Setup rewrite rules
-		add_action( 'init', [ $this, 'add_rewrite_rules' ], 202 );
+		add_action( 'init', [ $this, 'add_rewrite_rules' ], 11 );
 		add_filter( 'post_type_link', [ $this, 'post_type_link' ], 10, 2 );
 		add_action( 'save_post_wppedia_term', [ $this, 'set_flush_rewrite_rules_flag' ] );
 
