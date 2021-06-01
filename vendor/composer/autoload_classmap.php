@@ -9,6 +9,8 @@ return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'bf\\WPPedia\\WPPediaUpgrade' => $baseDir . '/core/classes/WPPediaUpgrade.php',
     'bf\\WPPedia\\admin' => $baseDir . '/core/classes/admin.php',
+    'bf\\WPPedia\\compatibilities\\compatibilityCollection' => $baseDir . '/core/classes/compatibilities/compatibilityCollection.php',
+    'bf\\WPPedia\\compatibilities\\compatibilityLoader' => $baseDir . '/core/classes/compatibilities/compatibilityLoader.php',
     'bf\\WPPedia\\inlineStyleCollector' => $baseDir . '/core/classes/inlineStyleCollector.php',
     'bf\\WPPedia\\modules\\crossLinkModule' => $baseDir . '/core/classes/modules/crossLinkModule.php',
     'bf\\WPPedia\\modules\\tooltipModule' => $baseDir . '/core/classes/modules/tooltipModule.php',

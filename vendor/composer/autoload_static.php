@@ -24,6 +24,8 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'bf\\WPPedia\\WPPediaUpgrade' => __DIR__ . '/../..' . '/core/classes/WPPediaUpgrade.php',
         'bf\\WPPedia\\admin' => __DIR__ . '/../..' . '/core/classes/admin.php',
+        'bf\\WPPedia\\compatibilities\\compatibilityCollection' => __DIR__ . '/../..' . '/core/classes/compatibilities/compatibilityCollection.php',
+        'bf\\WPPedia\\compatibilities\\compatibilityLoader' => __DIR__ . '/../..' . '/core/classes/compatibilities/compatibilityLoader.php',
         'bf\\WPPedia\\inlineStyleCollector' => __DIR__ . '/../..' . '/core/classes/inlineStyleCollector.php',
         'bf\\WPPedia\\modules\\crossLinkModule' => __DIR__ . '/../..' . '/core/classes/modules/crossLinkModule.php',
         'bf\\WPPedia\\modules\\tooltipModule' => __DIR__ . '/../..' . '/core/classes/modules/tooltipModule.php',

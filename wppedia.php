@@ -28,8 +28,12 @@ use bf\WPPedia\admin;
 use bf\WPPedia\options;
 use bf\WPPedia\postMeta;
 use bf\WPPedia\postType;
+
+// Modules
 use bf\WPPedia\modules\crossLinkModule;
 use bf\WPPedia\modules\tooltipModule;
+
+use bf\WPPedia\compatibilities\compatibilityCollection;
 
 class WPPedia {
 
@@ -91,6 +95,7 @@ class WPPedia {
 		 * Instantiate Template Utils
 		 */
 		template::getInstance();
+		new compatibilityCollection();
 
 		/**
 		 * Instantiate REST API Controller Class
