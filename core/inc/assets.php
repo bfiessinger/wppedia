@@ -89,7 +89,7 @@ function wppedia_enqueue_admin_assets($hook) {
 	$is_edit = false;
 	$is_option = false;
 
-	if ('post.php' === $hook && wppedia_get_post_type() === get_post_type()) {
+	if (('post.php' === $hook || 'post-new.php' === $hook) && wppedia_get_post_type() === get_post_type()) {
 		$is_edit = true;
 	}
 	
