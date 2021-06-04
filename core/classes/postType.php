@@ -317,36 +317,48 @@ class postType {
 	/**
 	 * Add rewrite rules
 	 * 
-	 * @since 1.1.5
+	 * @since 1.2.0
 	 */
 	function add_rewrite_rules() {
-		add_rewrite_tag('%wppedia_initial_letter%', '([^&]+)', 'wppedia_initial_letter=');
-    add_rewrite_rule(
-			ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/([^/]*)/?',
-			'index.php?post_type=' . $this->post_type . '&wppedia_initial_letter=$matches[1]&name=$matches[2]',
-			'top'
-		);
+		if (false != get_option('wppedia_permalink_use_initial_character', options::get_option_defaults('wppedia_permalink_use_initial_character'))) {
+			add_rewrite_tag('%wppedia_initial_letter%', '([^&]+)', 'wppedia_initial_letter=');
+			add_rewrite_rule(
+				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/([^/]*)/?',
+				'index.php?post_type=' . $this->post_type . '&wppedia_initial_letter=$matches[1]&name=$matches[2]',
+				'top'
+			);
+		} else {
+			add_rewrite_rule(
+				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/?',
+				'index.php?post_type=' . $this->post_type . '&name=$matches[1]',
+				'top'
+			);
+		}
 	}
 
 	/**
 	 * Change default post link
 	 * 
-	 * @since 1.1.5
+	 * @since 1.2.0
 	 */
 	function post_type_link( $permalink, $post ) {
     // bail if post type is not wppedia_term
 		if (wppedia_get_post_type() !== $post->post_type)
 			return $permalink;
 
-		$terms = wp_get_post_terms($post->ID, $this->taxonomy);
-		// set location, if no location is found, provide a default value.
-		if ( 0 < count( $terms ))
-			$init_char = $terms[0]->slug;
-		else
-			$init_char = 'other';
-
-		$init_char = urlencode( $init_char );
-		$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $init_char . '/' . $post->post_name;
+		if (false != get_option('wppedia_permalink_use_initial_character', options::get_option_defaults('wppedia_permalink_use_initial_character'))) {
+			$terms = wp_get_post_terms($post->ID, $this->taxonomy);
+			// set location, if no location is found, provide a default value.
+			if ( 0 < count( $terms ))
+				$init_char = $terms[0]->slug;
+			else
+				$init_char = 'other';
+	
+			$init_char = urlencode( $init_char );
+			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $init_char . '/' . $post->post_name;
+		} else {
+			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $post->post_name;
+		}
 
 		return $permalink;
 	}
