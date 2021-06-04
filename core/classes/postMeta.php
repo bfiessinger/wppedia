@@ -8,10 +8,15 @@
 
 namespace WPPedia;
 
+use WPPedia\traits\adminFields;
+
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class postMeta extends options {
+class postMeta {
+
+	use adminFields;
+
 	private $post_meta_config;
 
 	public function __construct() {

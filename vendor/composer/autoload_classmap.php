@@ -20,4 +20,5 @@ return array(
     'WPPedia\\queryControl' => $baseDir . '/core/classes/queryControl.php',
     'WPPedia\\restController' => $baseDir . '/core/classes/restController.php',
     'WPPedia\\template' => $baseDir . '/core/classes/template.php',
+    'WPPedia\\traits\\adminFields' => $baseDir . '/core/classes/traits/adminFields.php',
 );
