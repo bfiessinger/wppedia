@@ -22,4 +22,4 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<div class="wppedia-loop-wrapper">
+</div>
