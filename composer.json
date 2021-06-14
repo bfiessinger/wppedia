@@ -1,12 +1,12 @@
 {
-    "name": "bf/wppedia",
-    "description": "Basic Glossary for WordPress",
+    "name": "wppedia/wppedia",
+    "description": "The most advanced Glossary solution for WordPress!",
     "type": "wordpress-plugin",
     "license": "GPLv3",
     "authors": [
         {
             "name": "Bastian Fießinger",
-            "email": "bastian.fiessinger@proxenos.de"
+            "email": "bastian.fiessinger@steinrein.com"
         }
     ],
     "minimum-stability": "stable",

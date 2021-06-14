@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.2.0
+### New
+- option `use initial character in URL` is now available in the free version
+- new taxonomy for glossary categorization
+
+### Bug fixes
+- fixed some styling issues
+- fixed an issue where edit scripts where not enqueued for new posts
+- fixed a template issue where 2 loop wrapper elements exists
+
+### Enhancements
+- better theme compatibility with default WordPress themes
+- stabilized templates
+- added more editable template parts
+
+### Breaking ⚠️
+- switch classNames to camel case
+- rename plugin constants
+- rename plugin namespaces
+
 ## 1.1.6
 ### Bug fixes
 - fixed permalink base setting had no effect on the actual permalinks
