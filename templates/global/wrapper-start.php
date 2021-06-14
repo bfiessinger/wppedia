@@ -16,12 +16,12 @@
  * @see https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package wppedia
- * @version 1.0.0
+ * @version 1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<div id="primary" class="content-area">
-	<main id="main" class="site-main" role="main">
+<div id="primary" class="wppedia-content-area content-area">
+	<main id="main" class="wppedia-site-main site-main" role="main">
 	
