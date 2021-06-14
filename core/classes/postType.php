@@ -18,10 +18,10 @@ class postType {
 	/**
 	 * Public variables
 	 */
-	public $post_type = 'wppedia_term';
-	public $post_limit = 500;
+	public $post_types = [];
+	public $taxonomies = [];
 
-	public $taxonomy = 'wppedia_initial_letter';
+	public $post_limit = 500;
 
 	/**
 	 * Protected variables
@@ -49,6 +49,9 @@ class postType {
 
   protected function __construct() {
 
+		$this->definePostTypes();
+		$this->defineTaxonomies();
+
 		add_action( 'init', [ $this, 'set_permalink_base' ], 9 );
 
 		// Create Post type
@@ -57,8 +60,11 @@ class postType {
 		// Create Fake Taxonomy to query by initial letter
 		add_action( 'init', [ $this, 'create_wppedia_initial_letter_tax' ], 10 );
 
+		// Create glossary category taxonomy
+		add_action( 'init', [ $this, 'create_wppedia_category_tax' ], 10 );
+
 		// Setup a post creation limit
-		add_action( 'publish_' . $this->post_type , [ $this, 'limit_num_posts' ] );
+		add_action( 'publish_' . $this->post_types['main'] , [ $this, 'limit_num_posts' ] );
 		add_action( 'admin_notices', [ $this, 'limit_reached_msg_notice' ] );
 
 		// Setup rewrite rules
@@ -69,6 +75,19 @@ class postType {
 		// Set Initial Letter Taxonomy on post save
 		add_action( 'save_post_wppedia_term', [ $this, 'manage_initial_character_onsave' ], 10, 3 );
 
+	}
+
+	private function definePostTypes() {
+		$this->post_types = [
+			'main' => 'wppedia_term'
+		];
+	}
+
+	private function defineTaxonomies() {
+		$this->taxonomies = [
+			'initial_character' => 'wppedia_initial_letter',
+			'category'					=> 'wppedia_category'
+		];
 	}
 
 	/**
@@ -88,7 +107,7 @@ class postType {
    * 
 	 * @uses register_post_type
 	 * 
-   * @since 1.1.3
+   * @since 1.2.0
    */
   public function register_wppedia_post_type() {
 
@@ -127,7 +146,7 @@ class postType {
       'labels' => $labels,
       'menu_icon' => 'dashicons-book-alt',
       'supports' => [ 'thumbnail', 'title', 'editor', 'excerpt', 'revisions', 'author' ],
-      'taxonomies' => [ $this->taxonomy ],
+      'taxonomies' => $this->taxonomies,
       'public' => true,
       'show_ui' => true,
       'show_in_menu' => true,
@@ -149,7 +168,7 @@ class postType {
 		}
 			
 
-		\register_post_type( $this->post_type, $args );
+		\register_post_type( $this->post_types['main'], $args );
 
 	}
 
@@ -157,7 +176,7 @@ class postType {
 	 * Setup a post creation limit as the free version does not offer an index which might cause
 	 * the crosslink generation to be very slow
 	 * 
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 */
 	function limit_num_posts( $post_id ) {
 
@@ -165,8 +184,10 @@ class postType {
 			return;
 
 		global $wpdb;
+
+		$limit_post_type = $this->post_types['main'];
 		
-		$query_num_posts = "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = '$this->post_type' AND post_status = 'publish' ";
+		$query_num_posts = "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = '$limit_post_type' AND post_status = 'publish' ";
 		$num_published = $wpdb->get_var($query_num_posts);
 			
 		// Check the limit
@@ -218,7 +239,7 @@ class postType {
 	 * 
 	 * @uses register_taxonomy
 	 * 
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 */
 	function create_wppedia_initial_letter_tax() {
 
@@ -258,7 +279,7 @@ class postType {
 			'rewrite' => $rewrite
 		];
 
-		\register_taxonomy( $this->taxonomy, [ $this->post_type ], $args );
+		\register_taxonomy( $this->taxonomies['initial_character'], [ $this->post_types['main'] ], $args );
 
 	}
 
@@ -269,13 +290,13 @@ class postType {
 	 * @uses get_terms
 	 * @uses wp_delete_term
 	 * 
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 */
 	function manage_initial_character_onsave( int $post_ID, \WP_POST $post, bool $update ) {
 
 		$cur_initial = wppedia_get_post_initial_letter( $post_ID );
 
-		$taxonomy = $this->taxonomy;
+		$taxonomy = $this->taxonomies['initial_character'];
 		$cur_initial_encoded = wppedia_slugify( $cur_initial );
 		
 		// Create a new term based on the initial letter
@@ -315,6 +336,54 @@ class postType {
 	}
 
 	/**
+	 * Register a term category taxonomy
+	 * 
+	 * @uses register_taxonomy
+	 * 
+	 * @since 1.2.0
+	 */
+	function create_wppedia_category_tax() {
+
+		flush_rewrite_rules();
+
+		$labels = array(
+			'name'              => _x( 'Glossary categories', 'taxonomy general name', 'wppedia' ),
+			'singular_name'     => _x( 'Glossary category', 'taxonomy singular name', 'wppedia' ),
+			'search_items'      => __( 'Search Glossary categories', 'wppedia' ),
+			'all_items'         => __( 'All Glossary categories', 'wppedia' ),
+			'parent_item'       => __( 'Parent Glossary category', 'wppedia' ),
+			'parent_item_colon' => __( 'Parent Glossary category:', 'wppedia' ),
+			'edit_item'         => __( 'Edit Glossary category', 'wppedia' ),
+			'update_item'       => __( 'Update Glossary category', 'wppedia' ),
+			'add_new_item'      => __( 'Add New Glossary category', 'wppedia' ),
+			'new_item_name'     => __( 'New Glossary category Name', 'wppedia' ),
+			'menu_name'         => __( 'Categories' ),
+		);
+		$rewrite = array(
+			'slug' => 'glossary-category',//ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/kategorie',
+			'with_front' => false,
+			'hierarchical' => true,
+		);
+		$args = array(
+			'labels' => $labels,
+			'description' => __( '', 'wppedia' ),
+			'hierarchical' => true,
+			'public' => true,
+			'publicly_queryable' => true,
+			'show_ui' => true,
+			'show_in_menu' => true,
+			'show_in_nav_menus' => true,
+			'show_tagcloud' => true,
+			'show_in_quick_edit' => true,
+			'show_admin_column' => false,
+			'show_in_rest' => true,
+			'rewrite' => $rewrite,
+		);
+		\register_taxonomy( $this->taxonomies['category'], [ $this->post_types['main'] ], $args );
+
+	}
+
+	/**
 	 * Add rewrite rules
 	 * 
 	 * @since 1.2.0
@@ -324,13 +393,13 @@ class postType {
 			add_rewrite_tag('%wppedia_initial_letter%', '([^&]+)', 'wppedia_initial_letter=');
 			add_rewrite_rule(
 				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/([^/]*)/?',
-				'index.php?post_type=' . $this->post_type . '&wppedia_initial_letter=$matches[1]&name=$matches[2]',
+				'index.php?post_type=' . $this->post_types['main'] . '&wppedia_initial_letter=$matches[1]&name=$matches[2]',
 				'top'
 			);
 		} else {
 			add_rewrite_rule(
 				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/?',
-				'index.php?post_type=' . $this->post_type . '&name=$matches[1]',
+				'index.php?post_type=' . $this->post_types['main'] . '&name=$matches[1]',
 				'top'
 			);
 		}
@@ -347,7 +416,7 @@ class postType {
 			return $permalink;
 
 		if (false != get_option('wppedia_permalink_use_initial_character', options::get_option_defaults('wppedia_permalink_use_initial_character'))) {
-			$terms = wp_get_post_terms($post->ID, $this->taxonomy);
+			$terms = wp_get_post_terms($post->ID, $this->taxonomies['initial_character']);
 			// set location, if no location is found, provide a default value.
 			if ( 0 < count( $terms ))
 				$init_char = $terms[0]->slug;
