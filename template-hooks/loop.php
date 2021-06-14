@@ -23,49 +23,25 @@ if ( ! function_exists( 'wppedia_postlist_wrapper_end' ) ) {
 }
 
 /**
- * Loop item link open
- * 
- * @since 1.0.0
- */
-if ( ! function_exists( 'wppedia_loop_postlink_open' ) ) {
-	function wppedia_loop_postlink_open() { ?>
-		<a href="<?php echo get_the_permalink(); ?>" title="<?php echo esc_html( get_the_title() ); ?>" rel="bookmark">
-	<?php }
-}
-
-/**
- * Loop item link close
- * 
- * @since 1.0.0
- */
-if ( ! function_exists( 'wppedia_loop_postlink_close' ) ) {
-	function wppedia_loop_postlink_close() { ?>
-		</a>
-	<?php }
-}
-
-/**
  * Loop title
  * 
- * @since 1.0.0
+ * @since 1.2.0
  */
 if ( ! function_exists( 'wppedia_loop_item_title' ) ) {
 	function wppedia_loop_item_title() {
-		the_title('<h2 class="wppedia-post-title entry-title">', '</h2>');
+		wppedia_get_template_part('loop/post', 'title');
 	}
 }
 
 /**
  * Loop Featured Image
  * 
- * @since 1.1.3
+ * @since 1.2.0
  */
 if ( ! function_exists( 'wppedia_loop_featured_image' ) ) {
 	function wppedia_loop_featured_image() {
 		if (has_post_thumbnail()) {
-			echo '<div class="wppedia-thumbnail-wrapper">';
-			the_post_thumbnail('thumbnail', ['class' => 'wppedia-post-thumbnail']);
-			echo '</div>';
+			wppedia_get_template_part('loop/post', 'featured-image');
 		}
 	}
 }
@@ -73,7 +49,7 @@ if ( ! function_exists( 'wppedia_loop_featured_image' ) ) {
 /**
  * Loop excerpt
  * 
- * @since 1.1.3
+ * @since 1.2.0
  */
 if ( ! function_exists( 'wppedia_loop_excerpt' ) ) {
 	function wppedia_loop_excerpt() {
@@ -81,9 +57,7 @@ if ( ! function_exists( 'wppedia_loop_excerpt' ) ) {
 			return;
 		}		
 
-		echo '<div class="entry-content">';
-		the_excerpt_wppedia();
-		echo '</div>';
+		wppedia_get_template_part('loop/post', 'excerpt');
 	}
 }
 
