@@ -65,7 +65,15 @@ class WPPedia {
 	 */
 	private function define_constants() {
 
-		wppedia_maybe_define_constant('WPPediaPluginVersion', '1.2.0');
+		if (!function_exists('get_plugins')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		$pluginData = array_values(array_filter(get_plugins(), function ($plugins) {
+			return ('WPPedia' === $plugins['Name']);
+		}))[0];
+
+		wppedia_maybe_define_constant('WPPediaPluginVersion', $pluginData['Version']);
 
 		// Path Constants
 		wppedia_maybe_define_constant('WPPediaPluginDir', plugin_dir_path(__FILE__));
