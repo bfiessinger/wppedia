@@ -9,10 +9,6 @@
  * @since 1.0.0
  */
 function wppedia_maybe_define_constant(string $name, $value) {
-	if (!isset($name) || !isset($value)) {
-		throw new Exception('wppedia_maybe_define_constant has been called wrong. Either `$name` or `$value` is missing', 1);
-	}
-	
 	if (!defined($name)) {
 		define($name, $value);
 	}
