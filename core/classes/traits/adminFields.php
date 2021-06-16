@@ -120,6 +120,15 @@ trait adminFields {
 			$field['id'], $field['id'],
 			$this->restrict_pro($field)
 		);
+
+		if (isset($field['class']) && false !== strpos($field['class'], 'wppedia-switch-button')) {
+			printf(
+				'<label for="%s" class="wppedia-switch-label" data-on="%s" data-off="%s"></label>',
+				$field['id'],
+				_x('Yes', 'options', 'wppedia'),
+				_x('No', 'options', 'wppedia')
+			);
+		}
 	}
 
 	public function checkbox_group( $field ) {

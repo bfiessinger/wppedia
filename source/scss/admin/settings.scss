@@ -38,81 +38,79 @@
 	margin-top: .5em;
 }
 
-@supports((-webkit-appearance: none) or (-moz-appearance: none)) and (--css: variables) {
-  input.wppedia-switch-button {
-    --active: #{$wp_primary};
-    --active-inner: #fff;
-    --border: #{$grey};
-    --border-hover: #{$wp_highlight};
-    --background: #fff;
-    --disabled: #{$grey};
-    --disabled-inner: #E1E6F9;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    height: 21px;
-    outline: none;
-    vertical-align: top;
-    position: relative;
-    margin: 0;
-    cursor: pointer;
-    border: 1px solid var(--bc, var(--border));
-    background: var(--b, var(--background));
-    transition: background .3s, border-color .3s, box-shadow .2s;
-		margin-right: .5rem;
-		width: 38px;
-		border-radius: 11px;
-		&:checked:before {
-			content: none;
-		}
-    &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
-			left: 2px;
-			top: 2px;
-			border-radius: 50%;
-			width: 15px;
-			height: 15px;
-			background: var(--ab, var(--border));
-			transform: translateX(var(--x, 0));
-    }
-    &:checked {
-      --b: var(--active);
-      --bc: var(--active);
-      --d-o: .3s;
-      --d-t: .6s;
-      --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
-			--ab: var(--active-inner);
-			--x: 17px;
-    }
-    &:disabled {
-      --b: var(--disabled);
-			--ab: var(--background);
-      cursor: not-allowed;
-      opacity: .9;
-      &:checked {
-        --b: var(--disabled-inner);
-        --bc: var(--border);
-      }
-      & + label {
-        cursor: not-allowed;
-      }
-			&:not(:checked) {
-				&:after {
-					opacity: .6;
-				}
+// Checkbox switches
+input.wppedia-switch-button {
+	border: 0;
+	clip: rect(1px,1px,1px,1px);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal!important;
+	&:checked {
+		+ .wppedia-switch-label {
+			&:before {
+				content: attr(data-on);
+				background-color: #160351;
+				border: 1px solid #160351;
+				color: #fff;
+				padding: 0 26px 0 6px
 			}
-    }
-    &:hover {
-      &:not(:checked) {
-        &:not(:disabled) {
-          --bc: var(--border-hover);
-        }
-      }
-    }
-    &:focus {
-      box-shadow: 0 0 0 2px rgba($wp_primary, .3);
-    }
-  }
+			&:after {
+				left: 57px;
+				transform: translateX(-100%)
+			}
+		}
+	}
+	&:disabled {
+		+ .wppedia-switch-label {
+			cursor: not-allowed;
+			&:before,
+			&:after {
+				opacity: .6;
+			}
+		}
+	}
+}
+
+.wppedia-switch-label {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	padding-left: 60px;
+	margin-top: 0;
+	min-height: 26px;
+	&:after {
+		content: "";
+		position: absolute;
+		top: 3px;
+		left: 3px;
+		width: 20px;
+		height: 20px;
+		background: #fff;
+		border-radius: 5px;
+		transition: .3s;
+		z-index: 3;
+	}
+	&:before {
+		content: attr(data-off);
+		width: 60px;
+		position: absolute;
+		left: 0;
+		height: 26px;
+		line-height: 26px;
+		box-sizing: border-box;
+		background-color: #e0e0e0;
+		border: 1px solid #d6d6d6;
+		display: inline-block;
+		border-radius: 5px;
+		vertical-align: middle;
+		color: #444;
+		transition: background .1s linear, color .1s linear, border .1s linear;
+		padding: 0 6px 0 26px
+	}
 }
