@@ -65,7 +65,7 @@ class WPPedia {
 	 */
 	private function define_constants() {
 
-		wppedia_maybe_define_constant('WPPediaPluginVersion', '1.1.1');
+		wppedia_maybe_define_constant('WPPediaPluginVersion', '1.2.0');
 
 		// Path Constants
 		wppedia_maybe_define_constant('WPPediaPluginDir', plugin_dir_path(__FILE__));
