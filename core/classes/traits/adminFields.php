@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WPPedia module crosslinks
+ * WPPedia admin fields
  * 
  * @since 1.2.0
  */
@@ -13,6 +13,11 @@ defined( 'ABSPATH' ) || die();
 
 trait adminFields {
 
+	/**
+	 * Evaluate the function to use foreach field type
+	 * 
+	 * @since 1.2.0
+	 */
 	public function field( $field ) {
 		switch ( $field['type'] ) {
 			case 'number':
@@ -44,6 +49,11 @@ trait adminFields {
 		}
 	}
 
+	/**
+	 * Create a regular input field
+	 * 
+	 * @since 1.2.0
+	 */
 	public function input( $field ) {
 		printf(
 			'<input class="regular-text %s" id="%s" name="%s" %s type="%s" value="%s" %s>',
@@ -56,6 +66,11 @@ trait adminFields {
 		);
 	}
 
+	/**
+	 * Create a numeric input field
+	 * 
+	 * @since 1.2.0
+	 */
 	public function input_minmax( $field ) {
 		printf(
 			'<input class="regular-text %s" id="%s" %s %s name="%s" %s type="%s" value="%s" %s>',
@@ -71,6 +86,11 @@ trait adminFields {
 		);
 	}
 
+	/**
+	 * Create a textarea field
+	 * 
+	 * @since 1.2.0
+	 */
 	public function textarea( $field ) {
 		printf(
 			'<textarea class="regular-text %s" id="%s" name="%s" rows="%d" %s>%s</textarea>',
@@ -82,6 +102,11 @@ trait adminFields {
 		);
 	}
 
+	/**
+	 * Create a select input 
+	 * 
+	 * @since 1.2.0
+	 */
 	public function select( $field ) {
 		printf(
 			'<select id="%s" name="%s" %s %s>%s</select>',
@@ -92,6 +117,11 @@ trait adminFields {
 		);
 	}
 
+	/**
+	 * Evaluate the selected option
+	 * 
+	 * @since 1.2.0
+	 */
 	public function select_selected( $field, $current ) {
 		$value = $this->value( $field );
 		if ( strval($value) === strval($current) ) {
@@ -100,6 +130,11 @@ trait adminFields {
 		return '';
 	}
 
+	/**
+	 * Output options for the select method
+	 * 
+	 * @since 1.2.0
+	 */
 	public function select_options( $field ) {
 		$output = [];
 		foreach ( $field['options'] as $option => $label ) {
@@ -112,6 +147,11 @@ trait adminFields {
 		return implode( '<br>', $output );
 	}
 
+	/**
+	 * Create a checkbox field
+	 * 
+	 * @since 1.2.1
+	 */
 	public function checkbox( $field ) {
 		printf(
 			'<input %s %s id="%s" name="%s" type="checkbox" value="1" %s>',
@@ -131,6 +171,11 @@ trait adminFields {
 		}
 	}
 
+	/**
+	 * Create a group of checkbox fields
+	 * 
+	 * @since 1.2.0
+	 */
 	public function checkbox_group( $field ) {
 		foreach ( $field['options'] as $option => $label ) {
 			$id = $field['id'] . '[' . $option . ']';
@@ -141,6 +186,11 @@ trait adminFields {
 		}
 	}
 
+	/**
+	 * Create an arbiatry title field
+	 * 
+	 * @since 1.2.0
+	 */
 	public function title( $field ) {
 		$allowed_h_tags = [
 			'h1',
@@ -162,6 +212,11 @@ trait adminFields {
 		echo '<hr>';
 	}
 
+	/**
+	 * Evaluate the current value of a field
+	 * 
+	 * @since 1.2.0
+	 */
 	public function value( $field ) {
 		if (get_option($field['id'], false)) {
 			$value = get_option($field['id']);
@@ -176,7 +231,7 @@ trait adminFields {
 	/**
 	 * Display an options description
 	 * 
-	 * @since 1.1.0
+	 * @since 1.2.0
 	 */
 	public function display_field_description($desc) {
 		if (is_callable($desc)) {
@@ -197,7 +252,7 @@ trait adminFields {
 	 * 
 	 * @param bool $disable
 	 * 
-	 * @since 1.1.0
+	 * @since 1.2.0
 	 */
 	public function restrict_pro($field) {
 		if (isset($field['class']) && false !== strpos($field['class'], self::$pro_feature_className)) {
