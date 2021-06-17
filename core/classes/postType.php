@@ -290,14 +290,14 @@ class postType {
 	 * @uses get_terms
 	 * @uses wp_delete_term
 	 * 
-	 * @since 1.2.0
+	 * @since 1.2.1
 	 */
 	function manage_initial_character_onsave( int $post_ID, \WP_POST $post, bool $update ) {
 
 		$cur_initial = wppedia_get_post_initial_letter( $post_ID );
 
 		$taxonomy = $this->taxonomies['initial_character'];
-		$cur_initial_encoded = wppedia_slugify( $cur_initial );
+		$cur_initial_encoded = wppedia_slugify( $cur_initial, _x( 'other', 'wppedia slugs', 'wppedia' ) );
 		
 		// Create a new term based on the initial letter
 		\wp_insert_term( 

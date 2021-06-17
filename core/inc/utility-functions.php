@@ -20,8 +20,10 @@ function wppedia_maybe_define_constant(string $name, $value) {
  * @param string $str 
  * 
  * @return string - a valid slug
+ * 
+ * @since 1.2.1
  */
-function wppedia_slugify( string $str ) {
+function wppedia_slugify( string $str, string $default ) {
 	
 	// replace non letter or digits by -
 	$str = preg_replace( '~[^\pL\d]+~u', '-', $str );
@@ -42,7 +44,7 @@ function wppedia_slugify( string $str ) {
 	$str = strtolower( $str );
 	
 	if ( empty( $str ) ) {
-		return _x( 'other', 'wppedia slugs', 'wppedia' );
+		return $default;
 	}
 	
 	// run a last urlencode to be sure to get a valid slug
