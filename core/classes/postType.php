@@ -344,8 +344,6 @@ class postType {
 	 */
 	function create_wppedia_category_tax() {
 
-		flush_rewrite_rules();
-
 		$labels = array(
 			'name'              => _x( 'Glossary categories', 'taxonomy general name', 'wppedia' ),
 			'singular_name'     => _x( 'Glossary category', 'taxonomy singular name', 'wppedia' ),
