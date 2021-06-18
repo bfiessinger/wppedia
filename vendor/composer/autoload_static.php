@@ -22,6 +22,7 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'WPPedia\\WPPediaQuery' => __DIR__ . '/../..' . '/core/classes/WPPediaQuery.php',
         'WPPedia\\WPPediaUpgrade' => __DIR__ . '/../..' . '/core/classes/WPPediaUpgrade.php',
         'WPPedia\\admin' => __DIR__ . '/../..' . '/core/classes/admin.php',
         'WPPedia\\compatibilities\\compatibilityCollection' => __DIR__ . '/../..' . '/core/classes/compatibilities/compatibilityCollection.php',
@@ -32,7 +33,6 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
         'WPPedia\\options' => __DIR__ . '/../..' . '/core/classes/options.php',
         'WPPedia\\postMeta' => __DIR__ . '/../..' . '/core/classes/postMeta.php',
         'WPPedia\\postType' => __DIR__ . '/../..' . '/core/classes/postType.php',
-        'WPPedia\\queryControl' => __DIR__ . '/../..' . '/core/classes/queryControl.php',
         'WPPedia\\restController' => __DIR__ . '/../..' . '/core/classes/restController.php',
         'WPPedia\\template' => __DIR__ . '/../..' . '/core/classes/template.php',
         'WPPedia\\traits\\adminFields' => __DIR__ . '/../..' . '/core/classes/traits/adminFields.php',
