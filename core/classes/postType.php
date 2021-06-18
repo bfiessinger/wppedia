@@ -3,7 +3,7 @@
 /**
  * WPPedia Post Type related
  * 
- * @since 1.2.0
+ * @since 1.2.1
  */
 
 namespace WPPedia;
@@ -107,10 +107,9 @@ class postType {
    * 
 	 * @uses register_post_type
 	 * 
-   * @since 1.2.0
+   * @since 1.2.1
    */
   public function register_wppedia_post_type() {
-
     $labels = [
 			'name' => _x( 'Glossary', 'Post Type General Name', 'wppedia' ),
 			'singular_name' => _x( 'Glossary Term', 'Post Type Singular Name', 'wppedia' ),
@@ -135,6 +134,7 @@ class postType {
 		];
 
     $rewrite = [
+			'slug'				=> ltrim( rtrim( $this->permalink_base, '/' ), '/' ),
       'with_front'	=> false,
       'pages' 			=> true,
       'feeds' 			=> true,
@@ -167,7 +167,6 @@ class postType {
 			$args['has_archive'] = ltrim( rtrim( $this->permalink_base, '/' ), '/' );
 		}
 			
-
 		\register_post_type( $this->post_types['main'], $args );
 
 	}
@@ -340,7 +339,7 @@ class postType {
 	 * 
 	 * @uses register_taxonomy
 	 * 
-	 * @since 1.2.0
+	 * @since 1.2.1
 	 */
 	function create_wppedia_category_tax() {
 
@@ -384,20 +383,32 @@ class postType {
 	/**
 	 * Add rewrite rules
 	 * 
-	 * @since 1.2.0
+	 * @since 1.2.1
 	 */
 	function add_rewrite_rules() {
 		if (false != get_option('wppedia_permalink_use_initial_character', options::get_option_defaults('wppedia_permalink_use_initial_character'))) {
-			add_rewrite_tag('%wppedia_initial_letter%', '([^&]+)', 'wppedia_initial_letter=');
 			add_rewrite_rule(
 				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/([^/]*)/?',
 				'index.php?post_type=' . $this->post_types['main'] . '&wppedia_initial_letter=$matches[1]&name=$matches[2]',
 				'top'
 			);
 		} else {
+			$initial_letters = get_terms( [
+				'taxonomy' => $this->taxonomies['initial_character'],
+				'hide_empty' => false,
+			] );
+
+			foreach ($initial_letters as $term) {
+				add_rewrite_rule(
+					ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/(' . $term->slug . ')(?:(?:/|$)[^/]*?/?)([0-9]+)?/?$',
+					'index.php?post_type=' . $this->post_types['main'] . '&wppedia_initial_letter=$matches[1]&paged=$matches[2]',
+					'top'
+				);
+			}
+
 			add_rewrite_rule(
 				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/?',
-				'index.php?post_type=' . $this->post_types['main'] . '&name=$matches[1]',
+				'index.php?post_type=' . $this->post_types['main'] . '&wppedia_term=$matches[1]&name=$matches[1]',
 				'top'
 			);
 		}
@@ -406,7 +417,7 @@ class postType {
 	/**
 	 * Change default post link
 	 * 
-	 * @since 1.2.0
+	 * @since 1.2.1
 	 */
 	function post_type_link( $permalink, $post ) {
     // bail if post type is not wppedia_term
