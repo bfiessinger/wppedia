@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+### Bug fixes
+- fixed alphabetical index redirect for non paged archives
+
 ## 1.2.1
 ### Bug fixes
 - fixed a redirection issue when `use initial character in URL` is not active
