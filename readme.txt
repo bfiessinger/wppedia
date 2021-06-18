@@ -1,7 +1,7 @@
 === Glossary by WPPedia - Best Glossary plugin for WordPress ===
 Contributors: steinrein, bastianfiessinger, wppedia
 Tested up to: 5.7.2
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Tags: glossary, encyclopedia, wiki, lexicon, vocabulary, dictionary, tooltip, clavis
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -146,6 +146,15 @@ or
 3. Go and manage your glossary...
 
 == Changelog ==
+
+= 1.2.1 =
+##### Bug fixes
+- fixed a redirection issue when `use initial character in URL` is not active
+
+##### Enhancements
+- enhanced UX on admin pages
+- automatically update version constant
+- added trailing slashes to the post URL's
 
 = 1.2.0 =
 ##### New

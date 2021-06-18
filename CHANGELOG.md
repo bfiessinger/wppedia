@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.1
+### Bug fixes
+- fixed a redirection issue when `use initial character in URL` is not active
+
+### Enhancements
+- enhanced UX on admin pages
+- automatically update version constant
+- added trailing slashes to the post URL's
+
 ## 1.2.0
 ### New
 - option `use initial character in URL` is now available in the free version
