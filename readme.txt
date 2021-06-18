@@ -1,7 +1,7 @@
 === Glossary by WPPedia - Best Glossary plugin for WordPress ===
 Contributors: steinrein, bastianfiessinger, wppedia
 Tested up to: 5.7.2
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 Tags: glossary, encyclopedia, wiki, lexicon, vocabulary, dictionary, tooltip, clavis
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -146,6 +146,13 @@ or
 3. Go and manage your glossary...
 
 == Changelog ==
+
+= 1.2.3 =
+##### Bug fixes
+- fixed alphabetical index redirect does not respect the permalink base (since 1.2.2)
+
+##### Enhancements
+- more robust regex for alphabetical index rewrite rules
 
 = 1.2.2 =
 ##### Bug fixes

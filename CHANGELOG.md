@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.3
+### Bug fixes
+- fixed alphabetical index redirect does not respect the permalink base (since 1.2.2)
+
+### Enhancements
+- more robust regex for alphabetical index rewrite rules
+
 ## 1.2.2
 ### Bug fixes
 - fixed alphabetical index redirect for non paged archives
