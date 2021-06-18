@@ -238,7 +238,7 @@ class postType {
 	 * 
 	 * @uses register_taxonomy
 	 * 
-	 * @since 1.2.0
+	 * @since 1.2.2
 	 */
 	function create_wppedia_initial_letter_tax() {
 
@@ -257,7 +257,7 @@ class postType {
 		];
 
 		$rewrite = [
-			'slug' => ltrim( rtrim( $this->permalink_base, '/' ), '/' ),
+			//'slug' => ltrim( rtrim( $this->permalink_base, '/' ), '/' ),
 			'with_front' => false,
 			'hierarchical' => false,
 		];
@@ -383,7 +383,7 @@ class postType {
 	/**
 	 * Add rewrite rules
 	 * 
-	 * @since 1.2.1
+	 * @since 1.2.2
 	 */
 	function add_rewrite_rules() {
 		$initial_letters = get_terms( [
@@ -393,7 +393,7 @@ class postType {
 
 		foreach ($initial_letters as $term) {
 			add_rewrite_rule(
-				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/(' . $term->slug . ')(?:(?:/|$)[^/]*?/?)([0-9]+)/?$',
+				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/(' . $term->slug . ')(?:(?:/|$)[^/]*?/?)([0-9]+)?/?$',
 				'index.php?post_type=' . $this->post_types['main'] . '&wppedia_initial_letter=$matches[1]&paged=$matches[2]',
 				'top'
 			);
