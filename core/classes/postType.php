@@ -422,9 +422,9 @@ class postType {
 				$init_char = 'other';
 	
 			$init_char = urlencode( $init_char );
-			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $init_char . '/' . $post->post_name;
+			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $init_char . '/' . $post->post_name . '/';
 		} else {
-			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $post->post_name;
+			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $post->post_name . '/';
 		}
 
 		return $permalink;
