@@ -134,7 +134,7 @@ class postType {
 		];
 
     $rewrite = [
-			'slug'				=> ltrim( rtrim( $this->permalink_base, '/' ), '/' ),
+			//'slug'				=> ltrim( rtrim( $this->permalink_base, '/' ), '/' ),
       'with_front'	=> false,
       'pages' 			=> true,
       'feeds' 			=> true,
@@ -386,6 +386,19 @@ class postType {
 	 * @since 1.2.1
 	 */
 	function add_rewrite_rules() {
+		$initial_letters = get_terms( [
+			'taxonomy' => $this->taxonomies['initial_character'],
+			'hide_empty' => false,
+		] );
+
+		foreach ($initial_letters as $term) {
+			add_rewrite_rule(
+				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/(' . $term->slug . ')(?:(?:/|$)[^/]*?/?)([0-9]+)/?$',
+				'index.php?post_type=' . $this->post_types['main'] . '&wppedia_initial_letter=$matches[1]&paged=$matches[2]',
+				'top'
+			);
+		}
+
 		if (false != get_option('wppedia_permalink_use_initial_character', options::get_option_defaults('wppedia_permalink_use_initial_character'))) {
 			add_rewrite_rule(
 				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/([^/]*)/?',
@@ -393,19 +406,6 @@ class postType {
 				'top'
 			);
 		} else {
-			$initial_letters = get_terms( [
-				'taxonomy' => $this->taxonomies['initial_character'],
-				'hide_empty' => false,
-			] );
-
-			foreach ($initial_letters as $term) {
-				add_rewrite_rule(
-					ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/(' . $term->slug . ')(?:(?:/|$)[^/]*?/?)([0-9]+)?/?$',
-					'index.php?post_type=' . $this->post_types['main'] . '&wppedia_initial_letter=$matches[1]&paged=$matches[2]',
-					'top'
-				);
-			}
-
 			add_rewrite_rule(
 				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/?',
 				'index.php?post_type=' . $this->post_types['main'] . '&wppedia_term=$matches[1]&name=$matches[1]',
