@@ -215,7 +215,7 @@ class crossLinkModule {
 		foreach( $xpath->query($query) as $node ) {
 
 			$regex_flags = 'imsu';
-			$regex = ($this->require_full_words) ? '/(?<=^|\s|\>|\#|\@|\+)' . $link_phrase . '(?=\?|\!|\;|,|\.|\<|\s|$)/' : '/' . $link_phrase . '/';
+			$regex = ($this->require_full_words) ? '/(?<=^|\s|\>|\#|\@|\+|\()' . $link_phrase . '(?=\?|\!|\;|,|\.|\<|\)|\s|$)/' : '/' . $link_phrase . '/';
 			$regex .= $regex_flags;
 
 			$replaced = preg_replace_callback( $regex, function( $match ) use ( $post ) {
