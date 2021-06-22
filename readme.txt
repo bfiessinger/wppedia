@@ -39,6 +39,7 @@ All automatic generated links are rendered with tooltips just like it's known fr
 
 So you may ask, when Glossary by WPPedia renders the tooltips with their regarding excerpts on every post, isn't it possible that Google recognizes this as duplicate content?
 No! The tooltips content is not visible to search engines on page load. It get's fetched asynchronous only when hovering an automatic generated link. 
+
 Sounds great? It is!
 
 #### 🔎 Autosuggest search for glossary terms
