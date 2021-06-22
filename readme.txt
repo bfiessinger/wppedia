@@ -77,6 +77,7 @@ However, by providing educational and informational quality content you can sign
 
 ### Free Features
 * Alphabetical glossary index / archive
+* Extended Permalink settings for the glossary
 * Easy to understand template system / structure that can be adjusted via your theme or childtheme
 * Full support for the Gutenberg Block Editor out of the box.
 * support for all popular pagebuilder plugins.
@@ -93,7 +94,6 @@ However, by providing educational and informational quality content you can sign
 ### PRO Features
 * All the features in the free version
 * Unlimited glossary terms
-* Extended permalink settings
 * Let WPPedia create a crosslink index for each post. This ensures faster loading times.
 * Allow crosslinking to other post types (not just glossary terms)
 * **more coming soon**
