@@ -54,14 +54,6 @@ Speed matters! Glossary by WPPedia works completely without jQuery as a dependen
 We are constantly updating this plugin to offer as many features as possible.  
 Have a feature request? Don't hesitate and [contact us](https://wordpress.org/support/plugin/wppedia/)!
 
-### Template System/Structure
-WPPedia template files contain the markup and template structure for the frontend of your glossary. All template files contain several actions you can use to add/move/remove parts of the WPPedia Template or even restructure it completely.
-
-Just copy files from /plugins/wppedia/templates/x.php to /themes/yourtheme/wppedia/x.php and give it your own look.
-They might also left completely untouched.
-
-Another way to restructure WPPedia is to use it's actions and filters to modify content. More about this will be available soon in the Documentation.
-
 ### What is a glossary?
 A glossary, often called encyclopedia or wiki is an industry-specific word list with the corresponding explanations. 
 It's very important that the terms defined are easy to understand and comprehensible.
