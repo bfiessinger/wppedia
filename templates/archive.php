@@ -41,7 +41,6 @@ do_action( 'wppedia_before_main_content' );
 
 <?php
 /**
- * TODO: TODO!!!
  * Hook: wppedia_archive_description.
  *
  * @hooked wppedia_taxonomy_archive_description - 10

@@ -77,4 +77,15 @@ add_action('wp', function() {
 		add_action( 'wppedia_before_main_content', 'wppedia_searchform', 30 );
 	}
 
+	/**
+	 * Archive template hooks
+	 */
+	if (is_wppedia_frontpage()) {
+		add_action( 'wppedia_archive_description', 'wppedia_frontpage_archive_description', 10 );
+	}
+	
+	if (is_tax()) {
+		add_action( 'wppedia_archive_description', 'wppedia_taxonomy_archive_description', 10 );
+	}
+
 });
