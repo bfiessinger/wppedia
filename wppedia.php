@@ -23,7 +23,7 @@ require_once plugin_dir_path(__FILE__) . 'core/inc/core-functions.php';
 
 use WPPedia\template;
 use WPPedia\restController;
-use WPPedia\WPPediaQuery;
+use WPPedia\WPPediaQuerySetup;
 use WPPedia\admin;
 use WPPedia\options;
 use WPPedia\postMeta;
@@ -113,7 +113,7 @@ class WPPedia {
 		/**
 		 * Instantiate Query Controller
 		 */
-		new WPPediaQuery();
+		new WPPediaQuerySetup();
 
 		/**
 		 * Instatiate Admin View

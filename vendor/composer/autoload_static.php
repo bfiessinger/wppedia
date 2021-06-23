@@ -22,7 +22,7 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'WPPedia\\WPPediaQuery' => __DIR__ . '/../..' . '/core/classes/WPPediaQuery.php',
+        'WPPedia\\WPPediaQuerySetup' => __DIR__ . '/../..' . '/core/classes/WPPediaQuerySetup.php',
         'WPPedia\\WPPediaUpgrade' => __DIR__ . '/../..' . '/core/classes/WPPediaUpgrade.php',
         'WPPedia\\admin' => __DIR__ . '/../..' . '/core/classes/admin.php',
         'WPPedia\\compatibilities\\compatibilityCollection' => __DIR__ . '/../..' . '/core/classes/compatibilities/compatibilityCollection.php',

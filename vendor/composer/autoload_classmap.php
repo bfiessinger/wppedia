@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'WPPedia\\WPPediaQuery' => $baseDir . '/core/classes/WPPediaQuery.php',
+    'WPPedia\\WPPediaQuerySetup' => $baseDir . '/core/classes/WPPediaQuerySetup.php',
     'WPPedia\\WPPediaUpgrade' => $baseDir . '/core/classes/WPPediaUpgrade.php',
     'WPPedia\\admin' => $baseDir . '/core/classes/admin.php',
     'WPPedia\\compatibilities\\compatibilityCollection' => $baseDir . '/core/classes/compatibilities/compatibilityCollection.php',
