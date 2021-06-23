@@ -2,7 +2,17 @@
 
 defined( 'ABSPATH' ) || die();
 
-
+/**
+ * Return a specific page id from a special WPPedia
+ * page
+ * 
+ * Currently available pages:
+ * - front
+ * 
+ * @param string $page
+ * 
+ * @since 1.1.0
+ */
 function wppedia_get_page_id(string $page) {
 	$page_id = get_option('wppedia_' . $page . '_page_id');
 	return ($page_id) ? absint($page_id) : false;
