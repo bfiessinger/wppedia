@@ -75,6 +75,33 @@ function wppedia_get_template_part( $slug, $name = '' ) {
 }
 
 /**
+ * Get the current page title
+ *
+ * @param  bool $echo Should echo title.
+ * 
+ * @since 1.2.1
+ */
+function wppedia_page_title( $echo = true ) { 
+	if ( is_search() ) { 
+		$page_title = sprintf( __( 'Search results: “%s”', 'wppedia' ), get_search_query() );
+		if ( get_query_var( 'paged' ) )
+			$page_title .= sprintf( __( ' – Page %s', 'wppedia' ), get_query_var( 'paged' ) );
+	} elseif ( is_tax() ) { 
+		$page_title = single_term_title( "", false );
+	} else {
+		$front_page_id = wppedia_get_page_id( 'front' );
+		$page_title = get_the_title( $front_page_id );
+	} 
+
+	$page_title = apply_filters( 'wppedia_page_title', $page_title ); 
+
+	if ( $echo ) 
+		echo $page_title; 
+	else 
+		return $page_title;
+}
+
+/**
  * Get the excerpt with fallback generated from the content
  * 
  * @param WP_Post|int $post - Post ID or object

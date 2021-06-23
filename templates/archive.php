@@ -32,6 +32,23 @@ get_header('wppedia');
  */
 do_action( 'wppedia_before_main_content' );
 
+?>
+<header class="wppedia-archive-header">
+	<?php if ( apply_filters('wppedia_show_page_title', true) ) : ?>
+		<h1 class="wppedia-archive-header__title page-title"><?php wppedia_page_title(); ?></h1>
+	<?php endif; ?>
+</header>
+
+<?php
+/**
+ * TODO: TODO!!!
+ * Hook: wppedia_archive_description.
+ *
+ * @hooked wppedia_taxonomy_archive_description - 10
+ * @hooked wppedia_frontpage_archive_description - 10
+ */
+do_action( 'wppedia_archive_description' );
+
 if ( have_posts() ) {
 
 	/**
