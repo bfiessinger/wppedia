@@ -4,8 +4,74 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a27619561cf9421cc7c7219c5a940563",
-    "packages": [],
+    "content-hash": "34e87b05d9cd5ce4194eb43ec2db1c08",
+    "packages": [
+        {
+            "name": "aristath/kirki",
+            "version": "3.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kirki-framework/kirki.git",
+                "reference": "0f9d24437665f6d5664da4e12bb4f0ae410815e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kirki-framework/kirki/zipball/0f9d24437665f6d5664da4e12bb4f0ae410815e4",
+                "reference": "0f9d24437665f6d5664da4e12bb4f0ae410815e4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "codacy/coverage": "dev-master",
+                "composer/installers": "*",
+                "dealerdirect/phpcodesniffer-composer-installer": "*",
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpcompatibility/phpcompatibility-wp": "*",
+                "phpunit/phpunit": "*",
+                "wp-coding-standards/wpcs": "*"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ".",
+                "core"
+            ],
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "aristath",
+                    "email": "aristath@gmail.com",
+                    "homepage": "https://aristath.github.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Extending the WordPress customizer",
+            "homepage": "https://kirki.org",
+            "keywords": [
+                "customizer",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/kirki-framework/kirki/issues",
+                "source": "https://github.com/kirki-framework/kirki/tree/3.1.7"
+            },
+            "funding": [
+                {
+                    "url": "https://aristath.github.io/donate",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/aristath",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-06-21T13:48:36+00:00"
+        }
+    ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
@@ -14,5 +80,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

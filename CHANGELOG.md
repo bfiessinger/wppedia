@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.3.0
+### New
+- the static frontpage now acts like a glossary archive with additional content
+- added a page title to the glossary archive
+- added a page title to glossary taxonomies
+- added a content section to glossary taxonomies 
+
+### Bug fixes
+- fixed a bug where automated crosslinking was not working if the link phrase was paranthesed
+
+### Enhancements
+- implemented php-scoper for composer dependencies to avoid namespace issues
+
+### Code Quality
+- updated comments
+
 ## 1.2.3
 ### Bug fixes
 - fixed alphabetical index redirect does not respect the permalink base (since 1.2.2)

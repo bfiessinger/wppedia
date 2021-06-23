@@ -11,12 +11,11 @@
     ],
     "minimum-stability": "stable",
     "require": {
+        "aristath/kirki": "^3.1"
     },
     "autoload": {
         "psr-4": {
             "WPPedia\\": "core/classes"
 				}
-    },
-    "require-dev": {
-		}
+    }
 }
