@@ -93,7 +93,7 @@ class WPPedia {
 
 		// psr4 Autoloader
 		$loader = require "vendor/autoload.php";
-		$loader->addPsr4('wpPedia\\', __DIR__);
+		$loader->addPsr4('WPPedia\\', __DIR__);
 
 		$this->define_constants();
 
