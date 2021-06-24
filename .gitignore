@@ -29,3 +29,4 @@ $RECYCLE.BIN/
 !/vendor/autoload.php
 
 /3rd-party/*/
+!/3rd-party/vendor

@@ -19,10 +19,7 @@
 				"WPPedia\\": [
 					"core/classes"
 				]
-			},
-			"classmap": [
-				"3rd-party"
-			]
+			}
     },
 		"scripts": {
 			"post-install-cmd": [
@@ -34,7 +31,8 @@
 			"prefix-dependencies": [
 				"@composer --working-dir=php-scoper install",
 				"@composer prefix-vendor-aristath",
-				"@composer dump-autoload -a"
+				"@composer dump-autoload -a",
+				"@composer --working-dir=3rd-party dump-autoload -a"
 			],
 			"prefix-vendor-aristath": [
 				"@php ./php-scoper/vendor/humbug/php-scoper/bin/php-scoper add-prefix --prefix=\"WPPedia_Vendor\" --output-dir=\"./3rd-party/aristath/kirki\" --config=\"./config/php-scoper/kirki.inc.php\" --force --quiet"
