@@ -175,7 +175,7 @@ class template {
 		if ( ! $this->current_template_exists_in_theme() )
 			return $template;
 
-		if ( (is_wppedia_frontpage() || is_wppedia_archive()) && false != get_option('wppedia_archive_use_templates', options::get_option_defaults('wppedia_archive_use_templates')) && false !== wppedia_locate_template( 'archive.php' ) ) {
+		if ( is_wppedia_archive() && false != get_option('wppedia_archive_use_templates', options::get_option_defaults('wppedia_archive_use_templates')) && false !== wppedia_locate_template( 'archive.php' ) ) {
 			// Load default Archive view
 			return wppedia_locate_template( 'archive.php' );
 		} elseif ( is_wppedia_singular() && false != get_option('wppedia_singular_use_templates', options::get_option_defaults('wppedia_singular_use_templates')) && false !== wppedia_locate_template( 'single.php' ) ) {
