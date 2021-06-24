@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34e87b05d9cd5ce4194eb43ec2db1c08",
+    "content-hash": "0c22940d87f408e1aa0994edbb5b2bd4",
     "packages": [
         {
             "name": "aristath/kirki",
@@ -78,7 +78,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.3|^8.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
 }

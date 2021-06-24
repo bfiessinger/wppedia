@@ -94,6 +94,7 @@ class WPPedia {
 		// psr4 Autoloader
 		$loader = require "vendor/autoload.php";
 		$loader->addPsr4('WPPedia\\', __DIR__);
+		$loader->add('WPPedia_Vendor\\', __DIR__ . '3rd-party/');
 
 		$this->define_constants();
 
