@@ -15,7 +15,7 @@ if ( ! function_exists( 'wppedia_frontpage_archive_description' ) ) {
 		if ( is_wppedia_archive() && 0 === absint( get_query_var( 'paged' ) ) ) { 
 			$frontpage = get_post( wppedia_get_page_id( 'front' ) ); 
 			if ( $frontpage ) { 
-				$description = $frontpage->post_content; 
+				$description = apply_filters('the_content', $frontpage->post_content); 
 				if ( $description ) { 
 					echo '<div class="wppedia-page-description">' . $description . '</div>'; 
 				} 
@@ -32,7 +32,7 @@ if ( ! function_exists( 'wppedia_frontpage_archive_description' ) ) {
 if ( ! function_exists( 'wppedia_taxonomy_archive_description' ) ) {
 	function wppedia_taxonomy_archive_description() {
 		if ( is_tax() && 0 === absint( get_query_var( 'paged' ) ) ) {
-			$description = term_description();
+			$description = apply_filters('the_content', term_description());
 			if ( $description ) { 
 					echo '<div class="wppedia-term-description">' . $description . '</div>';
 			}
