@@ -34,7 +34,7 @@ if ( ! function_exists( 'wppedia_taxonomy_archive_description' ) ) {
 		if ( is_tax() && 0 === absint( get_query_var( 'paged' ) ) ) {
 			$description = apply_filters('the_content', term_description());
 			if ( $description ) { 
-					echo '<div class="wppedia-term-description">' . $description . '</div>';
+				echo '<div class="wppedia-term-description">' . $description . '</div>';
 			}
 		} 
 	}
