@@ -23,5 +23,9 @@ $RECYCLE.BIN/
 /node_modules
 
 # Composer directory
-/vendor
+/vendor/**
+!/vendor/composer
+!/vendor/composer/*
+!/vendor/autoload.php
+
 /3rd-party/*/
