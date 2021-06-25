@@ -7,7 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit34d58f2be87084aed392fd860cd7e76e
 {
     public static $files = array (
-        '65bee99f1bc71fac716df33b19f20a0b' => __DIR__ . '/../..' . '/aristath/kirki/kirki.php',
+        '0e943327c3ea0a8a72bb5e6bbe9133c5' => __DIR__ . '/../..' . '/aristath/kirki/kirki.php',
     );
 
     public static $classMap = array (

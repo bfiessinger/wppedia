@@ -20,6 +20,9 @@ return [
 				'*.svg',
 				'*.png',
 				'*.jpg',
+				'*.json',
+				'*.js',
+				'*.css',
 				'LICENSE',
 				'composer.json'
 			] 
