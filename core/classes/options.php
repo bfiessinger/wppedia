@@ -220,6 +220,7 @@ class options {
 				'id'								=> 'wppedia_front_page_id',
 				'label' 						=> _x('Glossary frontpage', 'options', 'wppedia'),
 				'type' 							=> 'select',
+				'desc'							=> sprintf(_x('By default, WPPedia creates a simple archive page using the slug defined at %s. Using this option allows you to have more control over the frontpage of your glossary.', 'options', 'wppedia'), '<a href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Permalinks') . '</a>'),
 				'options'						=> $this->dropdown_pages(true),
 				'settings_section' 	=> 'wppedia_settings_page',
 				'settings_page' 		=> 'wppedia_settings_general',
