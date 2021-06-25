@@ -97,6 +97,9 @@ However, by providing educational and informational quality content you can sign
 * Unlimited glossary terms
 * Let WPPedia create a crosslink index for each post. This ensures faster loading times.
 * Allow crosslinking to other post types (not just glossary terms)
+* Glossary categories widget
+* Version histories (*planned*)
+* Glossary term attributes for filtering and displaying in special lists (*planned*)
 * **more coming soon**
 
 ### Support
