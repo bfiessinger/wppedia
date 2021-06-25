@@ -1,8 +1,8 @@
 {
 	"name": "wppedia/wppedia",
 	"autoload": {
-		"classmap": [
-			"../3rd-party"
+		"files": [
+			"aristath/kirki/kirki.php"
 		]
 	}
 }

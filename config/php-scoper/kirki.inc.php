@@ -34,6 +34,36 @@ return [
 	 *
 	 * For more see: https://github.com/humbug/php-scoper#patchers
 	 */
-	'patchers'                   => [],
+	'patchers'                   => [
+		/**
+		 * Replaces the Adapter string references with the prefixed versions.
+		 *
+		 * @param string $filePath The path of the current file.
+		 * @param string $prefix   The prefix to be used.
+		 * @param string $content  The content of the specific file.
+		 *
+		 * @return string The modified content.
+		 */
+		function( $file_path, $prefix, $content ) {
+			// 24 is the length of the class-kirki-autoload.php file path.
+			if ( substr( $file_path, -24 ) !== 'class-kirki-autoload.php' ) {
+				return $content;
+			}
+
+			$replaced = str_replace(
+				[
+					'\stripos($class_name, \'Kirki\')',
+					'$filename = \'class-\' . \strtolower(\str_replace(\'_\', \'-\', $class_name)) . \'.php\';'
+				],
+				[
+					sprintf( '\stripos($class_name, \'%s\\Kirki\')', $prefix ),
+					sprintf( '$class_name = \str_replace(\'%s\\\\\', \'\', $class_name); $filename = \'class-\' . \strtolower(\str_replace(\'_\', \'-\', $class_name)) . \'.php\';', $prefix )
+				],
+				$content
+			);
+
+			return $replaced;
+		},
+	],
 
 ];

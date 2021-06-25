@@ -35,6 +35,7 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
         'WPPedia\\postType' => __DIR__ . '/../..' . '/core/classes/postType.php',
         'WPPedia\\restController' => __DIR__ . '/../..' . '/core/classes/restController.php',
         'WPPedia\\template' => __DIR__ . '/../..' . '/core/classes/template.php',
+        'WPPedia\\testcustomizer' => __DIR__ . '/../..' . '/core/classes/testcustomizer.php',
         'WPPedia\\traits\\adminFields' => __DIR__ . '/../..' . '/core/classes/traits/adminFields.php',
     );
 

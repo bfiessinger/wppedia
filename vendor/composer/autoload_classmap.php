@@ -20,5 +20,6 @@ return array(
     'WPPedia\\postType' => $baseDir . '/core/classes/postType.php',
     'WPPedia\\restController' => $baseDir . '/core/classes/restController.php',
     'WPPedia\\template' => $baseDir . '/core/classes/template.php',
+    'WPPedia\\testcustomizer' => $baseDir . '/core/classes/testcustomizer.php',
     'WPPedia\\traits\\adminFields' => $baseDir . '/core/classes/traits/adminFields.php',
 );
