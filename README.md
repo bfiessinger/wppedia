@@ -32,6 +32,7 @@ Glossary by WPPedia offers the best out of the box system for creating a glossar
 *coming soon!*
 
 <h2>Go PRO <img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/pro-badge.svg?sanitize=true" width="35" /></h2>
+
 *coming soon!*
 
 ### Support
