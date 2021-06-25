@@ -12,6 +12,7 @@ return array(
     'WPPedia\\admin' => $baseDir . '/core/classes/admin.php',
     'WPPedia\\compatibilities\\compatibilityCollection' => $baseDir . '/core/classes/compatibilities/compatibilityCollection.php',
     'WPPedia\\compatibilities\\compatibilityLoader' => $baseDir . '/core/classes/compatibilities/compatibilityLoader.php',
+    'WPPedia\\customize' => $baseDir . '/core/classes/customize.php',
     'WPPedia\\inlineStyleCollector' => $baseDir . '/core/classes/inlineStyleCollector.php',
     'WPPedia\\modules\\crossLinkModule' => $baseDir . '/core/classes/modules/crossLinkModule.php',
     'WPPedia\\modules\\tooltipModule' => $baseDir . '/core/classes/modules/tooltipModule.php',
@@ -20,6 +21,5 @@ return array(
     'WPPedia\\postType' => $baseDir . '/core/classes/postType.php',
     'WPPedia\\restController' => $baseDir . '/core/classes/restController.php',
     'WPPedia\\template' => $baseDir . '/core/classes/template.php',
-    'WPPedia\\testcustomizer' => $baseDir . '/core/classes/testcustomizer.php',
     'WPPedia\\traits\\adminFields' => $baseDir . '/core/classes/traits/adminFields.php',
 );

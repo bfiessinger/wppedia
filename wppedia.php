@@ -21,18 +21,21 @@ defined( 'ABSPATH' ) or die();
  */
 require_once plugin_dir_path(__FILE__) . 'core/inc/core-functions.php';
 
+// Core Classes
 use WPPedia\template;
 use WPPedia\restController;
 use WPPedia\WPPediaQuerySetup;
 use WPPedia\admin;
 use WPPedia\options;
 use WPPedia\postMeta;
+use WPPedia\customize;
 use WPPedia\postType;
 
 // Modules
 use WPPedia\modules\crossLinkModule;
 use WPPedia\modules\tooltipModule;
 
+// Compatibility
 use WPPedia\compatibilities\compatibilityCollection;
 
 class WPPedia {
@@ -135,6 +138,11 @@ class WPPedia {
 		 * Setup custom postmeta for WPPedia articles
 		 */
 		new postMeta();
+
+		/**
+		 * Setup Customizer Controls
+		 */
+		new customize();
 
 		/**
 		 * Instantiate Post Type
