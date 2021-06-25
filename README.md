@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/wordpress/plugin/v/wppedia?logo=wordpress&style=for-the-badge)](https://wordpress.org/plugins/wppedia/)
 
-<img src="https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/wppedia-logo.svg?sanitize=true" alt="WPPedia" width="150">
+![WPPedia](https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/wppedia-banner-1544x500.jpg)
 
 # WPPedia - The WordPress Wiki Solution
 
