@@ -3,7 +3,7 @@
 /**
  * Theme and Plugin compatibilities
  * 
- * @since 1.2.0
+ * @since 1.2.4
  */
 
 namespace WPPedia\compatibilities;
@@ -14,16 +14,16 @@ class compatibilityLoader {
 
 	// Private variable to check if loading a 
 	// compatibility for either a theme or a plugin
-	private string $type;
+	private $type;
 
 	// Private vars to check if the plugin or theme exists
-	private string $slug;
+	private $slug;
 	private $className;
-	private string $themeName;
+	private $themeName;
 
 	// Private variable to set the path for loading the
 	// compatibility file
-	private string $path = WPPediaPluginDir . 'core/inc/compatibilities/';
+	private $path = WPPediaPluginDir . 'core/inc/compatibilities/';
 
 	/**
 	 * Set the compatiblity loader type

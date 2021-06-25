@@ -3,7 +3,7 @@
 /**
  * Theme and Plugin compatibilities
  * 
- * @since 1.2.0
+ * @since 1.2.4
  */
 
 namespace WPPedia\compatibilities;
@@ -14,8 +14,8 @@ defined( 'ABSPATH' ) || die();
 
 class compatibilityCollection {
 
-	private array $themeCompatibilities = [];
-	private array $pluginCompatibilities = [];
+	private $themeCompatibilities = [];
+	private $pluginCompatibilities = [];
 
 	function __construct() {
 		$this->setDefaultThemeCompatibilities();
