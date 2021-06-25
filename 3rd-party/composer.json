@@ -1,5 +1,5 @@
 {
-	"name": "wppedia/wppedia",
+	"name": "wppedia/wppedia_vendor",
 	"autoload": {
 		"files": [
 			"aristath/kirki/kirki.php"
