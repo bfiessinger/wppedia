@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    '0e943327c3ea0a8a72bb5e6bbe9133c5' => $baseDir . '/aristath/kirki/kirki.php',
+    '69f2437da9b281df4d4b6081a545f703' => $vendorDir . '/aristath/kirki/kirki.php',
 );

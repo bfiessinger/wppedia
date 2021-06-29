@@ -19,7 +19,10 @@
 				"WPPedia\\": [
 					"core/classes"
 				]
-			}
+			},
+			"files": [
+				"vendor/aristath/kirki/kirki.php"
+			]
     },
 		"scripts": {
 			"post-install-cmd": [
