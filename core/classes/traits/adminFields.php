@@ -191,17 +191,17 @@ trait adminFields {
 	 */
 	protected function checkbox_group($field) {
 		foreach ($field['args']['options'] as $option => $label ) {
-			$id = $field['id'] . '[' . $option . ']';
 			$name = $this->field_name($field) . '[' . $option . ']';
-			echo '<div class="wppedia-checkbox-group-item">';
+			echo '<label class="wppedia-checkbox-group-item">';
 			$this->checkbox(
 				array_merge($field, [
-					'id' => $id, 
+					'pid' => $field['id'],
+					'id' => $option, 
 					'name' => $name
 				])
 			);
-			echo '<label for="' . $id . '">' . $label . '</label>';
-			echo '</div>';
+			echo '<span>' . $label . '</span>';
+			echo '</label>';
 		}
 	}
 
@@ -293,11 +293,14 @@ trait adminFields {
 	private function value($field) {
 		if (get_option('wppedia_settings', false) && isset(maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['id']])) {
 			$value = maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['id']];
+		} else if (get_option('wppedia_settings', false) && isset($field['pid']) && isset(maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['pid']][$field['id']])) {
+			$value = maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['pid']][$field['id']];
 		} else if ( isset( $field['args']['default'] ) ) {
 			$value = $field['args']['default'];
 		} else {
 			return '';
 		}
+		
 		return str_replace( '\u0027', "'", $value );
 	}
 
