@@ -3,7 +3,7 @@
 /**
  * Admin View
  * 
- * @since 1.2.0
+ * @since 1.3.0
  */
 
 namespace WPPedia;
@@ -23,26 +23,26 @@ class options {
 	private static $pro_feature_className = 'wppedia-pro-feature';
 	private $wp_option_fields;
 
-  /**
-   * Static variable for instanciation
-   */
+	/**
+	 * Static variable for instanciation
+	 */
 	protected static $instance = null;
 
-  /**
-   * Get current Instance
-   */
-  public static function getInstance() {
+	/**
+	 * Get current Instance
+	 */
+	public static function getInstance() {
 
-    if ( null === self::$instance ) {
-      self::$instance = new self;
-    }
-    return self::$instance;
+		if ( null === self::$instance ) {
+		self::$instance = new self;
+		}
+		return self::$instance;
 
-  }
+	}
 
-  protected function __clone() {}
+  	protected function __clone() {}
 
-  protected function __construct() {
+  	protected function __construct() {
 
 		// Main Plugin Settings
 		add_action( 'admin_menu', [ $this, 'settings_page' ] );
@@ -64,7 +64,7 @@ class options {
 			'WPPedia Settings',
 			'WPPedia Settings', 
 			'manage_options', 
-			'wppedia_settings_general', 
+			'wppedia_settings', 
 			[ $this, 'settings_cb' ],
 			null
 		);
@@ -86,21 +86,21 @@ class options {
 				<h1 class="screen-reader-text"><?php echo _x('WPPedia Settings', 'options', 'wppedia'); ?></h1>
 				<?php settings_errors(); ?>
 
-				<div class="wppedia-layout-flex-container">
+				<form method="post" action="options.php" class="wppedia-layout-flex-container">
 					<div class="wppedia-layout-content">
-						<form method="post" action="options.php">
-							<?php settings_fields( 'wppedia_settings_general' ); ?>
-							<?php $this->do_settings_sections_tabbed( 'wppedia_settings_general', true ); ?>
-							<?php submit_button(); ?>
-						</form>
+						<div>
+							<?php settings_fields( 'wppedia_settings' ); ?>
+							<?php $this->do_settings_sections_tabbed( 'wppedia_settings', true ); ?>
+						</div>
 					</div>
 
 					<div class="wppedia-layout-sidebar">
 						<div class="wppedia-sidebar-widget">
 							<img src="<?php echo WPPediaPluginUrl; ?>assets/img/WPPedia-pro-teaser.png" width="200" />
+							<?php submit_button(); ?>
 						</div>
 					</div>
-				</div>
+				</form>
 
 			</div>
 
@@ -116,38 +116,57 @@ class options {
 	 * 
 	 * @since 1.1.6
 	 */
-	static function get_option_defaults(string $option = null) {
+	static function get_option_defaults(string $option_group = null, string $option = null) {
 		$defaults = [
-			// Pages
-			'wppedia_front_page_id' => false,
-			// Crosslinking
-			'wppedia_feature_crosslinks' => true,
-			'wppedia_crosslinks_prefer_single_words' => false,
-			'wppedia_crosslinks_posttypes' => [
-				\wppedia_get_post_type()
+			'general' => [
+				'front_page_id' => 0,
 			],
-			// Tooltips
-			'wppedia_feature_tooltips' => true,
-			'wppedia_tooltips_style' => 'light',
+			'archive' => [
+				'wppedia_templates' => true,
+				'show_nav' => true,
+				'show_searchbar' => true,
+				'posts_per_page' => 25,
+			],
+			'singular' => [
+				'wppedia_templates' => true,
+				'show_nav' => false,
+				'show_searchbar' => false,
+			],
+			'crosslinks' => [
+				'active' => true,
+				'prefer_single_words' => false,
+				'posttypes' => [
+					\wppedia_get_post_type()
+				]
+			],
+			'tooltips' => [
+				'active' => true,
+				'style' => 'light'
+			],
 			// Permalinks
 			'wppedia_permalink_base' => 'glossary',
 			'wppedia_permalink_use_initial_character' => true,
-			// Layout
-			'wppedia_singular_use_templates' => true,
-			'wppedia_archive_use_templates' => true,
-			'wppedia_archive_show_navigation' => true,
-			'wppedia_singular_show_navigation' => false,
-			'wppedia_archive_show_searchbar' => true,
-			'wppedia_singular_show_searchbar' => false,
-			// Query
-			'wppedia_posts_per_page' => 25,
 		];
 
-		if (!$option) {
+		if (!$option_group && !$option) {
 			return $defaults;
+		} else if ($option_group && !$option) {
+			return $defaults[$option_group];
 		}
 		
-		return (isset($defaults[$option])) ? $defaults[$option] : null;
+		return isset($defaults[$option_group][$option]) ? $defaults[$option_group][$option] : null;
+	}
+
+	public static function get_option(string $option_group, string $option) {
+		if (!get_option('wppedia_settings')) {
+			return self::get_option_defaults();
+		} else if (!isset(get_option('wppedia_settings')[$option_group])) {
+			return self::get_option_defaults($option_group);
+		} else if (!isset(get_option('wppedia_settings')[$option_group][$option])) {
+			return self::get_option_defaults($option_group, $option);
+		}
+		
+		return get_option('wppedia_settings')[$option_group][$option];
 	}
 
 	/**
@@ -157,43 +176,83 @@ class options {
 	 */
 	static function get_deprecated_options() {
 		return [
-			'wppedia_frontpage' => 'wppedia_front_page_id'
+			'wppedia_frontpage' => 'general.front_page_id',
+			'wppedia_something' => false,
+			'general.s' => 'general.something',
+			'general.b' => false,
 		];
 	}
 
 	/**
 	 * Initialize settings sections and fields
 	 * 
-	 * @since 1.0.0
+	 * @since 1.3.0
 	 */
 	function settings_init() {
 
 		/**
-		 * General Settings
+		 * General settings section
 		 */
 
-		// Settings section: Glossary front page
 		add_settings_section( 
-			'wppedia_settings_page', 
-			_x('Page Settings', 'options', 'wppedia'), 
+			'general', 
+			_x('General Settings', 'options', 'wppedia'), 
 			[ $this, 'settings_section_callback' ], 
-			'wppedia_settings_general' 
+			'wppedia_settings' 
 		);
 
-		// Settings section: Crosslinking
+		register_setting(
+			'wppedia_settings', 
+			'wppedia_settings',
+			[
+				'default' => [
+
+				]
+			]
+		);
+
+		/**
+		 * Archive settings section
+		 */
+
+		add_settings_section( 
+			'archive', 
+			_x('Archive Settings', 'options', 'wppedia'), 
+			[ $this, 'settings_section_callback' ], 
+			'wppedia_settings' 
+		);
+
+		/**
+		 * Singular settings section
+		 */
+
+		add_settings_section( 
+			'singular', 
+			_x('Singular Settings', 'options', 'wppedia'), 
+			[ $this, 'settings_section_callback' ], 
+			'wppedia_settings' 
+		);
+
+		/**
+		 * Crosslink settings section
+		 */		
+		
 		add_settings_section(
-			'wppedia_settings_crosslinks',
+			'crosslinks',
 			_x('Crosslinking', 'options', 'wppedia'),
 			[ $this, 'settings_section_callback' ],
-			'wppedia_settings_general'
+			'wppedia_settings'
 		);
 
-		// Settings section: Tooltips
+		/**
+		 * Tooltip settings section
+		 */
+
 		add_settings_section(
-			'wppedia_settings_tooltips',
+			'tooltips',
 			_x('Tooltips', 'options', 'wppedia'),
 			[ $this, 'settings_section_callback' ],
-			'wppedia_settings_general'
+			'wppedia_settings'
 		);
 
 		/**
@@ -208,109 +267,93 @@ class options {
 			'permalink'
 		);
 
-		$switch_className = 'wppedia-switch-button';
-
 		$this->wp_option_fields = [
 			/**
-			 * Page settings
+			 * General Settings
 			 */
 
 			// WPPedia frontpage
 			[
-				'id'								=> 'wppedia_front_page_id',
-				'label' 						=> _x('Glossary frontpage', 'options', 'wppedia'),
-				'type' 							=> 'select',
-				'desc'							=> sprintf(_x('By default, WPPedia creates a simple archive page using the slug defined at %s. Using this option allows you to have more control over the frontpage of your glossary.', 'options', 'wppedia'), '<a href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Permalinks') . '</a>'),
-				'options'						=> $this->dropdown_pages(true),
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general',
+				'id'								=> 'front_page_id',
+				'label'								=> _x('Glossary frontpage', 'options', 'wppedia'),
+				'type'								=> 'select',
+				'desc'								=> sprintf(_x('By default, WPPedia creates a simple archive page using the slug defined at %s. Using this option allows you to have more control over the frontpage of your glossary.', 'options', 'wppedia'), '<a href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Permalinks') . '</a>'),
+				'options'							=> $this->dropdown_pages(true),
+				'settings_section'					=> 'general',
+				'settings_page'						=> 'wppedia_settings',
 			],
-			// Section title: Archive settings
-			[
-				'id'								=> '__title_archive_settings',
-				'label' 						=> _x('Archive settings ', 'options', 'wppedia'),
-				'type' 							=> 'title',
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general',
-				'register_setting'	=> false
-			],
+
+			/**
+			 * Archive Settings
+			 */
+
 			// Use WPPedia templates in archives
 			[
-				'id'								=> 'wppedia_archive_use_templates',
-				'label' 						=> _x('use WPPedia Templates', 'options', 'wppedia'),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'desc' 							=> _x('If disabled WPPedia the Layout and content of WPPedia\'s Archive will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Archive pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia'),
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'wppedia_templates',
+				'label'								=> _x('use WPPedia Templates', 'options', 'wppedia'),
+				'type'								=> 'switch',
+				'desc'								=> _x('If disabled WPPedia the Layout and content of WPPedia\'s Archive will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Archive pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia'),
+				'settings_section'					=> 'archive',
+				'settings_page'						=> 'wppedia_settings'
 			],
 			// Show navigation in archives
 			[
-				'id'								=> 'wppedia_archive_show_navigation',
-				'label' 						=> _x('Show navigation', 'options', 'wppedia'),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'desc' 							=> _x('Show or hide WPPedia\'s navigation on archive pages.', 'options', 'wppedia'),
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'show_nav',
+				'label'								=> _x('Show navigation', 'options', 'wppedia'),
+				'type'								=> 'switch',
+				'desc'								=> _x('Show or hide WPPedia\'s navigation on archive pages.', 'options', 'wppedia'),
+				'settings_section'					=> 'archive',
+				'settings_page'						=> 'wppedia_settings'
 			],
 			// Show searchbar in archives
 			[
-				'id'								=> 'wppedia_archive_show_searchbar',
-				'label' 						=> _x('Show searchbar', 'options', 'wppedia'),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'desc' 							=> _x('Show or hide WPPedia\'s searchbar on archive pages.', 'options', 'wppedia'),
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'show_searchbar',
+				'label'								=> _x('Show searchbar', 'options', 'wppedia'),
+				'type'								=> 'switch',
+				'desc'								=> _x('Show or hide WPPedia\'s searchbar on archive pages.', 'options', 'wppedia'),
+				'settings_section'					=> 'archive',
+				'settings_page'						=> 'wppedia_settings'
 			],
 			// Default posts_per_page
 			[
-				'id'								=> 'wppedia_posts_per_page',
-				'label' 						=> _x('Posts per page', 'options', 'wppedia'),
-				'type' 							=> 'number',
-				'desc' 							=> _x('Manage how much posts should be available per page at a glossary archive', 'options', 'wppedia'),
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'posts_per_page',
+				'label'								=> _x('Posts per page', 'options', 'wppedia'),
+				'type'								=> 'number',
+				'desc'								=> _x('Manage how much posts should be available per page at a glossary archive', 'options', 'wppedia'),
+				'settings_section'					=> 'archive',
+				'settings_page'						=> 'wppedia_settings'
 			],
-			// Section title: Singular article settings
-			[
-				'id'								=> '__title_singular_settings',
-				'label' 						=> _x('Single article settings ', 'options', 'wppedia'),
-				'type' 							=> 'title',
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general',
-				'register_setting'	=> false
-			],
+
+			/**
+			 * Singular Settings
+			 */
+
 			// Use WPPedia templates in single articles
 			[
-				'id'								=> 'wppedia_singular_use_templates',
-				'label' 						=> _x('use WPPedia Templates', 'options', 'wppedia'),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'desc' 							=> _x('If disabled WPPedia the Layout and content of WPPedia\'s Single pages will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Singular pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia'),
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'wppedia_templates',
+				'label'								=> _x('use WPPedia Templates', 'options', 'wppedia'),
+				'type'								=> 'switch',
+				'desc'								=> _x('If disabled WPPedia the Layout and content of WPPedia\'s Single pages will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Singular pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia'),
+				'settings_section'					=> 'singular',
+				'settings_page'						=> 'wppedia_settings'
 			],
 			// Show navigation in single articles
 			[
-				'id'								=> 'wppedia_singular_show_navigation',
-				'label' 						=> _x('Show navigation', 'options', 'wppedia'),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'desc' 							=> _x('Show or hide WPPedia\'s navigation on single pages.', 'options', 'wppedia'),
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'show_nav',
+				'label'								=> _x('Show navigation', 'options', 'wppedia'),
+				'type'								=> 'switch',
+				'desc'								=> _x('Show or hide WPPedia\'s navigation on single pages.', 'options', 'wppedia'),
+				'settings_section'					=> 'singular',
+				'settings_page'						=> 'wppedia_settings'
 			],
 			// Show searchbar in single articles
 			[
-				'id'								=> 'wppedia_singular_show_searchbar',
-				'label' 						=> _x('Show searchbar', 'options', 'wppedia'),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'desc' 							=> _x('Show or hide WPPedia\'s searchbar on single pages.', 'options', 'wppedia'),
-				'settings_section' 	=> 'wppedia_settings_page',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'show_searchbar',
+				'label'								=> _x('Show searchbar', 'options', 'wppedia'),
+				'type'								=> 'switch',
+				'desc'								=> _x('Show or hide WPPedia\'s searchbar on single pages.', 'options', 'wppedia'),
+				'settings_section'					=> 'singular',
+				'settings_page'						=> 'wppedia_settings'
 			],
 
 			/**
@@ -319,45 +362,43 @@ class options {
 
 			// Activate crosslinking
 			[
-				'id'								=> 'wppedia_feature_crosslinks',
-				'label' 						=> _x( 'Activate Crosslinking', 'options', 'wppedia' ),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'desc' 							=> _x( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.', 'options', 'wppedia' ),
-				'settings_section' 	=> 'wppedia_settings_crosslinks',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'active',
+				'label'								=> _x( 'Activate Crosslinking', 'options', 'wppedia' ),
+				'type'								=> 'switch',
+				'desc'								=> _x( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.', 'options', 'wppedia' ),
+				'settings_section'					=> 'crosslinks',
+				'settings_page'						=> 'wppedia_settings'
 			],
 			// Prefer single words for crosslinks
 			[
-				'id'								=> 'wppedia_crosslinks_prefer_single_words',
-				'label' 						=> _x( 'Prefer single words', 'options', 'wppedia' ),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'desc' 							=> _x( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.', 'options', 'wppedia' ),
-				'settings_section' 	=> 'wppedia_settings_crosslinks',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'prefer_single_words',
+				'label'								=> _x( 'Prefer single words', 'options', 'wppedia' ),
+				'type'								=> 'switch',
+				'desc'								=> _x( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.', 'options', 'wppedia' ),
+				'settings_section'					=> 'crosslinks',
+				'settings_page'						=> 'wppedia_settings'
 			],
 			// Crosslink posttypes
 			[
-				'id'								=> 'wppedia_crosslinks_posttypes',
-				'label' 						=> _x( 'Create crosslinks to post types', 'options', 'wppedia' ),
-				'type' 							=> 'checkbox-group',
-				'options' 					=> $this->get_public_posttypes(),
-				'class'							=> self::$pro_feature_className,
-				'settings_section' 	=> 'wppedia_settings_crosslinks',
-				'settings_page' 		=> 'wppedia_settings_general',
-				'register_setting'	=> false
+				'id'								=> 'posttypes',
+				'label'								=> _x( 'Create crosslinks to post types', 'options', 'wppedia' ),
+				'type'								=> 'checkbox-group',
+				'options'							=> $this->get_public_posttypes(),
+				'class'								=> self::$pro_feature_className,
+				'settings_section'					=> 'crosslinks',
+				'settings_page'						=> 'wppedia_settings',
+				'register_setting'					=> false
 			],
 			// Crosslink index
 			[
-				'id'								=> 'wppedia_crosslinks_index',
-				'label' 						=> _x('Crosslink Index', 'options', 'wppedia'),
-				'type' 							=> 'checkbox',
-				'class'							=> self::$pro_feature_className . ' ' . $switch_className,
-				'desc' 							=> _x('If enabled WPPedia will create automatic indexes with all links created for each post. This ensures a significant faster loading time!', 'options', 'wppedia'),
-				'settings_section' 	=> 'wppedia_settings_crosslinks',
-				'settings_page' 		=> 'wppedia_settings_general',
-				'register_setting'	=> false
+				'id'								=> 'build_index',
+				'label'								=> _x('Crosslink Index', 'options', 'wppedia'),
+				'type'								=> 'switch',
+				'class'								=> self::$pro_feature_className,
+				'desc'								=> _x('If enabled WPPedia will create automatic indexes with all links created for each post. This ensures a significant faster loading time!', 'options', 'wppedia'),
+				'settings_section'					=> 'crosslinks',
+				'settings_page'						=> 'wppedia_settings',
+				'register_setting'					=> false
 			],
 
 			/**
@@ -366,28 +407,27 @@ class options {
 
 			// Activate tooltip feature
 			[
-				'id'								=> 'wppedia_feature_tooltips',
-				'label' 						=> _x( 'Enable tooltip feature', 'options', 'wppedia' ),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'desc' 							=> _x( 'Enable / Disable the tooltip feature for WPPedia Crosslinks.', 'options', 'wppedia' ),
-				'settings_section' 	=> 'wppedia_settings_tooltips',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'id'								=> 'active',
+				'label'								=> _x( 'Enable tooltip feature', 'options', 'wppedia' ),
+				'type'								=> 'switch',
+				'desc'								=> _x( 'Enable / Disable the tooltip feature for WPPedia Crosslinks.', 'options', 'wppedia' ),
+				'settings_section'					=> 'tooltips',
+				'settings_page'						=> 'wppedia_settings'
 			],
 			// Select tooltip style
 			[
-				'id'								=> 'wppedia_tooltips_style',
-				'label' 						=> _x( 'Tooltip style', 'options', 'wppedia' ),
-				'type' 							=> 'select',
-				'options'						=> [
-					'light'					=> 'Light',
+				'id'								=> 'style',
+				'label'								=> _x( 'Tooltip style', 'options', 'wppedia' ),
+				'type'								=> 'select',
+				'options'							=> [
+					'light'			=> 'Light',
 					'light-border' 	=> 'Light with border',
-					'material'			=> 'Material',
-					'translucent'		=> 'Translucent'
+					'material'		=> 'Material',
+					'translucent'	=> 'Translucent'
 				],
-				'desc' 							=> _x( 'Select your preferred tooltip style.', 'options', 'wppedia' ),
-				'settings_section' 	=> 'wppedia_settings_tooltips',
-				'settings_page' 		=> 'wppedia_settings_general'
+				'desc'								=> _x( 'Select your preferred tooltip style.', 'options', 'wppedia' ),
+				'settings_section'					=> 'tooltips',
+				'settings_page'						=> 'wppedia_settings'
 			],
 
 			/**
@@ -397,54 +437,79 @@ class options {
 			// Glossary permalink base setting 
 			[
 				'id'								=> 'wppedia_permalink_base',
-				'label' 						=> _x('WPPedia base', 'options', 'wppedia'),
-				'type' 							=> 'text',
-				'settings_section' 	=> 'wppedia_settings_permalink',
-				'settings_page' 		=> 'permalink',
-				'register_setting' 	=> [ $this, 'wppedia_permalink_part_sanitize' ]
+				'label'								=> _x('WPPedia base', 'options', 'wppedia'),
+				'type'								=> 'text',
+				'settings_section'					=> 'wppedia_settings_permalink',
+				'settings_page'						=> 'permalink',
+				'register_setting'					=> [ $this, 'wppedia_permalink_part_sanitize' ]
 			],
 			[
 				'id'								=> 'wppedia_permalink_use_initial_character',
-				'label' 						=> _x('use initial character in URL', 'options', 'wppedia'),
-				'type' 							=> 'checkbox',
-				'class'							=> $switch_className,
-				'settings_section' 	=> 'wppedia_settings_permalink',
-				'settings_page' 		=> 'permalink'
+				'label'								=> _x('use initial character in URL', 'options', 'wppedia'),
+				'type'								=> 'switch',
+				'settings_section'					=> 'wppedia_settings_permalink',
+				'settings_page'						=> 'permalink'
 			]
 		];
 
-		foreach ($this->wp_option_fields as $opt) {
+		foreach ($this->wp_option_fields as $field) {
+			$field_arguments = $this->setFieldArguments($field);
+			$field_name = 'wppedia_settings[' . $field['settings_section'] . '][' . $field['id'] . ']';
+			$field_type = (isset($field['type'])) ? $field['type'] : 'text';
+
 			add_settings_field( 
-				$opt['id'], 
-				$opt['label'],
+				$field['id'], 
+				$field['label'],
 				[ $this, 'field' ],
-				$opt['settings_page'],
-				$opt['settings_section'],
+				$field['settings_page'],
+				$field['settings_section'],
 				[
-					// General field data
-					'type' 					=> (isset($opt['type'])) ? $opt['type'] : 'text',
-					'id' 						=> $opt['id'],
-					'label'					=> $opt['label'],
-					'class'					=> (isset($opt['class'])) ? $opt['class'] : null,
-					'desc'					=> (isset($opt['desc'])) ? $opt['desc'] : null,
-					'default'				=> (isset($opt['default'])) ? $opt['default'] : null,
-					// Options field data
-					'options' 			=> (isset($opt['options'])) ? $opt['options'] : null,
-					// Arbitrary title field data
-					'heading_level' => (isset($opt['heading_level'])) ? $opt['heading_level'] : 'h2',
+					'id' 				=> $field['id'],
+					'name'				=> $field_name,
+					'settings_section' 	=> $field['settings_section'],
+					'type'				=> $field_type,
+					'class'				=> isset($field_arguments['class']) ? $field_arguments['class'] : '',
+					'args'				=> $field_arguments,
 				]
 			);
-
-			if (!isset($opt['register_setting']) || false !== $opt['register_setting']) {
-				register_setting(
-					$opt['settings_page'], 
-					$opt['id'],
-					(isset($opt['register_setting']) && is_array($opt['register_setting'])) ? $opt['register_setting'] : []
-				);
-			}
-			
 		}
 
+	}
+
+	/**
+	 * Set Arguments for fields
+	 * 
+	 * @since 1.3.0
+	 */
+	private function setFieldArguments(array $field) {
+		$args = [];
+
+		// General field data
+		$args['label'] = $field['label'];
+
+		if (isset($field['class']) && $field['class'] !== '') {
+			$args['class'] = $field['class'];
+		}
+
+		if (isset($field['desc']) && $field['desc'] !== '') {
+			$args['desc'] = $field['desc'];
+		}
+
+		if (isset($field['default'])) {
+			$args['default'] = $field['default'];
+		}
+
+		// Options field data
+		if (isset($field['options']) && !empty($field['options'])) {
+			$args['options'] = $field['options'];
+		}
+
+		// Arbitrary title field data
+		if ('title' === $field['type']) {
+			$args['heading_level'] = (isset($field['heading_level'])) ? $field['heading_level'] : 'h2';
+		}
+
+		return $args;
 	}
 
 	/**
@@ -541,12 +606,14 @@ class options {
 			}
 
 			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
+				echo '</div>';
 				continue;
 			}
 
 			echo '<table class="form-table" role="presentation">';
 			$this->do_settings_fields( $page, $section['id'] );
 			echo '</table>';
+			submit_button();
 				
 			echo '</div>';
 			
@@ -565,7 +632,7 @@ class options {
 	 * @since 1.1.0
 	 */
 	private function do_settings_fields( $page, $section ) {
-	  global $wp_settings_fields;
+		global $wp_settings_fields;
 	
 		if ( ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
 			return;

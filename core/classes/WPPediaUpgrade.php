@@ -52,26 +52,51 @@ class WPPediaUpgrade {
 	private function handle_upgrade_options() {
 		// Set default options
 		$defaults = options::get_option_defaults();
-		foreach ($defaults as $key => $value) {
-			if (false !== $value) {
-				$this->set_default_option($key, $value);
-			}
-		}
-		// Handle deprecated options
-		$deprecated = options::get_deprecated_options();
-		foreach ($deprecated as $old => $new) {
-			if (false !== $new) {
-				$this->replace_option_key($old, $new);
+		foreach ($defaults as $option_group => $options) {
+			if (is_array($options)) {
+				foreach ($options as $key => $value) {
+					$this->set_default_option($option_group, $key, $value);
+				}
 			} else {
-				delete_option($old);
+				$this->set_default_option(null, $option_group, $options);
 			}
 		}
+
+		// TODO for version 1.3.0:
+		//
+		// Handle deprecated options
+		// $deprecated = options::get_deprecated_options();
+		// foreach ($deprecated as $old => $new) {
+		// 	if (false !== $new) {
+		// 		$this->replace_option_key($old, $new);
+		// 	} else {
+		// 		$options = get_option('wppedia_options');
+		// 		delete_option($old);
+		// 	}
+		// }
 	}
 
-	private function set_default_option($key, $value, $autoload = false) {
-		if (!get_option($key)) {
-			add_option($key, $value, '', $autoload);
+	private function set_default_option($option_group, $key, $value) {
+		if (!get_option('wppedia_settings')) {
+			add_option(
+				'wppedia_settings', 
+				array_filter(options::get_option_defaults(), function($value) {
+					return is_array($value);
+				}),
+				'', 
+				false
+			);
 		}
+
+		// Update single option
+		$options = get_option('wppedia_settings');
+		if ($option_group && !isset($options[$option_group][$key])) {
+			$options[$option_group][$key] = $value;
+			update_option('wppedia_settings', $options);
+		} else if (!$option_group && !get_option($key)) {
+			update_option($key, $value);
+		}
+		
 	}
 
 	private function replace_option_key($oldKey, $newKey) {

@@ -3,7 +3,7 @@
 /**
  * WPPedia admin fields
  * 
- * @since 1.2.0
+ * @since 1.3.0
  */
 
 namespace WPPedia\traits;
@@ -16,52 +16,54 @@ trait adminFields {
 	/**
 	 * Evaluate the function to use foreach field type
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function field( $field ) {
-		switch ( $field['type'] ) {
+	public function field($field) {
+		switch ($field['type']) {
 			case 'number':
 			case 'date':
-				$this->input_minmax( $field );
+				$this->input_minmax($field);
 				break;
 			case 'textarea':
-				$this->textarea( $field );
+				$this->textarea($field);
 				break;
 			case 'select':
-				$this->select( $field );
+				$this->select($field);
 				break;
 			case 'checkbox':
-				$this->checkbox( $field );
+			case 'switch':
+				$this->checkbox($field);
 				break;
 			case 'checkbox-group':
-				$this->checkbox_group( $field );
+				$this->checkbox_group($field);
 				break;
 			case 'title':
-				$this->title( $field );
+				$this->title($field);
 				break;
 			default:
-				$this->input( $field );
+				$this->input($field);
 		}
 
 		// Show field description
-		if (isset($field['desc']) && '' !== $field['desc']) {
-			$this->display_field_description($field['desc']);
+		if (isset($field['args']['desc']) && '' !== $field['args']['desc']) {
+			$this->display_field_description($field['args']['desc']);
 		}
 	}
 
 	/**
 	 * Create a regular input field
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function input( $field ) {
+	protected function input($field) {
 		printf(
 			'<input class="regular-text %s" id="%s" name="%s" %s type="%s" value="%s" %s>',
-			isset( $field['class'] ) ? $field['class'] : '',
-			$field['id'], $field['id'],
-			isset( $field['pattern'] ) ? "pattern='{$field['pattern']}'" : '',
+			$this->field_class_string($field),
+			$this->field_id($field),
+			$this->field_name($field),
+			isset( $field['args']['pattern'] ) ? "pattern='{$field['args']['pattern']}'" : '',
 			$field['type'],
-			$this->value( $field ),
+			$this->value($field),
 			$this->restrict_pro($field)
 		);
 	}
@@ -69,19 +71,19 @@ trait adminFields {
 	/**
 	 * Create a numeric input field
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function input_minmax( $field ) {
+	protected function input_minmax($field) {
 		printf(
 			'<input class="regular-text %s" id="%s" %s %s name="%s" %s type="%s" value="%s" %s>',
-			isset( $field['class'] ) ? $field['class'] : '',
-			$field['id'],
-			isset( $field['max'] ) ? "max='{$field['max']}'" : '',
-			isset( $field['min'] ) ? "min='{$field['min']}'" : '',
-			$field['id'],
-			isset( $field['step'] ) ? "step='{$field['step']}'" : '',
+			$this->field_class_string($field),
+			$this->field_id($field),
+			isset( $field['args']['max'] ) ? "max='{$field['args']['max']}'" : '',
+			isset( $field['args']['min'] ) ? "min='{$field['args']['min']}'" : '',
+			$this->field_name($field),
+			isset( $field['args']['step'] ) ? "step='{$field['args']['step']}'" : '',
 			$field['type'],
-			$this->value( $field ),
+			$this->value($field),
 			$this->restrict_pro($field)
 		);
 	}
@@ -89,43 +91,45 @@ trait adminFields {
 	/**
 	 * Create a textarea field
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function textarea( $field ) {
+	protected function textarea($field) {
 		printf(
 			'<textarea class="regular-text %s" id="%s" name="%s" rows="%d" %s>%s</textarea>',
-			isset( $field['class'] ) ? $field['class'] : '',
-			$field['id'], $field['id'],
-			isset( $field['rows'] ) ? $field['rows'] : 4,
+			$this->field_class_string($field, [], true),
+			$this->field_id($field),
+			$this->field_name($field),
+			isset( $field['args']['rows'] ) ? $field['args']['rows'] : 4,
 			$this->restrict_pro($field),
-			$this->value( $field )
+			$this->value($field)
 		);
 	}
 
 	/**
 	 * Create a select input 
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function select( $field ) {
+	protected function select($field) {
 		printf(
 			'<select id="%s" name="%s" %s %s>%s</select>',
-			$field['id'], $field['id'],
-			($field['class'] && '' !== trim($field['class'])) ? ' class="' . $field['class'] . '"' : "",
+			$this->field_id($field),
+			$this->field_name($field),
+			$this->field_class_string($field, [], true),
 			$this->restrict_pro($field),
-			$this->select_options( $field )
+			$this->select_options($field)
 		);
 	}
 
 	/**
 	 * Evaluate the selected option
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function select_selected( $field, $current ) {
-		$value = $this->value( $field );
-		if ( strval($value) === strval($current) ) {
-			return 'selected';
+	private function select_selected($field, $current) {
+		$value = $this->value($field);
+		if (strval($value) === strval($current)) {
+			return ' selected';
 		}
 		return '';
 	}
@@ -133,15 +137,16 @@ trait adminFields {
 	/**
 	 * Output options for the select method
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function select_options( $field ) {
+	private function select_options($field) {
 		$output = [];
-		foreach ( $field['options'] as $option => $label ) {
+		foreach ($field['args']['options'] as $option => $label) {
 			$output[] = sprintf(
-				'<option %s value="%s"> %s</option>',
-				$this->select_selected( $field, $option ),
-				$option, $label
+				'<option%s value="%s">%s</option>',
+				$this->select_selected($field, $option),
+				$option, 
+				$label
 			);
 		}
 		return implode( '<br>', $output );
@@ -150,21 +155,29 @@ trait adminFields {
 	/**
 	 * Create a checkbox field
 	 * 
-	 * @since 1.2.1
+	 * @since 1.3.0
 	 */
-	public function checkbox( $field ) {
+	protected function checkbox($field) {
+		$is_switch = false;
+		$additionalClasses = [];
+		if ('switch' === $field['type']) {
+			$is_switch = true;
+			$additionalClasses[] = 'wppedia-switch-button';
+		}
+
 		printf(
 			'<input %s %s id="%s" name="%s" type="checkbox" value="1" %s>',
-			($field['class'] && '' !== trim($field['class'])) ? ' class="' . $field['class'] . '"' : "",
-			checked(get_option($field['id'], false), true, false),
-			$field['id'], $field['id'],
+			$this->field_class_string($field, $additionalClasses, true),
+			checked($this->value($field), true, false),
+			$this->field_id($field),
+			$this->field_name($field),
 			$this->restrict_pro($field)
 		);
 
-		if (isset($field['class']) && false !== strpos($field['class'], 'wppedia-switch-button')) {
+		if ($is_switch) {
 			printf(
 				'<label for="%s" class="wppedia-switch-label" data-on="%s" data-off="%s"></label>',
-				$field['id'],
+				$this->field_id($field),
 				_x('Yes', 'options', 'wppedia'),
 				_x('No', 'options', 'wppedia')
 			);
@@ -174,13 +187,19 @@ trait adminFields {
 	/**
 	 * Create a group of checkbox fields
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function checkbox_group( $field ) {
-		foreach ( $field['options'] as $option => $label ) {
+	protected function checkbox_group($field) {
+		foreach ($field['args']['options'] as $option => $label ) {
 			$id = $field['id'] . '[' . $option . ']';
+			$name = $this->field_name($field) . '[' . $option . ']';
 			echo '<div class="wppedia-checkbox-group-item">';
-			$this->checkbox( array_merge($field, ['id' => $id]) );
+			$this->checkbox(
+				array_merge($field, [
+					'id' => $id, 
+					'name' => $name
+				])
+			);
 			echo '<label for="' . $id . '">' . $label . '</label>';
 			echo '</div>';
 		}
@@ -189,9 +208,9 @@ trait adminFields {
 	/**
 	 * Create an arbiatry title field
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function title( $field ) {
+	protected function title($field) {
 		$allowed_h_tags = [
 			'h1',
 			'h2',
@@ -201,27 +220,81 @@ trait adminFields {
 			'h6'
 		];
 
-		$heading_lvl = (!isset($field['heading_level']) || !in_array($field['heading_level'], $allowed_h_tags)) ? 'h2' : $field['heading_level'];
+		$heading_lvl = (!isset($field['args']['heading_level']) || !in_array($field['args']['heading_level'], $allowed_h_tags)) ? 'h2' : $field['args']['heading_level'];
 
 		printf(
 			'<%s>%s</%s>',
 			$heading_lvl,
-			$field['label'],
+			$field['args']['label'],
 			$heading_lvl
 		);
 		echo '<hr>';
 	}
 
+	private function field_id($field) {
+		return isset($field['settings_section']) ? $field['settings_section'] . '.' . $field['id'] : $field['id'];
+	}
+
+	private function field_name($field) {
+		return isset($field['name']) ? $field['name'] : $field['id'];
+	}
+
+	/**
+	 * Print field css classes
+	 * classes might be defined as strings or string arrays
+	 * 
+	 * This method removes all non string values and returns a sanitized
+	 * class string
+	 * 
+	 * @param $field
+	 * @param $additionalClasses
+	 * @param $withAttribute
+	 * 
+	 * @return string
+	 * 
+	 * @since 1.3.0
+	 */
+	private function field_class_string($field, $additionalClasses = [], $withAttribute = false) {
+		if (!isset($field['args']['class']) && (!$additionalClasses || empty($additionalClasses))) {
+			return;
+		}
+
+		$class = (isset($field['args']['class'])) ? $field['args']['class'] : [];
+
+		$class_string = '';
+		if (is_array($class) && !empty($class)) {
+			$class_array_sanitized = array_filter($class, 'is_string');
+			$class_string = implode(' ', $class_array_sanitized);
+		} elseif (is_string($class)) {
+			$class_string = trim($class);
+		}		
+
+		if (is_array($additionalClasses) && !empty($additionalClasses)) {
+			$additional_class_array_sanitized = array_filter($additionalClasses, 'is_string');
+			$class_string .= ' ' . implode(' ', $additional_class_array_sanitized);
+		} elseif (is_string($additionalClasses)) {
+			$class_string .= trim($additionalClasses);
+		}
+
+		$class_string = trim($class_string);
+
+		if ($withAttribute) {
+			$class_string = 'class="' . $class_string . '"';
+		}
+
+		return $class_string;
+	}
+
 	/**
 	 * Evaluate the current value of a field
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function value( $field ) {
-		if (get_option($field['id'], false)) {
-			$value = get_option($field['id']);
-		} else if ( isset( $field['default'] ) ) {
-			$value = $field['default'];
+	private function value($field) {
+		if (get_option('wppedia_settings', false) && isset(maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['id']])) {
+			$value = maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['id']];
+		} else if ( isset( $field['args']['default'] ) ) {
+			$value = $field['args']['default'];
 		} else {
 			return '';
 		}
@@ -233,7 +306,7 @@ trait adminFields {
 	 * 
 	 * @since 1.2.0
 	 */
-	public function display_field_description($desc) {
+	private function display_field_description($desc) {
 		if (is_callable($desc)) {
 			$desc = call_user_func($desc);
 		}
@@ -247,15 +320,22 @@ trait adminFields {
 		echo '</div>';
 	}
 
+	private function is_restricted_pro($field) {
+		if (isset($field['args']['class']) && false !== strpos($field['args']['class'], self::$pro_feature_className)) {
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Return disabled attribute for pro features
 	 * 
 	 * @param bool $disable
 	 * 
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	public function restrict_pro($field) {
-		if (isset($field['class']) && false !== strpos($field['class'], self::$pro_feature_className)) {
+	private function restrict_pro($field) {
+		if ($this->is_restricted_pro($field)) {
 			return ' disabled="disabled"';
 		}
 		return '';

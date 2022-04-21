@@ -108,21 +108,21 @@ class WPPediaQuerySetup {
 
 	}
 
-  /**
-   * Set default sorting for WP List Table on wiki entries
-   * 
-   * @since 1.0.0
-   */
-  function default_wiki_entries_orderby( $query ) {
-    if(!$query->is_main_query() || $query->get('post_type') !== wppedia_get_post_type())
-      return $query;
+	/**
+	 * Set default sorting for WP List Table on wiki entries
+	 * 
+	 * @since 1.0.0
+	 */
+	function default_wiki_entries_orderby( $query ) {
+		if(!$query->is_main_query() || $query->get('post_type') !== wppedia_get_post_type())
+			return $query;
   
-    // Orderby should not be manually modified
-    if ( $query->get('orderby') == '' ) {
-      $query->set( 'orderby', 'title' );
-      $query->set( 'order', 'asc' );
+		// Orderby should not be manually modified
+		if ( $query->get('orderby') == '' ) {
+			$query->set( 'orderby', 'title' );
+			$query->set( 'order', 'asc' );
 		}
-		
+			
 		return $query;
 	}
 
@@ -133,7 +133,7 @@ class WPPediaQuerySetup {
 	 */
 	function default_posts_per_page( $query ) {
 		if (!is_admin() && $query->is_main_query() && $query->is_archive() && ($query->get('post_type') === wppedia_get_post_type() || $query->get('wppedia_initial_letter') !== ''))
-			$query->set( 'posts_per_page', get_option('wppedia_posts_per_page', options::get_option_defaults('wppedia_posts_per_page')) );
+			$query->set( 'posts_per_page', options::get_option('archive', 'posts_per_page') );
 
 		return $query;
 	}

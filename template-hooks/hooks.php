@@ -64,15 +64,15 @@ add_action('wp', function() {
 	 * Global template hooks
 	 */
 	if (
-		((is_wppedia_frontpage() || is_wppedia_archive()) && false != get_option('wppedia_archive_show_navigation', options::get_option_defaults('wppedia_archive_show_navigation'))) || 
-		(is_wppedia_singular() && false != get_option('wppedia_singular_show_navigation', options::get_option_defaults('wppedia_singular_show_navigation')))
+		((is_wppedia_frontpage() || is_wppedia_archive()) && false != options::get_option('archive', 'show_nav')) || 
+		(is_wppedia_singular() && false != options::get_option('singular', 'show_nav'))
 	) {
 		add_action( 'wppedia_before_main_content', 'wppedia_navigation', 20 );
 	}
 	
 	if (
-		((is_wppedia_frontpage() || is_wppedia_archive()) && false != get_option('wppedia_archive_show_searchbar', options::get_option_defaults('wppedia_archive_show_searchbar'))) ||
-		(is_wppedia_singular() && false != get_option('wppedia_singular_show_searchbar', options::get_option_defaults('wppedia_singular_show_searchbar')))
+		((is_wppedia_frontpage() || is_wppedia_archive()) && false != options::get_option('archive', 'show_searchbar')) ||
+		(is_wppedia_singular() && false != options::get_option('singular', 'show_searchbar'))
 	) {
 		add_action( 'wppedia_before_main_content', 'wppedia_searchform', 30 );
 	}

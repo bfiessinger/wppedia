@@ -7,14 +7,25 @@ defined( 'ABSPATH' ) || die();
  * page
  * 
  * Currently available pages:
- * - front
+ * - front (with aliases 'home' and 'index')
  * 
  * @param string $page
  * 
  * @since 1.1.0
  */
 function wppedia_get_page_id(string $page) {
-	$page_id = get_option('wppedia_' . $page . '_page_id');
+	$options = get_option('wppedia_settings');
+	$page_id = 0;
+	switch ($page) {
+		case 'index':
+		case 'home':
+		case 'front':
+			$page_id = (isset($options['general']['front_page_id'])) ? 
+				$options['general']['front_page_id'] : 
+				false;
+			break;
+	}
+	
 	return ($page_id) ? absint($page_id) : false;
 }
 
