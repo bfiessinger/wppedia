@@ -82,13 +82,13 @@ function wppedia_get_post_initial_letter( $post ) {
 function wppedia_get_posts_initial_letter_list(array $args = []) {
 	
 	// Default settings array
-  $defaults = [
+	$defaults = [
 		'show_option_home' => false,
 		'hide_empty' => true
 	];
 	
 	// Build final settings array
-  $settings = array_merge($defaults, $args);
+	$settings = array_merge($defaults, $args);
 	
 	$available_initial_chars = [];
 	
