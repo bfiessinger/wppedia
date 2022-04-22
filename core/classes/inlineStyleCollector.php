@@ -4,7 +4,7 @@
  * Style loader Class
  * Used to collect all stylesheets and merging them to inline styles
  * 
- * @since 1.2.0
+ * @since 1.3.0
  */
 
 namespace WPPedia;
@@ -15,30 +15,31 @@ defined( 'ABSPATH' ) or die();
 class inlineStyleCollector {
 
 	public $stylesheets = [];
+	public $removed_stylesheets = [];
 	public $final_css = '';
 
-  /**
-   * Static variable for instanciation
-   */
-  protected static $instance = null;
+	/**
+	 * Static variable for instanciation
+	 */
+	protected static $instance = null;
 
-  /**
-   * Get current Instance
+	/**
+	 * Get current Instance
 	 * 
 	 * @since 1.0.0
 	 * 
 	 * @return self
-   */
-  public static function getInstance() {
+	*/
+  	public static function getInstance() {
 
-    if ( null === self::$instance ) {
-      self::$instance = new self;
-    }
-    return self::$instance;
+		if ( null === self::$instance ) {
+		self::$instance = new self;
+		}
+		return self::$instance;
 
 	}
 	
-  protected function __clone() {}
+  	protected function __clone() {}
 
 	protected function __construct() {}
 
@@ -82,20 +83,6 @@ class inlineStyleCollector {
 
 	}
 
-	/** 
-	 * Remove a registered Stylesheet
-	 * 
-	 * @param string $handle - The registered handle
-	 * 
-	 * @since 1.0.0
-	 */
-	public function remove( string $handle ) {
-
-		unset( $this->stylesheets[ $handle ] );
-		$this->stylesheets = self::$stylesheets;
-
-	}
-
 	/**
 	 * Collect stylesheets and save them to a public Array
 	 * 
@@ -109,6 +96,35 @@ class inlineStyleCollector {
 	private function collect_inline_styles( string $handle, string $css ) {
 
 		$this->stylesheets[ $handle ] = $css;
+
+	}
+
+	/** 
+	 * Remove a registered Stylesheet
+	 * 
+	 * @param string $handle - The registered handle
+	 * 
+	 * @return true
+	 * 
+	 * @since 1.3.0
+	 */
+	public function remove( string $handle ) {
+		
+		$this->removed_stylesheets[] = $handle;
+		return true;
+
+	}
+
+	/**
+	 * Handle removal of stylesheets
+	 * 
+	 * @since 1.3.0
+	 */
+	private function handle_remove_stylesheets() {
+
+		foreach ( $this->removed_stylesheets as $handle ) {
+			unset( $this->stylesheets[ $handle ] );
+		}
 
 	}
 
@@ -130,9 +146,16 @@ class inlineStyleCollector {
 		$this->final_css = $css_string;
 	}
 
-
+	/**
+	 * Return the final CSS string
+	 * 
+	 * @return string
+	 * 
+	 * @since 1.3.0
+	 */
 	public function get_final_css() {
 
+		$this->handle_remove_stylesheets();
 		$this->merge_inline_styles();
 
 		return $this->final_css;

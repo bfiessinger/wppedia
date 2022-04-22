@@ -7,6 +7,7 @@
  */
 
 use WPPedia\options;
+use WPPedia\inlineStyleCollector;
 
 /**
  * Enqueue Assets
@@ -69,16 +70,18 @@ function wppedia_enqueue_frontend_assets() {
 		default:
 			break;
 	}
+}
+add_action('wp_enqueue_scripts', 'wppedia_enqueue_frontend_assets');
 
-	$final_css = WPPedia\inlineStyleCollector::getInstance()->get_final_css();
+function wppedia_enqueue_inline_styles() {
+	$final_css = inlineStyleCollector::getInstance()->get_final_css();
 	if ( '' != $final_css ) {
 		wp_register_style( 'wppedia-inline-style', false );
 		wp_enqueue_style( 'wppedia-inline-style' );
 		wp_add_inline_style( 'wppedia-inline-style', $final_css );
 	}
-
 }
-add_action('wp_enqueue_scripts', 'wppedia_enqueue_frontend_assets');
+add_action('wp_enqueue_scripts', 'wppedia_enqueue_inline_styles', 9999);
 
 /**
  * Enqueue admin assets

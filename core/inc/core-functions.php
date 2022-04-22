@@ -44,3 +44,17 @@ function wppedia_add_inline_style( string $handle, string $stylesheet ) {
 	return false;
 
 }
+
+/**
+ * Remove a registered inline style
+ * 
+ * @since 1.3.0
+ */
+function wppedia_remove_inline_style( string $handle ) {
+	
+	if ( inlineStyleCollector::getInstance()->remove( $handle ) )
+		return true;
+
+	return false;
+
+}
