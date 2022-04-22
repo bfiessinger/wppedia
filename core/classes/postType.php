@@ -102,15 +102,15 @@ class postType {
 		}
 	}
 
-  /**
-   * Register Wiki Custom Post type
-   * 
+	/**
+	 * Register Wiki Custom Post type
+	 * 
 	 * @uses register_post_type
 	 * 
-   * @since 1.2.3
-   */
-  public function register_wppedia_post_type() {
-    $labels = [
+	* @since 1.2.3
+	*/
+	public function register_wppedia_post_type() {
+		$labels = [
 			'name' => _x( 'Glossary', 'Post Type General Name', 'wppedia' ),
 			'singular_name' => _x( 'Glossary Term', 'Post Type Singular Name', 'wppedia' ),
 			'menu_name' => _x( 'Glossary', 'Admin Menu text', 'wppedia' ),
@@ -133,34 +133,34 @@ class postType {
 			'filter_items_list' => __( 'Filter Glossary list', 'wppedia' ),
 		];
 
-    $rewrite = [
-			'slug'				=> ltrim( rtrim( $this->permalink_base, '/' ), '/' ),
-      'with_front'	=> false,
-      'pages' 			=> true,
-      'feeds' 			=> true,
+		$rewrite = [
+			'slug'			=> ltrim( rtrim( $this->permalink_base, '/' ), '/' ),
+			'with_front'	=> false,
+			'pages'			=> true,
+			'feeds'			=> true,
 		];
 
-    $args = [
-      'label' => __( 'Glossary Term', 'wppedia' ),
-      'description' => __( '', 'wppedia' ),
-      'labels' => $labels,
-      'menu_icon' => 'dashicons-book-alt',
-      'supports' => [ 'thumbnail', 'title', 'editor', 'excerpt', 'revisions', 'author' ],
-      'taxonomies' => $this->taxonomies,
-      'public' => true,
-      'show_ui' => true,
-      'show_in_menu' => true,
-      'show_in_admin_bar' => true,
-      'show_in_nav_menus' => true,
-      'can_export' => true,
-      'has_archive' => true,
-      'hierarchical' => false,
-      'exclude_from_search' => false,
-      'show_in_rest' => true,
-      'publicly_queryable' => true,
+		$args = [
+			'label' => __( 'Glossary Term', 'wppedia' ),
+			'description' => __( '', 'wppedia' ),
+			'labels' => $labels,
+			'menu_icon' => 'dashicons-book-alt',
+			'supports' => [ 'thumbnail', 'title', 'editor', 'excerpt', 'revisions', 'author' ],
+			'taxonomies' => $this->taxonomies,
+			'public' => true,
+			'show_ui' => true,
+			'show_in_menu' => true,
+			'show_in_admin_bar' => true,
+			'show_in_nav_menus' => true,
+			'can_export' => true,
+			'has_archive' => true,
+			'hierarchical' => false,
+			'exclude_from_search' => false,
+			'show_in_rest' => true,
+			'publicly_queryable' => true,
 			'capability_type' => 'post',
 			'has_archive' => false,
-      'rewrite' => $rewrite
+			'rewrite' => $rewrite
 		];
 
 		if ( false == wppedia_get_page_id('front') ) {
@@ -168,7 +168,6 @@ class postType {
 		}
 			
 		\register_post_type( $this->post_types['main'], $args );
-
 	}
 
 	/**
