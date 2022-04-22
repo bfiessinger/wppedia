@@ -24,10 +24,24 @@ class WPPedia_Twenty_Twenty_One {
 
 		// Twenty Twenty-One wraps the content before WPPedia does it.
 		remove_action( 'wppedia_before_main_content', 'wppedia_wrapper_start', 10 );
+		add_action( 'wppedia_before_main_content', [__CLASS__, 'wppedia_wrapper_start'], 10 );
 		remove_action( 'wppedia_after_main_content', 'wppedia_wrapper_end', 20 );
+		add_action( 'wppedia_after_main_content', [__CLASS__, 'wppedia_wrapper_end'], 20 );
 
 		add_action('wp_enqueue_scripts', [ __CLASS__, 'unset_wppedia_content_width' ], 202 );
 
+	}
+
+	public static function wppedia_wrapper_start() {
+		if (is_archive()) {
+			echo '<div class="entry-content">';
+		}
+	}
+
+	public static function wppedia_wrapper_end() {
+		if (is_archive()) {
+			echo '</div>';
+		}
 	}
 
 	/**
