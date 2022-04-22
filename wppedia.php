@@ -106,7 +106,7 @@ class WPPedia {
 		/**
 		 * Instantiate Template Utils
 		 */
-		(new template())->init();
+		(new template())->_init();
 
 		/**
 		 * Theme and Plugin compatibility
@@ -116,7 +116,7 @@ class WPPedia {
 		/**
 		 * Instantiate REST API Controller Class
 		 */
-		(new restController())->init();
+		(new restController())->_init();
 
 		/**
 		 * Instantiate Query Controller
@@ -182,8 +182,8 @@ class WPPedia {
 	 * @since 1.1.3
 	 */
 	public function template_path() {
-    return trailingslashit(apply_filters( 'wppedia_template_path', 'wppedia' ));
-  }
+		return trailingslashit(apply_filters( 'wppedia_template_path', 'wppedia' ));
+	}
 
 	/**
 	 * Get default plugin path
