@@ -81,17 +81,23 @@ function wppedia_get_template_part( $slug, $name = '' ) {
  * 
  * @since 1.2.1
  */
-function wppedia_page_title( $echo = true ) { 
+function wppedia_page_title( $echo = true ) {
+	global $post;
+
 	if ( is_search() ) { 
 		$page_title = sprintf( __( 'Search results: “%s”', 'wppedia' ), get_search_query() );
 		if ( get_query_var( 'paged' ) )
 			$page_title .= sprintf( __( ' – Page %s', 'wppedia' ), get_query_var( 'paged' ) );
-	} elseif ( is_tax() ) { 
+	} else if ( is_tax() ) { 
 		$page_title = single_term_title( "", false );
-	} else {
+	} else if ( is_wppedia_frontpage() ) {
 		$front_page_id = wppedia_get_page_id( 'front' );
 		$page_title = get_the_title( $front_page_id );
-	} 
+	} else if ( is_wppedia_archive() ) {
+		$page_title = __('Glossary', 'wppedia');
+	} else {
+		$page_title = get_the_title();
+	}
 
 	$page_title = apply_filters( 'wppedia_page_title', $page_title ); 
 
