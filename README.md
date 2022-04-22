@@ -39,7 +39,7 @@ Glossary by WPPedia offers the best out of the box system for creating a glossar
 We offer dedicated support for all buyers of the **PRO** version.
 If you have any questions, suggestions or whatever bothers you we will try to assist you as quick as possible.
 
-If you use the free Version of glossary by WPPedia head over to the [Support forum here on wordpress.org](https://wordpress.org/support/plugin/wppedia/) or the [issues section here on github](https://github.com/bfiessinger/wppedia/issues).
+If you use the free Version of glossary by WPPedia head over to the [Support forum on wordpress.org](https://wordpress.org/support/plugin/wppedia/) or the [issues section here on github](https://github.com/bfiessinger/wppedia/issues).
 
 ## Sponsors
 <a href="https://www.steinrein.com/" target="_blank">
