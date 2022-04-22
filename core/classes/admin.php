@@ -201,7 +201,7 @@ class admin {
 	 */
 	function plugin_action_links(array $actions) {
 		$actions[] = '<a href="'. esc_url(get_admin_url(null, 'edit.php?post_type=' . wppedia_get_post_type())) .'">' . __('Manage glossary', 'wppedia') . '</a>';
-		$actions[] = '<a href="'. esc_url(get_admin_url(null, 'edit.php?post_type=' . wppedia_get_post_type() . '&page=wppedia_settings_general')) .'">' . __('Settings') . '</a>';
+		$actions[] = '<a href="'. esc_url(get_admin_url(null, 'edit.php?post_type=' . wppedia_get_post_type() . '&page=wppedia_settings')) .'">' . __('Settings') . '</a>';
 		return $actions;
 	}
 
