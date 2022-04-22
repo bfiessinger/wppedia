@@ -384,7 +384,7 @@ class options {
 				'label'								=> _x( 'Create crosslinks to post types', 'options', 'wppedia' ),
 				'type'								=> 'checkbox-group',
 				'options'							=> $this->get_public_posttypes(),
-				'class'								=> self::$pro_feature_className,
+				'pro'								=> true,
 				'settings_section'					=> 'crosslinks',
 				'settings_page'						=> 'wppedia_settings',
 				'register_setting'					=> false
@@ -394,7 +394,7 @@ class options {
 				'id'								=> 'build_index',
 				'label'								=> _x('Crosslink Index', 'options', 'wppedia'),
 				'type'								=> 'switch',
-				'class'								=> self::$pro_feature_className,
+				'pro'								=> true,
 				'desc'								=> _x('If enabled WPPedia will create automatic indexes with all links created for each post. This ensures a significant faster loading time!', 'options', 'wppedia'),
 				'settings_section'					=> 'crosslinks',
 				'settings_page'						=> 'wppedia_settings',
@@ -508,6 +508,8 @@ class options {
 		if ('title' === $field['type']) {
 			$args['heading_level'] = (isset($field['heading_level'])) ? $field['heading_level'] : 'h2';
 		}
+
+		$args['pro'] = isset($field['pro']) && $field['pro'] === true;
 
 		return $args;
 	}
@@ -629,7 +631,7 @@ class options {
 	 * 
 	 * @see https://developer.wordpress.org/reference/functions/do_settings_sections/
 	 * 
-	 * @since 1.1.0
+	 * @since 1.3.0
 	 */
 	private function do_settings_fields( $page, $section ) {
 		global $wp_settings_fields;
@@ -638,7 +640,7 @@ class options {
 			return;
 		}
 	
-	  foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
+	  	foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
 
 			$single_column = false;
 			$tdColspan = '';
@@ -649,8 +651,8 @@ class options {
 
 			$class = '';
 
-			if ( ! empty( $field['args']['class'] ) ) {
-				$class = ' class="' . esc_attr( $field['args']['class'] ) . '"';
+			if ( isset( $field['args']['args']['pro'] ) && $field['args']['args']['pro'] ) {
+				$class = ' class="' . self::$pro_feature_className . '"';
 			}
 
 			echo "<tr{$class}>";

@@ -300,7 +300,7 @@ trait adminFields {
 		} else {
 			return '';
 		}
-		
+
 		return str_replace( '\u0027', "'", $value );
 	}
 
@@ -324,7 +324,7 @@ trait adminFields {
 	}
 
 	private function is_restricted_pro($field) {
-		if (isset($field['args']['class']) && false !== strpos($field['args']['class'], self::$pro_feature_className)) {
+		if (isset($field['args']['pro']) && false !== $field['args']['pro']) {
 			return true;
 		}
 		return false;
