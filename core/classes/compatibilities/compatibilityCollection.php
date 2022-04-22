@@ -17,7 +17,7 @@ class compatibilityCollection {
 	private $themeCompatibilities = [];
 	private $pluginCompatibilities = [];
 
-	function __construct() {
+	public function _init() {
 		$this->setDefaultThemeCompatibilities();
 		$this->setDefaultPluginCompatibilities();
 

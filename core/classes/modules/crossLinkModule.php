@@ -42,9 +42,11 @@ class crossLinkModule {
 		if ( $crosslink_activated !== null )
 			$this->crosslink_activated = $crosslink_activated;
 
+	}
+
+	public function _init() {
 		if ( $this->crosslink_activated )
 			add_filter( 'the_content', [$this, 'the_post_content_links'] );
-
 	}
 
 	/**
@@ -123,22 +125,22 @@ class crossLinkModule {
 
   }
 
-  /**
-   * Prepare the link Phrase
-   * 
-   * @since 1.0.0
-   */
-  public function prepare_link_phrase( string $str ) {
+	/**
+	 * Prepare the link Phrase
+	 * 
+	 * @since 1.0.0
+	 */
+	public function prepare_link_phrase( string $str ) {
 
-    $str = trim($str);
-    $str = wptexturize($str);
-    $str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
-    $str = htmlspecialchars($str);
-    $str = preg_quote($str, '/');
+		$str = trim($str);
+		$str = wptexturize($str);
+		$str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
+		$str = htmlspecialchars($str);
+		$str = preg_quote($str, '/');
 
-    return $str;
+		return $str;
 
-  }
+	}
 
 	/**
 	 * Filter the content and insert crosslinks
@@ -167,7 +169,7 @@ class crossLinkModule {
 			
 		}
 
-    return $content;
+		return $content;
 
 	}
 

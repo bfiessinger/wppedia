@@ -13,7 +13,7 @@ namespace WPPedia;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class customize {
+class customizer {
 
 	protected function __clone() {}
 

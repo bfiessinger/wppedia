@@ -24,12 +24,13 @@ require_once plugin_dir_path(__FILE__) . 'core/inc/core-functions.php';
 // Core Classes
 use WPPedia\template;
 use WPPedia\restController;
-use WPPedia\WPPediaQuerySetup;
+use WPPedia\querySetup;
 use WPPedia\admin;
 use WPPedia\options;
 use WPPedia\postMeta;
-use WPPedia\customize;
+use WPPedia\customizer;
 use WPPedia\postType;
+use WPPedia\dbUpgrade;
 
 // Modules
 use WPPedia\modules\crossLinkModule;
@@ -105,64 +106,69 @@ class WPPedia {
 		/**
 		 * Instantiate Template Utils
 		 */
-		template::getInstance();
-		new compatibilityCollection();
+		(new template())->init();
+
+		/**
+		 * Theme and Plugin compatibility
+		 */
+		(new compatibilityCollection())->_init();
 
 		/**
 		 * Instantiate REST API Controller Class
 		 */
-		new restController();
+		(new restController())->init();
 
 		/**
 		 * Instantiate Query Controller
 		 */
-		new WPPediaQuerySetup();
+		(new querySetup())->_init();
 
 		/**
 		 * Instatiate Admin View
 		 * Used to edit post or edit views in wp_admin
 		 */
-		new admin();
+		(new admin())->_init();
 
 		/**
 		 * Options
 		 * Setup options and settings pages
 		 */
-		options::getInstance();
+		(new options())->_init();
 
 		/**
 		 * Post meta
 		 * Setup custom postmeta for WPPedia articles
 		 */
-		new postMeta();
+		(new postMeta())->_init();
 
 		/**
 		 * Setup Customizer Controls
 		 */
-		new customize();
+		(new customizer())->_init();
 
 		/**
 		 * Instantiate Post Type
 		 * Generates the WPPedia Post type and related taxonomies
 		 */
-		postType::getInstance();
+		(new postType())->_init();
 
 		/**
-		 * Modify Wiki Content
+		 * Instantiate Crosslink Module
 		 */
-		$crosslinks_active = !!options::get_option('crosslinks', 'active');
-		$prefer_single_words = !!options::get_option('crosslinks', 'prefer_single_words');
-
-		new crossLinkModule(
-			$crosslinks_active,
-			$prefer_single_words		
-		);
+		(new crossLinkModule(
+			!!options::get_option('crosslinks', 'active'),
+			!!options::get_option('crosslinks', 'prefer_single_words')
+		))->_init();
 
 		/**
 		 * Tooltips
 		 */
-		new tooltipModule();
+		(new tooltipModule())->_init();
 
+		/**
+		 * Upgrade the WPPedia Database if needed
+		 */
+		(new dbUpgrade())->_init();
 	}
 
 	/**
@@ -226,8 +232,6 @@ add_action('init', function() {
 	}
 
 }, 20);
-
-new WPPedia\WPPediaUpgrade();
 
 /**
  * The code that runs during plugin deactivation.

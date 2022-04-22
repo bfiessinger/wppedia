@@ -15,7 +15,7 @@ class tooltipModule {
 
 	private $excerpt_length = 40;
 
-	public function __construct() {
+	public function _init() {
 
 		add_action( 'wp_ajax_nopriv_wppedia_generate_tooltip', [ $this, '__generate_tooltip' ] );
 		add_action( 'wp_ajax_wppedia_generate_tooltip', [ $this, '__generate_tooltip' ] );

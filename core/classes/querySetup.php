@@ -13,9 +13,9 @@ use WPPedia\options;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class WPPediaQuerySetup {
+class querySetup {
 
-  public function __construct() {
+	public function _init() {
 
 		// Modify the default query output
 		add_filter( 'posts_join', [ $this, 'posts_join_get_posts_by_initial_letter' ], 10, 2 );
@@ -27,8 +27,8 @@ class WPPediaQuerySetup {
 		// Allow searching in glossary entries only
 		add_filter( 'pre_get_posts', [ $this, 'search_wppedia' ], 202 );
 
-    // Sort Wiki Entries by postname
-    add_action( 'pre_get_posts', [ $this, 'default_wiki_entries_orderby' ] );
+		// Sort Wiki Entries by postname
+		add_action( 'pre_get_posts', [ $this, 'default_wiki_entries_orderby' ] );
 
 		// Set default posts per page on WPPedia frontend archives
 		add_action( 'pre_get_posts', [ $this, 'default_posts_per_page' ] );

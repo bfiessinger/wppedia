@@ -13,12 +13,12 @@ use WPPedia\options;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class WPPediaUpgrade {
+class dbUpgrade {
 
 	private $last_version;
 	private $cur_version;
 
-	public function __construct() {
+	public function _init() {
 		$this->cur_version = wppedia_get_version();
 		$this->last_version = get_option('wppedia_installed_version');
 

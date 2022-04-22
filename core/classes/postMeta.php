@@ -19,20 +19,20 @@ class postMeta {
 
 	private $post_meta_config;
 
-	public function __construct() {
+	public function _init() {
 		$this->post_meta_config = [
-			'title' 			=> 'WPPedia post settings',
-			'description' => '',
-			'meta_prefix' => "wppedia_post_",
-			'class_name' 	=> 'WPPedia_Post_Settings',
-			'post-type' 	=> [\wppedia_get_post_type()],
-			'context' 		=> 'normal',
-			'priority' 		=> 'low',
-			'fields' 			=> [
+			'title'			=> 'WPPedia post settings',
+			'description'	=> '',
+			'meta_prefix'	=> "wppedia_post_",
+			'class_name'	=> 'WPPedia_Post_Settings',
+			'post-type'		=> [\wppedia_get_post_type()],
+			'context'		=> 'normal',
+			'priority'		=> 'low',
+			'fields'		=> [
 				[
-					'id'			=> 'wppedia_post_alt_tags',
-					'type' 		=> 'textarea',
-					'label' 	=> 'Alternative terms'
+					'id'	=> 'wppedia_post_alt_tags',
+					'type'	=> 'textarea',
+					'label'	=> 'Alternative terms'
 				]
 			]
 		];

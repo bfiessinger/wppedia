@@ -15,9 +15,7 @@ class admin {
 
 	private static $colorscheme_css = '';
 
-  protected function __clone() {}
-
-  public function __construct() {
+	public function _init() {
 
 		// Add Text to the glossary archive page
 		add_action( 'display_post_states', [ $this, 'wppedia_archive_post_state' ], 10, 2 );

@@ -15,26 +15,7 @@ defined( 'ABSPATH' ) || die();
 
 class template {
 
-  /**
-   * Static variable for instanciation
-   */
-  protected static $instance = null;
-
-  /**
-   * Get current Instance
-   */
-  public static function getInstance() {
-
-    if ( null === self::$instance ) {
-      self::$instance = new self;
-    }
-    return self::$instance;
-
-  }
-
-	protected function __clone() {}
-
-	protected function __construct() {
+	public function _init() {
 
 		/**
 		 * Add custom Classes to the body and each post
