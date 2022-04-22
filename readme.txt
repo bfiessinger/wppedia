@@ -56,7 +56,7 @@ We are constantly updating this plugin to offer as many features as possible.
 Have a feature request? Don't hesitate and [contact us](https://wordpress.org/support/plugin/wppedia/)!
 
 ### What is a glossary?
-A glossary, often called encyclopedia or wiki is an industry-specific word list with the corresponding explanations. 
+A glossary, often called encyclopedia or lexicon is an industry-specific word list with the corresponding explanations. 
 It's very important that the terms defined are easy to understand and comprehensible.
 
 ### How can your website benefit from a glossary?
