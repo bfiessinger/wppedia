@@ -103,10 +103,13 @@ class WPPedia {
 
 		add_action( 'after_setup_theme', [ $this, 'setup' ] );
 
+		$this->version = WPPediaPluginVersion;
+
 		/**
 		 * Instantiate Template Utils
 		 */
-		(new template())->_init();
+		$this->template = new template();
+		$this->template->_init();
 
 		/**
 		 * Theme and Plugin compatibility
@@ -133,7 +136,8 @@ class WPPedia {
 		 * Options
 		 * Setup options and settings pages
 		 */
-		(new options())->_init();
+		$this->options = new options();
+		$this->options->_init();
 
 		/**
 		 * Post meta
