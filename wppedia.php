@@ -5,12 +5,12 @@
  * 
  * @wordpress-plugin
  * 
- * Plugin Name: WPPedia
- * Description: The most advanced Glossary solution for WordPress!
- * Author: 			Bastian Fießinger & WPPedia Glossary Team
- * AuthorURI: 	https://github.com/bfiessinger/
- * Version: 		1.2.3
- * Text Domain: wppedia
+ * Plugin Name:	WPPedia
+ * Description:	The most advanced Glossary solution for WordPress!
+ * Author:		Bastian Fießinger & WPPedia Glossary Team
+ * AuthorURI:	https://github.com/bfiessinger/
+ * Version: 	1.3.0
+ * Text Domain:	wppedia
  */
 
 // Make sure this file runs only from within WordPress.
@@ -39,28 +39,97 @@ use WPPedia\modules\tooltipModule;
 // Compatibility
 use WPPedia\compatibilities\compatibilityCollection;
 
+// Vendor
+use WPPedia_Vendor\MyThemeShop\Notification_Center;
+
 class WPPedia {
 
-  /**
-   * Static variable for instanciation
-   */
-  protected static $instance = null;
+	/**
+	 * Static variable for instanciation
+	 */
+	protected static $instance = null;
 
-  /**
-   * Get current Instance
-   */
-  public static function getInstance() {
+	private $container = [];
 
-    if ( null === self::$instance ) {
-      self::$instance = new self;
-    }
-    return self::$instance;
+	/**
+	 * Magic isset to bypass referencing plugin.
+	 *
+	 * @param  string $prop Property to check.
+	 * 
+	 * @return bool
+	 * 
+	 * @since 1.3.0
+	 */
+	public function __isset( $prop ) {
+		return isset( $this->{$prop} ) || isset( $this->container[ $prop ] );
+	}
 
-  }
+	/**
+	 * Magic getter method.
+	 *
+	 * @param  string $prop Property to get.
+	 * 
+	 * @return mixed Property value or NULL if it does not exists.
+	 * 
+	 * @since 1.3.0
+	 */
+	public function __get( $prop ) {
+		if ( array_key_exists( $prop, $this->container ) ) {
+			return $this->container[ $prop ];
+		}
 
-  protected function __clone() {}
+		if ( isset( $this->{$prop} ) ) {
+			return $this->{$prop};
+		}
 
-  protected function __construct() {}
+		return null;
+	}
+
+	/**
+	 * Magic setter method.
+	 *
+	 * @param mixed $prop  Property to set.
+	 * @param mixed $value Value to set.
+	 * 
+	 * @since 1.3.0
+	 */
+	public function __set( $prop, $value ) {
+		if ( property_exists( $this, $prop ) ) {
+			$this->$prop = $value;
+			return;
+		}
+
+		$this->container[ $prop ] = $value;
+	}
+
+	/**
+	 * Magic call method.
+	 *
+	 * @param  string $name      Method to call.
+	 * @param  array  $arguments Arguments to pass when calling.
+	 * 
+	 * @return mixed Return value of the callback.
+	 * 
+	 * @since 1.3.0
+	 */
+	public function __call( $name, $arguments ) {
+		return call_user_func_array( $name, $arguments );
+	}
+
+	/**
+	 * Get current Instance
+	 */
+	public static function getInstance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self;
+			self::$instance->init();
+		}
+		return self::$instance;
+	}
+
+	protected function __clone() {}
+
+	protected function __construct() {}
 
 	/**
 	 * Define Plugin Constants
@@ -93,7 +162,7 @@ class WPPedia {
 		load_plugin_textdomain( 'wppedia', false, dirname( WPPediaPluginBaseName ) . '/languages' );
 	}
 
-	public function init() {
+	private function init() {
 
 		// psr4 Autoloader
 		$loader = require "vendor/autoload.php";
@@ -103,13 +172,19 @@ class WPPedia {
 
 		add_action( 'after_setup_theme', [ $this, 'setup' ] );
 
-		$this->version = WPPediaPluginVersion;
+		$this->container['version'] = WPPediaPluginVersion;
+		$this->container['template_debug_mode'] = WPPedia_TEMPLATE_DEBUG_MODE;
+		$this->container['plugin_dir'] = WPPediaPluginDir;
+		$this->container['plugin_url'] = WPPediaPluginUrl;
+		$this->container['notifications'] = new Notification_Center('wppedia_notifications');
 
 		/**
 		 * Instantiate Template Utils
 		 */
-		$this->template = new template();
-		$this->template->_init();
+		$template = new template();
+		$template->_init();
+
+		$this->container['template'] = $template;
 
 		/**
 		 * Theme and Plugin compatibility
@@ -136,8 +211,10 @@ class WPPedia {
 		 * Options
 		 * Setup options and settings pages
 		 */
-		$this->options = new options();
-		$this->options->_init();
+		$options = new options();
+		$options->_init();
+
+		$this->container['options'] = $options;
 
 		/**
 		 * Post meta
@@ -200,8 +277,7 @@ class WPPedia {
 
 }
 
-$WPPedia = WPPedia::getInstance();
-$WPPedia->init();
+WPPedia::getInstance();
 
 /**
  * Template Hooks
