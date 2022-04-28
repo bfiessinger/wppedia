@@ -6,41 +6,92 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
 {
-    public static $files = array (
-        '69f2437da9b281df4d4b6081a545f703' => __DIR__ . '/..' . '/aristath/kirki/kirki.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'M' => 
         array (
-            'WPPedia\\' => 8,
+            'MyThemeShop\\Helpers\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'WPPedia\\' => 
+        'MyThemeShop\\Helpers\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/core/classes',
+            0 => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src',
         ),
     );
 
     public static $classMap = array (
+        'ComposerAutoloaderInit94199a7f865ba6d053aa81a09153f9ff' => __DIR__ . '/../..' . '/3rd-party/vendor/composer/autoload_real.php',
+        'Composer\\Autoload\\ClassLoader' => __DIR__ . '/../..' . '/3rd-party/vendor/composer/ClassLoader.php',
+        'Composer\\Autoload\\ComposerStaticInit94199a7f865ba6d053aa81a09153f9ff' => __DIR__ . '/../..' . '/3rd-party/vendor/composer/autoload_static.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'WPPedia\\WPPediaQuerySetup' => __DIR__ . '/../..' . '/core/classes/WPPediaQuerySetup.php',
-        'WPPedia\\WPPediaUpgrade' => __DIR__ . '/../..' . '/core/classes/WPPediaUpgrade.php',
+        'MyThemeShop\\Admin\\List_Table' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/admin/class-list-table.php',
+        'MyThemeShop\\Admin\\Page' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/admin/class-page.php',
+        'MyThemeShop\\Database\\Clauses' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-clauses.php',
+        'MyThemeShop\\Database\\Database' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-database.php',
+        'MyThemeShop\\Database\\Escape' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-escape.php',
+        'MyThemeShop\\Database\\GroupBy' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-groupby.php',
+        'MyThemeShop\\Database\\Joins' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-joins.php',
+        'MyThemeShop\\Database\\OrderBy' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-orderby.php',
+        'MyThemeShop\\Database\\Query_Builder' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-query-builder.php',
+        'MyThemeShop\\Database\\Select' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-select.php',
+        'MyThemeShop\\Database\\Translate' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-translate.php',
+        'MyThemeShop\\Database\\Where' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-where.php',
+        'MyThemeShop\\Helpers\\Arr' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-arr.php',
+        'MyThemeShop\\Helpers\\Attachment' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-attachment.php',
+        'MyThemeShop\\Helpers\\Conditional' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-conditional.php',
+        'MyThemeShop\\Helpers\\DB' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-db.php',
+        'MyThemeShop\\Helpers\\HTML' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-html.php',
+        'MyThemeShop\\Helpers\\Param' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-param.php',
+        'MyThemeShop\\Helpers\\Str' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-str.php',
+        'MyThemeShop\\Helpers\\Url' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-url.php',
+        'MyThemeShop\\Helpers\\WordPress' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-wordpress.php',
+        'MyThemeShop\\Json_Manager' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/class-json-manager.php',
+        'MyThemeShop\\Notification' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/class-notification.php',
+        'MyThemeShop\\Notification_Center' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/class-notification-center.php',
         'WPPedia\\admin' => __DIR__ . '/../..' . '/core/classes/admin.php',
         'WPPedia\\compatibilities\\compatibilityCollection' => __DIR__ . '/../..' . '/core/classes/compatibilities/compatibilityCollection.php',
         'WPPedia\\compatibilities\\compatibilityLoader' => __DIR__ . '/../..' . '/core/classes/compatibilities/compatibilityLoader.php',
-        'WPPedia\\customize' => __DIR__ . '/../..' . '/core/classes/customize.php',
+        'WPPedia\\customizer' => __DIR__ . '/../..' . '/core/classes/customizer.php',
+        'WPPedia\\dbUpgrade' => __DIR__ . '/../..' . '/core/classes/dbUpgrade.php',
         'WPPedia\\inlineStyleCollector' => __DIR__ . '/../..' . '/core/classes/inlineStyleCollector.php',
         'WPPedia\\modules\\crossLinkModule' => __DIR__ . '/../..' . '/core/classes/modules/crossLinkModule.php',
         'WPPedia\\modules\\tooltipModule' => __DIR__ . '/../..' . '/core/classes/modules/tooltipModule.php',
         'WPPedia\\options' => __DIR__ . '/../..' . '/core/classes/options.php',
         'WPPedia\\postMeta' => __DIR__ . '/../..' . '/core/classes/postMeta.php',
         'WPPedia\\postType' => __DIR__ . '/../..' . '/core/classes/postType.php',
+        'WPPedia\\querySetup' => __DIR__ . '/../..' . '/core/classes/querySetup.php',
         'WPPedia\\restController' => __DIR__ . '/../..' . '/core/classes/restController.php',
         'WPPedia\\template' => __DIR__ . '/../..' . '/core/classes/template.php',
         'WPPedia\\traits\\adminFields' => __DIR__ . '/../..' . '/core/classes/traits/adminFields.php',
+        'WPPedia_Vendor\\ComposerAutoloaderInit65a0993a63c917989297698ea08a315e' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/vendor/composer/autoload_real.php',
+        'WPPedia_Vendor\\Composer\\Autoload\\ClassLoader' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/vendor/composer/ClassLoader.php',
+        'WPPedia_Vendor\\Composer\\Autoload\\ComposerStaticInit65a0993a63c917989297698ea08a315e' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/vendor/composer/autoload_static.php',
+        'WPPedia_Vendor\\Composer\\InstalledVersions' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/vendor/composer/InstalledVersions.php',
+        'WPPedia_Vendor\\MyThemeShop\\Admin\\List_Table' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/admin/class-list-table.php',
+        'WPPedia_Vendor\\MyThemeShop\\Admin\\Page' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/admin/class-page.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\Clauses' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-clauses.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\Database' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-database.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\Escape' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-escape.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\GroupBy' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-groupby.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\Joins' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-joins.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\OrderBy' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-orderby.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\Query_Builder' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-query-builder.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\Select' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-select.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\Translate' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-translate.php',
+        'WPPedia_Vendor\\MyThemeShop\\Database\\Where' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/database/class-where.php',
+        'WPPedia_Vendor\\MyThemeShop\\Helpers\\Arr' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/helpers/class-arr.php',
+        'WPPedia_Vendor\\MyThemeShop\\Helpers\\Attachment' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/helpers/class-attachment.php',
+        'WPPedia_Vendor\\MyThemeShop\\Helpers\\Conditional' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/helpers/class-conditional.php',
+        'WPPedia_Vendor\\MyThemeShop\\Helpers\\DB' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/helpers/class-db.php',
+        'WPPedia_Vendor\\MyThemeShop\\Helpers\\HTML' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/helpers/class-html.php',
+        'WPPedia_Vendor\\MyThemeShop\\Helpers\\Param' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/helpers/class-param.php',
+        'WPPedia_Vendor\\MyThemeShop\\Helpers\\Str' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/helpers/class-str.php',
+        'WPPedia_Vendor\\MyThemeShop\\Helpers\\Url' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/helpers/class-url.php',
+        'WPPedia_Vendor\\MyThemeShop\\Helpers\\WordPress' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/helpers/class-wordpress.php',
+        'WPPedia_Vendor\\MyThemeShop\\Json_Manager' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/class-json-manager.php',
+        'WPPedia_Vendor\\MyThemeShop\\Notification' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/class-notification.php',
+        'WPPedia_Vendor\\MyThemeShop\\Notification_Center' => __DIR__ . '/../..' . '/3rd-party/mythemeshop/wordpress-helpers/src/class-notification-center.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

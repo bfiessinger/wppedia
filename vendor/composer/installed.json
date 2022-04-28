@@ -1,74 +1,54 @@
 {
     "packages": [
         {
-            "name": "aristath/kirki",
-            "version": "3.1.7",
-            "version_normalized": "3.1.7.0",
+            "name": "mythemeshop/wordpress-helpers",
+            "version": "v1.1.18",
+            "version_normalized": "1.1.18.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/kirki-framework/kirki.git",
-                "reference": "0f9d24437665f6d5664da4e12bb4f0ae410815e4"
+                "url": "https://github.com/MyThemeShopTeam/wordpress-helpers.git",
+                "reference": "6294c995e9365bee25fcfa8f3c045800620a5278"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/kirki/zipball/0f9d24437665f6d5664da4e12bb4f0ae410815e4",
-                "reference": "0f9d24437665f6d5664da4e12bb4f0ae410815e4",
+                "url": "https://api.github.com/repos/MyThemeShopTeam/wordpress-helpers/zipball/6294c995e9365bee25fcfa8f3c045800620a5278",
+                "reference": "6294c995e9365bee25fcfa8f3c045800620a5278",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2"
+                "php": ">=5.6"
             },
-            "require-dev": {
-                "codacy/coverage": "dev-master",
-                "composer/installers": "*",
-                "dealerdirect/phpcodesniffer-composer-installer": "*",
-                "php-coveralls/php-coveralls": "^2.0",
-                "phpcompatibility/phpcompatibility-wp": "*",
-                "phpunit/phpunit": "*",
-                "wp-coding-standards/wpcs": "*"
-            },
-            "time": "2021-06-21T13:48:36+00:00",
+            "time": "2022-01-27T12:13:00+00:00",
             "type": "library",
             "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "MyThemeShop\\Helpers\\": "src/"
+                },
+                "classmap": [
+                    "src/"
+                ]
+            },
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                ".",
-                "core"
-            ],
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
-                    "name": "aristath",
-                    "email": "aristath@gmail.com",
-                    "homepage": "https://aristath.github.io",
-                    "role": "Developer"
+                    "name": "MyThemeShop",
+                    "email": "info@mythemeshop.com"
                 }
             ],
-            "description": "Extending the WordPress customizer",
-            "homepage": "https://kirki.org",
-            "keywords": [
-                "customizer",
-                "wordpress"
-            ],
+            "description": "Collection of utilities required during development of a plugin or theme for WordPress. Build for developers by developers.",
             "support": {
-                "issues": "https://github.com/kirki-framework/kirki/issues",
-                "source": "https://github.com/kirki-framework/kirki/tree/3.1.7"
+                "issues": "https://github.com/MyThemeShopTeam/wordpress-helpers/issues",
+                "source": "https://github.com/MyThemeShopTeam/wordpress-helpers/tree/v1.1.18"
             },
-            "funding": [
-                {
-                    "url": "https://aristath.github.io/donate",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/aristath",
-                    "type": "github"
-                }
-            ],
-            "install-path": "../aristath/kirki"
+            "install-path": "../mythemeshop/wordpress-helpers"
         }
     ],
     "dev": true,
-    "dev-package-names": []
+    "dev-package-names": [
+        "mythemeshop/wordpress-helpers"
+    ]
 }

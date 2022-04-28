@@ -11,17 +11,15 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "aristath/kirki": "^3.1",
         "php": "^7.3|^8.0"
     },
+    "require-dev": {
+        "mythemeshop/wordpress-helpers": "^1.1"
+    },
     "autoload": {
-			"psr-4": {
-				"WPPedia\\": [
-					"core/classes"
-				]
-			},
-			"files": [
-				"vendor/aristath/kirki/kirki.php"
+			"classmap": [
+				"core/classes/",
+				"3rd-party/"
 			]
     },
 		"scripts": {
@@ -33,12 +31,12 @@
 			],
 			"prefix-dependencies": [
 				"@composer --working-dir=php-scoper install",
-				"@composer prefix-vendor-aristath",
+				"@composer prefix-vendor-mythemeshop",
 				"@composer dump-autoload -a",
 				"@composer --working-dir=3rd-party dump-autoload -a"
 			],
-			"prefix-vendor-aristath": [
-				"@php ./php-scoper/vendor/humbug/php-scoper/bin/php-scoper add-prefix --prefix=\"WPPedia_Vendor\" --output-dir=\"./3rd-party/aristath/kirki\" --config=\"./config/php-scoper/kirki.inc.php\" --force --quiet"
+			"prefix-vendor-mythemeshop": [
+				"@php ./php-scoper/vendor/humbug/php-scoper/bin/php-scoper add-prefix --prefix=\"WPPedia_Vendor\" --output-dir=\"./3rd-party/mythemeshop/wordpress-helpers\" --config=\"./config/php-scoper/mythemeshop.inc.php\" --force --quiet"
 			]
 		}
 }
