@@ -28,10 +28,12 @@ class postType {
 	 */
 	protected $permalink_base;
 
-	public function _init() {
-
+	public function __construct() {
 		$this->definePostTypes();
 		$this->defineTaxonomies();
+	}
+
+	public function _init() {
 
 		add_action( 'init', [ $this, 'set_permalink_base' ], 9 );
 
