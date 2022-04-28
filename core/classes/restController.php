@@ -19,13 +19,13 @@ class restController extends \WP_REST_Controller {
 	// Public Endpoints
 	public $rest_endpoint_search = null;
 
-	public function _init() {
-
+	public function __construct() {
 		$this->rest_namespace = 'wppedia/v1';
 		$this->rest_endpoint_search = 'search';
+	}
 
+	public function _init() {
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ] );
-
 	}
 
 	function register_rest_routes() {
