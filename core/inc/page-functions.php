@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || die();
  * 
  * @param string $page
  * 
- * @since 1.1.0
+ * @since 1.3.0
  */
 function wppedia_get_page_id(string $page) {
 	$options = get_option('wppedia_settings');
