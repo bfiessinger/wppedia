@@ -1,4 +1,5 @@
 [![Version](https://img.shields.io/wordpress/plugin/v/wppedia?logo=wordpress&style=for-the-badge)](https://wordpress.org/plugins/wppedia/)
+[![CodeFactor](https://www.codefactor.io/repository/github/bfiessinger/wppedia/badge?style=for-the-badge)](https://www.codefactor.io/repository/github/bfiessinger/wppedia)
 
 ![WPPedia](https://raw.githubusercontent.com/bfiessinger/wppedia/master/assets/img/wppedia-banner-1544x500.jpg)
 
