@@ -13,6 +13,14 @@
 	.wppedia-featured-image-wrapper, .wppedia-thumbnail-wrapper {
 		margin-bottom: 1.5em;
 	}
+	.pagination {
+		ul {
+			list-style-type: none;
+		}
+		li {
+			display: inline-block;
+		}
+	}
 }
 
 /**
@@ -24,17 +32,6 @@
 	}
 	.wppedia-entry-content {
 		margin: 0;
-	}
-}
-
-.wppedia-page {
-	.pagination {
-		ul {
-			list-style-type: none;
-		}
-		li {
-			display: inline-block;
-		}
 	}
 }
 
