@@ -729,14 +729,127 @@ class options {
 	}
 
 	/**
-	 * Merge saved options with input array
+	 * Sanitize input array and merge them with the already saved options
+	 *
+	 * @param array $input
 	 *
 	 * @since 1.3.0
 	 */
 	function wppedia_settings_save($input_array) {
+		// Sanitize each input key based on settings field type
+		$sanitized_input = [];
+		foreach ( $input_array as $option_group => $options ) {
+			if ( ! isset( $this->settings_fields[$option_group] ) ) {
+				continue;
+			}
+
+			$sanitized_input[$option_group] = $this->sanitize_option_group($option_group, $options);
+		}
+
 		$settings = get_option( 'wppedia_settings' );
-		$settings = wp_parse_args( $input_array, $settings );
+		$settings = wp_parse_args( $sanitized_input, $settings );
 		return $settings;
+	}
+
+	/**
+	 * Sanitize each option group
+	 *
+	 * @param string $option_group
+	 * @param array $options
+	 *
+	 * @since 1.3.0
+	 */
+	function sanitize_option_group($option_group, $options) {
+		$sanitized_input = [];
+
+		foreach ( $options as $option_name => $value ) {
+			if ( ! isset( $this->settings_fields[$option_group][$option_name] ) ) {
+				continue;
+			}
+
+			$sanitized_input[$option_name] = $this->sanitize_option($option_group, $option_name, $value);
+		}
+
+		return $sanitized_input;
+	}
+
+	/**
+	 * Sanitize each option
+	 *
+	 * @param string $option_group
+	 * @param string $option_name
+	 * @param mixed $value
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return mixed
+	 */
+	function sanitize_option($option_group, $option_name, $value) {
+		$sanitized_input = null;
+
+		switch ( $option_group ) {
+			case 'general':
+				switch ( $option_name ) {
+					case 'front_page_id':
+						$sanitized_input = absint( $value );
+						break;
+				}
+				break;
+			case 'archive':
+				switch ( $option_name ) {
+					case 'wppedia_templates':
+						$sanitized_input = !!$value;
+						break;
+					case 'show_nav':
+						$sanitized_input = !!$value;
+						break;
+					case 'show_searchbar':
+						$sanitized_input = !!$value;
+						break;
+					case 'posts_per_page':
+						$sanitized_input = absint( $value );
+						break;
+				}
+				break;
+			case 'singular':
+				switch ( $option_name ) {
+					case 'wppedia_templates':
+						$sanitized_input = !!$value;
+						break;
+					case 'show_nav':
+						$sanitized_input = !!$value;
+						break;
+					case 'show_searchbar':
+						$sanitized_input = !!$value;
+						break;
+				}
+				break;
+			case 'crosslinks':
+				switch ( $option_name ) {
+					case 'active':
+						$sanitized_input = !!$value;
+						break;
+					case 'prefer_single_words':
+						$sanitized_input = !!$value;
+						break;
+					case 'posttypes':
+						$sanitized_input = array_map( 'sanitize_text_field', $value );
+						break;
+				}
+				break;
+			case 'tooltips':
+				switch ( $option_name ) {
+					case 'active':
+						$sanitized_input = !!$value;
+						break;
+					case 'style':
+						$sanitized_input = sanitize_text_field( $value );
+						break;
+				}
+				break;
+		}
+
+		return $sanitized_input;
 	}
 
 	/**
