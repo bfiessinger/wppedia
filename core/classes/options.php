@@ -21,7 +21,7 @@ class options {
 	 * Private variables
 	 */
 	private static $pro_feature_className = 'wppedia-pro-feature';
-	private $wp_option_fields;
+	private $settings_fields = [];
 
   	public function _init() {
 
@@ -259,7 +259,7 @@ class options {
 			'permalink'
 		);
 
-		$this->wp_option_fields = [
+		$this->settings_fields = [
 			/**
 			 * General Settings
 			 */
@@ -273,6 +273,7 @@ class options {
 				'options'							=> $this->dropdown_pages(true),
 				'settings_section'					=> 'general',
 				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_int' ],
 			],
 
 			/**
@@ -286,7 +287,8 @@ class options {
 				'type'								=> 'switch',
 				'desc'								=> _x('If disabled WPPedia the Layout and content of WPPedia\'s Archive will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Archive pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia'),
 				'settings_section'					=> 'archive',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 			// Show navigation in archives
 			[
@@ -295,7 +297,8 @@ class options {
 				'type'								=> 'switch',
 				'desc'								=> _x('Show or hide WPPedia\'s navigation on archive pages.', 'options', 'wppedia'),
 				'settings_section'					=> 'archive',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 			// Show searchbar in archives
 			[
@@ -304,7 +307,8 @@ class options {
 				'type'								=> 'switch',
 				'desc'								=> _x('Show or hide WPPedia\'s searchbar on archive pages.', 'options', 'wppedia'),
 				'settings_section'					=> 'archive',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 			// Default posts_per_page
 			[
@@ -313,7 +317,8 @@ class options {
 				'type'								=> 'number',
 				'desc'								=> _x('Manage how much posts should be available per page at a glossary archive', 'options', 'wppedia'),
 				'settings_section'					=> 'archive',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_int' ],
 			],
 
 			/**
@@ -327,7 +332,8 @@ class options {
 				'type'								=> 'switch',
 				'desc'								=> _x('If disabled WPPedia the Layout and content of WPPedia\'s Single pages will be defined by your themes templates. Attention: most WPPedia template filters and actions will stop working on Singular pages. This option might help if you encounter any incompatibilities between your theme and WPPedia\'s default templates.', 'options', 'wppedia'),
 				'settings_section'					=> 'singular',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 			// Show navigation in single articles
 			[
@@ -336,7 +342,8 @@ class options {
 				'type'								=> 'switch',
 				'desc'								=> _x('Show or hide WPPedia\'s navigation on single pages.', 'options', 'wppedia'),
 				'settings_section'					=> 'singular',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 			// Show searchbar in single articles
 			[
@@ -345,7 +352,8 @@ class options {
 				'type'								=> 'switch',
 				'desc'								=> _x('Show or hide WPPedia\'s searchbar on single pages.', 'options', 'wppedia'),
 				'settings_section'					=> 'singular',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 
 			/**
@@ -359,7 +367,8 @@ class options {
 				'type'								=> 'switch',
 				'desc'								=> _x( 'Allow WPPedia to automatically generate links to other articles if their name was found on a glossary term.', 'options', 'wppedia' ),
 				'settings_section'					=> 'crosslinks',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 			// Prefer single words for crosslinks
 			[
@@ -368,7 +377,8 @@ class options {
 				'type'								=> 'switch',
 				'desc'								=> _x( 'Enabling this option will change the default behaviour of crosslinking and WPPedia tries to link single words instead of multiple if possible. e.g. if there is a post "Lorem" and a post "Lorem Ipsum", the plugin will link only "Lorem" now if "Lorem Ipsum" was found in the content.', 'options', 'wppedia' ),
 				'settings_section'					=> 'crosslinks',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 			// Crosslink posttypes
 			[
@@ -379,7 +389,8 @@ class options {
 				'pro'								=> true,
 				'settings_section'					=> 'crosslinks',
 				'settings_page'						=> 'wppedia_settings',
-				'register_setting'					=> false
+				'register_setting'					=> false,
+				'sanitize_callback'					=> [ $this, 'sanitize_array' ],
 			],
 			// Crosslink index
 			[
@@ -390,7 +401,8 @@ class options {
 				'desc'								=> _x('If enabled WPPedia will create automatic indexes with all links created for each post. This ensures a significant faster loading time!', 'options', 'wppedia'),
 				'settings_section'					=> 'crosslinks',
 				'settings_page'						=> 'wppedia_settings',
-				'register_setting'					=> false
+				'register_setting'					=> false,
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 
 			/**
@@ -404,7 +416,8 @@ class options {
 				'type'								=> 'switch',
 				'desc'								=> _x( 'Enable / Disable the tooltip feature for WPPedia Crosslinks.', 'options', 'wppedia' ),
 				'settings_section'					=> 'tooltips',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
+				'sanitize_callback'					=> [ $this, 'sanitize_bool' ],
 			],
 			// Select tooltip style
 			[
@@ -419,7 +432,7 @@ class options {
 				],
 				'desc'								=> _x( 'Select your preferred tooltip style.', 'options', 'wppedia' ),
 				'settings_section'					=> 'tooltips',
-				'settings_page'						=> 'wppedia_settings'
+				'settings_page'						=> 'wppedia_settings',
 			],
 
 			/**
@@ -433,7 +446,7 @@ class options {
 				'type'								=> 'text',
 				'settings_section'					=> 'wppedia_settings_permalink',
 				'settings_page'						=> 'permalink',
-				'register_setting'					=> [ $this, 'wppedia_permalink_part_sanitize' ]
+				'register_setting'					=> [ $this, 'sanitize_permalink_part' ]
 			],
 			[
 				'id'								=> 'use_initial_character',
@@ -444,7 +457,7 @@ class options {
 			]
 		];
 
-		foreach ($this->wp_option_fields as $field) {
+		foreach ($this->settings_fields as $field) {
 			$field_arguments = $this->setFieldArguments($field);
 			$field_name = 'wppedia_settings[' . $this->field_group($field) . '][' . $field['id'] . ']';
 			$field_type = (isset($field['type'])) ? $field['type'] : 'text';
@@ -739,7 +752,7 @@ class options {
 		// Sanitize each input key based on settings field type
 		$sanitized_input = [];
 		foreach ( $input_array as $option_group => $options ) {
-			if ( ! isset( $this->settings_fields[$option_group] ) ) {
+			if ( ! isset( self::get_option_defaults()[$option_group] ) ) {
 				continue;
 			}
 
@@ -763,7 +776,7 @@ class options {
 		$sanitized_input = [];
 
 		foreach ( $options as $option_name => $value ) {
-			if ( ! isset( $this->settings_fields[$option_group][$option_name] ) ) {
+			if ( ! isset( self::get_option_defaults()[$option_group][$option_name] ) ) {
 				continue;
 			}
 
@@ -786,57 +799,12 @@ class options {
 	 */
 	function sanitize_option($option_group, $option_name, $value) {
 		$sanitized_input = null;
+		$sanitize_callback = $this->settings_fields[$option_group][$option_name]['sanitize_callback'];
 
-		switch ( $option_group ) {
-			case 'general':
-				switch ( $option_name ) {
-					case 'front_page_id':
-						$sanitized_input = absint( $value );
-						break;
-				}
-				break;
-			case 'archive':
-				switch ( $option_name ) {
-					case 'wppedia_templates':
-					case 'show_nav':
-					case 'show_searchbar':
-						$sanitized_input = !!$value;
-						break;
-					case 'posts_per_page':
-						$sanitized_input = absint( $value );
-						break;
-				}
-				break;
-			case 'singular':
-				switch ( $option_name ) {
-					case 'wppedia_templates':
-					case 'show_nav':
-					case 'show_searchbar':
-						$sanitized_input = !!$value;
-						break;
-				}
-				break;
-			case 'crosslinks':
-				switch ( $option_name ) {
-					case 'active':
-					case 'prefer_single_words':
-						$sanitized_input = !!$value;
-						break;
-					case 'posttypes':
-						$sanitized_input = array_map( 'sanitize_text_field', $value );
-						break;
-				}
-				break;
-			case 'tooltips':
-				switch ( $option_name ) {
-					case 'active':
-						$sanitized_input = !!$value;
-						break;
-					case 'style':
-						$sanitized_input = sanitize_text_field( $value );
-						break;
-				}
-				break;
+		if (!empty($sanitize_callback)) {
+			$sanitized_input = call_user_func($sanitize_callback, $value);
+		} else {
+			$sanitized_input = sanitize_text_field($value);
 		}
 
 		return $sanitized_input;
@@ -861,7 +829,7 @@ class options {
 
 			if (isset( $_POST['wppedia_settings']['permalinks']['base'] )) {
 				$permalink_base = $_POST['wppedia_settings']['permalinks']['base'];
-				$sanitized_permalink_base = $this->wppedia_permalink_part_sanitize($permalink_base);
+				$sanitized_permalink_base = $this->sanitize_permalink_part($permalink_base);
 				if ('' !== $sanitized_permalink_base && $sanitized_permalink_base !== self::get_option('permalinks', 'base')) {
 					self::update_option( 'permalinks', 'base', $sanitized_permalink_base );
 				} else if ('' === $sanitized_permalink_base) {
@@ -879,12 +847,24 @@ class options {
 
 	}
 
+	function sanitize_bool($input) {
+		return !!$input;
+	}
+
+	function sanitize_int($input) {
+		return absint($input);
+	}
+
+	function sanitize_array($input) {
+		return array_map('sanitize_text_field', $input);
+	}
+
 	/**
 	 * Sanitize permalink base option
 	 *
 	 * @since 1.0.0
 	 */
-	function wppedia_permalink_part_sanitize( $input ) {
+	function sanitize_permalink_part( $input ) {
 		// Add leading slash to prevent `esc_url_raw` adding a protocol
 		$input = '/' . $input;
 		// replace all whitespaces with `-`
