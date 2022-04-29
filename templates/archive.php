@@ -16,7 +16,7 @@
  * @see https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package wppedia
- * @version 1.1.3
+ * @version 1.3.0
  */
 
 defined( 'ABSPATH' ) || exit;
