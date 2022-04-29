@@ -2,7 +2,7 @@
 
 /**
  * Public available functions and declarations
- * 
+ *
  * @since 1.2.0
  */
 
@@ -24,7 +24,7 @@ function WPPedia() {
 
 /**
  * Return the current version of wpPedia
- * 
+ *
  * @since 1.2.0
  */
 function wppedia_get_version() {
@@ -33,11 +33,11 @@ function wppedia_get_version() {
 
 /**
  * Add additional inline styles
- * 
+ *
  * @since 1.2.0
  */
 function wppedia_add_inline_style( string $handle, string $stylesheet ) {
-	
+
 	if ( inlineStyleCollector::getInstance()->add( $handle, $stylesheet ) )
 		return true;
 
@@ -47,11 +47,11 @@ function wppedia_add_inline_style( string $handle, string $stylesheet ) {
 
 /**
  * Remove a registered inline style
- * 
+ *
  * @since 1.3.0
  */
 function wppedia_remove_inline_style( string $handle ) {
-	
+
 	if ( inlineStyleCollector::getInstance()->remove( $handle ) )
 		return true;
 
