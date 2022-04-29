@@ -2,7 +2,7 @@
 
 /**
  * WPPedia admin fields
- * 
+ *
  * @since 1.3.0
  */
 
@@ -15,7 +15,7 @@ trait adminFields {
 
 	/**
 	 * Evaluate the function to use foreach field type
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	public function field($field) {
@@ -52,7 +52,7 @@ trait adminFields {
 
 	/**
 	 * Create a regular input field
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	protected function input($field) {
@@ -70,7 +70,7 @@ trait adminFields {
 
 	/**
 	 * Create a numeric input field
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	protected function input_minmax($field) {
@@ -90,7 +90,7 @@ trait adminFields {
 
 	/**
 	 * Create a textarea field
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	protected function textarea($field) {
@@ -106,8 +106,8 @@ trait adminFields {
 	}
 
 	/**
-	 * Create a select input 
-	 * 
+	 * Create a select input
+	 *
 	 * @since 1.3.0
 	 */
 	protected function select($field) {
@@ -123,7 +123,7 @@ trait adminFields {
 
 	/**
 	 * Evaluate the selected option
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function select_selected($field, $current) {
@@ -136,7 +136,7 @@ trait adminFields {
 
 	/**
 	 * Output options for the select method
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function select_options($field) {
@@ -145,7 +145,7 @@ trait adminFields {
 			$output[] = sprintf(
 				'<option%s value="%s">%s</option>',
 				$this->select_selected($field, $option),
-				$option, 
+				$option,
 				$label
 			);
 		}
@@ -154,7 +154,7 @@ trait adminFields {
 
 	/**
 	 * Create a checkbox field
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	protected function checkbox($field) {
@@ -186,7 +186,7 @@ trait adminFields {
 
 	/**
 	 * Create a group of checkbox fields
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	protected function checkbox_group($field) {
@@ -196,7 +196,7 @@ trait adminFields {
 			$this->checkbox(
 				array_merge($field, [
 					'pid' => $field['id'],
-					'id' => $option, 
+					'id' => $option,
 					'name' => $name
 				])
 			);
@@ -207,7 +207,7 @@ trait adminFields {
 
 	/**
 	 * Create an arbiatry title field
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	protected function title($field) {
@@ -231,6 +231,20 @@ trait adminFields {
 		echo '<hr>';
 	}
 
+	private function field_group($field) {
+		$field_section = $field['settings_section'];
+
+		switch ($field_section) {
+			case 'wppedia_settings_permalink':
+				$field_section = 'permalinks';
+				break;
+			default:
+				break;
+		}
+
+		return $field_section;
+	}
+
 	private function field_id($field) {
 		return isset($field['settings_section']) ? $field['settings_section'] . '.' . $field['id'] : $field['id'];
 	}
@@ -242,16 +256,16 @@ trait adminFields {
 	/**
 	 * Print field css classes
 	 * classes might be defined as strings or string arrays
-	 * 
+	 *
 	 * This method removes all non string values and returns a sanitized
 	 * class string
-	 * 
+	 *
 	 * @param $field
 	 * @param $additionalClasses
 	 * @param $withAttribute
-	 * 
+	 *
 	 * @return string
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function field_class_string($field, $additionalClasses = [], $withAttribute = false) {
@@ -267,7 +281,7 @@ trait adminFields {
 			$class_string = implode(' ', $class_array_sanitized);
 		} elseif (is_string($class)) {
 			$class_string = trim($class);
-		}		
+		}
 
 		if (is_array($additionalClasses) && !empty($additionalClasses)) {
 			$additional_class_array_sanitized = array_filter($additionalClasses, 'is_string');
@@ -287,14 +301,14 @@ trait adminFields {
 
 	/**
 	 * Evaluate the current value of a field
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function value($field) {
-		if (get_option('wppedia_settings', false) && isset(maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['id']])) {
-			$value = maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['id']];
-		} else if (get_option('wppedia_settings', false) && isset($field['pid']) && isset(maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['pid']][$field['id']])) {
-			$value = maybe_unserialize(get_option('wppedia_settings'))[$field['settings_section']][$field['pid']][$field['id']];
+		if (get_option('wppedia_settings', false) && isset(maybe_unserialize(get_option('wppedia_settings'))[$this->field_group($field)][$field['id']])) {
+			$value = maybe_unserialize(get_option('wppedia_settings'))[$this->field_group($field)][$field['id']];
+		} else if (get_option('wppedia_settings', false) && isset($field['pid']) && isset(maybe_unserialize(get_option('wppedia_settings'))[$this->field_group($field)][$field['pid']][$field['id']])) {
+			$value = maybe_unserialize(get_option('wppedia_settings'))[$this->field_group($field)][$field['pid']][$field['id']];
 		} else if ( isset( $field['args']['default'] ) ) {
 			$value = $field['args']['default'];
 		} else {
@@ -306,7 +320,7 @@ trait adminFields {
 
 	/**
 	 * Display an options description
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	private function display_field_description($desc) {
@@ -332,9 +346,9 @@ trait adminFields {
 
 	/**
 	 * Return disabled attribute for pro features
-	 * 
+	 *
 	 * @param bool $disable
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function restrict_pro($field) {

@@ -2,7 +2,7 @@
 
 /**
  * Admin View
- * 
+ *
  * @since 1.3.0
  */
 
@@ -33,19 +33,16 @@ class options {
 		add_action( 'admin_init', [ $this, 'wppedia_permalink_settings_save' ], 999999 );
 
 		// Set flush rewrite rules flag for options related to permalinks
-		add_action( 'update_option_wppedia_front_page_id', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
-		add_action( 'update_option_wppedia_permalink_base', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
-		add_action( 'update_option_wppedia_permalink_use_initial_character', [ $this, 'set_flush_rewrite_rules_flag' ], 10, 2 );
-
+		add_action( 'update_option_wppedia_settings', [ $this, 'maybe_set_flush_rewrite_rules_flag' ], 10, 3 );
 	}
-	
+
 	function settings_page() {
-		add_submenu_page( 
-			'edit.php?post_type=' . \wppedia_get_post_type(), 
+		add_submenu_page(
+			'edit.php?post_type=' . \wppedia_get_post_type(),
 			'WPPedia Settings',
-			'WPPedia Settings', 
-			'manage_options', 
-			'wppedia_settings', 
+			'WPPedia Settings',
+			'manage_options',
+			'wppedia_settings',
 			[ $this, 'settings_cb' ],
 			null
 		);
@@ -53,7 +50,7 @@ class options {
 
 	/**
 	 * Callback to display the setting page
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	function settings_cb() { ?>
@@ -92,9 +89,9 @@ class options {
 	 * Return WPPedia default option as an array
 	 * If $option parameter is set return the option value
 	 * associated with the option name.
-	 * 
+	 *
 	 * @param string $option - option name
-	 * 
+	 *
 	 * @since 1.1.6
 	 */
 	static function get_option_defaults(string $option_group = null, string $option = null) {
@@ -117,16 +114,17 @@ class options {
 				'active' => true,
 				'prefer_single_words' => false,
 				'posttypes' => [
-					\wppedia_get_post_type()
+					\wppedia_get_post_type() => true
 				]
 			],
 			'tooltips' => [
 				'active' => true,
 				'style' => 'light'
 			],
-			// Permalinks
-			'wppedia_permalink_base' => 'glossary',
-			'wppedia_permalink_use_initial_character' => true,
+			'permalinks' => [
+				'base' => 'glossary',
+				'use_initial_character' => false
+			],
 		];
 
 		if (!$option_group && !$option) {
@@ -134,39 +132,52 @@ class options {
 		} else if ($option_group && !$option) {
 			return $defaults[$option_group];
 		}
-		
+
 		return isset($defaults[$option_group][$option]) ? $defaults[$option_group][$option] : null;
 	}
 
 	public static function get_option(string $option_group, string $option) {
-		if (!get_option('wppedia_settings')) {
-			return self::get_option_defaults();
-		} else if (!isset(get_option('wppedia_settings')[$option_group])) {
-			return self::get_option_defaults($option_group);
-		} else if (!isset(get_option('wppedia_settings')[$option_group][$option])) {
+		if (false == get_option('wppedia_settings', false) || !isset(get_option('wppedia_settings')[$option_group]) || !isset(get_option('wppedia_settings')[$option_group][$option])) {
 			return self::get_option_defaults($option_group, $option);
 		}
-		
+
 		return get_option('wppedia_settings')[$option_group][$option];
 	}
 
-	/**
-	 * Return deprecated options and their new option name
-	 * 
-	 * @since 1.1.0
-	 */
-	static function get_deprecated_options() {
-		return [
-			'wppedia_frontpage' => 'general.front_page_id',
-			'wppedia_something' => false,
-			'general.s' => 'general.something',
-			'general.b' => false,
-		];
+	public static function option_exists(string $option_group, string $option) {
+		return isset(get_option('wppedia_settings')[$option_group][$option]);
+	}
+
+	public static function default_option_exists(string $option_group, string $option) {
+		$defaults = self::get_option_defaults();
+		return isset($defaults[$option_group][$option]);
+	}
+
+	public static function update_option(string $option_group, string $option, $value) {
+		$options = get_option('wppedia_settings');
+
+		if (!self::default_option_exists($option_group, $option)) {
+			return;
+		}
+
+		$options[$option_group][$option] = $value;
+		update_option('wppedia_settings', $options);
+	}
+
+	public static function remove_option(string $option_group, string $option) {
+		$options = get_option('wppedia_settings');
+
+		if (!self::default_option_exists($option_group, $option)) {
+			return;
+		}
+
+		unset($options[$option_group][$option]);
+		update_option('wppedia_settings', $options);
 	}
 
 	/**
 	 * Initialize settings sections and fields
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	function settings_init() {
@@ -175,20 +186,20 @@ class options {
 		 * General settings section
 		 */
 
-		add_settings_section( 
-			'general', 
-			_x('General Settings', 'options', 'wppedia'), 
-			[ $this, 'settings_section_callback' ], 
-			'wppedia_settings' 
+		add_settings_section(
+			'general',
+			_x('General Settings', 'options', 'wppedia'),
+			[ $this, 'settings_section_callback' ],
+			'wppedia_settings'
 		);
 
 		register_setting(
-			'wppedia_settings', 
+			'wppedia_settings',
 			'wppedia_settings',
 			[
-				'default' => [
-
-				]
+				'type'		=> 'array',
+				'default' 	=> self::get_option_defaults(),
+				'sanitize_callback' => [ $this, 'wppedia_settings_save' ],
 			]
 		);
 
@@ -196,28 +207,28 @@ class options {
 		 * Archive settings section
 		 */
 
-		add_settings_section( 
-			'archive', 
-			_x('Archive Settings', 'options', 'wppedia'), 
-			[ $this, 'settings_section_callback' ], 
-			'wppedia_settings' 
+		add_settings_section(
+			'archive',
+			_x('Archive Settings', 'options', 'wppedia'),
+			[ $this, 'settings_section_callback' ],
+			'wppedia_settings'
 		);
 
 		/**
 		 * Singular settings section
 		 */
 
-		add_settings_section( 
-			'singular', 
-			_x('Singular Settings', 'options', 'wppedia'), 
-			[ $this, 'settings_section_callback' ], 
-			'wppedia_settings' 
+		add_settings_section(
+			'singular',
+			_x('Singular Settings', 'options', 'wppedia'),
+			[ $this, 'settings_section_callback' ],
+			'wppedia_settings'
 		);
 
 		/**
 		 * Crosslink settings section
-		 */		
-		
+		 */
+
 		add_settings_section(
 			'crosslinks',
 			_x('Crosslinking', 'options', 'wppedia'),
@@ -415,9 +426,9 @@ class options {
 			 * Permalink settings
 			 */
 
-			// Glossary permalink base setting 
+			// Glossary permalink base setting
 			[
-				'id'								=> 'wppedia_permalink_base',
+				'id'								=> 'base',
 				'label'								=> _x('WPPedia base', 'options', 'wppedia'),
 				'type'								=> 'text',
 				'settings_section'					=> 'wppedia_settings_permalink',
@@ -425,7 +436,7 @@ class options {
 				'register_setting'					=> [ $this, 'wppedia_permalink_part_sanitize' ]
 			],
 			[
-				'id'								=> 'wppedia_permalink_use_initial_character',
+				'id'								=> 'use_initial_character',
 				'label'								=> _x('use initial character in URL', 'options', 'wppedia'),
 				'type'								=> 'switch',
 				'settings_section'					=> 'wppedia_settings_permalink',
@@ -435,11 +446,11 @@ class options {
 
 		foreach ($this->wp_option_fields as $field) {
 			$field_arguments = $this->setFieldArguments($field);
-			$field_name = 'wppedia_settings[' . $field['settings_section'] . '][' . $field['id'] . ']';
+			$field_name = 'wppedia_settings[' . $this->field_group($field) . '][' . $field['id'] . ']';
 			$field_type = (isset($field['type'])) ? $field['type'] : 'text';
 
-			add_settings_field( 
-				$field['id'], 
+			add_settings_field(
+				$field['id'],
 				$field['label'],
 				[ $this, 'field' ],
 				$field['settings_page'],
@@ -459,7 +470,7 @@ class options {
 
 	/**
 	 * Set Arguments for fields
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function setFieldArguments(array $field) {
@@ -497,9 +508,9 @@ class options {
 
 	/**
 	 * Default settings section callback
-	 * show text and other content right before the 
+	 * show text and other content right before the
 	 * settings section
-	 * 
+	 *
 	 * @since 1.1.0
 	 */
 	function settings_section_callback($section) {
@@ -523,9 +534,9 @@ class options {
 	/**
 	 * Custom implementation of do_settings_sections for usage
 	 * with tabs
-	 * 
+	 *
 	 * @see https://developer.wordpress.org/reference/functions/do_settings_sections/
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private function do_settings_sections_tabbed( $page, bool $vertical = false ) {
@@ -534,12 +545,12 @@ class options {
 		if ( ! isset( $wp_settings_sections[ $page ] ) ) {
 			return;
 		}
-		
+
 		// Enqueue required scripts
 		wp_enqueue_script("jquery");
 		wp_enqueue_script("jquery-ui-core");
 		wp_enqueue_script("jquery-ui-tabs");
-		wp_add_inline_script( 
+		wp_add_inline_script(
 			'jquery-ui-tabs',
 			'jQuery("document").ready(function($) {
 				var wppedia_tabs = $(".wppedia-settings-tabs");
@@ -577,9 +588,9 @@ class options {
 
 		// Build Tab content HTML
 		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-			
+
 			echo '<div class="wppedia-settings-tab-content" id="settings_tab_' . $section['id'] . '">';
-			
+
 			if ( $section['title'] ) {
 				echo "<h2>{$section['title']}</h2>\n";
 			}
@@ -597,9 +608,9 @@ class options {
 			$this->do_settings_fields( $page, $section['id'] );
 			echo '</table>';
 			submit_button();
-				
+
 			echo '</div>';
-			
+
 		}
 
 		echo '</div>';
@@ -609,18 +620,18 @@ class options {
 	/**
 	 * Custom implementation of do_settings_sections for usage
 	 * with tabs
-	 * 
+	 *
 	 * @see https://developer.wordpress.org/reference/functions/do_settings_sections/
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function do_settings_fields( $page, $section ) {
 		global $wp_settings_fields;
-	
+
 		if ( ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
 			return;
 		}
-	
+
 	  	foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
 
 			$single_column = false;
@@ -655,7 +666,7 @@ class options {
 
 	/**
 	 * Custom options Callback for selecting Pages
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function dropdown_pages(bool $add_option_none = false) {
@@ -666,7 +677,7 @@ class options {
 		if ($add_option_none) {
 			$options[''] = '-';
 		}
-	
+
 		foreach ( $pages as $page ) {
 			$options[$page->ID] = get_the_title( $page->ID );
 		}
@@ -677,7 +688,7 @@ class options {
 
 	/**
 	 * Custom options Callback to get all public posttypes
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function get_public_posttypes() {
@@ -697,9 +708,41 @@ class options {
 	}
 
 	/**
+	 * Check if the updated options require flushing the rewrite rules
+	 *
+	 * @param array $old_value
+	 * @param array $new_value
+	 * @param string $option_name
+	 *
+	 * @return void
+	 *
+	 * @since 1.3.0
+	 */
+	function maybe_set_flush_rewrite_rules_flag($old_value, $new_value, $option) {
+		$options_to_be_checked = [
+			'general'		=> [
+				'front_page_id'
+			],
+			'permalinks' 	=> [
+				'base',
+				'use_initial_character'
+			],
+		];
+
+		foreach ( $options_to_be_checked as $option_group => $options ) {
+			foreach ( $options as $option_name ) {
+				if ( isset( $new_value[$option_group][$option_name] ) && $old_value[$option_group][$option_name] != $new_value[$option_group][$option_name] ) {
+					$this->set_flush_rewrite_rules_flag($old_value[$option_group][$option_name], $new_value[$option_group][$option_name]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
 	 * Set a flag for flushing rewrite rules on the next
 	 * pageload
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function set_flush_rewrite_rules_flag($old_value, $value) {
@@ -709,35 +752,47 @@ class options {
 	}
 
 	/**
+	 * Merge saved options with input array
+	 *
+	 * @since 1.3.0
+	 */
+	function wppedia_settings_save($input_array) {
+		$settings = get_option( 'wppedia_settings' );
+		$settings = wp_parse_args( $input_array, $settings );
+		return $settings;
+	}
+
+	/**
 	 * Add a custom options section to the permalinks admin screen
-	 * 
+	 *
 	 * @uses add_settings_section()
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	function wppedia_permalink_settings_save() {
 
 		// Save options to database
-		if ( isset( $_POST['wppedia_permalink_base'] ) || isset( $_POST['wppedia_permalink_use_initial_character'] ) ) {
+		if ( isset( $_POST['wppedia_settings']['permalinks']['base'] ) || isset( $_POST['wppedia_settings']['permalinks']['use_initial_character'] ) ) {
 
 			check_admin_referer('update-permalink');
 
 			if (!current_user_can('manage_options'))
 				wp_die(__('Cheatin&#8217; uh?'));
 
-			if (isset( $_POST['wppedia_permalink_base'] )) {
-				$sanitized_permalink_base = $this->wppedia_permalink_part_sanitize($_POST['wppedia_permalink_base']);
-				if ('' !== $sanitized_permalink_base && $sanitized_permalink_base !== get_option('wppedia_permalink_base')) {
-					update_option( 'wppedia_permalink_base', $sanitized_permalink_base );
+			if (isset( $_POST['wppedia_settings']['permalinks']['base'] )) {
+				$permalink_base = $_POST['wppedia_settings']['permalinks']['base'];
+				$sanitized_permalink_base = $this->wppedia_permalink_part_sanitize($permalink_base);
+				if ('' !== $sanitized_permalink_base && $sanitized_permalink_base !== self::get_option('permalinks', 'base')) {
+					self::update_option( 'permalinks', 'base', $sanitized_permalink_base );
 				} else if ('' === $sanitized_permalink_base) {
-					delete_option( 'wppedia_permalink_base' );
+					self::remove_option( 'permalinks', 'base' );
 				}
 			}
 
-			if (isset( $_POST['wppedia_permalink_use_initial_character'] ) && $_POST['wppedia_permalink_use_initial_character']) {
-				update_option( 'wppedia_permalink_use_initial_character', true );
+			if (isset( $_POST['wppedia_settings']['permalinks']['use_initial_character'] ) && $_POST['wppedia_settings']['permalinks']['use_initial_character']) {
+				self::update_option( 'permalinks', 'use_initial_character', true );
 			} else {
-				update_option( 'wppedia_permalink_use_initial_character', false );
+				self::update_option( 'permalinks', 'use_initial_character', false );
 			}
 
 		}
@@ -746,7 +801,7 @@ class options {
 
 	/**
 	 * Sanitize permalink base option
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function wppedia_permalink_part_sanitize( $input ) {

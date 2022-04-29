@@ -2,7 +2,7 @@
 
 /**
  * WPPedia Post Type related
- * 
+ *
  * @since 1.2.1
  */
 
@@ -69,27 +69,24 @@ class postType {
 	private function defineTaxonomies() {
 		$this->taxonomies = [
 			'initial_character' => 'wppedia_initial_letter',
-			'category'					=> 'wppedia_category'
+			'category'			=> 'wppedia_category'
 		];
 	}
 
 	/**
 	 * Set permalink base from wp_options
-	 * 
+	 *
 	 * @since 1.1.6
 	 */
 	function set_permalink_base() {
-		$this->permalink_base = get_option('wppedia_permalink_base');
-		if (!$this->permalink_base) {
-			$this->permalink_base = options::get_option_defaults('wppedia_permalink_base');
-		}
+		$this->permalink_base = options::get_option('permalinks', 'base');
 	}
 
 	/**
 	 * Register Wiki Custom Post type
-	 * 
+	 *
 	 * @uses register_post_type
-	 * 
+	 *
 	* @since 1.2.3
 	*/
 	public function register_wppedia_post_type() {
@@ -149,14 +146,14 @@ class postType {
 		if ( false == wppedia_get_page_id('front') ) {
 			$args['has_archive'] = ltrim( rtrim( $this->permalink_base, '/' ), '/' );
 		}
-			
+
 		\register_post_type( $this->post_types['main'], $args );
 	}
 
 	/**
 	 * Setup a post creation limit as the free version does not offer an index which might cause
 	 * the crosslink generation to be very slow
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	function limit_num_posts( $post_id ) {
@@ -167,10 +164,10 @@ class postType {
 		global $wpdb;
 
 		$limit_post_type = $this->post_types['main'];
-		
+
 		$query_num_posts = "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = '$limit_post_type' AND post_status = 'publish' ";
 		$num_published = $wpdb->get_var($query_num_posts);
-			
+
 		// Check the limit
 		if( $num_published > $this->post_limit ) {
 
@@ -178,9 +175,9 @@ class postType {
 			$upost['ID'] = $post_id;
 			$upost['post_status'] = 'draft';	//force it back to draft
 			wp_update_post($upost);
-				
+
 			//show an error message
-			add_filter('redirect_post_location', [ $this, 'do_limit_reached_msg' ] );		
+			add_filter('redirect_post_location', [ $this, 'do_limit_reached_msg' ] );
 
 		}
 
@@ -191,12 +188,12 @@ class postType {
 		//message=6 is the published message
 		if( strpos( $loc, '&message=6' ) )
 			return add_query_arg( [
-					'message'=>'1', 
-					'wppedia_limit_reached'=>'1' 
+					'message'=>'1',
+					'wppedia_limit_reached'=>'1'
 				], $loc
-			);			
+			);
 		else
-			return add_query_arg('wppedia_limit_reached', '1', $loc);	
+			return add_query_arg('wppedia_limit_reached', '1', $loc);
 
 	}
 
@@ -217,9 +214,9 @@ class postType {
 	/**
 	 * Register a fake Taxonomy for initial letters
 	 * used to query glossary terms by initial letter
-	 * 
+	 *
 	 * @uses register_taxonomy
-	 * 
+	 *
 	 * @since 1.2.3
 	 */
 	function create_wppedia_initial_letter_tax() {
@@ -266,11 +263,11 @@ class postType {
 
 	/**
 	 * Set and update the initial character fake taxonomy on save
-	 * 
+	 *
 	 * @uses wp_insert_term
 	 * @uses get_terms
 	 * @uses wp_delete_term
-	 * 
+	 *
 	 * @since 1.2.1
 	 */
 	function manage_initial_character_onsave( int $post_ID, \WP_POST $post, bool $update ) {
@@ -279,11 +276,11 @@ class postType {
 
 		$taxonomy = $this->taxonomies['initial_character'];
 		$cur_initial_encoded = wppedia_slugify( $cur_initial, _x( 'other', 'wppedia slugs', 'wppedia' ) );
-		
+
 		// Create a new term based on the initial letter
-		\wp_insert_term( 
-			$cur_initial, 
-			$taxonomy, 
+		\wp_insert_term(
+			$cur_initial,
+			$taxonomy,
 			[
 				'slug' => $cur_initial_encoded
 			]
@@ -311,16 +308,16 @@ class postType {
 
 			if ( $term_count < 1 )
 				\wp_delete_term( $term->term_id, $taxonomy );
-			
+
 		}
 
 	}
 
 	/**
 	 * Register a term category taxonomy
-	 * 
+	 *
 	 * @uses register_taxonomy
-	 * 
+	 *
 	 * @since 1.2.1
 	 */
 	function create_wppedia_category_tax() {
@@ -364,7 +361,7 @@ class postType {
 
 	/**
 	 * Add rewrite rules
-	 * 
+	 *
 	 * @since 1.2.3
 	 */
 	function add_rewrite_rules() {
@@ -381,7 +378,7 @@ class postType {
 			);
 		}
 
-		if (false != get_option('wppedia_permalink_use_initial_character', options::get_option_defaults('wppedia_permalink_use_initial_character'))) {
+		if (false != options::get_option('permalinks', 'use_initial_character')) {
 			add_rewrite_rule(
 				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/([^/]*)/?',
 				'index.php?post_type=' . $this->post_types['main'] . '&wppedia_initial_letter=$matches[1]&name=$matches[2]',
@@ -398,7 +395,7 @@ class postType {
 
 	/**
 	 * Change default post link
-	 * 
+	 *
 	 * @since 1.2.1
 	 */
 	function post_type_link( $permalink, $post ) {
@@ -406,14 +403,14 @@ class postType {
 		if (wppedia_get_post_type() !== $post->post_type)
 			return $permalink;
 
-		if (false != get_option('wppedia_permalink_use_initial_character', options::get_option_defaults('wppedia_permalink_use_initial_character'))) {
+		if (false != options::get_option('permalinks', 'use_initial_character')) {
 			$terms = wp_get_post_terms($post->ID, $this->taxonomies['initial_character']);
 			// set location, if no location is found, provide a default value.
 			if ( 0 < count( $terms ))
 				$init_char = $terms[0]->slug;
 			else
 				$init_char = 'other';
-	
+
 			$init_char = urlencode( $init_char );
 			$permalink = rtrim( get_home_url(), '/' ) . '/' . ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/' . $init_char . '/' . $post->post_name . '/';
 		} else {
@@ -425,8 +422,8 @@ class postType {
 
 	/**
 	 * Set a custom option that tells WPPedia to flush
-	 * rewrite rules 
-	 * 
+	 * rewrite rules
+	 *
 	 * @since 1.1.6
 	 */
 	function set_flush_rewrite_rules_flag() {
