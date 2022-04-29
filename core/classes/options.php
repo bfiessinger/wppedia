@@ -546,29 +546,6 @@ class options {
 			return;
 		}
 
-		// Enqueue required scripts
-		wp_enqueue_script("jquery");
-		wp_enqueue_script("jquery-ui-core");
-		wp_enqueue_script("jquery-ui-tabs");
-		wp_add_inline_script(
-			'jquery-ui-tabs',
-			'jQuery("document").ready(function($) {
-				var wppedia_tabs = $(".wppedia-settings-tabs");
-				var wppedia_tabs_anchor = wppedia_tabs.find(".wppedia-settings-tabs-wrapper > li > a");
-
-				wppedia_tabs.tabs();
-
-				wppedia_tabs_anchor.on("click", function(e) {
-					e.preventDefault();
-					if(history.pushState) {
-						history.pushState(null, null, this.href);
-					} else {
-						location.hash = this.href;
-					}
-				});
-			});'
-		);
-
 		echo '<div class="wppedia-settings-tabs';
 		if ($vertical) {
 			echo ' ui-tabs-vertical';

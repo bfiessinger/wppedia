@@ -2,7 +2,7 @@
 
 /**
  * Include Styles and Scripts
- * 
+ *
  * @since 1.3.0
  */
 
@@ -11,7 +11,7 @@ use WPPedia\inlineStyleCollector;
 
 /**
  * Enqueue Assets
- * 
+ *
  * @since 1.3.0
  */
 function wppedia_enqueue_frontend_assets() {
@@ -42,7 +42,7 @@ function wppedia_enqueue_frontend_assets() {
 		wp_localize_script( 'wppedia_search', 'wppedia_search_props', [
 			'postlist_url' 		=> $rest_controller->get_endpoint_url( $rest_controller->rest_endpoint_search ),
 			'search_options'	=> json_encode( [
-				'keys' => [ 
+				'keys' => [
 					'post_title',
 					'tags'
 				],
@@ -56,7 +56,7 @@ function wppedia_enqueue_frontend_assets() {
 	$css_vars = [
 		'--wppedia-main-color' => get_theme_mod('wppedia_main_color', '#160351')
 	];
-	
+
 	$css_var_string = ':root{' . join( ';', array_map( function( $key, $value ) {
 		return $key . ':' . $value;
 	}, array_keys( $css_vars ), $css_vars ) ) . '}';
@@ -95,7 +95,7 @@ add_action('wp_enqueue_scripts', 'wppedia_enqueue_inline_styles', 9999);
 
 /**
  * Enqueue admin assets
- * 
+ *
  * @since 1.3.0
  */
 function wppedia_enqueue_admin_assets($hook) {
@@ -105,7 +105,7 @@ function wppedia_enqueue_admin_assets($hook) {
 	if (('post.php' === $hook || 'post-new.php' === $hook) && wppedia_get_post_type() === get_post_type()) {
 		$is_edit = true;
 	}
-	
+
 	if ('wppedia_term_page_wppedia_settings' === $hook || 'options-permalink.php' === $hook) {
 		$is_option = true;
 	}
@@ -125,7 +125,27 @@ function wppedia_enqueue_admin_assets($hook) {
 	}
 
 	if ($is_option) {
+		wp_enqueue_script("jquery");
+		wp_enqueue_script("jquery-ui-core");
+		wp_enqueue_script("jquery-ui-tabs");
+		wp_add_inline_script(
+			'jquery-ui-tabs',
+			'jQuery("document").ready(function($) {
+				var wppedia_tabs = $(".wppedia-settings-tabs");
+				var wppedia_tabs_anchor = wppedia_tabs.find(".wppedia-settings-tabs-wrapper > li > a");
 
+				wppedia_tabs.tabs();
+
+				wppedia_tabs_anchor.on("click", function(e) {
+					e.preventDefault();
+					if(history.pushState) {
+						history.pushState(null, null, this.href);
+					} else {
+						location.hash = this.href;
+					}
+				});
+			});'
+		);
 	}
 
 	if ($is_edit || $is_option) {
