@@ -46,9 +46,16 @@ class WPPedia {
 
 	/**
 	 * Static variable for instanciation
+	 *
+	 * @var WPPedia
 	 */
 	protected static $instance = null;
 
+	/**
+	 * Container that holds various class instances
+	 *
+	 * @var array
+	 */
 	private $container = [];
 
 	/**
