@@ -3,7 +3,7 @@
 /**
  * Database Upgrade
  * 
- * @since 1.2.0
+ * @since 1.3.0
  */
 
 namespace WPPedia;
@@ -25,6 +25,11 @@ class dbUpgrade {
 		add_action('init', [$this, 'maybe_run_upgrade']);
 	}
 
+	/**
+	 * Check if the database needs to be upgraded
+	 * 
+	 * @since 1.2.0
+	 */
 	private function is_upgrade_required() {
 		if ($this->cur_version !== $this->last_version) {
 			return true;
@@ -32,6 +37,11 @@ class dbUpgrade {
 		return false;
 	}
 
+	/**
+	 * Run upgrade if required
+	 * 
+	 * @since 1.2.0
+	 */
 	public function maybe_run_upgrade() {
 		if (!$this->is_upgrade_required()) {
 			return;
@@ -41,14 +51,24 @@ class dbUpgrade {
 		$this->set_version_option();
 	}
 
+	/**
+	 * Save the current version to the database
+	 * 
+	 * @since 1.2.0
+	 */
 	private function set_version_option() {
-		if (!get_option('wppedia_installed_version')) {
+		if (!wppedia_option_exists('wppedia_installed_version')) {
 			add_option('wppedia_installed_version', wppedia_get_version(), '', false);
 		} else {
 			update_option('wppedia_installed_version', wppedia_get_version(), false);
 		}
 	}
 
+	/**
+	 * Handle version upgrades
+	 * 
+	 * @since 1.3.0
+	 */
 	private function handle_upgrade_options() {
 		// Set default options
 		$defaults = options::get_option_defaults();
@@ -62,22 +82,37 @@ class dbUpgrade {
 			}
 		}
 
-		// TODO for version 1.3.0:
-		//
-		// Handle deprecated options
-		// $deprecated = options::get_deprecated_options();
-		// foreach ($deprecated as $old => $new) {
-		// 	if (false !== $new) {
-		// 		$this->replace_option_key($old, $new);
-		// 	} else {
-		// 		$options = get_option('wppedia_options');
-		// 		delete_option($old);
-		// 	}
-		// }
+		$this->update();
 	}
 
+	/**
+	 * Upgrade the database for each outdated version
+	 * 
+	 * @since 1.3.0
+	 */
+	private function update() {
+		$current_db_version = $this->cur_version;
+
+		if (version_compare($current_db_version, '1.1.0', '<')) {
+			include_once('updates/wppedia-update-1.1.0.php');
+		}
+
+		if (version_compare($current_db_version, '1.3.0', '<')) {
+			include_once('updates/wppedia-update-1.3.0.php');
+		}
+	}
+
+	/**
+	 * Set default option values if they don't exist
+	 * 
+	 * @param string $option_group
+	 * @param string $key
+	 * @param mixed $value
+	 * 
+	 * @since 1.3.0
+	 */
 	private function set_default_option($option_group, $key, $value) {
-		if (!get_option('wppedia_settings')) {
+		if (!wppedia_option_exists('wppedia_settings')) {
 			add_option(
 				'wppedia_settings', 
 				array_filter(options::get_option_defaults(), function($value) {
@@ -86,27 +121,11 @@ class dbUpgrade {
 				'', 
 				false
 			);
+			return;
 		}
 
-		// Update single option
-		$options = get_option('wppedia_settings');
-		if ($option_group && !isset($options[$option_group][$key])) {
-			$options[$option_group][$key] = $value;
-			update_option('wppedia_settings', $options);
-		} else if (!$option_group && !get_option($key)) {
-			update_option($key, $value);
-		}
-		
+		if (!option::option_exists($option_group, $key)) {
+			option::update_option($option_group, $key, $value);
+		}		
 	}
-
-	private function replace_option_key($oldKey, $newKey) {
-		if (get_option($oldKey) && !get_option($newKey)) {
-			global $wpdb;
-			$is_autoload = $wpdb->get_results("SELECT `autoload` FROM $wpdb->options WHERE `option_name` = '$oldKey' LIMIT 1");
-			$autoload = ('yes' === $is_autoload) ? true : false;
-			add_option($newKey, get_option($oldKey), '', $autoload);
-			delete_option($oldKey);
-		}
-	}
-
 }

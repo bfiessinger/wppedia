@@ -15,6 +15,21 @@ function wppedia_maybe_define_constant(string $name, $value) {
 }
 
 /**
+ * Check if an option exists in the database
+ * 
+ * @param string $option_name Option name.
+ * @param bool   $site_wide   Whether to check the site-wide options or not.
+ * 
+ * @return mixed
+ * 
+ * @since 1.3.0
+ */
+function wppedia_option_exists($name, $site_wide = false) {
+	global $wpdb; 
+	return $wpdb->query("SELECT * FROM ". ($site_wide ? $wpdb->base_prefix : $wpdb->prefix). "options WHERE option_name ='$name' LIMIT 1");
+}
+
+/**
  * Generate a valid slug from a string
  * 
  * @param string $str 
