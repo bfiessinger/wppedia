@@ -53,6 +53,16 @@ function wppedia_enqueue_frontend_assets() {
 	}
 
 	// Print inline styles
+	$css_vars = [
+		'--wppedia-main-color' => get_theme_mod('wppedia_main_color', '#160351')
+	];
+	
+	$css_var_string = ':root{' . join( ';', array_map( function( $key, $value ) {
+		return $key . ':' . $value;
+	}, array_keys( $css_vars ), $css_vars ) ) . '}';
+
+	wppedia_add_inline_style('wppedia-css-vars', $css_var_string);
+
 	global $content_width;
 	wppedia_add_inline_style('wppedia-content-width', '.wppedia-page .content-area{width:' . $content_width . 'px;}');
 

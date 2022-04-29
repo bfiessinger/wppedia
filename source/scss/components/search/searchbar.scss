@@ -6,10 +6,8 @@
 #wppedia_searchform {
 	position: relative;
 	display: flex;
+	flex-wrap: nowrap;
 	margin-bottom: 1.5rem;
-	.search-field, .search-submit {
-		margin: 0;
-	}
 	.search-field {
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
@@ -23,16 +21,17 @@
 }
 
 #wppedia_results_rendered {
-  position: absolute;
-	top: 100%;
+	position: absolute;
+	top: calc(100% + 1rem);
 	left: 0;
-  margin: 0;
-	border: solid rgba(0, 0, 0, 0.54);
-	border-width: 0 1px 1px;
-  padding: 0;
-  width: 100%;
-  z-index: 2;
-  background: #fff;
+	margin: 0;
+	border: solid $main-color;
+	border-color: var(--wppedia-main-color);
+	border-width: 1px;
+	padding: 0;
+	width: 100%;
+	z-index: 2;
+	background: #fff;
 	transition: none;
 	list-style: none;
 	> li {
@@ -44,6 +43,19 @@
 		display: block;
 		padding: .6rem;
 		color: inherit;
+	}
+	&:before {
+		content: '';
+		position: absolute;
+		top: -.5rem;
+		left: 1rem;
+		width: 0;
+		height: 0;
+		border-left: .5rem solid transparent;
+		border-right: .5rem solid transparent;
+		border-bottom: .5rem solid $main-color;
+		border-bottom-color: var(--wppedia-main-color);
+		transform: translateX(-50%);
 	}
 }
 

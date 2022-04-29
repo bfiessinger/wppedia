@@ -27,7 +27,9 @@
 			z-index: 1;
 			color: #FFF;
 			background-color: $main-color;
+			background-color: var(--wppedia-main-color);
 			border: solid 1px $main-color;
+			border-color: var(--wppedia-main-color);
 		}
 		a, span {
 			background: #FFF;
