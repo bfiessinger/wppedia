@@ -798,11 +798,7 @@ class options {
 			case 'archive':
 				switch ( $option_name ) {
 					case 'wppedia_templates':
-						$sanitized_input = !!$value;
-						break;
 					case 'show_nav':
-						$sanitized_input = !!$value;
-						break;
 					case 'show_searchbar':
 						$sanitized_input = !!$value;
 						break;
@@ -814,11 +810,7 @@ class options {
 			case 'singular':
 				switch ( $option_name ) {
 					case 'wppedia_templates':
-						$sanitized_input = !!$value;
-						break;
 					case 'show_nav':
-						$sanitized_input = !!$value;
-						break;
 					case 'show_searchbar':
 						$sanitized_input = !!$value;
 						break;
@@ -827,8 +819,6 @@ class options {
 			case 'crosslinks':
 				switch ( $option_name ) {
 					case 'active':
-						$sanitized_input = !!$value;
-						break;
 					case 'prefer_single_words':
 						$sanitized_input = !!$value;
 						break;
