@@ -1,10 +1,10 @@
 <?php
 
 /**
- * WPPedia - The most advanced Glossary solution for WordPress! 
- * 
+ * WPPedia - The most advanced Glossary solution for WordPress!
+ *
  * @wordpress-plugin
- * 
+ *
  * Plugin Name:	WPPedia
  * Description:	The most advanced Glossary solution for WordPress!
  * Author:		Bastian Fießinger & WPPedia Glossary Team
@@ -55,9 +55,9 @@ class WPPedia {
 	 * Magic isset to bypass referencing plugin.
 	 *
 	 * @param  string $prop Property to check.
-	 * 
+	 *
 	 * @return bool
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	public function __isset( $prop ) {
@@ -68,9 +68,9 @@ class WPPedia {
 	 * Magic getter method.
 	 *
 	 * @param  string $prop Property to get.
-	 * 
+	 *
 	 * @return mixed Property value or NULL if it does not exists.
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	public function __get( $prop ) {
@@ -90,7 +90,7 @@ class WPPedia {
 	 *
 	 * @param mixed $prop  Property to set.
 	 * @param mixed $value Value to set.
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	public function __set( $prop, $value ) {
@@ -107,9 +107,9 @@ class WPPedia {
 	 *
 	 * @param  string $name      Method to call.
 	 * @param  array  $arguments Arguments to pass when calling.
-	 * 
+	 *
 	 * @return mixed Return value of the callback.
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	public function __call( $name, $arguments ) {
@@ -133,7 +133,7 @@ class WPPedia {
 
 	/**
 	 * Define Plugin Constants
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	private function define_constants() {
@@ -155,7 +155,7 @@ class WPPedia {
 
 		// Env Constants
 		wppedia_maybe_define_constant('WPPedia_TEMPLATE_DEBUG_MODE', false);
-		
+
 	}
 
 	public function setup() {
@@ -167,7 +167,7 @@ class WPPedia {
 		// psr4 Autoloader
 		$loader = require "vendor/autoload.php";
 		$loader->addPsr4('WPPedia\\', __DIR__);
-		
+
 		$this->define_constants();
 
 		add_action( 'after_setup_theme', [ $this, 'setup' ] );
@@ -255,11 +255,11 @@ class WPPedia {
 	/**
 	 * Get default path for templates in themes.
 	 * By default the template path is yourtheme/wppedia
-	 * 
+	 *
 	 * If you want to override the default behaviour in your theme use
 	 * the filter "wppedia_template_path" and return your preferred folder name
 	 * in the callback.
-	 * 
+	 *
 	 * @since 1.1.3
 	 */
 	public function template_path() {
@@ -268,7 +268,7 @@ class WPPedia {
 
 	/**
 	 * Get default plugin path
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function plugin_path() {
