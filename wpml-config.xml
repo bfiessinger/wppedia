@@ -1,0 +1,15 @@
+<wpml-config>
+	<custom-fields>
+
+	</custom-fields>
+	<admin-texts>
+		<key name="group-name">
+			<key name="single-name" />
+		</key>
+	<custom-types>
+		<custom-type translate="1" display-as-translated="1">wppedia_term</custom-type>
+	</custom-types>
+	<taxonomies>
+		<taxonomy translate="1">wppedia_category</taxonomy>
+	</taxonomies>
+</wpml-config>
