@@ -2,7 +2,7 @@
 
 /**
  * Admin View
- * 
+ *
  * @since 1.2.0
  */
 
@@ -38,14 +38,12 @@ class admin {
 		add_action( 'update_option_wppedia_front_page_id', [ $this, 'unset_admin_notice_state_permalink_base_frontpage_slug_check' ], 10 );
 
 		// dismiss notice handler
-		add_action( 'wp_ajax_dismissed_notice_handler', [ $this, 'ajax_dismiss_notice_handler' ] );
-		add_action( 'admin_print_footer_scripts', [ $this, 'ajax_dismiss_notice_print_scripts' ] );
-
-  }
+		add_action( 'wp_helpers_notification_dismissed', [ $this, 'dismiss_admin_notification' ], 10, 2 );
+	}
 
 	/**
 	 * Modify the posts state for the glossary Archive Page
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function wppedia_archive_post_state( $post_states, $post ) {
@@ -53,16 +51,16 @@ class admin {
 		if( $post->ID == wppedia_get_page_id('front') ) {
 			$post_states[] = __( 'Glossary page', 'wppedia' );
 		}
-	
+
 		return $post_states;
 
 	}
 
 	/**
 	 * Get the current screen/page post type in admin
-	 * 
+	 *
 	 * @since 1.0.0
-	 */ 
+	 */
 	private function current_screen_post_type() {
 		global $post, $typenow, $current_screen;
 
@@ -80,7 +78,7 @@ class admin {
 
 	/**
 	 * Add a body class to all WPPedia Admin pages
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function wppedia_admin_body_class( $classes ) {
@@ -94,7 +92,7 @@ class admin {
 	/**
 	 * Setup colorscheme CSS variables based on
 	 * the selected colorscheme of the current user
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function create_colorscheme_css_vars() {
@@ -168,7 +166,7 @@ class admin {
 	/**
 	 * Enqueue the colorscheme created in
 	 * create_colorscheme_css_vars method
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function enqueue_colorscheme_css() {
@@ -184,7 +182,7 @@ class admin {
 	/**
 	 * Show the WPPedia logo in the header section
 	 * of WPPedia Settings screen
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	function settings_header_logo() { ?>
@@ -194,7 +192,7 @@ class admin {
 	/**
 	 * Add plugin action links on the plugins
 	 * screen
-	 * 
+	 *
 	 * @since 1.1.0
 	 */
 	function plugin_action_links(array $actions) {
@@ -206,148 +204,49 @@ class admin {
 	/**
 	 * Display an admin notice if the WPPedia frontpage slug
 	 * does not match the permalink base setting
-	 * 
+	 *
 	 * @since 1.1.6
 	 */
 	function frontpage_slug_not_matching_permalink_settings_notice() {
+		if (false !== wppedia_get_page_id('front') && get_post_field('post_name', get_post(wppedia_get_page_id('front'))) !== options::get_option('permalinks', 'base')) {
+			$notification_content = '<p>' .
+					sprintf(
+						_x('Attention! Your permalink base %s does not match the slug of your glossary frontpage %s', 'options', 'wppedia'),
+						'<code>' . options::get_option('permalinks', 'base') . '</code>',
+						'<code>' . get_post_field('post_name', get_post(wppedia_get_page_id('front'))) . '</code>'
+					) . '
+				</p>
+				<p>
+					<a class="button" href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Manage permalinks') . '</a>
+				</p>';
 
-		$current_state = $this->get_admin_notice_state('permalink_base_frontpage_slug_check');
-		$is_dismissed = (isset($current_state['is_dismissed']) && $current_state['is_dismissed']) ? true : false;
-
-		if (isset($current_state['valid_until']) && strtotime($current_state['valid_until']) > time()) {
-			$this->remove_admin_notice_state('permalink_base_frontpage_slug_check');
-			$is_dismissed = false;
+			if (!wppedia_notification_is_dismissed('frontpage_slug_not_matching_permalink_settings')) {
+				WPPedia()->notifications->add($notification_content, [
+					'id' => 'frontpage_slug_not_matching_permalink_settings',
+					'type' => 'warning',
+					'dismiss_until' => '+1 week',
+				]);
+			}
 		}
-
-		if (!$is_dismissed && false !== wppedia_get_page_id('front') && get_post_field('post_name', get_post(wppedia_get_page_id('front'))) !== get_option('wppedia_permalink_base')) {
-			echo '<div class="wppedia-admin-message notice notice-warning is-dismissible" data-wppedia_notice="permalink_base_frontpage_slug_check">';
-			echo '<p>';
-			printf(
-				_x('Attention! Your permalink base %s does not match the slug of your glossary frontpage %s', 'options', 'wppedia'),
-				'<code>' . get_option('wppedia_permalink_base') . '</code>',
-				'<code>' . get_post_field('post_name', get_post(wppedia_get_page_id('front'))) . '</code>'
-			);
-			echo '</p>';
-			echo '<p>';
-			echo '<a class="button" href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Manage permalinks') . '</a>';
-			echo '</p>';
-			echo '</div>';
-		}
-
-		return false;
 	}
 
-	/**
-	 * Unset Admin notice state for permalink_base_frontpage_slug_check
-	 * after updating the wppedia frontpage option
-	 * 
-	 * @since 1.1.6
-	 */
-	function unset_admin_notice_state_permalink_base_frontpage_slug_check() {
-		$this->remove_admin_notice_state('permalink_base_frontpage_slug_check');
-	}
+	function dismiss_admin_notification($notification_id, $notification) {
+		$dismiss_until = $notification->args('dismiss_until');
+		if ($dismiss_until && '' !== $dismiss_until) {
+			$dismiss_until = strtotime($dismiss_until);
+			if ($dismiss_until > time()) {
+				$dismissed_notifications = get_option('wppedia_dismissed_notifications', []);
 
-	/**
-	 * Get admin notice state by name
-	 * 
-	 * @since 1.1.6
-	 */
-	public function get_admin_notice_state($name) {
-		$current_states = get_option('wppedia_admin_notice_states');
-		if (!isset($current_states[$name])) {
-			return;
+				// remove all notifications with a dismiss_until date in the past
+				foreach ($dismissed_notifications as $notification_id => $dismissed_until) {
+					if ($dismissed_until < time()) {
+						unset($dismissed_notifications[$notification_id]);
+					}
+				}
+
+				$dismissed_notifications[$notification_id] = $dismiss_until;
+				update_option( 'wppedia_dismissed_notifications', $dismissed_notifications );
+			}
 		}
-		return $current_states[$name];
 	}
-
-	/**
-	 * Set admin notice state
-	 * 
-	 * @since 1.1.6
-	 */
-	public function set_admin_notice_state($name, $state = []) {
-		if (!get_option('wppedia_admin_notice_states')) {
-			add_option('wppedia_admin_notice_states', [], '', false);
-		}
-
-		$default_state = [
-			'is_dismissed' => true, 
-			'valid_until' => null
-		];
-
-		if (!is_array($state) || is_empty($state)) {
-			$state = $default_state;
-		}
-
-		$current_states = get_option('wppedia_admin_notice_states');
-
-		$current_states[$name] = $state;
-		update_option('wppedia_admin_notice_states', $current_states, false);
-	}
-
-	/**
-	 * Remove admin notice state
-	 * 
-	 * @since 1.1.6
-	 */
-	public function remove_admin_notice_state($name) {
-		$current_states = get_option('wppedia_admin_notice_states');
-		if (!isset($current_states[$name])) {
-			return;
-		}
-		unset($current_states[$name]);
-		update_option('wppedia_admin_notice_states', $current_states, false);
-	}
-
-	/**
-	 * Ajax handler to dismiss an admin notice
-	 * 
-	 * @since 1.1.6
-	 */
-	public function ajax_dismiss_notice_handler() {
-		check_ajax_referer('process_wppedia_dismiss_notice_nonce', '_ajax_nonce');
-
-		if (isset($_POST['notice'])) {
-			$valid_until = (isset($_POST['valid_until']) && $_POST['valid_until']) ? $_POST['valid_until'] : null;
-			$this->set_admin_notice_state(
-				$_POST['notice'],
-				[
-					'is_dismissed' => true,
-					'valid_until' => $valid_until
-				]
-			);
-		}
-
-		wp_die();
-	}
-
-	/**
-	 * Print footer scripts to dismiss admin notices
-	 * 
-	 * @since 1.1.6
-	 */
-	public function ajax_dismiss_notice_print_scripts() {
-		$nonce = wp_create_nonce('process_wppedia_dismiss_notice_nonce');
-		?>
-		<script type="text/javascript">
-			jQuery(function($) {
-				$(document).on('click', '.wppedia-admin-message .notice-dismiss', function () {
-					var message_element = $(this).closest('.wppedia-admin-message');
-					var notice_name = message_element.data('wppedia_notice');
-					var valid_until = message_element.data('wppedia_notice_valid_until') || null;
-					$.ajax('<?php echo admin_url('admin-ajax.php'); ?>', {
-						type: 'POST',
-						data: {
-							action: 'dismissed_notice_handler',
-							_ajax_nonce: '<?php echo $nonce; ?>',
-							notice: notice_name,
-							valid_until: valid_until
-						}
-					} );
-				} );
-			});
-		</script>
-		<?php
-	}
-
 }

@@ -34,6 +34,8 @@ class options {
 
 		// Set flush rewrite rules flag for options related to permalinks
 		add_action( 'update_option_wppedia_settings', [ $this, 'maybe_set_flush_rewrite_rules_flag' ], 10, 3 );
+
+		add_action( 'update_option_wppedia_settings', [ $this, 'update_option_wppedia_settings' ], 10, 3 );
 	}
 
 	function settings_page() {
@@ -738,6 +740,22 @@ class options {
 	function set_flush_rewrite_rules_flag($old_value, $value) {
 		if ( $old_value !== $value && ! get_option( 'wppedia_flush_rewrite_rules_flag' ) ) {
 			add_option( 'wppedia_flush_rewrite_rules_flag', true );
+		}
+	}
+
+	/**
+	 * Do stuff while changing plugin options
+	 *
+	 * @param array $old_value
+	 * @param array $new_value
+	 * @param string $option_name
+	 *
+	 * @since 1.3.0
+	 */
+	function update_option_wppedia_settings($old_value, $new_value, $option_name) {
+		// unset `frontpage_slug_not_matching_permalink_settings` notification
+		if ( $old_value['general']['front_page_id'] != $new_value['general']['front_page_id'] ) {
+			wppedia_undismiss_notification( 'wppedia_frontpage_slug_not_matching_permalink_settings' );
 		}
 	}
 
