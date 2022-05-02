@@ -2,20 +2,20 @@
 
 /**
  * WPPedia post meta settings
- * 
+ *
  * @since 1.2.0
  */
 
 namespace WPPedia;
 
-use WPPedia\traits\adminFields;
+use WPPedia\Traits\Has_Admin_Fields;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class postMeta {
+class Post_Meta {
 
-	use adminFields;
+	use Has_Admin_Fields;
 
 	private $post_meta_config;
 
@@ -43,7 +43,7 @@ class postMeta {
 
 	/**
 	 * Create WPPedia metaboxes
-	 * 
+	 *
 	 * @since 1.1.0
 	 */
 	public function add_meta_boxes() {
@@ -61,7 +61,7 @@ class postMeta {
 
 	/**
 	 * Save custom field values
-	 * 
+	 *
 	 * @since 1.1.0
 	 */
 	public function save_post( $post_id ) {
@@ -78,7 +78,7 @@ class postMeta {
 
 	/**
 	 * Print metabox contents
-	 * 
+	 *
 	 * @since 1.1.0
 	 */
 	public function add_meta_box_callback() {
@@ -88,7 +88,7 @@ class postMeta {
 
 	/**
 	 * Wrap individual fields in WordPress option tables
-	 * 
+	 *
 	 * @since 1.1.0
 	 */
 	private function fields_table() {
@@ -106,7 +106,7 @@ class postMeta {
 
 	/**
 	 * Create field labels
-	 * 
+	 *
 	 * @since 1.1.0
 	 */
 	private function label( $field ) {
@@ -121,7 +121,7 @@ class postMeta {
 
 	/**
 	 * Retrieve custom field values
-	 * 
+	 *
 	 * @since 1.1.0
 	 */
 	public function value( $field ) {

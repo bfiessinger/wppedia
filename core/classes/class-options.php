@@ -8,14 +8,14 @@
 
 namespace WPPedia;
 
-use WPPedia\traits\adminFields;
+use WPPedia\Traits\Has_Admin_Fields;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class options {
+class Options {
 
-	use adminFields;
+	use Has_Admin_Fields;
 
 	/**
 	 * Private variables

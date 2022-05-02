@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die();
 
-use WPPedia\inlineStyleCollector;
+use WPPedia\Inline_Style_Collector;
 
 require_once __DIR__ . '/template-functions.php';
 require_once __DIR__ . '/page-functions.php';
@@ -38,7 +38,7 @@ function wppedia_get_version() {
  */
 function wppedia_add_inline_style( string $handle, string $stylesheet ) {
 
-	if ( inlineStyleCollector::getInstance()->add( $handle, $stylesheet ) )
+	if ( Inline_Style_Collector::getInstance()->add( $handle, $stylesheet ) )
 		return true;
 
 	return false;
@@ -52,7 +52,7 @@ function wppedia_add_inline_style( string $handle, string $stylesheet ) {
  */
 function wppedia_remove_inline_style( string $handle ) {
 
-	if ( inlineStyleCollector::getInstance()->remove( $handle ) )
+	if ( Inline_Style_Collector::getInstance()->remove( $handle ) )
 		return true;
 
 	return false;

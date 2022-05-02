@@ -2,7 +2,7 @@
 
 /**
  * WPPedia Customizer
- * 
+ *
  * @since 1.3.0
  */
 
@@ -13,7 +13,7 @@ namespace WPPedia;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class customizer {
+class Customizer {
 
 	protected function __clone() {}
 

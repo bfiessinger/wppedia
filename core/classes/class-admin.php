@@ -11,7 +11,7 @@ namespace WPPedia;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class admin {
+class Admin {
 
 	private static $colorscheme_css = '';
 

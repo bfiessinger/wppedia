@@ -8,12 +8,12 @@
 
 namespace WPPedia;
 
-use WPPedia\options;
+use WPPedia\Options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class dbUpgrade {
+class DB_Upgrade {
 
 	private $last_version;
 	private $cur_version;
@@ -71,7 +71,7 @@ class dbUpgrade {
 	 */
 	private function handle_upgrade_options() {
 		// Set default options
-		$defaults = options::get_option_defaults();
+		$defaults = Options::get_option_defaults();
 		foreach ($defaults as $option_group => $options) {
 			if (is_array($options)) {
 				foreach ($options as $key => $value) {
@@ -115,7 +115,7 @@ class dbUpgrade {
 		if (!wppedia_option_exists('wppedia_settings')) {
 			add_option(
 				'wppedia_settings',
-				array_filter(options::get_option_defaults(), function($value) {
+				array_filter(Options::get_option_defaults(), function($value) {
 					return is_array($value);
 				}),
 				'',
@@ -124,8 +124,8 @@ class dbUpgrade {
 			return;
 		}
 
-		if (!options::option_exists($option_group, $key)) {
-			options::update_option($option_group, $key, $value);
+		if (!Options::option_exists($option_group, $key)) {
+			Options::update_option($option_group, $key, $value);
 		}
 	}
 }

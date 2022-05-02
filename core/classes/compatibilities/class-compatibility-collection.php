@@ -2,17 +2,17 @@
 
 /**
  * Theme and Plugin compatibilities
- * 
+ *
  * @since 1.2.4
  */
 
-namespace WPPedia\compatibilities;
+namespace WPPedia\Compatibilities;
 
-use WPPedia\compatibilities\compatibilityLoader;
+use WPPedia\Compatibilities\Compatibility_Loader;
 
 defined( 'ABSPATH' ) || die();
 
-class compatibilityCollection {
+class Compatibility_Collection {
 
 	private $themeCompatibilities = [];
 	private $pluginCompatibilities = [];
@@ -27,10 +27,10 @@ class compatibilityCollection {
 
 	/**
 	 * Add Theme to compatibility Array
-	 * 
+	 *
 	 * @param string $slug
 	 * @param string $name
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function addThemeCompatibility(string $slug, string $name) {
@@ -39,10 +39,10 @@ class compatibilityCollection {
 
 	/**
 	 * Add Plugin to compatibility Array
-	 * 
+	 *
 	 * @param string $slug
 	 * @param string|array $className
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function addPluginCompatibility(string $slug, $className) {
@@ -51,7 +51,7 @@ class compatibilityCollection {
 
 	/**
 	 * Set default Theme Compatibilities
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	private function setDefaultThemeCompatibilities() {
@@ -68,7 +68,7 @@ class compatibilityCollection {
 
 	/**
 	 * Set default Plugin Compatibilities
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	private function setDefaultPluginCompatibilities()  {
@@ -81,18 +81,18 @@ class compatibilityCollection {
 
 	function runThemeCompatibilities() {
 		foreach ($this->themeCompatibilities as $slug => $themeName) {
-			$loader = new compatibilityLoader();
+			$loader = new Compatibility_Loader();
 			$loader->setType('theme');
 			$loader->setSlug($slug);
 			$loader->setThemeName($themeName);
-			
+
 			$loader->load();
 		}
 	}
 
 	function runPluginCompatibilies() {
 		foreach ($this->pluginCompatibilities as $slug => $className) {
-			$loader = new compatibilityLoader();
+			$loader = new Compatibility_Loader();
 			$loader->setType('plugin');
 			$loader->setSlug($slug);
 			$loader->setClassName($className);

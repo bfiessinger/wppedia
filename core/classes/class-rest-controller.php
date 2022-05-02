@@ -2,7 +2,7 @@
 
 /**
  * REST API Endpoint
- * 
+ *
  * @since 1.2.0
  */
 
@@ -11,7 +11,7 @@ namespace WPPedia;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class restController extends \WP_REST_Controller {
+class Rest_Controller extends \WP_REST_Controller {
 
 	// Public namespace
 	public $rest_namespace = null;
@@ -32,8 +32,8 @@ class restController extends \WP_REST_Controller {
 
 		register_rest_route( $this->rest_namespace, '/' . $this->rest_endpoint_search, [
 			'methods' => 'GET',
-			'callback' => function() { 
-				return $this->get_wiki_entry_searchables(); 
+			'callback' => function() {
+				return $this->get_wiki_entry_searchables();
 			},
 			'permission_callback' => '__return_true'
 		] );
@@ -42,13 +42,13 @@ class restController extends \WP_REST_Controller {
 
 	/**
 	 * Simple utility to obtain the Rest endpoint for WPPedia
-	 * 
+	 *
 	 * @uses rest_url()
-	 * 
+	 *
 	 * @param string {$endpoint}
-	 * 
+	 *
 	 * @return string - the final endpoint URL
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	public function get_endpoint_url( string $endpoint = '' ) {
@@ -60,9 +60,9 @@ class restController extends \WP_REST_Controller {
 
 	/**
 	 * Get Wiki Entry titles
-	 * 
+	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @return array Array with post titles
 	 */
 	private function get_wiki_entry_searchables( array $query_args = [] ) {

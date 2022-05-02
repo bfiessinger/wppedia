@@ -2,7 +2,7 @@
 
 /**
  * WP Wiki Controller
- * 
+ *
  * @since 1.2.1
  */
 
@@ -13,7 +13,7 @@ use WPPedia\options;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class querySetup {
+class WP_Query_Setup {
 
 	public function _init() {
 
@@ -53,8 +53,8 @@ class querySetup {
 
   /**
    * posts_where filter to query posts by initial letter
-   * 
-   * @since 1.0.0 
+   *
+   * @since 1.0.0
    */
   function posts_where_get_posts_by_initial_letter( $where, \WP_Query $query ) {
     $initial_letter = $query->get( 'wppedia_query_initial_letter' );
@@ -65,11 +65,11 @@ class querySetup {
 
     return $where;
 	}
-	
+
 	function pre_get_posts( $query ) {
 		if (is_admin() || !$query->is_main_query())
 			return $query;
-			
+
 		if ($query->is_page() && wppedia_has_static_frontpage() && wppedia_get_page_id('front') === $query->get_queried_object_id()) {
 
 			$query->set('post_type', wppedia_get_post_type());
@@ -79,7 +79,7 @@ class querySetup {
 			if ( isset( $query->query['paged'] ) ) {
 				$query->set( 'paged', $query->query['paged'] );
 			}
-			
+
 			$query->is_singular = 0;
 			$query->is_post_type_archive = 1;
 			$query->is_archive = 1;
@@ -88,14 +88,14 @@ class querySetup {
 			// Remove post type archive name from front page title tag.
 			add_filter( 'post_type_archive_title', '__return_empty_string', 5 );
 		}
-		
+
 
 		return $query;
 	}
 
 	/**
 	 * Modify the main query for searches on the archive page
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function search_wppedia( $query ) {
@@ -110,25 +110,25 @@ class querySetup {
 
 	/**
 	 * Set default sorting for WP List Table on wiki entries
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function default_wiki_entries_orderby( $query ) {
 		if(!$query->is_main_query() || $query->get('post_type') !== wppedia_get_post_type())
 			return $query;
-  
+
 		// Orderby should not be manually modified
 		if ( $query->get('orderby') == '' ) {
 			$query->set( 'orderby', 'title' );
 			$query->set( 'order', 'asc' );
 		}
-			
+
 		return $query;
 	}
 
 	/**
 	 * Set default posts per page on WPPedia Frontend Archives
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function default_posts_per_page( $query ) {

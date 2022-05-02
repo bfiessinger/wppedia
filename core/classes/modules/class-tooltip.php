@@ -2,16 +2,16 @@
 
 /**
  * WPPedia module Tooltips
- * 
+ *
  * @since 1.2.0
  */
 
-namespace WPPedia\modules;
+namespace WPPedia\Modules;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class tooltipModule {
+class Tooltip {
 
 	private $excerpt_length = 40;
 
@@ -27,7 +27,7 @@ class tooltipModule {
 
 	/**
 	 * Generate WPPedia Tooltip HTML
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	function __generate_tooltip() {
@@ -42,18 +42,18 @@ class tooltipModule {
 		echo apply_filters( 'wppedia_tooltip_before_excerpt', '<div class="wppedia-tooltip-content">' );
 		the_excerpt_wppedia( $post_id, $this->excerpt_length, true );
 		echo apply_filters( 'wppedia_tooltip_after_excerpt', '</div>' );
-		
+
 		die;
 
 	}
 
 	/**
 	 * Display the post thumbnail
-	 * 
+	 *
 	 * @param WP_Post|int $post - Post ID or object
-	 * 
+	 *
 	 * @return boolean - true if an image is available
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private function tooltip_thumbnail( $post = null ) {
@@ -66,7 +66,7 @@ class tooltipModule {
 			return;
 
 		$thumbnail_id = get_post_thumbnail_id( $post );
-		
+
 		echo wp_get_attachment_image( $thumbnail_id, 'wppedia_tooltip_thumbnail', [ 'class' => 'wppedia-tooltip-image' ] );
 
 		return true;

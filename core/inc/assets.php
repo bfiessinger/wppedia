@@ -6,8 +6,8 @@
  * @since 1.3.0
  */
 
-use WPPedia\options;
-use WPPedia\inlineStyleCollector;
+use WPPedia\Options;
+use WPPedia\Inline_Style_Collector;
 
 /**
  * Enqueue Assets
@@ -22,20 +22,20 @@ function wppedia_enqueue_frontend_assets() {
 	wp_enqueue_style( 'wppedia-style', WPPediaPluginUrl . 'dist/css/style.min.css', [], null );
 
 	// Scripts
-	if ( is_singular() && options::get_option('tooltips', 'active') ) {
+	if ( is_singular() && Options::get_option('tooltips', 'active') ) {
 
 		// Tooltips
 		wp_enqueue_script( 'wppedia_ajax_tooltips', WPPediaPluginUrl . 'dist/js/ajax_tooltip.bundle.js', [], null, true );
 		wp_localize_script( 'wppedia_ajax_tooltips', 'wppedia_tooltip_props', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'tooltip_theme' => options::get_option('tooltips', 'style')
+			'tooltip_theme' => Options::get_option('tooltips', 'style')
 		) );
 
 	}
 
 	if (
-		(is_wppedia_archive() && options::get_option('archive', 'show_searchbar')) ||
-		(is_wppedia_singular() && options::get_option('singular', 'show_searchbar'))
+		(is_wppedia_archive() && Options::get_option('archive', 'show_searchbar')) ||
+		(is_wppedia_singular() && Options::get_option('singular', 'show_searchbar'))
 	) {
 		$rest_controller = new WPPedia\restController();
 		wp_enqueue_script( 'wppedia_search', WPPediaPluginUrl . 'dist/js/search.bundle.js', [], null, true );
@@ -67,7 +67,7 @@ function wppedia_enqueue_frontend_assets() {
 	wppedia_add_inline_style('wppedia-content-width', '.wppedia-page .content-area{width:' . $content_width . 'px;}');
 
 	// Alternative Tooltip Themes for inline usage
-	switch (options::get_option('tooltips', 'style')) {
+	switch (Options::get_option('tooltips', 'style')) {
 		case 'light-border':
 			wppedia_add_inline_style('tooltip-theme', WPPediaPluginDir . 'dist/css/tooltip-theme-light-border.min.css');
 			break;
@@ -84,7 +84,7 @@ function wppedia_enqueue_frontend_assets() {
 add_action('wp_enqueue_scripts', 'wppedia_enqueue_frontend_assets');
 
 function wppedia_enqueue_inline_styles() {
-	$final_css = inlineStyleCollector::getInstance()->get_final_css();
+	$final_css = Inline_Style_Collector::getInstance()->get_final_css();
 	if ( '' != $final_css ) {
 		wp_register_style( 'wppedia-inline-style', false );
 		wp_enqueue_style( 'wppedia-inline-style' );

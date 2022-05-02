@@ -22,22 +22,22 @@ defined( 'ABSPATH' ) or die();
 require_once plugin_dir_path(__FILE__) . 'core/inc/core-functions.php';
 
 // Core Classes
-use WPPedia\template;
-use WPPedia\restController;
-use WPPedia\querySetup;
-use WPPedia\admin;
-use WPPedia\options;
-use WPPedia\postMeta;
-use WPPedia\customizer;
-use WPPedia\postType;
-use WPPedia\dbUpgrade;
+use WPPedia\Template;
+use WPPedia\Rest_Controller;
+use WPPedia\WP_Query_Setup;
+use WPPedia\Admin;
+use WPPedia\Options;
+use WPPedia\Post_Meta;
+use WPPedia\Customizer;
+use WPPedia\Post_Type;
+use WPPedia\DB_Upgrade;
 
 // Modules
-use WPPedia\modules\crossLinkModule;
-use WPPedia\modules\tooltipModule;
+use WPPedia\Modules\Cross_Link_Content;
+use WPPedia\Modules\Tooltip;
 
 // Compatibility
-use WPPedia\compatibilities\compatibilityCollection;
+use WPPedia\Compatibilities\Compatibility_Collection;
 
 // Vendor
 use WPPedia_Vendor\MyThemeShop\Notification_Center;
@@ -188,7 +188,7 @@ class WPPedia {
 		/**
 		 * Instantiate Template Utils
 		 */
-		$template = new template();
+		$template = new Template();
 		$template->_init();
 
 		$this->container['template'] = $template;
@@ -196,29 +196,29 @@ class WPPedia {
 		/**
 		 * Theme and Plugin compatibility
 		 */
-		(new compatibilityCollection())->_init();
+		(new Compatibility_Collection())->_init();
 
 		/**
 		 * Instantiate REST API Controller Class
 		 */
-		(new restController())->_init();
+		(new Rest_Controller())->_init();
 
 		/**
 		 * Instantiate Query Controller
 		 */
-		(new querySetup())->_init();
+		(new WP_Query_Setup())->_init();
 
 		/**
 		 * Instatiate Admin View
 		 * Used to edit post or edit views in wp_admin
 		 */
-		(new admin())->_init();
+		(new Admin())->_init();
 
 		/**
 		 * Options
 		 * Setup options and settings pages
 		 */
-		$options = new options();
+		$options = new Options();
 		$options->_init();
 
 		$this->container['options'] = $options;
@@ -227,23 +227,23 @@ class WPPedia {
 		 * Post meta
 		 * Setup custom postmeta for WPPedia articles
 		 */
-		(new postMeta())->_init();
+		(new Post_Meta())->_init();
 
 		/**
 		 * Setup Customizer Controls
 		 */
-		(new customizer())->_init();
+		(new Customizer())->_init();
 
 		/**
 		 * Instantiate Post Type
 		 * Generates the WPPedia Post type and related taxonomies
 		 */
-		(new postType())->_init();
+		(new Post_Type())->_init();
 
 		/**
 		 * Instantiate Crosslink Module
 		 */
-		(new crossLinkModule(
+		(new Cross_Link_Content(
 			!!options::get_option('crosslinks', 'active'),
 			!!options::get_option('crosslinks', 'prefer_single_words')
 		))->_init();
@@ -251,12 +251,12 @@ class WPPedia {
 		/**
 		 * Tooltips
 		 */
-		(new tooltipModule())->_init();
+		(new Tooltip())->_init();
 
 		/**
 		 * Upgrade the WPPedia Database if needed
 		 */
-		(new dbUpgrade())->_init();
+		(new DB_Upgrade())->_init();
 	}
 
 	/**
@@ -304,7 +304,7 @@ require_once WPPediaPluginDir . 'core/inc/shortcodes.php';
 /**
  * The code that runs during plugin activation.
  */
-require_once WPPediaPluginDir . 'core/inc/class.activation.php';
+require_once WPPediaPluginDir . 'core/inc/class-activation.php';
 register_activation_hook( __FILE__, [ 'WPPedia\\activation', 'activate' ] );
 
 /**
@@ -323,5 +323,5 @@ add_action('init', function() {
 /**
  * The code that runs during plugin deactivation.
  */
-require_once WPPediaPluginDir . 'core/inc/class.deactivation.php';
+require_once WPPediaPluginDir . 'core/inc/class-deactivation.php';
 register_deactivation_hook( __FILE__, [ 'WPPedia\\deactivation', 'deactivate' ] );

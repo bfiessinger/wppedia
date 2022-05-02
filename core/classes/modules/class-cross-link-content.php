@@ -2,18 +2,18 @@
 
 /**
  * WPPedia module crosslinks
- * 
+ *
  * @since 1.2.0
  */
 
-namespace WPPedia\modules;
+namespace WPPedia\Modules;
 
 use WPPedia\options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class crossLinkModule {
+class Cross_Link_Content {
 
 	/**
 	 * Public Settings variables
@@ -51,10 +51,10 @@ class crossLinkModule {
 
 	/**
 	 * Helper function to sort post titles by length
-	 * 
+	 *
 	 * @param stdClass $posts - self generated post array
 	 * @param bool $prefer_single_words - Whether to check for single words or phrases first
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private function sort_post_titles( $posts, bool $prefer_single_words ) {
@@ -77,7 +77,7 @@ class crossLinkModule {
 
   /**
    * Get Posts available for crosslink content
-   * 
+   *
    * @since 1.1.0
    */
   public function get_crosslink_posts() {
@@ -127,7 +127,7 @@ class crossLinkModule {
 
 	/**
 	 * Prepare the link Phrase
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	public function prepare_link_phrase( string $str ) {
@@ -144,7 +144,7 @@ class crossLinkModule {
 
 	/**
 	 * Filter the content and insert crosslinks
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	public function the_content_linked( $content ) {
@@ -166,7 +166,7 @@ class crossLinkModule {
 				}
 
 			}
-			
+
 		}
 
 		return $content;
@@ -176,13 +176,13 @@ class crossLinkModule {
 	/**
 	 * Parse post content as XML and return a new version of the_content
 	 * with all crosslinks applied.
-	 * 
+	 *
 	 * @since 1.1.3
 	 */
 	public function parse_content_xml( $content, $link_phrase, $post ) {
 
 		$dom = new \DOMDocument();
-		
+
 		libxml_use_internal_errors(true);
 		if ( ! $dom->loadHtml(mb_convert_encoding( $content, 'HTML-ENTITIES', "UTF-8") ) ) {
 			libxml_clear_errors();
@@ -194,11 +194,11 @@ class crossLinkModule {
 		 * for link phrases.
 		 */
 		$ignore_tags = apply_filters( 'wppedia_crosslink_ignored_tags', [
-			'a', 
-			'script', 
-			'style', 
-			'code', 
-			'pre', 
+			'a',
+			'script',
+			'style',
+			'code',
+			'pre',
 			'object',
 			'h1',
 			'h2',
@@ -243,7 +243,7 @@ class crossLinkModule {
 			}
 
 		}
-		
+
 		/**
 		 * get only the body tag with its contents, then trim the body tag itself to get only the original content
 		 */
@@ -270,14 +270,14 @@ class crossLinkModule {
 
 	/**
 	 * Modify Post Content
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	public function the_post_content_links( $content ) {
 
 		// Bail early if the current post is not a wiki entry
-		if ( 
-			is_admin() || 
+		if (
+			is_admin() ||
 			! is_singular( wppedia_get_post_type() ) ||
 			doing_action('wpseo_head')
 		)

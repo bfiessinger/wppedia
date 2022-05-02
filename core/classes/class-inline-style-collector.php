@@ -3,7 +3,7 @@
 /**
  * Style loader Class
  * Used to collect all stylesheets and merging them to inline styles
- * 
+ *
  * @since 1.3.0
  */
 
@@ -12,7 +12,7 @@ namespace WPPedia;
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
 
-class inlineStyleCollector {
+class Inline_Style_Collector {
 
 	public $stylesheets = [];
 	public $removed_stylesheets = [];
@@ -25,9 +25,9 @@ class inlineStyleCollector {
 
 	/**
 	 * Get current Instance
-	 * 
+	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @return self
 	*/
   	public static function getInstance() {
@@ -38,19 +38,19 @@ class inlineStyleCollector {
 		return self::$instance;
 
 	}
-	
+
   	protected function __clone() {}
 
 	protected function __construct() {}
 
 	/**
 	 * Register a new Stylesheet
-	 * 
+	 *
 	 * @param string $handle - CSS handle
 	 * @param string $data - CSS File or String to register
-	 * 
+	 *
 	 * @return boolean - returns true if styles where merged, false otherwhise
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function add( string $handle, string $stylesheet ) {
@@ -85,12 +85,12 @@ class inlineStyleCollector {
 
 	/**
 	 * Collect stylesheets and save them to a public Array
-	 * 
+	 *
 	 * @param string $handle
 	 * @param string $css
-	 * 
+	 *
 	 * @return array - associative array with handle and CSS
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private function collect_inline_styles( string $handle, string $css ) {
@@ -99,17 +99,17 @@ class inlineStyleCollector {
 
 	}
 
-	/** 
+	/**
 	 * Remove a registered Stylesheet
-	 * 
+	 *
 	 * @param string $handle - The registered handle
-	 * 
+	 *
 	 * @return true
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	public function remove( string $handle ) {
-		
+
 		$this->removed_stylesheets[] = $handle;
 		return true;
 
@@ -117,7 +117,7 @@ class inlineStyleCollector {
 
 	/**
 	 * Handle removal of stylesheets
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function handle_remove_stylesheets() {
@@ -130,9 +130,9 @@ class inlineStyleCollector {
 
 	/**
 	 * Merge stylesheets after all modifications
-	 * 
+	 *
 	 * @return string final CSS string
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private function merge_inline_styles() {
@@ -148,9 +148,9 @@ class inlineStyleCollector {
 
 	/**
 	 * Return the final CSS string
-	 * 
+	 *
 	 * @return string
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	public function get_final_css() {

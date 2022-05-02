@@ -6,12 +6,12 @@
  * @since 1.3.0
  */
 
-namespace WPPedia\traits;
+namespace WPPedia\Traits;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) || die();
 
-trait adminFields {
+trait Has_Admin_Fields {
 
 	/**
 	 * Evaluate the function to use foreach field type

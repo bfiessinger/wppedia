@@ -2,17 +2,17 @@
 
 /**
  * Theme and Plugin compatibilities
- * 
+ *
  * @since 1.2.4
  */
 
-namespace WPPedia\compatibilities;
+namespace WPPedia\Compatibilities;
 
 defined( 'ABSPATH' ) || die();
 
-class compatibilityLoader {
+class Compatibility_Loader {
 
-	// Private variable to check if loading a 
+	// Private variable to check if loading a
 	// compatibility for either a theme or a plugin
 	private $type;
 
@@ -28,9 +28,9 @@ class compatibilityLoader {
 	/**
 	 * Set the compatiblity loader type
 	 * either plugin or theme
-	 * 
+	 *
 	 * @param string $type
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function setType(string $type) {
@@ -40,9 +40,9 @@ class compatibilityLoader {
 
 	/**
 	 * Set compatibility file slug
-	 * 
+	 *
 	 * @param string $slug
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function setSlug(string $slug) {
@@ -54,9 +54,9 @@ class compatibilityLoader {
 	 * Set classname or classnames to check for
 	 * existance before loading the compatibility
 	 * file
-	 * 
+	 *
 	 * @param string|array $slug
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function setClassName($className) {
@@ -67,9 +67,9 @@ class compatibilityLoader {
 	/**
 	 * Alternatively to method `setClassName` set the
 	 * name of the compatible theme (many theme don't use a main class)
-	 * 
+	 *
 	 * @param string $themeName
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function setThemeName(string $themeName) {
@@ -79,9 +79,9 @@ class compatibilityLoader {
 
 	/**
 	 * Set path to the compatibility file
-	 * 
+	 *
 	 * @param string $path
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function setPath(string $path) {
@@ -104,7 +104,7 @@ class compatibilityLoader {
 					if (class_exists($className)) {
 						$canLoad = true;
 					}
-				} 
+				}
 			} else {
 				if (class_exists($className)) {
 					$canLoad = true;
@@ -116,7 +116,7 @@ class compatibilityLoader {
 			return;
 		}
 
-		
+
 
 		$compatFile = trailingslashit($this->path) . 'class.' . $this->type . '-compatibility-' . $this->slug . '.php';
 		if (file_exists($compatFile)) {
@@ -126,7 +126,7 @@ class compatibilityLoader {
 
 	/**
 	 * Load the compatibility file
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function load() {
