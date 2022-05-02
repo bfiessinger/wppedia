@@ -2,7 +2,7 @@
 
 /**
  * Database Upgrade
- * 
+ *
  * @since 1.3.0
  */
 
@@ -27,7 +27,7 @@ class dbUpgrade {
 
 	/**
 	 * Check if the database needs to be upgraded
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	private function is_upgrade_required() {
@@ -39,7 +39,7 @@ class dbUpgrade {
 
 	/**
 	 * Run upgrade if required
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function maybe_run_upgrade() {
@@ -53,7 +53,7 @@ class dbUpgrade {
 
 	/**
 	 * Save the current version to the database
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	private function set_version_option() {
@@ -66,7 +66,7 @@ class dbUpgrade {
 
 	/**
 	 * Handle version upgrades
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function handle_upgrade_options() {
@@ -87,7 +87,7 @@ class dbUpgrade {
 
 	/**
 	 * Upgrade the database for each outdated version
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function update() {
@@ -104,28 +104,28 @@ class dbUpgrade {
 
 	/**
 	 * Set default option values if they don't exist
-	 * 
+	 *
 	 * @param string $option_group
 	 * @param string $key
 	 * @param mixed $value
-	 * 
+	 *
 	 * @since 1.3.0
 	 */
 	private function set_default_option($option_group, $key, $value) {
 		if (!wppedia_option_exists('wppedia_settings')) {
 			add_option(
-				'wppedia_settings', 
+				'wppedia_settings',
 				array_filter(options::get_option_defaults(), function($value) {
 					return is_array($value);
 				}),
-				'', 
+				'',
 				false
 			);
 			return;
 		}
 
-		if (!option::option_exists($option_group, $key)) {
-			option::update_option($option_group, $key, $value);
-		}		
+		if (!options::option_exists($option_group, $key)) {
+			options::update_option($option_group, $key, $value);
+		}
 	}
 }
