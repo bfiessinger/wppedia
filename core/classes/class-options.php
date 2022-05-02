@@ -9,6 +9,7 @@
 namespace WPPedia;
 
 use WPPedia\Traits\Has_Admin_Fields;
+use WPPedia\Traits\Sanitizes_Data;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -16,6 +17,7 @@ defined( 'ABSPATH' ) or die();
 class Options {
 
 	use Has_Admin_Fields;
+	use Sanitizes_Data;
 
 	/**
 	 * Private variables
@@ -864,34 +866,4 @@ class Options {
 		}
 
 	}
-
-	function sanitize_bool($input) {
-		return !!$input;
-	}
-
-	function sanitize_int($input) {
-		return absint($input);
-	}
-
-	function sanitize_array($input) {
-		return array_map('sanitize_text_field', $input);
-	}
-
-	/**
-	 * Sanitize permalink base option
-	 *
-	 * @since 1.0.0
-	 */
-	function sanitize_permalink_part( $input ) {
-		// Add leading slash to prevent `esc_url_raw` adding a protocol
-		$input = '/' . $input;
-		// replace all whitespaces with `-`
-		$input = preg_replace( '/\s+/', '-', $input );
-		$input = esc_url_raw( $input, null );
-		// Remove leading slash
-		$input = substr($input, 1);
-
-		return $input;
-	}
-
 }
