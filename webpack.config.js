@@ -77,7 +77,8 @@ module.exports = [
 		entry: cssEntryPoints,
 		output: {
 			path: path.resolve(__dirname, 'dist/css'),
-			filename: '[name].bundle.js'
+			filename: '[name].bundle.js',
+			assetModuleFilename: '../asset/[name][ext]',
 		},
 		optimization: {
 			minimize: true,
@@ -89,7 +90,7 @@ module.exports = [
 						},
 					},
 					extractComments: false,
-				}), 
+				}),
 				new CssMinimizerPlugin({})
 			],
 		},
@@ -97,30 +98,16 @@ module.exports = [
 			rules: [
 				{
 					test: /\.(png|jpg|jpeg|gif|ico)$/,
-					use: [
-						{
-							loader: 'file-loader',
-							options: {
-								name: '[name].[ext]',
-								outputPath: '../images'
-							}
-						}
-					],
+					type: 'asset/resource'
 				},
 				{
 					test: /\.svgz?$/,
+					type: 'asset/resource',
 					use: [
-						{
-							loader: 'file-loader',
-							options: {
-								name: '[name].[ext]',
-								outputPath: '../images'
-							}
-						},
 						{
 							loader: 'svgo-loader'
 						}
-					],
+					]
 				},
 				{
 					test: /\.(pc|sa|sc|c)ss$/,
