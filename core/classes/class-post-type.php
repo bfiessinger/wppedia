@@ -8,7 +8,7 @@
 
 namespace WPPedia;
 
-use WPPedia\options;
+use WPPedia\Options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -79,7 +79,7 @@ class Post_Type {
 	 * @since 1.1.6
 	 */
 	function set_permalink_base() {
-		$this->permalink_base = options::get_option('permalinks', 'base');
+		$this->permalink_base = Options::get_option('permalinks', 'base');
 	}
 
 	/**
@@ -378,7 +378,7 @@ class Post_Type {
 			);
 		}
 
-		if (false != options::get_option('permalinks', 'use_initial_character')) {
+		if (false != Options::get_option('permalinks', 'use_initial_character')) {
 			add_rewrite_rule(
 				ltrim( rtrim( $this->permalink_base, '/' ), '/' ) . '/([^/]*)/([^/]*)/?',
 				'index.php?post_type=' . $this->post_types['main'] . '&wppedia_initial_letter=$matches[1]&name=$matches[2]',
@@ -403,7 +403,7 @@ class Post_Type {
 		if (wppedia_get_post_type() !== $post->post_type)
 			return $permalink;
 
-		if (false != options::get_option('permalinks', 'use_initial_character')) {
+		if (false != Options::get_option('permalinks', 'use_initial_character')) {
 			$terms = wp_get_post_terms($post->ID, $this->taxonomies['initial_character']);
 			// set location, if no location is found, provide a default value.
 			if ( 0 < count( $terms ))

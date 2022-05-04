@@ -8,7 +8,7 @@
 
 namespace WPPedia;
 
-use WPPedia\options;
+use WPPedia\Options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
@@ -133,7 +133,7 @@ class WP_Query_Setup {
 	 */
 	function default_posts_per_page( $query ) {
 		if (!is_admin() && $query->is_main_query() && $query->is_archive() && ($query->get('post_type') === wppedia_get_post_type() || $query->get('wppedia_initial_letter') !== ''))
-			$query->set( 'posts_per_page', options::get_option('archive', 'posts_per_page') );
+			$query->set( 'posts_per_page', Options::get_option('archive', 'posts_per_page') );
 
 		return $query;
 	}
