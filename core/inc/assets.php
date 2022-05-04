@@ -7,6 +7,7 @@
  */
 
 use WPPedia\Options;
+use WPPedia\Rest_Controller;
 use WPPedia\Inline_Style_Collector;
 
 /**
@@ -37,7 +38,7 @@ function wppedia_enqueue_frontend_assets() {
 		(is_wppedia_archive() && Options::get_option('archive', 'show_searchbar')) ||
 		(is_wppedia_singular() && Options::get_option('singular', 'show_searchbar'))
 	) {
-		$rest_controller = new WPPedia\restController();
+		$rest_controller = new Rest_Controller();
 		wp_enqueue_script( 'wppedia_search', WPPediaPluginUrl . 'dist/js/search.bundle.js', [], null, true );
 		wp_localize_script( 'wppedia_search', 'wppedia_search_props', [
 			'postlist_url' 		=> $rest_controller->get_endpoint_url( $rest_controller->rest_endpoint_search ),
