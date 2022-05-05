@@ -546,11 +546,20 @@ class Options {
 	function settings_section_callback($section) {
 		$output = false;
 		switch ($section['id']) {
-			case 'wppedia_settings_page':
-				$output = _x( 'Setup WPPedia pages.', 'options', 'wppedia' );
+			case 'general':
+				$output = _x( 'General WPPedia settings.', 'options', 'wppedia' );
 				break;
-			case 'wppedia_settings_crosslinks':
-				$output = _x( 'Modify WPPedia crosslink module settings.', 'options', 'wppedia' );
+			case 'archive':
+				$output = _x( 'Modify the look and feel of your glossary archives.', 'options', 'wppedia' );
+				break;
+			case 'singular':
+				$output = _x( 'Modify the look and feel of your glossary single pages.', 'options', 'wppedia' );
+				break;
+			case 'crosslinks':
+				$output = _x( 'Change the behaviour of how WPPedia links your content.', 'options', 'wppedia' );
+				break;
+			case 'tooltips':
+				$output = _x( 'Change the behaviour of how WPPedia tooltips are displayed.', 'options', 'wppedia' );
 				break;
 			case 'wppedia_settings_permalink':
 				$output = _x( 'If you like, you may enter custom structures for your WPPedia URLs here.', 'options', 'wppedia' );
