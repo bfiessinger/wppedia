@@ -779,7 +779,7 @@ class Options {
 	function update_option_wppedia_settings($old_value, $new_value, $option_name) {
 		// unset `frontpage_slug_not_matching_permalink_settings` notification
 		if ( $old_value['general']['front_page_id'] != $new_value['general']['front_page_id'] ) {
-			wppedia_undismiss_notification( 'wppedia_frontpage_slug_not_matching_permalink_settings' );
+			wppedia_undismiss_notification( 'frontpage_slug_not_matching_permalink_settings' );
 		}
 	}
 
