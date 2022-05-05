@@ -220,12 +220,15 @@ class Admin {
 				</p>';
 
 			if (!wppedia_notification_is_dismissed('frontpage_slug_not_matching_permalink_settings')) {
+				WPPedia()->notifications->remove_by_id('frontpage_slug_not_matching_permalink_settings');
 				WPPedia()->notifications->add($notification_content, [
 					'id' => 'frontpage_slug_not_matching_permalink_settings',
 					'type' => 'warning',
 					'dismiss_until' => '+1 week',
 				]);
 			}
+		} else {
+			WPPedia()->notifications->remove_by_id('frontpage_slug_not_matching_permalink_settings');
 		}
 	}
 
