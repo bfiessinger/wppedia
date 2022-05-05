@@ -46,12 +46,11 @@ trait Has_Admin_Fields {
 				$output = $this->input($field);
 		}
 
-		if ($output) {
+		if ($this->is_restricted_pro($field)) {
+			echo preg_replace('/name=("|\').*?("|\')/i', 'disabled', $output);
+			echo '<input type="hidden" name="' . $this->field_name($field) . '" value="' . esc_attr($field['args']['default']) . '" />';
+		} else {
 			echo $output;
-
-			if ($this->is_restricted_pro($field)) {
-				echo '<input type="hidden" name="' . $this->field_name($field) . '" value="' . esc_attr(serialize($field['args']['default'])) . '" />';
-			}
 		}
 
 		// Show field description
@@ -66,15 +65,14 @@ trait Has_Admin_Fields {
 	 * @since 1.3.0
 	 */
 	protected function input($field) {
-		printf(
-			'<input class="regular-text %s" id="%s" name="%s" %s type="%s" value="%s" %s>',
+		return sprintf(
+			'<input class="regular-text %s" id="%s" name="%s" %s type="%s" value="%s">',
 			$this->field_class_string($field),
 			$this->field_id($field),
 			$this->field_name($field),
 			isset( $field['args']['pattern'] ) ? "pattern='{$field['args']['pattern']}'" : '',
 			$field['type'],
-			$this->value($field),
-			$this->restrict_pro($field)
+			$this->value($field)
 		);
 	}
 
@@ -85,7 +83,7 @@ trait Has_Admin_Fields {
 	 */
 	protected function input_minmax($field) {
 		return sprintf(
-			'<input class="regular-text %s" id="%s" %s %s name="%s" %s type="%s" value="%s" %s>',
+			'<input class="regular-text %s" id="%s" %s %s name="%s" %s type="%s" value="%s">',
 			$this->field_class_string($field),
 			$this->field_id($field),
 			isset( $field['args']['max'] ) ? "max='{$field['args']['max']}'" : '',
@@ -93,8 +91,7 @@ trait Has_Admin_Fields {
 			$this->field_name($field),
 			isset( $field['args']['step'] ) ? "step='{$field['args']['step']}'" : '',
 			$field['type'],
-			$this->value($field),
-			$this->restrict_pro($field)
+			$this->value($field)
 		);
 	}
 
@@ -105,12 +102,11 @@ trait Has_Admin_Fields {
 	 */
 	protected function textarea($field) {
 		return sprintf(
-			'<textarea class="regular-text %s" id="%s" name="%s" rows="%d" %s>%s</textarea>',
+			'<textarea class="regular-text %s" id="%s" name="%s" rows="%d">%s</textarea>',
 			$this->field_class_string($field, [], true),
 			$this->field_id($field),
 			$this->field_name($field),
 			isset( $field['args']['rows'] ) ? $field['args']['rows'] : 4,
-			$this->restrict_pro($field),
 			$this->value($field)
 		);
 	}
@@ -124,22 +120,20 @@ trait Has_Admin_Fields {
 		if (isset($field['args']['remote_options']) && is_array($field['args']['remote_options'])) {
 			$remote_options = $field['args']['remote_options'];
 			return sprintf(
-				'<select id="%s" name="%s" %s %s data-remote-options="%s">%s</select>',
+				'<select id="%s" name="%s" %s data-remote-options="%s">%s</select>',
 				$this->field_id($field),
 				$this->field_name($field),
 				$this->field_class_string($field, ['wppedia-select2'], true),
-				$this->restrict_pro($field),
 				esc_attr(json_encode($remote_options)),
 				'<option value="' . $this->value($field) . '">' . $remote_options['selected_label'] . '</option>'
 			);
 		}
 
 		return sprintf(
-			'<select id="%s" name="%s" %s %s>%s</select>',
+			'<select id="%s" name="%s" %s>%s</select>',
 			$this->field_id($field),
 			$this->field_name($field),
 			$this->field_class_string($field, ['wppedia-select2'], true),
-			$this->restrict_pro($field),
 			$this->select_options($field)
 		);
 	}
@@ -189,12 +183,11 @@ trait Has_Admin_Fields {
 		}
 
 		$html = sprintf(
-			'<input %s %s id="%s" name="%s" type="checkbox" value="1" %s>',
+			'<input %s %s id="%s" name="%s" type="checkbox" value="1">',
 			$this->field_class_string($field, $additionalClasses, true),
 			checked($this->value($field), true, false),
 			$this->field_id($field),
-			$this->field_name($field),
-			$this->restrict_pro($field)
+			$this->field_name($field)
 		);
 
 		if ($is_switch) {
@@ -342,7 +335,7 @@ trait Has_Admin_Fields {
 			return '';
 		}
 
-		return str_replace( '\u0027', "'", $value );
+		return esc_attr(str_replace( '\u0027', "'", $value ));
 	}
 
 	/**
@@ -370,19 +363,4 @@ trait Has_Admin_Fields {
 		}
 		return false;
 	}
-
-	/**
-	 * Return disabled attribute for pro features
-	 *
-	 * @param bool $disable
-	 *
-	 * @since 1.3.0
-	 */
-	private function restrict_pro($field) {
-		if ($this->is_restricted_pro($field)) {
-			return ' disabled="disabled"';
-		}
-		return '';
-	}
-
 }
