@@ -111,7 +111,8 @@ trait Has_Admin_Fields {
 	 * @since 1.3.0
 	 */
 	protected function select($field) {
-		if (isset($field['args']['remote_options']) && $remote_options = $field['args']['remote_options']) {
+		if (isset($field['args']['remote_options']) && is_array($field['args']['remote_options'])) {
+			$remote_options = $field['args']['remote_options'];
 			printf(
 				'<select id="%s" name="%s" %s %s data-remote-options="%s">%s</select>',
 				$this->field_id($field),
