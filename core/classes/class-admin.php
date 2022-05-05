@@ -35,7 +35,6 @@ class Admin {
 
 		// Admin notices
 		add_action( 'admin_notices', [ $this, 'frontpage_slug_not_matching_permalink_settings_notice' ] );
-		add_action( 'update_option_wppedia_front_page_id', [ $this, 'unset_admin_notice_state_permalink_base_frontpage_slug_check' ], 10 );
 
 		// dismiss notice handler
 		add_action( 'wp_helpers_notification_dismissed', [ $this, 'dismiss_admin_notification' ], 10, 2 );
