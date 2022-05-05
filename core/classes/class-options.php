@@ -832,13 +832,14 @@ class Options {
 	 */
 	function sanitize_option($option_group, $option_name, $value) {
 		$sanitized_input = null;
-		$sanitize_callback = $this->settings_fields[$option_group][$option_name]['sanitize_callback'];
 
-		if (!empty($sanitize_callback)) {
-			$sanitized_input = call_user_func($sanitize_callback, $value);
-		} else {
-			$sanitized_input = sanitize_text_field($value);
-		}
+		$settings_field = array_values(array_filter( $this->settings_fields, function($field) use ($option_group, $option_name) {
+			return $field['id'] == $option_name && $field['settings_section'] == $option_group;
+		}))[0];
+
+		$sanitize_callback = isset($settings_field['sanitize_callback']) ? $settings_field['sanitize_callback'] : 'sanitize_text_field';
+
+		$sanitized_input = call_user_func($sanitize_callback, $value);
 
 		return $sanitized_input;
 	}
