@@ -62,6 +62,22 @@ trait Sanitizes_Data {
 	 * @since 1.3.0
 	 */
 	function sanitize_array($input) {
+		$orig_input = $input;
+
+		/**
+		 * try to make input an array if it is not
+		 * use unserialize, if it fails, then use json_decode and finally explode
+		 */
+		if ( ! is_array( $input ) ) {
+			$input = @unserialize( $orig_input );
+			if ( ! is_array( $input ) ) {
+				$input = json_decode( $orig_input, true );
+				if ( ! is_array( $input ) ) {
+					$input = explode( ',', $orig_input );
+				}
+			}
+		}
+
 		return array_map('sanitize_text_field', $input);
 	}
 
