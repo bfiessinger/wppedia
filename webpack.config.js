@@ -12,6 +12,7 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
 const jsExternals = {
 	jquery: 'jQuery',
 	'@yaireo/tagify': 'Tagify',
+	select2: 'select2',
 	// WordPress Packages.
 	'@wordpress/hooks': 'wp.hooks',
 }
@@ -21,8 +22,11 @@ const jsEntryPoints = {
 	ajax_tooltip: './source/js/ajax-tooltips.js',
 	search: './source/js/wppedia-search.js',
 	// Backend
-	edit: './source/js/admin/edit/edit.js'
+	edit: './source/js/admin/edit/edit.js',
+	options: './source/js/admin/options/options.js',
 };
+
+const isDev = process.argv[process.argv.indexOf('--mode') + 1] === 'development';
 
 const cssEntryPoints = {
 	// Frontend
@@ -38,10 +42,10 @@ const cssEntryPoints = {
 module.exports = [
 	// Compile Javascript
 	{
-		mode: 'production',
+		mode: isDev ? 'development' : 'production',
 		entry: jsEntryPoints,
 		optimization: {
-			minimize: true,
+			minimize: !isDev,
 			minimizer: [
 				new TerserJSPlugin({
 					terserOptions: {
@@ -73,7 +77,7 @@ module.exports = [
 	},
 	// Compile CSS
 	{
-		mode: 'production',
+		mode: isDev ? 'development' : 'production',
 		entry: cssEntryPoints,
 		output: {
 			path: path.resolve(__dirname, 'dist/css'),
@@ -81,7 +85,7 @@ module.exports = [
 			assetModuleFilename: '../asset/[name][ext]',
 		},
 		optimization: {
-			minimize: true,
+			minimize: !isDev,
 			minimizer: [
 				new TerserJSPlugin({
 					terserOptions: {
@@ -135,7 +139,7 @@ module.exports = [
 		],
 	},
 	{
-		mode: 'production',
+		mode: isDev ? 'development' : 'production',
 		entry: {},
 		output: {
 			path: path.resolve(__dirname, 'dist'),
@@ -146,9 +150,19 @@ module.exports = [
 				patterns: [
 					{
 						from: 'tagify.(min.js|css)',
-						to: path.resolve(__dirname, 'dist/vendor'),
+						to: path.resolve(__dirname, 'dist/vendor/tagify'),
 						context: path.resolve(__dirname, 'node_modules/@yaireo/tagify/dist')
-					}
+					},
+					{
+						from: 'select2.min.css',
+						to: path.resolve(__dirname, 'dist/vendor/select2'),
+						context: path.resolve(__dirname, 'node_modules/select2/dist/css')
+					},
+					{
+						from: 'select2.min.js',
+						to: path.resolve(__dirname, 'dist/vendor/select2'),
+						context: path.resolve(__dirname, 'node_modules/select2/dist/js')
+					},
 				]
 			})
 		]

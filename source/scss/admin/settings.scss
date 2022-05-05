@@ -114,3 +114,13 @@ input.wppedia-switch-button {
 		padding: 0 6px 0 26px
 	}
 }
+
+.wppedia-select2 {
+	min-width: 350px;
+}
+
+@media (max-width: 480px) {
+	.wppedia-select2 {
+		width: 100%;
+	}
+}

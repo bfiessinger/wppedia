@@ -116,9 +116,9 @@ function wppedia_enqueue_admin_assets($hook) {
 	}
 
 	if ($is_edit) {
-		wp_register_style('tagify', WPPediaPluginUrl . 'dist/vendor/tagify.css', [], '4.0.5');
+		wp_register_style('tagify', WPPediaPluginUrl . 'dist/vendor/tagify/tagify.css', [], '4.12.0');
 		wp_enqueue_style('tagify');
-		wp_register_script('tagify', WPPediaPluginUrl . 'dist/vendor/tagify.min.js', [], '4.0.5', true);
+		wp_register_script('tagify', WPPediaPluginUrl . 'dist/vendor/tagify/tagify.min.js', [], '4.12.0', true);
 
 		$edit_script_asset_file = WPPediaPluginDir . 'dist/js/edit.bundle.asset.php';
 		$edit_script_asset = (file_exists($edit_script_asset_file)) ? require($edit_script_asset_file) : ['dependencies' => [], 'version' => filemtime($edit_script_asset_file)];
@@ -126,11 +126,10 @@ function wppedia_enqueue_admin_assets($hook) {
 	}
 
 	if ($is_option) {
-		wp_enqueue_script("jquery");
-		wp_enqueue_script("jquery-ui-core");
-		wp_enqueue_script("jquery-ui-tabs");
+		wp_register_script('wppedia_option_tabs', '', ['jquery', 'jquery-ui-core', 'jquery-ui-tabs'], null, true);
+		wp_enqueue_script('wppedia_option_tabs');
 		wp_add_inline_script(
-			'jquery-ui-tabs',
+			'wppedia_option_tabs',
 			'jQuery("document").ready(function($) {
 				var wppedia_tabs = $(".wppedia-settings-tabs");
 				var wppedia_tabs_anchor = wppedia_tabs.find(".wppedia-settings-tabs-wrapper > li > a");
@@ -147,6 +146,14 @@ function wppedia_enqueue_admin_assets($hook) {
 				});
 			});'
 		);
+
+		wp_register_style('select2', WPPediaPluginUrl . 'dist/vendor/select2/select2.min.css', [], '4.0.13');
+		wp_enqueue_style('select2');
+		wp_register_script('select2', WPPediaPluginUrl . 'dist/vendor/select2/select2.min.js', [], '4.0.13', true);
+
+		$options_script_asset_file = WPPediaPluginDir . 'dist/js/options.bundle.asset.php';
+		$options_script_asset = (file_exists($options_script_asset_file)) ? require($options_script_asset_file) : ['dependencies' => [], 'version' => filemtime($options_script_asset_file)];
+		wp_enqueue_script('wppedia_options', WPPediaPluginUrl . 'dist/js/options.bundle.js', array_merge($options_script_asset['dependencies'], ['select2']), wppedia_get_version(), null, true);
 	}
 
 	if ($is_edit || $is_option) {

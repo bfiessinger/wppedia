@@ -111,11 +111,25 @@ trait Has_Admin_Fields {
 	 * @since 1.3.0
 	 */
 	protected function select($field) {
+		if (isset($field['args']['remote_options']) && $remote_options = $field['args']['remote_options']) {
+			printf(
+				'<select id="%s" name="%s" %s %s data-remote-options="%s">%s</select>',
+				$this->field_id($field),
+				$this->field_name($field),
+				$this->field_class_string($field, ['wppedia-select2'], true),
+				$this->restrict_pro($field),
+				esc_attr(json_encode($remote_options)),
+				'<option value="' . $this->value($field) . '">' . $remote_options['selected_label'] . '</option>'
+			);
+
+			return;
+		}
+
 		printf(
 			'<select id="%s" name="%s" %s %s>%s</select>',
 			$this->field_id($field),
 			$this->field_name($field),
-			$this->field_class_string($field, [], true),
+			$this->field_class_string($field, ['wppedia-select2'], true),
 			$this->restrict_pro($field),
 			$this->select_options($field)
 		);

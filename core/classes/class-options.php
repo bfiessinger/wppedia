@@ -274,7 +274,16 @@ class Options {
 				'label'								=> _x('Glossary frontpage', 'options', 'wppedia'),
 				'type'								=> 'select',
 				'desc'								=> sprintf(_x('By default, WPPedia creates a simple archive page using the slug defined at %s. Using this option allows you to have more control over the frontpage of your glossary.', 'options', 'wppedia'), '<a href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Permalinks') . '</a>'),
-				'options'							=> $this->dropdown_pages(true),
+				// 'options'							=> $this->dropdown_pages(true),
+				'remote_options'					=> [
+					'type' => 'WP_API',
+					'endpoint' => get_rest_url(null, 'wp/v2/pages'),
+					'selected_label' => Options::get_option('general', 'front_page_id') ? get_the_title(Options::get_option('general', 'front_page_id')) : __('Select a page', 'wppedia'),
+					'args' => [
+						'status' => 'publish',
+						'per_page' => 20
+					],
+				],
 				'settings_section'					=> 'general',
 				'settings_page'						=> 'wppedia_settings',
 				'sanitize_callback'					=> [ $this, 'sanitize_int' ],
@@ -511,6 +520,10 @@ class Options {
 		// Options field data
 		if (isset($field['options']) && !empty($field['options'])) {
 			$args['options'] = $field['options'];
+		}
+
+		if (isset($field['remote_options']) &&  !empty($field['remote_options'])) {
+			$args['remote_options'] = $field['remote_options'];
 		}
 
 		// Arbitrary title field data
