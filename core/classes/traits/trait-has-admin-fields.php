@@ -19,29 +19,39 @@ trait Has_Admin_Fields {
 	 * @since 1.3.0
 	 */
 	public function field($field) {
+		$output = null;
+
 		switch ($field['type']) {
 			case 'number':
 			case 'date':
-				$this->input_minmax($field);
+				$output = $this->input_minmax($field);
 				break;
 			case 'textarea':
-				$this->textarea($field);
+				$output = $this->textarea($field);
 				break;
 			case 'select':
-				$this->select($field);
+				$output = $this->select($field);
 				break;
 			case 'checkbox':
 			case 'switch':
-				$this->checkbox($field);
+				$output = $this->checkbox($field);
 				break;
 			case 'checkbox-group':
-				$this->checkbox_group($field);
+				$output = $this->checkbox_group($field);
 				break;
 			case 'title':
-				$this->title($field);
+				$output = $this->title($field);
 				break;
 			default:
-				$this->input($field);
+				$output = $this->input($field);
+		}
+
+		if ($output) {
+			echo $output;
+
+			if ($this->is_restricted_pro($field)) {
+				echo '<input type="hidden" name="' . $this->field_name($field) . '" value="' . esc_attr(serialize($field['args']['default'])) . '" />';
+			}
 		}
 
 		// Show field description
@@ -74,7 +84,7 @@ trait Has_Admin_Fields {
 	 * @since 1.3.0
 	 */
 	protected function input_minmax($field) {
-		printf(
+		return sprintf(
 			'<input class="regular-text %s" id="%s" %s %s name="%s" %s type="%s" value="%s" %s>',
 			$this->field_class_string($field),
 			$this->field_id($field),
@@ -94,7 +104,7 @@ trait Has_Admin_Fields {
 	 * @since 1.3.0
 	 */
 	protected function textarea($field) {
-		printf(
+		return sprintf(
 			'<textarea class="regular-text %s" id="%s" name="%s" rows="%d" %s>%s</textarea>',
 			$this->field_class_string($field, [], true),
 			$this->field_id($field),
@@ -113,7 +123,7 @@ trait Has_Admin_Fields {
 	protected function select($field) {
 		if (isset($field['args']['remote_options']) && is_array($field['args']['remote_options'])) {
 			$remote_options = $field['args']['remote_options'];
-			printf(
+			return sprintf(
 				'<select id="%s" name="%s" %s %s data-remote-options="%s">%s</select>',
 				$this->field_id($field),
 				$this->field_name($field),
@@ -122,11 +132,9 @@ trait Has_Admin_Fields {
 				esc_attr(json_encode($remote_options)),
 				'<option value="' . $this->value($field) . '">' . $remote_options['selected_label'] . '</option>'
 			);
-
-			return;
 		}
 
-		printf(
+		return sprintf(
 			'<select id="%s" name="%s" %s %s>%s</select>',
 			$this->field_id($field),
 			$this->field_name($field),
@@ -180,7 +188,7 @@ trait Has_Admin_Fields {
 			$additionalClasses[] = 'wppedia-switch-button';
 		}
 
-		printf(
+		$html = sprintf(
 			'<input %s %s id="%s" name="%s" type="checkbox" value="1" %s>',
 			$this->field_class_string($field, $additionalClasses, true),
 			checked($this->value($field), true, false),
@@ -190,13 +198,15 @@ trait Has_Admin_Fields {
 		);
 
 		if ($is_switch) {
-			printf(
+			$html .= sprintf(
 				'<label for="%s" class="wppedia-switch-label" data-on="%s" data-off="%s"></label>',
 				$this->field_id($field),
 				_x('Yes', 'options', 'wppedia'),
 				_x('No', 'options', 'wppedia')
 			);
 		}
+
+		return $html;
 	}
 
 	/**
@@ -205,19 +215,22 @@ trait Has_Admin_Fields {
 	 * @since 1.3.0
 	 */
 	protected function checkbox_group($field) {
+		$html = '';
 		foreach ($field['args']['options'] as $option => $label ) {
 			$name = $this->field_name($field) . '[' . $option . ']';
-			echo '<label class="wppedia-checkbox-group-item">';
-			$this->checkbox(
+
+			$html .= '<label class="wppedia-checkbox-group-item">';
+			$html .= $this->checkbox(
 				array_merge($field, [
 					'pid' => $field['id'],
 					'id' => $option,
 					'name' => $name
 				])
 			);
-			echo '<span>' . $label . '</span>';
-			echo '</label>';
+			$html .= '<span>' . $label . '</span>';
+			$html .= '</label>';
 		}
+		return $html;
 	}
 
 	/**
@@ -237,13 +250,12 @@ trait Has_Admin_Fields {
 
 		$heading_lvl = (!isset($field['args']['heading_level']) || !in_array($field['args']['heading_level'], $allowed_h_tags)) ? 'h2' : $field['args']['heading_level'];
 
-		printf(
-			'<%s>%s</%s>',
+		return sprintf(
+			'<%s>%s</%s><hr>',
 			$heading_lvl,
 			$field['args']['label'],
 			$heading_lvl
 		);
-		echo '<hr>';
 	}
 
 	private function field_group($field) {
