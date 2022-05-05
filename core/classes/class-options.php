@@ -513,8 +513,9 @@ class Options {
 			$args['desc'] = $field['desc'];
 		}
 
-		if (isset($field['default'])) {
-			$args['default'] = $field['default'];
+		$args['default'] = isset($field['default']) ? $field['default'] : $this->get_option_defaults($this->field_group($field), $field['id']);
+		if (is_array($args['default'])) {
+			$args['default'] = serialize($args['default']);
 		}
 
 		// Options field data
