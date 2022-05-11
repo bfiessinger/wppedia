@@ -5,16 +5,38 @@
 - the static frontpage now acts like a glossary archive with additional content
 - added a page title to the glossary archive
 - added a page title to glossary taxonomies
-- added a content section to glossary taxonomies 
+- added a content section to glossary taxonomies
+- added a customizer section for WPPedia
 
 ### Bug fixes
 - fixed a bug where automated crosslinking was not working if the link phrase was paranthesed
+- removed typecasting on class properties to avoid fatal errors prior php 7.4
+- fixed a bug where it was unable for theme and plugin developers to update WPPedia's inline styles
+- fixed a bug where the page title was wrong for the glossary archive
 
 ### Enhancements
-- implemented php-scoper for composer dependencies to avoid namespace issues
+- implemented php-scoper for composer dependencies to avoid namespace issues with other themes / plugins
+- [⚠️ BREAKING] improvements to wp_options, options are now stored as serialized data to avoid multiple requests to the WordPress database
+- minor styling improvements
+- enhanced WPPedia database upgrade logic
+- implemented select2 for select menus in the admin area
+
+### Template Updates
+- The following templates have been updated:
+ - `archive.php`
+ - `nav/char-navigation.php`
+
+### Theme Compatibility
+- enhanced support for the Twenty Twenty One theme
+
+### Translations
+- added translations for the following languages:
+ - German
 
 ### Code Quality
 - updated comments
+- fixed several code style issues
+- strict use of [wpcs naming conventions](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/#naming-conventions) for file names
 
 ## 1.2.3
 ### Bug fixes
