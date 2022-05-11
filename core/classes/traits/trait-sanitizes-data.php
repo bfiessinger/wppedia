@@ -78,7 +78,33 @@ trait Sanitizes_Data {
 			}
 		}
 
-		return array_map('sanitize_text_field', $input);
+		/**
+		 * Loop over the array and sanitize values based on
+		 * data type
+		 */
+		foreach ( $input as $key => $value ) {
+
+			/**
+			 * If the value is an array, then recursively call this function
+			 * to sanitize the values
+			 */
+			if ( is_array( $value ) ) {
+				$input[ $key ] = $this->sanitize_array( $value );
+			} else if ( is_bool( $value ) ) {
+				$input[ $key ] = $this->sanitize_bool( $value );
+			} else if ( is_int( $value ) ) {
+				$input[ $key ] = $this->sanitize_int( $value );
+			} else if ( is_float( $value ) ) {
+				$input[ $key ] = $this->sanitize_float( $value );
+			} else if ( is_null( $value ) ) {
+				$input[ $key ] = null;
+			} else {
+				$input[ $key ] = sanitize_text_field( $value );
+			}
+
+		}
+
+		return $input;
 	}
 
 	/**
