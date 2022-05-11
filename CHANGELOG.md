@@ -23,15 +23,15 @@
 
 ### Template Updates
 - The following templates have been updated:
- - `archive.php`
- - `nav/char-navigation.php`
+	- `archive.php`
+	- `nav/char-navigation.php`
 
 ### Theme Compatibility
 - enhanced support for the Twenty Twenty One theme
 
 ### Translations
 - added translations for the following languages:
- - German
+	- German
 
 ### Code Quality
 - updated comments
