@@ -26,6 +26,7 @@ use WPPedia\Template;
 use WPPedia\Rest_Controller;
 use WPPedia\WP_Query_Setup;
 use WPPedia\Admin;
+use WPPedia\Notification_Center;
 use WPPedia\Options;
 use WPPedia\Post_Meta;
 use WPPedia\Customizer;
@@ -38,9 +39,6 @@ use WPPedia\Modules\Tooltip;
 
 // Compatibility
 use WPPedia\Compatibilities\Compatibility_Collection;
-
-// Vendor
-use WPPedia_Vendor\MyThemeShop\Notification_Center;
 
 class WPPedia {
 
@@ -183,7 +181,7 @@ class WPPedia {
 		$this->container['template_debug_mode'] = WPPedia_TEMPLATE_DEBUG_MODE;
 		$this->container['plugin_dir'] = WPPediaPluginDir;
 		$this->container['plugin_url'] = WPPediaPluginUrl;
-		$this->container['notifications'] = new Notification_Center('wppedia_notifications');
+		$this->container['notifications'] = new Notification_Center( 'wppedia_notifications' );
 
 		/**
 		 * Instantiate Template Utils

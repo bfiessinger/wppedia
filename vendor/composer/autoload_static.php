@@ -57,6 +57,7 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
         'WPPedia\\Inline_Style_Collector' => __DIR__ . '/../..' . '/core/classes/class-inline-style-collector.php',
         'WPPedia\\Modules\\Cross_Link_Content' => __DIR__ . '/../..' . '/core/classes/modules/class-cross-link-content.php',
         'WPPedia\\Modules\\Tooltip' => __DIR__ . '/../..' . '/core/classes/modules/class-tooltip.php',
+        'WPPedia\\Notification_Center' => __DIR__ . '/../..' . '/core/classes/class-notification-center.php',
         'WPPedia\\Options' => __DIR__ . '/../..' . '/core/classes/class-options.php',
         'WPPedia\\Post_Meta' => __DIR__ . '/../..' . '/core/classes/class-post-meta.php',
         'WPPedia\\Post_Type' => __DIR__ . '/../..' . '/core/classes/class-post-type.php',

@@ -42,6 +42,7 @@ return array(
     'WPPedia\\Inline_Style_Collector' => $baseDir . '/core/classes/class-inline-style-collector.php',
     'WPPedia\\Modules\\Cross_Link_Content' => $baseDir . '/core/classes/modules/class-cross-link-content.php',
     'WPPedia\\Modules\\Tooltip' => $baseDir . '/core/classes/modules/class-tooltip.php',
+    'WPPedia\\Notification_Center' => $baseDir . '/core/classes/class-notification-center.php',
     'WPPedia\\Options' => $baseDir . '/core/classes/class-options.php',
     'WPPedia\\Post_Meta' => $baseDir . '/core/classes/class-post-meta.php',
     'WPPedia\\Post_Type' => $baseDir . '/core/classes/class-post-type.php',

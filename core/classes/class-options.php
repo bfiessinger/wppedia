@@ -780,7 +780,7 @@ class Options {
 	function update_option_wppedia_settings($old_value, $new_value, $option_name) {
 		// unset `frontpage_slug_not_matching_permalink_settings` notification
 		if ( $old_value['general']['front_page_id'] != $new_value['general']['front_page_id'] ) {
-			wppedia_undismiss_notification( 'frontpage_slug_not_matching_permalink_settings' );
+			WPPedia()->notifications->undismiss_notification( 'frontpage_slug_not_matching_permalink_settings' );
 		}
 	}
 
@@ -878,6 +878,10 @@ class Options {
 					self::update_option( 'permalinks', 'base', $sanitized_permalink_base );
 				} else if ('' === $sanitized_permalink_base) {
 					self::remove_option( 'permalinks', 'base' );
+				}
+
+				if ($permalink_base != $sanitized_permalink_base) {
+					WPPedia()->notifications->undismiss_notification( 'frontpage_slug_not_matching_permalink_settings' );
 				}
 			}
 

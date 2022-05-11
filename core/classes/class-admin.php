@@ -37,7 +37,7 @@ class Admin {
 		add_action( 'admin_notices', [ $this, 'frontpage_slug_not_matching_permalink_settings_notice' ] );
 
 		// dismiss notice handler
-		add_action( 'wp_helpers_notification_dismissed', [ $this, 'dismiss_admin_notification' ], 10, 2 );
+		add_action( 'wp_helpers_notification_dismissed', [ WPPedia()->notifications, 'dismiss_notification' ], 10, 2 );
 	}
 
 	/**
@@ -219,36 +219,16 @@ class Admin {
 					<a class="button" href="' . admin_url('/options-permalink.php') . '" target="_blank">' . __('Manage permalinks') . '</a>
 				</p>';
 
-			if (!wppedia_notification_is_dismissed('frontpage_slug_not_matching_permalink_settings')) {
+			if (!WPPedia()->notifications->is_dismissed( 'frontpage_slug_not_matching_permalink_settings' )) {
 				WPPedia()->notifications->remove_by_id('frontpage_slug_not_matching_permalink_settings');
 				WPPedia()->notifications->add($notification_content, [
 					'id' => 'frontpage_slug_not_matching_permalink_settings',
 					'type' => 'warning',
-					'dismiss_until' => '+1 week',
+					'dismiss_until' => 'never_expire',
 				]);
 			}
 		} else {
 			WPPedia()->notifications->remove_by_id('frontpage_slug_not_matching_permalink_settings');
-		}
-	}
-
-	function dismiss_admin_notification($notification_id, $notification) {
-		$dismiss_until = $notification->args('dismiss_until');
-		if ($dismiss_until && '' !== $dismiss_until) {
-			$dismiss_until = strtotime($dismiss_until);
-			if ($dismiss_until > time()) {
-				$dismissed_notifications = get_option('wppedia_dismissed_notifications', []);
-
-				// remove all notifications with a dismiss_until date in the past
-				foreach ($dismissed_notifications as $notification_id => $dismissed_until) {
-					if ($dismissed_until < time()) {
-						unset($dismissed_notifications[$notification_id]);
-					}
-				}
-
-				$dismissed_notifications[$notification_id] = $dismiss_until;
-				update_option( 'wppedia_dismissed_notifications', $dismissed_notifications );
-			}
 		}
 	}
 }

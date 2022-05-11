@@ -29,25 +29,30 @@ function wppedia_option_exists($name, $site_wide = false) {
 	return $wpdb->query("SELECT * FROM ". ($site_wide ? $wpdb->base_prefix : $wpdb->prefix). "options WHERE option_name ='$name' LIMIT 1");
 }
 
-function wppedia_notification_is_dismissed($notification_id) {
-	$dismissed_notifications = get_option('wppedia_dismissed_notifications', []);
-	$is_dismissed = false;
-
-	foreach ($dismissed_notifications as $dismissed_id => $dismissed_until) {
-		if ($dismissed_id == $notification_id && $dismissed_until > time()) {
-			$is_dismissed = true;
-			break;
-		}
-	}
-
-	return $is_dismissed;
+/**
+ * Check if a notifications is currently dismissed
+ *
+ * @param string $notification_id Notification ID.
+ *
+ * @return bool
+ *
+ * @since 1.3.0
+ */
+function wppedia_notification_is_dismissed( $notification_id ) {
+	return WPPedia()->notifications->is_dismissed( $notification_id );
 }
 
-function wppedia_undismiss_notification($notification_id) {
-	$dismissed_notifications = get_option('wppedia_dismissed_notifications', []);
-	unset($dismissed_notifications[$notification_id]);
-
-	update_option('wppedia_dismissed_notifications', $dismissed_notifications);
+/**
+ * Manually undismiss a notification
+ *
+ * @param string $notification_id Notification ID.
+ *
+ * @return void
+ *
+ * @since 1.3.0
+ */
+function wppedia_undismiss_notification( $notification_id ) {
+	WPPedia()->notifications->undismiss_notification( $notification_id );
 }
 
 /**
