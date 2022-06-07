@@ -6,6 +6,7 @@
 #wppedia_searchform {
 	position: relative;
 	display: flex;
+    align-items: baseline;
 	flex-wrap: nowrap;
 	margin-bottom: 1.5rem;
 	.search-field {
