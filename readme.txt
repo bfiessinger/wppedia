@@ -154,6 +154,7 @@ or
 
 ##### Bug fixes
 - fixed a bug where automated crosslinking was not working if the link phrase was paranthesed
+- fixed a bug where automated crosslinking was not working if the link phrase was in quotes
 - removed typecasting on class properties to avoid fatal errors prior php 7.4
 - fixed a bug where it was unable for theme and plugin developers to update WPPedia's inline styles
 - fixed a bug where the page title was wrong for the glossary archive
