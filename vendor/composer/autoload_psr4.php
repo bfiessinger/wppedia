@@ -6,5 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'MyThemeShop\\Helpers\\' => array($vendorDir . '/mythemeshop/wordpress-helpers/src'),
 );

@@ -6,49 +6,11 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
 {
-    public static $prefixLengthsPsr4 = array (
-        'M' => 
-        array (
-            'MyThemeShop\\Helpers\\' => 20,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'MyThemeShop\\Helpers\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src',
-        ),
-    );
-
     public static $classMap = array (
         'ComposerAutoloaderInit94199a7f865ba6d053aa81a09153f9ff' => __DIR__ . '/../..' . '/3rd-party/vendor/composer/autoload_real.php',
         'Composer\\Autoload\\ClassLoader' => __DIR__ . '/../..' . '/3rd-party/vendor/composer/ClassLoader.php',
         'Composer\\Autoload\\ComposerStaticInit94199a7f865ba6d053aa81a09153f9ff' => __DIR__ . '/../..' . '/3rd-party/vendor/composer/autoload_static.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'MyThemeShop\\Admin\\List_Table' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/admin/class-list-table.php',
-        'MyThemeShop\\Admin\\Page' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/admin/class-page.php',
-        'MyThemeShop\\Database\\Clauses' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-clauses.php',
-        'MyThemeShop\\Database\\Database' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-database.php',
-        'MyThemeShop\\Database\\Escape' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-escape.php',
-        'MyThemeShop\\Database\\GroupBy' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-groupby.php',
-        'MyThemeShop\\Database\\Joins' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-joins.php',
-        'MyThemeShop\\Database\\OrderBy' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-orderby.php',
-        'MyThemeShop\\Database\\Query_Builder' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-query-builder.php',
-        'MyThemeShop\\Database\\Select' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-select.php',
-        'MyThemeShop\\Database\\Translate' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-translate.php',
-        'MyThemeShop\\Database\\Where' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/database/class-where.php',
-        'MyThemeShop\\Helpers\\Arr' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-arr.php',
-        'MyThemeShop\\Helpers\\Attachment' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-attachment.php',
-        'MyThemeShop\\Helpers\\Conditional' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-conditional.php',
-        'MyThemeShop\\Helpers\\DB' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-db.php',
-        'MyThemeShop\\Helpers\\HTML' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-html.php',
-        'MyThemeShop\\Helpers\\Param' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-param.php',
-        'MyThemeShop\\Helpers\\Str' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-str.php',
-        'MyThemeShop\\Helpers\\Url' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-url.php',
-        'MyThemeShop\\Helpers\\WordPress' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/helpers/class-wordpress.php',
-        'MyThemeShop\\Json_Manager' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/class-json-manager.php',
-        'MyThemeShop\\Notification' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/class-notification.php',
-        'MyThemeShop\\Notification_Center' => __DIR__ . '/..' . '/mythemeshop/wordpress-helpers/src/class-notification-center.php',
         'WPPedia\\Admin' => __DIR__ . '/../..' . '/core/classes/class-admin.php',
         'WPPedia\\Compatibilities\\Compatibility_Collection' => __DIR__ . '/../..' . '/core/classes/compatibilities/class-compatibility-collection.php',
         'WPPedia\\Compatibilities\\Compatibility_Loader' => __DIR__ . '/../..' . '/core/classes/compatibilities/class-compatibility-loader.php',
@@ -99,8 +61,6 @@ class ComposerStaticInit4e80afd48a4b68841472432bfedaa227
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4e80afd48a4b68841472432bfedaa227::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4e80afd48a4b68841472432bfedaa227::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit4e80afd48a4b68841472432bfedaa227::$classMap;
 
         }, null, ClassLoader::class);
