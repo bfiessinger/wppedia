@@ -75,55 +75,55 @@ class Cross_Link_Content {
 
 	}
 
-  /**
-   * Get Posts available for crosslink content
-   *
-   * @since 1.1.0
-   */
-  public function get_crosslink_posts() {
+    /**
+     * Get Posts available for crosslink content
+     *
+     * @since 1.1.0
+     */
+    public function get_crosslink_posts() {
 
-    // Query all available posts
-    $posts_query = wppedia_get_posts([
-      'post_type'     => $this->post_types,
-      'post_status'   => 'publish',
-      'post__not_in'  => [get_the_ID()]
-    ]);
+        // Query all available posts
+        $posts_query = wppedia_get_posts([
+        'post_type'     => $this->post_types,
+        'post_status'   => 'publish',
+        'post__not_in'  => [get_the_ID()]
+        ]);
 
-    // Get Posts
-    $posts = $posts_query->posts;
+        // Get Posts
+        $posts = $posts_query->posts;
 
-    // Reduce to the necessary parts
-    $post_data = array_map(function ($p) {
+        // Reduce to the necessary parts
+        $post_data = array_map(function ($p) {
 
-			$data = [];
+            $data = [];
 
-			$post_id = $p->ID;
+            $post_id = $p->ID;
 
-      $post = new \stdClass();
-      $post->ID = $post_id;
-      $post->title = $p->post_title;
+            $post = new \stdClass();
+            $post->ID = $post_id;
+            $post->title = $p->post_title;
 
-			array_push($data, $post);
+            array_push($data, $post);
 
-			// Check alternative post terms and add them to the posts array as individual posts
-			$alternative_terms = wppedia_get_post_alternative_terms($post_id);
-			if (!empty($alternative_terms)) {
-				foreach($alternative_terms as $at) {
-					$alt_post = new \stdClass();
-					$alt_post->ID = $post_id;
-					$alt_post->title = $at;
+            // Check alternative post terms and add them to the posts array as individual posts
+            $alternative_terms = wppedia_get_post_alternative_terms($post_id);
+            if (!empty($alternative_terms)) {
+                foreach($alternative_terms as $at) {
+                    $alt_post = new \stdClass();
+                    $alt_post->ID = $post_id;
+                    $alt_post->title = $at;
 
-					array_push($data, $alt_post);
-				}
-			}
+                    array_push($data, $alt_post);
+                }
+            }
 
-      return $data;
+            return $data;
 
-    }, $posts);
+        }, $posts);
 
-    return array_reduce($post_data, 'array_merge', []);
+        return array_reduce($post_data, 'array_merge', []);
 
-  }
+    }
 
 	/**
 	 * Prepare the link Phrase
