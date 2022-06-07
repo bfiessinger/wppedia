@@ -1,6 +1,6 @@
 === Glossary by WPPedia - Best Glossary plugin for WordPress ===
 Contributors: steinrein, bastianfiessinger, wppedia
-Tested up to: 5.9.3
+Tested up to: 6.0.0
 Stable tag: 1.3.0
 Tags: glossary, encyclopedia, wiki, lexicon, vocabulary, dictionary, tooltip, clavis
 License: GPLv3 or later
