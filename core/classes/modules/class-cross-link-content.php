@@ -222,6 +222,8 @@ class Cross_Link_Content {
 				'/' . $link_phrase . '/';
 			$regex .= $regex_flags;
 
+            $content_rendered = do_shortcode($node->wholeText);
+
 			$replaced = preg_replace_callback( $regex, function( $match ) use ( $post ) {
 
 				if ( ! empty( $match[0] ) ) {
@@ -232,15 +234,15 @@ class Cross_Link_Content {
 
 				}
 
-			}, htmlspecialchars($node->wholeText, ENT_COMPAT));
+			}, $content_rendered );
 
 			if (!empty($replaced)) {
 				$newNode = $dom->createDocumentFragment();
-				$replacedShortcodes = strip_shortcodes($replaced);
-				$result = $newNode->appendXML('<![CDATA[' . $replacedShortcodes . ']]>');
+				$content_without_shortcodes = strip_shortcodes($replaced);
+				$result = $newNode->appendXML('<![CDATA[' . $content_without_shortcodes . ']]>');
 
 				if ($result !== false) {
-						$node->parentNode->replaceChild($newNode, $node);
+					$node->parentNode->replaceChild($newNode, $node);
 				}
 			}
 
