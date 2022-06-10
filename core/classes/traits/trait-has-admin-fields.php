@@ -183,7 +183,8 @@ trait Has_Admin_Fields {
 		}
 
 		$html = sprintf(
-			'<input %s %s id="%s" name="%s" type="checkbox" value="1">',
+            '<input type="hidden" name="%4$s" value="0">' .
+			'<input %1$s %2$s id="%3$s" name="%4$s" type="checkbox" value="1">',
 			$this->field_class_string($field, $additionalClasses, true),
 			checked($this->value($field), true, false),
 			$this->field_id($field),
