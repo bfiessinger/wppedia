@@ -26,10 +26,7 @@ $RECYCLE.BIN/
 /languages/*backup*
 
 # Composer directory
-/vendor/**
-!/vendor/composer
-!/vendor/composer/*
-!/vendor/autoload.php
+/vendor
 
 /3rd-party/*/
 !/3rd-party/vendor

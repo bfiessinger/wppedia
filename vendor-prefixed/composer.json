@@ -1,0 +1,9 @@
+{
+	"name": "wppedia/wppedia-vendor",
+    "autoload": {
+        "classmap": [
+            "../core/classes/",
+            "../vendor-prefixed/"
+        ]
+    }
+}
