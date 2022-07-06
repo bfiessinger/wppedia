@@ -28,13 +28,7 @@ class Cross_Link_Content {
 		if ( $prefer_single_words !== null )
 			$this->prefer_single_words = $prefer_single_words;
 
-		$this->post_types = maybe_unserialize(options::get_option('crosslinks', 'posttypes'));
-
-		// Set the main post type on the first place in the posttype array
-		if ( in_array( wppedia_get_post_type(), $this->post_types ) ) {
-			unset( $this->post_types[wppedia_get_post_type()] );
-			array_unshift( $this->post_types, wppedia_get_post_type() );
-		}
+		$this->post_types = [wppedia_get_post_type()];
 
 		if ( $require_full_words !== null )
 			$this->require_full_words = $require_full_words;
