@@ -8,7 +8,7 @@
 
 namespace WPPedia\Modules;
 
-use WPPedia\options;
+use WPPedia\Options;
 
 // Make sure this file runs only from within WordPress.
 defined( 'ABSPATH' ) or die();
