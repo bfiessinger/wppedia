@@ -182,9 +182,7 @@ class WPPedia {
 		$this->container['plugin_dir'] = WPPediaPluginDir;
 		$this->container['plugin_url'] = WPPediaPluginUrl;
 
-        if ( is_admin() ) {
-		    $this->container['notifications'] = new Notification_Center( 'wppedia_notifications' );
-        }
+        $this->container['notifications'] = new Notification_Center( 'wppedia_notifications' );
 
 		/**
 		 * Instantiate Template Utils
