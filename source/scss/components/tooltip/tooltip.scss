@@ -1,3 +1,6 @@
+@import '~tippy.js/themes/light';
+@import '~tippy.js/animations/shift-toward';
+
 .tippy-box[data-animation=fade][data-state=hidden] {
 	opacity: 0
 }
@@ -99,6 +102,3 @@
 .wppedia-tooltip-error {
 	padding: 1rem;
 }
-
-@import '~tippy.js/themes/light';
-@import '~tippy.js/animations/shift-toward';
