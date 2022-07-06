@@ -400,6 +400,7 @@ class Options {
 				'type'								=> 'checkbox-group',
 				'options'							=> $this->get_public_posttypes(),
 				'pro'								=> true,
+                'default'						    => [ wppedia_get_post_type() => true ],
 				'settings_section'					=> 'crosslinks',
 				'settings_page'						=> 'wppedia_settings',
 				'register_setting'					=> false,

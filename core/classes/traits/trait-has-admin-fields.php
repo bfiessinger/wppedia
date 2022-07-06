@@ -330,7 +330,9 @@ trait Has_Admin_Fields {
 			$value = maybe_unserialize(get_option('wppedia_settings'))[$this->field_group($field)][$field['id']];
 		} else if (get_option('wppedia_settings', false) && isset($field['pid']) && isset(maybe_unserialize(get_option('wppedia_settings'))[$this->field_group($field)][$field['pid']][$field['id']])) {
 			$value = maybe_unserialize(get_option('wppedia_settings'))[$this->field_group($field)][$field['pid']][$field['id']];
-		} else if ( isset( $field['args']['default'] ) ) {
+		} else if ( isset( $field['args']['default'] ) && isset($field['pid']) && isset(maybe_unserialize($field['args']['default'])[$field['id']]) ) {
+            $value = maybe_unserialize($field['args']['default'])[$field['id']];
+        } else if ( isset( $field['args']['default'] ) ) {
 			$value = $field['args']['default'];
 		} else {
 			return '';
