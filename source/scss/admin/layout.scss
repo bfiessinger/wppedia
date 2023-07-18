@@ -66,7 +66,7 @@
 			.ui-tabs-panel {
 				float: left;
 				width: calc(100% - #{$tab_width});
-				padding: 20px; 
+				padding: 20px;
 				border-radius: 0;
 				position: relative;
 				background: #FFF;
@@ -85,21 +85,43 @@
 	top: 32px;
 	display: flex;
 	align-items: center;
-	padding: 0 0 0 40px;
+	padding: 0 40px 0 40px;
+    width: calc(100% - 240px); // WordPress Menu width and padding
 	flex: 1 auto;
+    gap: 16px;
 	background: #fff;
 	font-weight: 600;
 	font-size: 14px;
 	text-transform: capitalize;
-	width: calc(100% - 160px);
 	.wppedia-logo {
 		padding: 1em 0;
 	}
 }
 
+.wppedia-header-links {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    .wppedia-link {
+        margin-left: 10px;
+    }
+}
+
+.wppedia-link-pill {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: hsl(0, 0%, 95%);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #333;
+}
+
 .folded {
 	.wppedia-layout-header {
-		width: calc(100% - 36px);
+		width: calc(100% - 116px); // WordPress Menu width and padding
 	}
 }
 

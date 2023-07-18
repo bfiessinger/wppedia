@@ -29,6 +29,7 @@ class Admin {
 
 		// Show WPPedia Logo in Settings
 		add_action( 'wppedia_admin_settings_page_header_content', [ $this, 'settings_header_logo' ], 10 );
+        add_action( 'wppedia_admin_settings_page_header_content', [ $this, 'settings_header_links' ], 20 );
 
 		// Add plugin action links
 		add_filter( 'plugin_action_links_' . WPPediaPluginBaseName, [ $this, 'plugin_action_links' ] );
@@ -187,6 +188,22 @@ class Admin {
 	function settings_header_logo() { ?>
 		<img class="wppedia-logo" src="<?php echo WPPediaPluginUrl; ?>assets/img/wppedia-logo.svg" width="60">
 	<?php }
+
+    function settings_header_links() {
+        $create_link = static function ( $url, $text, $target = '_blank' ) {
+            return '<a class="wppedia-link wppedia-link-pill" href="' . esc_url( $url ) . '" target="' . $target . '">' . esc_html( $text ) . '</a>';
+        };
+
+        $links = [
+            $create_link( get_wppedia_url(), 'Glossary Home' ),
+            $create_link( '#', 'Support' ),
+            $create_link( '#', 'Contact Us' ),
+            $create_link( '#', 'About Us' ),
+            $create_link( '#', 'Blog' ),
+        ];
+
+        echo '<div class="wppedia-header-links">' . implode( '', $links ) . '</div>';
+    }
 
 	/**
 	 * Add plugin action links on the plugins
