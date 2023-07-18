@@ -39,7 +39,7 @@ function wppedia_get_page_id(string $page) {
  * @since 1.1.0
  */
 function get_wppedia_url(array $query_args = []) {
-	$archive_url;
+	$archive_url = null;
 	if ( FALSE === wppedia_get_page_id('front') )
 		$archive_url = get_post_type_archive_link('wppedia_term');
 	else
