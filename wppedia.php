@@ -168,10 +168,7 @@ class WPPedia {
 	}
 
 	private function init() {
-
-		// psr4 Autoloader
-		$loader = require "vendor/autoload.php";
-		$loader->addPsr4('WPPedia\\', __DIR__);
+		require "vendor-prefixed/vendor/autoload.php";
 
 		$this->define_constants();
 

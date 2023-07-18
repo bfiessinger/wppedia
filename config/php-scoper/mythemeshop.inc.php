@@ -14,12 +14,12 @@ return [
 	 * For more see: https://github.com/humbug/php-scoper#finders-and-paths
 	 */
 	'finders'                    => [
-		Finder::create()->files()->in( 'vendor/mythemeshop/wordpress-helpers' )->name( 
-			[ 
+		Finder::create()->files()->in( 'vendor/mythemeshop/wordpress-helpers' )->name(
+			[
 				'*.php',
 				'LICENSE',
 				'composer.json'
-			] 
+			]
 		)
 	],
 

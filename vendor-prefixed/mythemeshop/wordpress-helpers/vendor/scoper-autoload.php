@@ -12,11 +12,6 @@ if (!class_exists('ComposerAutoloaderInit65a0993a63c917989297698ea08a315e', fals
 
 // Functions whitelisting. For more information see:
 // https://github.com/humbug/php-scoper/blob/master/README.md#functions-whitelisting
-if (!function_exists('is_network_admin')) {
-    function is_network_admin() {
-        return \WPPedia_Vendor\is_network_admin(...func_get_args());
-    }
-}
 if (!function_exists('absint')) {
     function absint() {
         return \WPPedia_Vendor\absint(...func_get_args());
@@ -45,6 +40,11 @@ if (!function_exists('is_plugin_active')) {
 if (!function_exists('is_woocommerce')) {
     function is_woocommerce() {
         return \WPPedia_Vendor\is_woocommerce(...func_get_args());
+    }
+}
+if (!function_exists('is_network_admin')) {
+    function is_network_admin() {
+        return \WPPedia_Vendor\is_network_admin(...func_get_args());
     }
 }
 
