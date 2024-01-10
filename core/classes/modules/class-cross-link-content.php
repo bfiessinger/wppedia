@@ -46,12 +46,12 @@ class Cross_Link_Content {
 	/**
 	 * Helper function to sort post titles by length
 	 *
-	 * @param stdClass $posts - self generated post array
+	 * @param array $posts - self generated post array
 	 * @param bool $prefer_single_words - Whether to check for single words or phrases first
 	 *
 	 * @since 1.0.0
 	 */
-	private function sort_post_titles( $posts, bool $prefer_single_words ) {
+	private function sort_post_titles( array $posts, bool $prefer_single_words ) {
 
 		usort($posts, function($a, $b) use ( $prefer_single_words ) {
 
@@ -171,7 +171,7 @@ class Cross_Link_Content {
 	 * Parse post content as XML and return a new version of the_content
 	 * with all crosslinks applied.
 	 *
-	 * @since 1.1.3
+	 * @since 1.4.0
 	 */
 	public function parse_content_xml( $content, $link_phrase, $post ) {
 
@@ -207,6 +207,12 @@ class Cross_Link_Content {
 		foreach ( $ignore_tags as $tag ) {
 			$query .= '[not(ancestor::' . $tag . ')]';
 		}
+
+        $ignore_classes = apply_filters( 'wppedia_crosslink_ignored_classes', [] );
+        $query .= $this->generateQueryPart($ignore_classes, 'class');
+
+        $ignore_ids = apply_filters( 'wppedia_crosslink_ignored_ids', [] );
+        $query .= $this->generateQueryPart($ignore_ids, 'id');
 
 		foreach( $xpath->query($query) as $node ) {
 
@@ -265,6 +271,28 @@ class Cross_Link_Content {
 		return $content;
 
 	}
+
+    /**
+     * Generate query part for crosslink content
+     *
+     * @param $items
+     * @param $attribute
+     *
+     * @since 1.1.3
+     *
+     * @return string
+     */
+    protected function generateQueryPart($items, $attribute) {
+        if (empty($items)) {
+            return '';
+        }
+
+        $queryPart = '';
+        foreach ($items as $item) {
+            $queryPart .= '[not(ancestor::*[contains(concat(" ", normalize-space(@' . $attribute . '), " "), " ' . $item . ' ")])]';
+        }
+        return $queryPart;
+    }
 
 	/**
 	 * Modify Post Content
