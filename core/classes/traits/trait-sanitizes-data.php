@@ -59,53 +59,67 @@ trait Sanitizes_Data {
 	 *
 	 * @return array
 	 *
-	 * @since 1.3.0
+	 * @since 1.4.0
 	 */
-	function sanitize_array($input) {
-		$orig_input = $input;
+    function sanitize_array($input) {
+        $input = $this->to_array($input);
+        foreach ($input as $key => $value) {
+            $input[$key] = $this->sanitize_array_value($value);
+        }
+        return $input;
+    }
 
-		/**
-		 * try to make input an array if it is not
-		 * use unserialize, if it fails, then use json_decode and finally explode
-		 */
-		if ( ! is_array( $input ) ) {
-			$input = @unserialize( $orig_input );
-			if ( ! is_array( $input ) ) {
-				$input = json_decode( $orig_input, true );
-				if ( ! is_array( $input ) ) {
-					$input = explode( ',', $orig_input );
-				}
-			}
-		}
+    /**
+     * Convert input to array
+     *
+     * @param mixed $input - input value
+     *
+     * @return array
+     *
+     * @since 1.4.0
+     */
+    private function to_array($input) {
+        if (is_array($input)) {
+            return $input;
+        }
 
-		/**
-		 * Loop over the array and sanitize values based on
-		 * data type
-		 */
-		foreach ( $input as $key => $value ) {
+        $unserialized = @unserialize($input);
+        if (is_array($unserialized)) {
+            return $unserialized;
+        }
 
-			/**
-			 * If the value is an array, then recursively call this function
-			 * to sanitize the values
-			 */
-			if ( is_array( $value ) ) {
-				$input[ $key ] = $this->sanitize_array( $value );
-			} else if ( is_bool( $value ) ) {
-				$input[ $key ] = $this->sanitize_bool( $value );
-			} else if ( is_int( $value ) ) {
-				$input[ $key ] = $this->sanitize_int( $value );
-			} else if ( is_float( $value ) ) {
-				$input[ $key ] = $this->sanitize_float( $value );
-			} else if ( is_null( $value ) ) {
-				$input[ $key ] = null;
-			} else {
-				$input[ $key ] = sanitize_text_field( $value );
-			}
+        $jsonDecoded = json_decode($input, true);
+        if (is_array($jsonDecoded)) {
+            return $jsonDecoded;
+        }
 
-		}
+        return explode(',', $input);
+    }
 
-		return $input;
-	}
+    /**
+     * Sanitize single value of an array
+     *
+     * @param mixed $value - input value
+     *
+     * @return mixed
+     *
+     * @since 1.4.0
+     */
+    private function sanitize_array_value($value) {
+        if (is_array($value)) {
+            return $this->sanitize_array($value);
+        } elseif (is_bool($value)) {
+            return $this->sanitize_bool($value);
+        } elseif (is_int($value)) {
+            return $this->sanitize_int($value);
+        } elseif (is_float($value)) {
+            return $this->sanitize_float($value);
+        } elseif (is_null($value)) {
+            return null;
+        } else {
+            return sanitize_text_field($value);
+        }
+    }
 
 	/**
 	 * Sanitize permalink base option
