@@ -200,7 +200,8 @@ class Cross_Link_Content {
 			'h4',
 			'h5',
 			'h6',
-			'textarea'
+			'textarea',
+            'select'
 		] );
 
 		$query = '//text()';
