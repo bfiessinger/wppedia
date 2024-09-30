@@ -78,9 +78,9 @@ class Cross_Link_Content {
 
         // Query all available posts
         $posts_query = wppedia_get_posts([
-        'post_type'     => $this->post_types,
-        'post_status'   => 'publish',
-        'post__not_in'  => [get_the_ID()]
+            'post_type'     => $this->post_types,
+            'post_status'   => 'publish',
+            'post__not_in'  => [get_the_ID()]
         ]);
 
         // Get Posts
