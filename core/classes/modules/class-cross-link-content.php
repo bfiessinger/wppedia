@@ -191,6 +191,8 @@ class Cross_Link_Content {
 			'a',
 			'script',
 			'style',
+            'noscript',
+            'canvas',
 			'code',
 			'pre',
 			'object',
@@ -200,8 +202,20 @@ class Cross_Link_Content {
 			'h4',
 			'h5',
 			'h6',
+            'svg',
 			'textarea',
-            'select'
+            'select',
+            'button',
+            'input',
+            'progress',
+            'meter',
+            'iframe',
+            'map',
+            'object',
+            'embed',
+            'audio',
+            'video',
+            'track',
 		] );
 
 		$query = '//text()';
