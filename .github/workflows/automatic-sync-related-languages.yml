@@ -17,11 +17,11 @@ jobs:
 
     - name: Copy de_DE translation files to de_AT and de_CH
       run: |
-        mkdir -p ./wp-content/plugins/my-plugin/languages
-        cp ./wp-content/plugins/my-plugin/languages/de_DE.po ./wp-content/plugins/my-plugin/languages/de_AT.po
-        cp ./wp-content/plugins/my-plugin/languages/de_DE.mo ./wp-content/plugins/my-plugin/languages/de_AT.mo
-        cp ./wp-content/plugins/my-plugin/languages/de_DE.po ./wp-content/plugins/my-plugin/languages/de_CH.po
-        cp ./wp-content/plugins/my-plugin/languages/de_DE.mo ./wp-content/plugins/my-plugin/languages/de_CH.mo
+        mkdir -p ./languages
+        cp ./languages/de_DE.po ./languages/de_AT.po
+        cp ./languages/de_DE.mo ./languages/de_AT.mo
+        cp ./languages/de_DE.po ./languages/de_CH.po
+        cp ./languages/de_DE.mo ./languages/de_CH.mo
 
     - name: Commit changes
       run: |
