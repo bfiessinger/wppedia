@@ -84,6 +84,11 @@ function wppedia_enqueue_frontend_assets() {
 }
 add_action('wp_enqueue_scripts', 'wppedia_enqueue_frontend_assets');
 
+/**
+ * Collect all inline styles and queue them
+ *
+ * @since 1.3.0
+ */
 function wppedia_enqueue_inline_styles() {
 	$final_css = Inline_Style_Collector::getInstance()->get_final_css();
 	if ( '' != $final_css ) {
