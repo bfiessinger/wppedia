@@ -15,6 +15,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Install gettext (for msgfmt)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gettext
+
     - name: Copy and adjust de_AT translation files
       run: |
         mkdir -p ./languages
