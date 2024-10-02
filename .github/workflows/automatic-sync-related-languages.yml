@@ -18,10 +18,10 @@ jobs:
     - name: Copy de_DE translation files to de_AT and de_CH
       run: |
         mkdir -p ./languages
-        cp ./languages/de_DE.po ./languages/de_AT.po
-        cp ./languages/de_DE.mo ./languages/de_AT.mo
-        cp ./languages/de_DE.po ./languages/de_CH.po
-        cp ./languages/de_DE.mo ./languages/de_CH.mo
+        cp ./languages/wppedia-de_DE.po ./languages/wppedia-de_AT.po
+        cp ./languages/wppedia-de_DE.mo ./languages/wppedia-de_AT.mo
+        cp ./languages/wppedia-de_DE.po ./languages/wppedia-de_CH.po
+        cp ./languages/wppedia-de_DE.mo ./languages/wppedia-de_CH.mo
 
     - name: Commit changes
       run: |
