@@ -1,0 +1,34 @@
+name: Automatic synchronization of related languages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  sync-translations:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Copy de_DE translation files to de_AT and de_CH
+      run: |
+        mkdir -p ./wp-content/plugins/my-plugin/languages
+        cp ./wp-content/plugins/my-plugin/languages/de_DE.po ./wp-content/plugins/my-plugin/languages/de_AT.po
+        cp ./wp-content/plugins/my-plugin/languages/de_DE.mo ./wp-content/plugins/my-plugin/languages/de_AT.mo
+        cp ./wp-content/plugins/my-plugin/languages/de_DE.po ./wp-content/plugins/my-plugin/languages/de_CH.po
+        cp ./wp-content/plugins/my-plugin/languages/de_DE.mo ./wp-content/plugins/my-plugin/languages/de_CH.mo
+
+    - name: Commit changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Sync translation files for de_AT and de_CH"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
