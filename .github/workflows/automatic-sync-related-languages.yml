@@ -15,20 +15,34 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Copy de_DE translation files to de_AT and de_CH
+    - name: Copy and adjust de_AT translation files
       run: |
         mkdir -p ./languages
+
+        # Copy and adjust the .po file
         cp ./languages/wppedia-de_DE.po ./languages/wppedia-de_AT.po
-        cp ./languages/wppedia-de_DE.mo ./languages/wppedia-de_AT.mo
+        sed -i 's/Language: de_DE/Language: de_AT/' ./languages/wppedia-de_AT.po
+        sed -i 's/Language-Team: Deutsch/Language-Team: Österreichisches Deutsch/' ./languages/wppedia-de_AT.po
+
+        # Recompile the .mo file for de_AT
+        msgfmt ./languages/wppedia-de_AT.po -o ./languages/wppedia-de_AT.mo
+
+    - name: Copy and adjust de_CH translation files
+      run: |
+        # Copy and adjust the .po file
         cp ./languages/wppedia-de_DE.po ./languages/wppedia-de_CH.po
-        cp ./languages/wppedia-de_DE.mo ./languages/wppedia-de_CH.mo
+        sed -i 's/Language: de_DE/Language: de_CH/' ./languages/wppedia-de_CH.po
+        sed -i 's/Language-Team: Deutsch/Language-Team: Schweizerdeutsch/' ./languages/wppedia-de_CH.po
+
+        # Recompile the .mo file for de_CH
+        msgfmt ./languages/wppedia-de_CH.po -o ./languages/wppedia-de_CH.mo
 
     - name: Commit changes
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add .
-        git commit -m "Sync translation files for de_AT and de_CH"
+        git commit -m "Sync translation files for de_AT and de_CH with metadata"
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
