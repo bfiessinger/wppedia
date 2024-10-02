@@ -47,7 +47,7 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add .
-        git commit -m "Sync translation files for de_AT and de_CH with metadata"
+        git commit -m "🔄 Sync translation files for de_AT and de_CH"
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
