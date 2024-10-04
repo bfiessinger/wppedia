@@ -14,7 +14,9 @@
         "php": "^7.3|^8.0"
     },
     "require-dev": {
-        "mythemeshop/wordpress-helpers": "^1.1"
+        "mythemeshop/wordpress-helpers": "^1.1",
+        "phpunit/phpunit": "^11.3",
+        "yoast/phpunit-polyfills": "^3.0"
     },
     "autoload": {},
 	"scripts": {

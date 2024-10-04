@@ -1,0 +1,8 @@
+<phpunit bootstrap="tests/bootstrap.php">
+    <coverage/>
+    <testsuites>
+        <testsuite name="WPPedia Test Suite">
+            <directory prefix="test-" suffix=".php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
