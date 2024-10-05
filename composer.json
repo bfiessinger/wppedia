@@ -19,6 +19,11 @@
         "yoast/phpunit-polyfills": "^3.0"
     },
     "autoload": {},
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
 	"scripts": {
 		"post-install-cmd": [
 			"@prefix-dependencies"
@@ -34,6 +39,7 @@
 		],
 		"prefix-vendor-mythemeshop": [
 			"@php ./php-scoper/vendor/humbug/php-scoper/bin/php-scoper add-prefix --prefix=\"WPPedia_Vendor\" --output-dir=\"./vendor-prefixed/mythemeshop/wordpress-helpers\" --config=\"./config/php-scoper/mythemeshop.inc.php\" --force --quiet"
-		]
+		],
+        "test": "phpunit"
 	}
 }

@@ -43,6 +43,12 @@ jobs:
 
       - name: Set up WordPress and WordPress Test Library
         uses: sjinks/setup-wordpress-test-library@v2.1.1
+        with:
+          version: latest
+          db_user: wordpress
+          db_password: wordpress
+          db_name: wordpress_test
+          db_host: 127.0.0.1:1337
 
       - name: Install MySQL Client
         run: sudo apt-get update && sudo apt-get install -y mysql-client
