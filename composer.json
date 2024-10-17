@@ -16,7 +16,10 @@
     "require-dev": {
         "mythemeshop/wordpress-helpers": "^1.1",
         "phpunit/phpunit": "^11.3",
-        "yoast/phpunit-polyfills": "^3.0"
+        "yoast/phpunit-polyfills": "^3.0",
+        "squizlabs/php_codesniffer": "^3.10",
+        "wp-coding-standards/wpcs": "^3.1",
+        "phpcompatibility/phpcompatibility-wp": "^2.1"
     },
     "autoload": {},
     "autoload-dev": {
@@ -24,7 +27,12 @@
             "tests/"
         ]
     },
-	"scripts": {
+	"config": {
+		"allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+	},
+    "scripts": {
 		"post-install-cmd": [
 			"@prefix-dependencies"
 		],
@@ -39,7 +47,6 @@
 		],
 		"prefix-vendor-mythemeshop": [
 			"@php ./php-scoper/vendor/humbug/php-scoper/bin/php-scoper add-prefix --prefix=\"WPPedia_Vendor\" --output-dir=\"./vendor-prefixed/mythemeshop/wordpress-helpers\" --config=\"./config/php-scoper/mythemeshop.inc.php\" --force --quiet"
-		],
-        "test": "phpunit"
+		]
 	}
 }
