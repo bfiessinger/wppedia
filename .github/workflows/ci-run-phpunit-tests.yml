@@ -12,13 +12,17 @@ permissions:
 
 jobs:
   testing:
-    name: Run tests
-    runs-on: ubuntu-latest
+    name: Run tests on ${{ matrix.operating-system }} with PHP ${{ matrix.php-versions }}
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: [7.4, 8.3]
     services:
       mysql:
         image: mariadb:latest
         ports:
-          - '1337:3306'
+          - 3306/udp
         env:
           MYSQL_ROOT_PASSWORD: wordpress
           MARIADB_INITDB_SKIP_TZINFO: 1
@@ -33,7 +37,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           coverage: none
-          php-version: "8.2"
+          php-version: ${{ matrix.php-versions }}
 
       - name: Install PHP Dependencies
         uses: ramsey/composer-install@v3
