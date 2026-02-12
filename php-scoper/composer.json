@@ -1,12 +1,12 @@
 {
-	"require": {
-			"humbug/php-scoper": "^0.15.0"
-	},
-	"config": {
-		"platform": {
-			"php": "7.4"
-		}
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true
+    "require": {
+        "humbug/php-scoper": "^0.18.18"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
