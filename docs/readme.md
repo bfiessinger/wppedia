@@ -1,11 +1,10 @@
 # WPPedia Documentation
 
-## Getting started
-Transform your WordPress website into a thoroughbred encyclopedia.  
-[Learn how](./getting-started.md)
+## Main documentation sections
 
-## Codex
+- [Developer documentation](./developers/readme.md)
+- [User documentation](./users/readme.md)
 
-## Theming
+## Legacy pages
 
-## Action & Filter Reference
+- [Legacy getting started page](./getting-started.md)
