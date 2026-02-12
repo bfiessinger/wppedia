@@ -12,7 +12,8 @@ This section is intended for plugin/theme developers and agency teams that want 
 
 ### Extending
 - [Extension overview](./extending/overview.md)
-- [Hook reference and examples](./extending/hooks.md)
+- [Action reference](./extending/actions-reference.md)
+- [Filter reference](./extending/filters-reference.md)
 - [Shortcodes and frontend integration](./extending/shortcodes-and-frontend.md)
 
 ### Templating
@@ -27,5 +28,5 @@ This section is intended for plugin/theme developers and agency teams that want 
 ## Who should read which page?
 
 - **Theme developer**: start with templating docs.
-- **Plugin developer**: start with extending + hooks docs.
+- **Plugin developer**: start with extending + action/filter references.
 - **Core contributor**: start with architecture, then testing and contribution docs.

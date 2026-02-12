@@ -35,18 +35,28 @@ Create your own plugin that:
 
 This method is ideal for agencies or productized implementations.
 
-## 2) Decision matrix
+## 2) Hook references
 
-- Need to **insert or reorder content**? → Start with hooks.
+All extension hooks are documented in dedicated references:
+
+- [Action reference](./actions-reference.md)
+- [Filter reference](./filters-reference.md)
+
+Each hook/filter includes context, purpose, and usage guidance.
+
+## 3) Decision matrix
+
+- Need to **insert or reorder content**? → Start with actions.
+- Need to **change computed values/paths/attributes**? → Use filters.
 - Need to **change full markup**? → Use template overrides.
 - Need **multi-site reuse/versioning**? → Companion plugin.
 
 In real projects, these methods are often combined.
 
-## 3) Safe extension checklist
+## 4) Safe extension checklist
 
 - Never edit WPPedia plugin files directly in production.
 - Prefix your own hooks/functions/classes.
-- Document every WPPedia hook you rely on.
+- Document every WPPedia hook/filter you rely on.
 - Keep custom code in git.
 - Re-test after each WPPedia update.
