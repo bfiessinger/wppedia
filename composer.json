@@ -27,26 +27,26 @@
             "tests/"
         ]
     },
-	"config": {
-		"allow-plugins": {
+    "config": {
+        "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-	},
+    },
     "scripts": {
-		"post-install-cmd": [
-			"@prefix-dependencies"
-		],
-		"post-update-cmd": [
-			"@prefix-dependencies"
-		],
-		"prefix-dependencies": [
-			"@composer --working-dir=php-scoper install",
-			"@composer prefix-vendor-mythemeshop",
-			"@composer dump-autoload -a --no-dev",
-			"@composer --working-dir=vendor-prefixed dump-autoload -a"
-		],
-		"prefix-vendor-mythemeshop": [
-			"@php ./php-scoper/vendor/humbug/php-scoper/bin/php-scoper add-prefix --prefix=\"WPPedia_Vendor\" --output-dir=\"./vendor-prefixed/mythemeshop/wordpress-helpers\" --config=\"./config/php-scoper/mythemeshop.inc.php\" --force --quiet"
-		]
-	}
+        "post-install-cmd": [
+            "@prefix-dependencies"
+        ],
+        "post-update-cmd": [
+            "@prefix-dependencies"
+        ],
+        "prefix-dependencies": [
+            "@composer --working-dir=php-scoper install",
+            "@composer prefix-vendor-mythemeshop",
+            "@composer dump-autoload -a --no-dev",
+            "@composer --working-dir=vendor-prefixed dump-autoload -a"
+        ],
+        "prefix-vendor-mythemeshop": [
+            "@php ./php-scoper/vendor/humbug/php-scoper/bin/php-scoper add-prefix --prefix=\"WPPedia_Vendor\" --output-dir=\"./vendor-prefixed/mythemeshop/wordpress-helpers\" --config=\"./config/php-scoper/mythemeshop.inc.php\" --force --quiet"
+        ]
+    }
 }
