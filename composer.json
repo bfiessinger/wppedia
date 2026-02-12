@@ -14,12 +14,12 @@
         "php": "^7.3|^8.0"
     },
     "require-dev": {
-        "mythemeshop/wordpress-helpers": "^1.1",
-        "phpunit/phpunit": "^11.3",
-        "yoast/phpunit-polyfills": "^3.0",
-        "squizlabs/php_codesniffer": "^3.10",
+        "mythemeshop/wordpress-helpers": "^1.1.22",
+        "phpunit/phpunit": "^11.5",
+        "yoast/phpunit-polyfills": "^4.0",
+        "squizlabs/php_codesniffer": "^3.13.5",
         "wp-coding-standards/wpcs": "^3.1",
-        "phpcompatibility/phpcompatibility-wp": "^2.1"
+        "phpcompatibility/phpcompatibility-wp": "^2.1.8"
     },
     "autoload": {},
     "autoload-dev": {
