@@ -69,8 +69,9 @@ class Rest_Controller extends \WP_REST_Controller {
 
 		$the_query = wppedia_get_posts( $query_args );
 
-		if ( ! $the_query->have_posts() )
-			return null;
+		if ( ! $the_query->have_posts() ) {
+			return [];
+		}
 
 		$searchables = [];
 		while ( $the_query->have_posts() ) {
@@ -87,6 +88,8 @@ class Rest_Controller extends \WP_REST_Controller {
 			];
 
 		}
+
+		wp_reset_postdata();
 
 		return $searchables;
 
