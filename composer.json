@@ -14,12 +14,12 @@
         "php": "^7.3|^8.0"
     },
     "require-dev": {
-        "mythemeshop/wordpress-helpers": "^1.2",
+        "mythemeshop/wordpress-helpers": "^1.1.22",
         "phpunit/phpunit": "^11.5",
         "yoast/phpunit-polyfills": "^4.0",
-        "squizlabs/php_codesniffer": "^3.11",
+        "squizlabs/php_codesniffer": "^3.13.5",
         "wp-coding-standards/wpcs": "^3.1",
-        "phpcompatibility/phpcompatibility-wp": "^2.2"
+        "phpcompatibility/phpcompatibility-wp": "^2.1.8"
     },
     "autoload": {},
     "autoload-dev": {
@@ -27,26 +27,26 @@
             "tests/"
         ]
     },
-	"config": {
-		"allow-plugins": {
+    "config": {
+        "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-	},
+    },
     "scripts": {
-		"post-install-cmd": [
-			"@prefix-dependencies"
-		],
-		"post-update-cmd": [
-			"@prefix-dependencies"
-		],
-		"prefix-dependencies": [
-			"@composer --working-dir=php-scoper install",
-			"@composer prefix-vendor-mythemeshop",
-			"@composer dump-autoload -a --no-dev",
-			"@composer --working-dir=vendor-prefixed dump-autoload -a"
-		],
-		"prefix-vendor-mythemeshop": [
-			"@php ./php-scoper/vendor/humbug/php-scoper/bin/php-scoper add-prefix --prefix=\"WPPedia_Vendor\" --output-dir=\"./vendor-prefixed/mythemeshop/wordpress-helpers\" --config=\"./config/php-scoper/mythemeshop.inc.php\" --force --quiet"
-		]
-	}
+        "post-install-cmd": [
+            "@prefix-dependencies"
+        ],
+        "post-update-cmd": [
+            "@prefix-dependencies"
+        ],
+        "prefix-dependencies": [
+            "@composer --working-dir=php-scoper install",
+            "@composer prefix-vendor-mythemeshop",
+            "@composer dump-autoload -a --no-dev",
+            "@composer --working-dir=vendor-prefixed dump-autoload -a"
+        ],
+        "prefix-vendor-mythemeshop": [
+            "@php ./php-scoper/vendor/humbug/php-scoper/bin/php-scoper add-prefix --prefix=\"WPPedia_Vendor\" --output-dir=\"./vendor-prefixed/mythemeshop/wordpress-helpers\" --config=\"./config/php-scoper/mythemeshop.inc.php\" --force --quiet"
+        ]
+    }
 }
