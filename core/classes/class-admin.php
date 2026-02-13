@@ -19,6 +19,7 @@ class Admin {
 
 		// Add Text to the glossary archive page
 		add_action( 'display_post_states', [ $this, 'wppedia_archive_post_state' ], 10, 2 );
+		add_action( 'add_meta_boxes', [ $this, 'register_version_history_metabox' ] );
 
 		// Add body class to WPPedia Admin Pages
 		add_filter( 'admin_body_class', [ $this, 'wppedia_admin_body_class' ] );
@@ -247,5 +248,55 @@ class Admin {
 		} else {
 			WPPedia()->notifications->remove_by_id('frontpage_slug_not_matching_permalink_settings');
 		}
+	}
+
+	/**
+	 * Register the version history metabox on glossary entries.
+	 *
+	 * @since 1.4.0
+	 */
+	function register_version_history_metabox() {
+		add_meta_box(
+			'wppedia-version-history',
+			__( 'Version history', 'wppedia' ),
+			[ $this, 'render_version_history_metabox' ],
+			wppedia_get_post_type(),
+			'side',
+			'default'
+		);
+	}
+
+	/**
+	 * Render a compact revision list for quick access.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param \WP_Post $post Current post object.
+	 */
+	function render_version_history_metabox( \WP_Post $post ) {
+		$history = wppedia_get_post_version_history( (int) $post->ID, [ 'posts_per_page' => 8 ] );
+
+		if ( empty( $history ) ) {
+			echo '<p>' . esc_html__( 'No revisions available yet. Update this glossary entry to start tracking versions.', 'wppedia' ) . '</p>';
+			return;
+		}
+
+		echo '<ul>';
+		foreach ( $history as $version ) {
+			echo '<li>';
+			echo '<strong>' . esc_html( $version['modified_human'] ) . '</strong><br />';
+			echo sprintf(
+				/* translators: %s: Author name */
+				esc_html__( 'by %s', 'wppedia' ),
+				esc_html( $version['author_name'] )
+			);
+
+			if ( ! empty( $version['edit_link'] ) && current_user_can( 'edit_post', $version['id'] ) ) {
+				echo ' · <a href="' . esc_url( $version['edit_link'] ) . '">' . esc_html__( 'Open revision', 'wppedia' ) . '</a>';
+			}
+
+			echo '</li>';
+		}
+		echo '</ul>';
 	}
 }

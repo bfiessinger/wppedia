@@ -89,7 +89,8 @@ However, by providing educational and informational quality content you can sign
 * autosuggest search for your glossary entries.
 * let the plugin generate the archive page for you or use a static page with contents defined by you.
 * all scripts run on vanilla JavaScript. No jQuery needed.
-* **2** additional Shortcodes
+* **3** additional Shortcodes
+* Built-in version history panel for glossary entries and frontend shortcode output.
 * **more coming soon**
 
 ### PRO Features
@@ -99,7 +100,7 @@ However, by providing educational and informational quality content you can sign
 * Allow crosslinking to other post types (not just glossary terms)
 * Glossary categories widget
 * Visual assistance about all crosslinks that will be created while editing a glossary term (*in work*)
-* Version histories (*planned*)
+* Version histories
 * Glossary term attributes for filtering and displaying in special lists (*planned*)
 * **more coming soon**
 
