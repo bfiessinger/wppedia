@@ -64,4 +64,43 @@ class PostFunctionsTest extends TestCase {
 		$this->assertArrayHasKey( 'b', $letters );
 		$this->assertSame( 'b', $letters['b'] );
 	}
+
+
+	public function testGetPostVersionHistoryReturnsRevisionsInDescendingOrder(): void {
+		$post_id = self::factory()->post->create(
+			[
+				'post_type'   => 'wppedia_term',
+				'post_title'  => 'Versioned Entry',
+				'post_status' => 'publish',
+			]
+		);
+
+		$this->assertIsInt( $post_id );
+
+		wp_update_post(
+			[
+				'ID'           => $post_id,
+				'post_content' => 'First revision content',
+			]
+		);
+
+		wp_update_post(
+			[
+				'ID'           => $post_id,
+				'post_content' => 'Second revision content',
+			]
+		);
+
+		$history = wppedia_get_post_version_history( $post_id );
+
+		$this->assertNotEmpty( $history );
+		$this->assertArrayHasKey( 'id', $history[0] );
+		$this->assertArrayHasKey( 'author_name', $history[0] );
+		$this->assertArrayHasKey( 'modified_human', $history[0] );
+	}
+
+	public function testGetPostVersionHistoryReturnsEmptyArrayForInvalidPostId(): void {
+		$this->assertSame( [], wppedia_get_post_version_history( 0 ) );
+	}
+
 }

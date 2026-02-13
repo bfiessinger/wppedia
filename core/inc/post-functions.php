@@ -120,3 +120,46 @@ function wppedia_get_posts_initial_letter_list(array $args = []) {
 	return $available_initial_chars;
 
 }
+
+/**
+ * Get revision history details for a glossary entry.
+ *
+ * @since 1.4.0
+ *
+ * @param int   $post_id Post ID.
+ * @param array $query_args Arguments for wp_get_post_revisions.
+ *
+ * @return array<int,array<string,mixed>>
+ */
+function wppedia_get_post_version_history( int $post_id, array $query_args = [] ) {
+	if ( $post_id <= 0 ) {
+		return [];
+	}
+
+	$defaults = [
+		'order'         => 'DESC',
+		'check_enabled' => false,
+	];
+
+	$revisions = wp_get_post_revisions( $post_id, array_merge( $defaults, $query_args ) );
+
+	if ( empty( $revisions ) ) {
+		return [];
+	}
+
+	$date_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+	$history = [];
+
+	foreach ( $revisions as $revision ) {
+		$history[] = [
+			'id'            => (int) $revision->ID,
+			'modified_gmt'  => $revision->post_modified_gmt,
+			'modified_human'=> get_date_from_gmt( $revision->post_modified_gmt, $date_format ),
+			'author_id'     => (int) $revision->post_author,
+			'author_name'   => get_the_author_meta( 'display_name', $revision->post_author ),
+			'edit_link'     => get_edit_post_link( $revision->ID, '' ),
+		];
+	}
+
+	return $history;
+}

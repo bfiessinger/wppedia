@@ -12,3 +12,5 @@ defined( 'ABSPATH' ) || die();
 
 require_once __DIR__ . '/shortcodes/navigation.php';
 require_once __DIR__ . '/shortcodes/searchform.php';
+
+require_once __DIR__ . '/shortcodes/version-history.php';
