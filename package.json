@@ -21,7 +21,7 @@
   "homepage": "https://github.com/bfiessinger/wppedia#readme",
   "dependencies": {
     "@s-libs/micro-dash": "^18.0.0",
-    "@yaireo/tagify": "^4.35.4",
+    "@yaireo/tagify": "^4.36.0",
     "fuse.js": "^7.1.0",
     "jquery": "^3.7.1",
     "select2": "^4.1.0-rc.0",
