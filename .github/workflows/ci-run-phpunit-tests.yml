@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: [7.4, 8.3]
+        php-versions: [8.3]
     services:
       mysql:
         image: mariadb:latest
@@ -39,8 +39,8 @@ jobs:
           coverage: none
           php-version: ${{ matrix.php-versions }}
 
-      - name: Install PHP Dependencies
-        uses: ramsey/composer-install@v3
+      - name: Update PHP Dependencies
+        run: composer update --with-all-dependencies --no-interaction
 
       - name: Composer dump-autoload
         run: composer dump-autoload
