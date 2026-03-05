@@ -46,7 +46,7 @@
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.51.0",
     "sass-loader": "^16.0.4",
-    "svgo": "^3.3.2",
+    "svgo": "^3.3.3",
     "svgo-loader": "^3.0.0",
     "terser-webpack-plugin": "^5.3.11",
     "webpack": "^5.97.1",
